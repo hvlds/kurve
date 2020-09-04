@@ -8,6 +8,7 @@ extern "C" {
 	// Include the GLFW library (should be the same for all OS):
 	#include <GLFW/glfw3.h>
 }
+#include <vector>
 
 
 typedef struct
@@ -24,10 +25,10 @@ typedef struct
 	GLint angle_x_loc;
 
 	// The vertex array object (blackbox ...):
-	GLuint vao;
+	std::vector<GLuint> vec_vao;
 
 	// The vertex buffer object (GPU mem for the vertex data):
-	GLuint vbo;
+	std::vector<GLuint> vec_vbo;
 
 	// The texture object:
 	GLuint tex;

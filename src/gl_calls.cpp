@@ -291,14 +291,18 @@ void init_uniforms(user_data_t* user_data)
 	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
 }
 
+void init_player_data(user_data_t* user_data, int position) {
+
+}
+
 void init_vertex_data(user_data_t* user_data)
 {
 	// Triangle data:
 	vertex_data_t vertex_data[] =
 	{
-		{ .position = { -1, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
-		{ .position = {  1, -1, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
-		{ .position = {  0,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // center / up
+		{ .position = { -0.5, -0.5, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
+		{ .position = {  0.5, -0.5, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
+		{ .position = {  0,  0.5, 0 }, .color = { 0x00, 0x00, 0xFF } }, // center / up
 	};
 
 	// TODO: blackbox! Create a VAO.
@@ -311,7 +315,7 @@ void init_vertex_data(user_data_t* user_data)
 	gl_check_error("glBindVertexArray");
 
 	// Store the VAO inside our user data:
-	user_data->vao = vao;
+	user_data->vec_vao.push_back(vao);
 
 	// Generate and bind a vertex buffer object:
 	GLuint vbo;
@@ -342,7 +346,7 @@ void init_vertex_data(user_data_t* user_data)
 	gl_check_error("glEnableVertexAttribArray [color]");
 
 	// Store the VBO inside our user data:
-	user_data->vbo = vbo;
+	user_data->vec_vbo.push_back(vbo);
 }
 
 void init_model(user_data_t* user_data)
@@ -450,10 +454,14 @@ void teardown_gl(GLFWwindow* window)
 	gl_check_error("glDeleteProgram");
 
 	// Delete the VAO:
-	glDeleteVertexArrays(1, &user_data->vao);
-	gl_check_error("glDeleteVertexArrays");
+	for (auto vao : user_data->vec_vao) {
+		glDeleteVertexArrays(1, &vao);
+		gl_check_error("glDeleteVertexArrays");
+	}
 
 	// Delete the VBO:
-	glDeleteBuffers(1, &user_data->vbo);
-	gl_check_error("glDeleteBuffers");
+	for (auto vbo : user_data->vec_vbo) {
+		glDeleteVertexArrays(1, &vbo);
+		gl_check_error("glDeleteBuffers");
+	}
 }
