@@ -7,8 +7,9 @@ extern "C" {
 	#include "obj.h"
 	#include "bitmap.h"
 }
+#include <vector>
 
-#define MODEL_PATH "./models/teapot"
+#define MODEL_PATH "./models/ring"
 #define TEX_PATH "./models/logo.bmp"
 #define Y_ANGULAR_VELOCITY 2
 
@@ -149,11 +150,11 @@ void init_shader_program(user_data_t* user_data)
 {
 	// Create the vertex shader:
 	printf("Compiling vertex shader ...\n");
-	GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, "shader/vertex.glsl", "Vertex shader");
+	GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, "shader/circle_vertex.glsl", "Vertex shader");
 
 	// Create the fragment shader:
 	printf("Compiling fragment shader ...\n");
-	GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, "shader/fragment.glsl", "Fragment shader");
+	GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, "shader/circle_fragment.glsl", "Fragment shader");
 
 	// Create an empty shader program:
 	printf("Creating shader program ...\n");
@@ -282,31 +283,24 @@ void init_uniforms(user_data_t* user_data)
 	// Y angle:
 	user_data->angle_y_loc = glGetUniformLocation(user_data->shader_program, "angle_y");
 	gl_check_error("glGetUniformLocation [angle_y]");
-	check_error(user_data->angle_y_loc >= 0, "Failed to obtain uniform location for angle_y.");
+	//check_error(user_data->angle_y_loc >= 0, "Failed to obtain uniform location for angle_y.");
 
 	// X angle:
 	user_data->angle_x_loc = glGetUniformLocation(user_data->shader_program, "angle_x");
 	gl_check_error("glGetUniformLocation [angle_x]");
-	check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
-
-	// Shading case:
-	user_data->shading_case_loc = glGetUniformLocation(user_data->shader_program, "shading_case");
-	gl_check_error("glGetUniformLocation [shading_case]");
-	// check_error(user_data->shading_case_loc >= 0, "Failed to obtain uniform location for shading_case.");
-
-	// Texture:
-	GLint tex_loc = glGetUniformLocation(user_data->shader_program, "tex");
-
-	gl_check_error("glGetUniformLocation [tex]");
-	check_error(tex_loc >= 0, "Failed to obtain uniform location for tex.");
-
-	// Associate the sampler "tex" with texture unit 0:
-	glUniform1i(tex_loc, 0);
-	gl_check_error("glUniform1i [tex]");
+	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
 }
 
 void init_vertex_data(user_data_t* user_data)
 {
+	// Triangle data:
+	vertex_data_t vertex_data[] =
+	{
+		{ .position = { -1, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
+		{ .position = {  1, -1, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
+		{ .position = {  0,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // center / up
+	};
+
 	// TODO: blackbox! Create a VAO.
 	GLuint vao;
 
@@ -328,111 +322,9 @@ void init_vertex_data(user_data_t* user_data)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	gl_check_error("glBindBuffer");
 
-	// Open the obj file:
-	FILE* obj = fopen(MODEL_PATH, "r");
-	check_error(obj != NULL, "Failed to open obj file at \"" MODEL_PATH "\".");
-
-	// Count the entries:
-	int vertex_count = 0;
-	int tex_coords_count = 0;
-	int normal_count = 0;
-	int face_count = 0;
-	int mtl_lib_count = 0;
-
-	obj_count_entries(obj, &vertex_count, &tex_coords_count, &normal_count, &face_count, &mtl_lib_count);
-
-	printf("Parsed obj file \"%s\":\n", MODEL_PATH);
-	printf("\tVertices: %d\n", vertex_count);
-	printf("\tTexture coordinates: %d\n", tex_coords_count);
-	printf("\tNormals: %d\n", normal_count);
-	printf("\tFaces: %d\n", face_count);
-	printf("\tMaterial libraries: %d\n", mtl_lib_count);
-
-	// Rewind the file pointer:
-	rewind(obj);
-
-	// Allocate memory from the counters:
-	obj_vertex_entry_t* vertices = (obj_vertex_entry_t*) malloc(vertex_count * sizeof(obj_vertex_entry_t));
-	check_error(vertices != NULL, "Failed to allocate memory for vertices.");
-
-	obj_normal_entry_t* normals = (obj_normal_entry_t*) malloc(normal_count * sizeof(obj_normal_entry_t));
-	check_error(normals != NULL, "Failed to allocate memory for normals.");
-
-	obj_tex_coords_entry_t* tex_coords = (obj_tex_coords_entry_t*) malloc(tex_coords_count * sizeof(obj_tex_coords_entry_t));
-	check_error(tex_coords != NULL, "Failed to allocate memory for texture coordinates.");
-
-	// Allocate the vertex data array:
-	user_data->vertex_data_count = 3 * face_count;
-
-	vertex_data_t* vertex_data = (vertex_data_t*) malloc(user_data->vertex_data_count * sizeof(vertex_data_t));
-	check_error(vertex_data != NULL, "Failed to allocate memory for vertex data.");
-
-	// Walk all the entries in the obj file using a while loop.
-
-	obj_entry_type_t entry_type;
-	obj_entry_t entry;
-
-	int vertex_counter = 0;
-	int normal_counter = 0;
-	int tex_coords_counter = 0;
-	int vertex_data_counter = 0;
-
-	while ((entry_type = obj_get_next_entry(obj, &entry)) != OBJ_ENTRY_TYPE_END)
-	{
-		switch (entry_type)
-		{
-		case OBJ_ENTRY_TYPE_VERTEX: vertices[vertex_counter++] = entry.vertex_entry; break;
-		case OBJ_ENTRY_TYPE_NORMAL: normals[normal_counter++] = entry.normal_entry; break;
-		case OBJ_ENTRY_TYPE_TEX_COORDS: tex_coords[tex_coords_counter++] = entry.tex_coords_entry; break;
-		case OBJ_ENTRY_TYPE_FACE:
-		{
-			// Iterate over the three vertices of the face:
-			const obj_face_index_triple_t* triples = entry.face_entry.triples;
-
-			for (int i = 0; i < 3; i++)
-			{
-				// Use the triple indices to find the vertex / normal / tex coord entries:
-				const obj_vertex_entry_t* vertex_entry = &vertices[triples[i].vertex_index];
-				const obj_normal_entry_t* normal_entry = &normals[triples[i].normal_index];
-				const obj_tex_coords_entry_t* tex_coords_entry = &tex_coords[triples[i].tex_coords_index];
-
-				// Build the vertex data struct:
-				vertex_data_t* new_vertex_data = &vertex_data[vertex_data_counter++];
-
-				new_vertex_data->position[0] = (GLfloat)vertex_entry->x;
-				new_vertex_data->position[1] = (GLfloat)vertex_entry->y;
-				new_vertex_data->position[2] = (GLfloat)vertex_entry->z;
-
-				new_vertex_data->normal[0] = (GLfloat)normal_entry->x;
-				new_vertex_data->normal[1] = (GLfloat)normal_entry->y;
-				new_vertex_data->normal[2] = (GLfloat)normal_entry->z;
-
-				new_vertex_data->tex_coords[0] = (GLfloat)tex_coords_entry->u;
-				new_vertex_data->tex_coords[1] = (GLfloat)tex_coords_entry->v;
-
-				new_vertex_data->color[0] = 0x80;
-				new_vertex_data->color[1] = 0x80;
-				new_vertex_data->color[2] = 0x80;
-			}
-
-			break;
-		}
-
-		default: break;
-		}
-	}
-
-	// Upload the data to the GPU:
-	glBufferData(GL_ARRAY_BUFFER, user_data->vertex_data_count * sizeof(vertex_data_t), (const GLvoid*)vertex_data, GL_STATIC_DRAW);
+	// Upload the vertex data to the GPU:
+	glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(vertex_data_t), (const GLvoid*)vertex_data, GL_STATIC_DRAW);
 	gl_check_error("glBufferData");
-
-	// Release allocated memory and close the obj file:
-	free(vertices);
-	free(normals);
-	free(tex_coords);
-	free(vertex_data);
-
-	fclose(obj);
 
 	// Position attribute:
 	// Number of attribute, number of components, data type, normalize, stride, pointer (= offset)
@@ -442,24 +334,12 @@ void init_vertex_data(user_data_t* user_data)
 	glVertexAttribPointer(ATTRIB_COLOR, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vertex_data_t), (GLvoid*)offsetof(vertex_data_t, color));
 	gl_check_error("glVertexAttribPointer [color]");
 
-	glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data_t), (GLvoid*)offsetof(vertex_data_t, normal));
-	gl_check_error("glVertexAttribPointer [normal]");
-
-	glVertexAttribPointer(ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(vertex_data_t), (GLvoid*)offsetof(vertex_data_t, tex_coords));
-	gl_check_error("glVertexAttribPointer [tex_coords]");
-
 	// Enable the attributes:
 	glEnableVertexAttribArray(ATTRIB_POSITION);
 	gl_check_error("glEnableVertexAttribArray [position]");
 
 	glEnableVertexAttribArray(ATTRIB_COLOR);
 	gl_check_error("glEnableVertexAttribArray [color]");
-
-	glEnableVertexAttribArray(ATTRIB_NORMAL);
-	gl_check_error("glEnableVertexAttribArray [normal]");
-
-	glEnableVertexAttribArray(ATTRIB_TEX_COORDS);
-	gl_check_error("glEnableVertexAttribArray [tex_coords]");
 
 	// Store the VBO inside our user data:
 	user_data->vbo = vbo;
@@ -470,7 +350,6 @@ void init_model(user_data_t* user_data)
 	user_data->time = glfwGetTime();
 	user_data->angle_y = 0;
 	user_data->angle_x = 0;
-	user_data->shading_case = 0;
 }
 
 void init_gl(GLFWwindow* window)
@@ -480,17 +359,14 @@ void init_gl(GLFWwindow* window)
 	// Initialize our shader program:
 	init_shader_program(user_data);
 
-	// Initialize our texture:
-	init_texture(user_data);
-
 	// Initialize our uniforms:
 	init_uniforms(user_data);
 
-	// Initialize our vertex data:
-	init_vertex_data(user_data);
-
 	// Initialize our model:
 	init_model(user_data);
+
+	// Initialize our vertex data:
+	init_vertex_data(user_data);
 
 	// Obtain the internal size of the framebuffer:
 	int fb_width, fb_height;
@@ -503,10 +379,6 @@ void init_gl(GLFWwindow* window)
 	// Specify the clear color:
 	glClearColor(0.1, 0.1, 0.1, 1);
 	gl_check_error("glClearColor");
-
-	// Enable the depth test:
-	glEnable(GL_DEPTH_TEST);
-	gl_check_error("glEnable [GL_DEPTH_TEST]");
 
 	// Init the Key Callback for the change of shading
 	glfwSetKeyCallback(window, key_callback);
@@ -521,10 +393,6 @@ void update_gl(GLFWwindow* window)
 	double time_delta = new_time - user_data->time;
 
 	user_data->time = new_time;
-
-	// Adapt the angle using the time delta and the angular velocity:
-	// user_data->angle_y = fmod(user_data->angle_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
-	// user_data->angle_x = fmod(user_data->angle_x + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 
 	int right_state = glfwGetKey(window, GLFW_KEY_RIGHT);
 	if (right_state == GLFW_PRESS)
@@ -556,9 +424,6 @@ void update_gl(GLFWwindow* window)
 
 	glUniform1f(user_data->angle_x_loc, user_data->angle_x);
 	gl_check_error("glUniform1f [angle_x]");
-	
-	glUniform1ui(user_data->shading_case_loc, user_data->shading_case);
-	gl_check_error("glUniform1ui [shading_case]");
 }
 
 void draw_gl(GLFWwindow* window)
@@ -566,12 +431,12 @@ void draw_gl(GLFWwindow* window)
 	user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
 
 	// Clear the color buffer -> background color:
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 	gl_check_error("glClear");
 
 	// Draw our stuff!
 	// Parameters: primitive type, start index, count
-	glDrawArrays(GL_TRIANGLES, 0, user_data->vertex_data_count);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 	gl_check_error("glDrawArrays");
 }
 

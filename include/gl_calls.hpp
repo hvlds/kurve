@@ -1,11 +1,14 @@
 #ifndef GLCALLS_HPP
 #define GLCALLS_HPP
 
-// Include the GLAD loader *before* including GLFW!
-#include "glad/glad.h"
+extern "C" {
+	// Include the GLAD loader *before* including GLFW!
+	#include "glad/glad.h"
+	
+	// Include the GLFW library (should be the same for all OS):
+	#include <GLFW/glfw3.h>
+}
 
-// Include the GLFW library (should be the same for all OS):
-#include <GLFW/glfw3.h>
 
 typedef struct
 {
@@ -19,7 +22,6 @@ typedef struct
 	// The uniform locations:
 	GLint angle_y_loc;
 	GLint angle_x_loc;
-	GLint shading_case_loc;
 
 	// The vertex array object (blackbox ...):
 	GLuint vao;
@@ -45,15 +47,11 @@ typedef struct
 {
 	GLfloat position[3];
 	GLubyte color[3];
-	GLfloat normal[3];
-	GLfloat tex_coords[2];
 } vertex_data_t;
 
 // Vertex attributes:
 #define ATTRIB_POSITION 0
 #define ATTRIB_COLOR 1
-#define ATTRIB_NORMAL 2
-#define ATTRIB_TEX_COORDS 3
 
 // Generic error checks:
 void check_error(int condition, const char* error_text);
