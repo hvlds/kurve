@@ -10,6 +10,9 @@ out vec4 f_color;
 
 void main()
 {
-	gl_Position = v_position;
+	vec4 position = v_position;
+	position.y += angle_y;
+	position.x += angle_x;
+	gl_Position = position;
 	f_color = v_color;
 }

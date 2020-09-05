@@ -416,28 +416,28 @@ void update_gl(GLFWwindow* window)
 
 	user_data->time = new_time;
 
-	int right_state = glfwGetKey(window, GLFW_KEY_RIGHT);
+	int right_state = glfwGetKey(window, GLFW_KEY_LEFT);
 	if (right_state == GLFW_PRESS)
-	{
-		user_data->angle_y = fmod(user_data->angle_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
-	}
-
-	int left_state = glfwGetKey(window, GLFW_KEY_LEFT);
-	if (left_state == GLFW_PRESS)
-	{
-		user_data->angle_y = fmod(user_data->angle_y + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
-	}
-
-	int up_state = glfwGetKey(window, GLFW_KEY_UP);
-	if (up_state == GLFW_PRESS)
 	{
 		user_data->angle_x = fmod(user_data->angle_x + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 	}
 
-	int down_state = glfwGetKey(window, GLFW_KEY_DOWN);
-	if (down_state == GLFW_PRESS)
+	int left_state = glfwGetKey(window, GLFW_KEY_RIGHT);
+	if (left_state == GLFW_PRESS)
 	{
 		user_data->angle_x = fmod(user_data->angle_x + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+	}
+
+	int up_state = glfwGetKey(window, GLFW_KEY_DOWN);
+	if (up_state == GLFW_PRESS)
+	{
+		user_data->angle_y = fmod(user_data->angle_y + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+	}
+
+	int down_state = glfwGetKey(window, GLFW_KEY_UP);
+	if (down_state == GLFW_PRESS)
+	{
+		user_data->angle_y = fmod(user_data->angle_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 	}
 
 	// Update the uniform:
