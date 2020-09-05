@@ -8,6 +8,7 @@ extern "C" {
 	#include "bitmap.h"
 }
 #include <vector>
+#include <iostream>
 
 #define MODEL_PATH "./models/ring"
 #define TEX_PATH "./models/logo.bmp"
@@ -150,11 +151,11 @@ void init_shader_program(user_data_t* user_data)
 {
 	// Create the vertex shader:
 	printf("Compiling vertex shader ...\n");
-	GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, "shader/circle_vertex.glsl", "Vertex shader");
+	GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, "../shader/circle_vertex.glsl", "Vertex shader");
 
 	// Create the fragment shader:
 	printf("Compiling fragment shader ...\n");
-	GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, "shader/circle_fragment.glsl", "Fragment shader");
+	GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, "../shader/circle_fragment.glsl", "Fragment shader");
 
 	// Create an empty shader program:
 	printf("Creating shader program ...\n");
@@ -291,19 +292,28 @@ void init_uniforms(user_data_t* user_data)
 	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
 }
 
-void init_player_data(user_data_t* user_data, int position) {
+void init_player_data(user_data_t* user_data, int pos) {
+	std::cout << "Init player: " << pos << std::endl;
 
-}
-
-void init_vertex_data(user_data_t* user_data)
-{
 	// Triangle data:
-	vertex_data_t vertex_data[] =
-	{
-		{ .position = { -0.5, -0.5, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
-		{ .position = {  0.5, -0.5, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
-		{ .position = {  0,  0.5, 0 }, .color = { 0x00, 0x00, 0xFF } }, // center / up
-	};
+	std::vector<vertex_data_t> vertex_data;
+	if(pos == 1) {
+		vertex_data =
+		{
+			{ .position = { -1, 0, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
+			{ .position = {  0, 0, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
+			{ .position = {  -0.5,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // center / up
+		};
+	} else {
+		vertex_data =
+		{
+			{ .position = { 0, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
+			{ .position = {  1, -1, 0 }, .color = { 0x00, 0x10, 0x00 } }, // right / down
+			{ .position = {  0.5,  0, 0 }, .color = { 0x00, 0x0F, 0xFF } }, // center / up
+		};
+	}
+
+	user_data->vertex_data_count += 3;
 
 	// TODO: blackbox! Create a VAO.
 	GLuint vao;
@@ -316,6 +326,7 @@ void init_vertex_data(user_data_t* user_data)
 
 	// Store the VAO inside our user data:
 	user_data->vec_vao.push_back(vao);
+	std::cout << "vao: " << vao << std::endl;
 
 	// Generate and bind a vertex buffer object:
 	GLuint vbo;
@@ -327,7 +338,7 @@ void init_vertex_data(user_data_t* user_data)
 	gl_check_error("glBindBuffer");
 
 	// Upload the vertex data to the GPU:
-	glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(vertex_data_t), (const GLvoid*)vertex_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
 	gl_check_error("glBufferData");
 
 	// Position attribute:
@@ -347,6 +358,13 @@ void init_vertex_data(user_data_t* user_data)
 
 	// Store the VBO inside our user data:
 	user_data->vec_vbo.push_back(vbo);
+	std::cout << "vbo: " << vbo << std::endl;
+}
+
+void init_vertex_data(user_data_t* user_data)
+{
+	init_player_data(user_data, 1);
+	init_player_data(user_data, 2);
 }
 
 void init_model(user_data_t* user_data)
@@ -440,8 +458,11 @@ void draw_gl(GLFWwindow* window)
 
 	// Draw our stuff!
 	// Parameters: primitive type, start index, count
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	gl_check_error("glDrawArrays");
+	for (auto vao : user_data->vec_vao) {
+		glBindVertexArray(vao);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		gl_check_error("glDrawArrays");
+	}
 }
 
 void teardown_gl(GLFWwindow* window)
