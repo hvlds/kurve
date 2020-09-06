@@ -302,18 +302,20 @@ void init_player_data(user_data_t* user_data, int pos) {
 		{
 			{ .position = { -1, 0, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
 			{ .position = {  0, 0, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
-			{ .position = {  -0.5,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // center / up
+			{ .position = {  0,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // right / up
+			{ .position = {  -1,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // left / up
 		};
 	} else {
 		vertex_data =
 		{
 			{ .position = { 0, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
 			{ .position = {  1, -1, 0 }, .color = { 0x00, 0x10, 0x00 } }, // right / down
-			{ .position = {  0.5,  0, 0 }, .color = { 0x00, 0x0F, 0xFF } }, // center / up
+			{ .position = {  1,  0, 0 }, .color = { 0x00, 0x0F, 0xFF } }, // right / up
+			{ .position = {  0,  0, 0 }, .color = { 0x00, 0x0F, 0xFF } }, // left / up
 		};
 	}
 
-	user_data->vertex_data_count += 3;
+	user_data->vertex_data_count += 4;
 
 	// TODO: blackbox! Create a VAO.
 	GLuint vao;
@@ -324,9 +326,17 @@ void init_player_data(user_data_t* user_data, int pos) {
 	glBindVertexArray(vao);
 	gl_check_error("glBindVertexArray");
 
-	// Store the VAO inside our user data:
-	user_data->vec_vao.push_back(vao);
-	std::cout << "vao: " << vao << std::endl;
+	// Generate and bind an element buffer object:
+	GLuint ebo;
+    glGenBuffers(1, &ebo);
+
+    GLuint elements[] = {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
 	// Generate and bind a vertex buffer object:
 	GLuint vbo;
@@ -357,8 +367,12 @@ void init_player_data(user_data_t* user_data, int pos) {
 	gl_check_error("glEnableVertexAttribArray [color]");
 
 	// Store the VBO inside our user data:
-	user_data->vec_vbo.push_back(vbo);
-	std::cout << "vbo: " << vbo << std::endl;
+	meta_obj_t meta_obj = {
+		vao,
+		vbo,
+		ebo
+	};
+	user_data->vec_meta.push_back(meta_obj);
 }
 
 void init_vertex_data(user_data_t* user_data)
@@ -458,9 +472,12 @@ void draw_gl(GLFWwindow* window)
 
 	// Draw our stuff!
 	// Parameters: primitive type, start index, count
-	for (auto vao : user_data->vec_vao) {
-		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+	for (auto meta_obj : user_data->vec_meta) {
+		glBindVertexArray(meta_obj.vao);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
+		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		gl_check_error("glDrawArrays");
 	}
 }
@@ -475,14 +492,14 @@ void teardown_gl(GLFWwindow* window)
 	gl_check_error("glDeleteProgram");
 
 	// Delete the VAO:
-	for (auto vao : user_data->vec_vao) {
-		glDeleteVertexArrays(1, &vao);
+	for (auto meta_obj : user_data->vec_meta) {
+		glDeleteVertexArrays(1, &meta_obj.vao);
 		gl_check_error("glDeleteVertexArrays");
-	}
+		
+		glDeleteBuffers(1, &meta_obj.ebo);
+		gl_check_error("glDeleteBuffers");
 
-	// Delete the VBO:
-	for (auto vbo : user_data->vec_vbo) {
-		glDeleteVertexArrays(1, &vbo);
+		glDeleteBuffers(1, &meta_obj.vbo);
 		gl_check_error("glDeleteBuffers");
 	}
 }

@@ -10,9 +10,14 @@ extern "C" {
 }
 #include <vector>
 
+typedef struct {
+	GLuint vao; // Vertex array object
+	GLuint vbo; // Vertex buffer object
+	GLuint ebo; // Element buffer object
+} meta_obj_t; 
 
-typedef struct
-{
+
+typedef struct {
 	// Dimensions of the window:
 	int window_width;
 	int window_height;
@@ -24,11 +29,7 @@ typedef struct
 	GLint angle_y_loc;
 	GLint angle_x_loc;
 
-	// The vertex array object (blackbox ...):
-	std::vector<GLuint> vec_vao;
-
-	// The vertex buffer object (GPU mem for the vertex data):
-	std::vector<GLuint> vec_vbo;
+	std::vector<meta_obj_t> vec_meta;
 
 	// The texture object:
 	GLuint tex;
