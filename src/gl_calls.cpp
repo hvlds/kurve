@@ -348,7 +348,7 @@ void init_player_data(user_data_t* user_data, int pos) {
 	gl_check_error("glBindBuffer");
 
 	// Upload the vertex data to the GPU:
-	glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
 	gl_check_error("glBufferData");
 
 	// Position attribute:
@@ -478,7 +478,7 @@ void draw_gl(GLFWwindow* window)
 		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
 		 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		gl_check_error("glDrawArrays");
+		gl_check_error("glDrawElements");
 	}
 }
 
