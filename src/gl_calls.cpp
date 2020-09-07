@@ -283,13 +283,13 @@ void init_texture(user_data_t* user_data)
 void init_uniforms(user_data_t* user_data)
 {
 	// Y angle:
-	user_data->angle_y_loc = glGetUniformLocation(user_data->shader_program, "angle_y");
-	gl_check_error("glGetUniformLocation [angle_y]");
+	user_data->trans_y_loc = glGetUniformLocation(user_data->shader_program, "trans_y");
+	gl_check_error("glGetUniformLocation [trans_y]");
 	//check_error(user_data->angle_y_loc >= 0, "Failed to obtain uniform location for angle_y.");
 
 	// X angle:
-	user_data->angle_x_loc = glGetUniformLocation(user_data->shader_program, "angle_x");
-	gl_check_error("glGetUniformLocation [angle_x]");
+	user_data->trans_x_loc = glGetUniformLocation(user_data->shader_program, "trans_x");
+	gl_check_error("glGetUniformLocation [trans_x]");
 	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
 }
 
@@ -382,8 +382,8 @@ void init_vertex_data(user_data_t* user_data)
 void init_model(user_data_t* user_data)
 {
 	user_data->time = glfwGetTime();
-	user_data->angle_y = 0;
-	user_data->angle_x = 0;
+	user_data->trans_y = 0;
+	user_data->trans_x = 0;
 }
 
 void init_gl(GLFWwindow* window)
@@ -431,32 +431,32 @@ void update_gl(GLFWwindow* window)
 	int right_state = glfwGetKey(window, GLFW_KEY_LEFT);
 	if (right_state == GLFW_PRESS)
 	{
-		user_data->angle_x = fmod(user_data->angle_x + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+		user_data->trans_x = fmod(user_data->trans_x + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 	}
 
 	int left_state = glfwGetKey(window, GLFW_KEY_RIGHT);
 	if (left_state == GLFW_PRESS)
 	{
-		user_data->angle_x = fmod(user_data->angle_x + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+		user_data->trans_x = fmod(user_data->trans_x + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 	}
 
 	int up_state = glfwGetKey(window, GLFW_KEY_DOWN);
 	if (up_state == GLFW_PRESS)
 	{
-		user_data->angle_y = fmod(user_data->angle_y + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+		user_data->trans_y = fmod(user_data->trans_y + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 	}
 
 	int down_state = glfwGetKey(window, GLFW_KEY_UP);
 	if (down_state == GLFW_PRESS)
 	{
-		user_data->angle_y = fmod(user_data->angle_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+		user_data->trans_y = fmod(user_data->trans_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
 	}
 
 	// Update the uniform:
-	glUniform1f(user_data->angle_y_loc, user_data->angle_y);
+	glUniform1f(user_data->trans_y_loc, user_data->trans_y);
 	gl_check_error("glUniform1f [angle_y]");
 
-	glUniform1f(user_data->angle_x_loc, user_data->angle_x);
+	glUniform1f(user_data->trans_x_loc, user_data->trans_x);
 	gl_check_error("glUniform1f [angle_x]");
 }
 
@@ -477,18 +477,18 @@ void draw_gl(GLFWwindow* window)
 		glBindBuffer(GL_UNIFORM_BUFFER, meta_obj.ubo);
 
 		if (user_data->count == 0) {
-			user_data->angle_y = (GLfloat) 0.5;
-			glUniform1f(user_data->angle_y_loc, user_data->angle_y);
+			user_data->trans_y = (GLfloat) 0.5;
+			glUniform1f(user_data->trans_y_loc, user_data->trans_y);
 
-			user_data->angle_x = (GLfloat) 0.5;
-			glUniform1f(user_data->angle_x_loc, user_data->angle_x);
+			user_data->trans_x = (GLfloat) 0.5;
+			glUniform1f(user_data->trans_x_loc, user_data->trans_x);
 			user_data->count++;
 		} else if (user_data->count == 1) {
-			user_data->angle_y = (GLfloat) 0;
-			glUniform1f(user_data->angle_y_loc, user_data->angle_y);
+			user_data->trans_y = (GLfloat) 0;
+			glUniform1f(user_data->trans_y_loc, user_data->trans_y);
 
-			user_data->angle_x = (GLfloat) 0;
-			glUniform1f(user_data->angle_x_loc, user_data->angle_x);
+			user_data->trans_x = (GLfloat) 0;
+			glUniform1f(user_data->trans_x_loc, user_data->trans_x);
 			user_data->count++;
 		}
 

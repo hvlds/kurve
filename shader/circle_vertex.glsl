@@ -3,20 +3,20 @@ layout(location = 0) in vec4 v_position;
 layout(location = 1) in vec4 v_color;
 
 // Uniforms:
-uniform float angle_y;
-uniform float angle_x;
-uniform float triangleBlock;
+uniform float trans_y;
+uniform float trans_x;
+uniform vec2 offsets[2];
 
 out vec4 f_color;
 
 void main()
 {
 	// Distance from the camera
-	vec4 trans = vec4(0.0, 0.0, 0.0, triangleBlock);
+	vec4 trans = vec4(0.0, 0.0, 0.0, offsets[gl_InstanceID]);
 
 	vec4 position = v_position;
-	position.y += angle_y;
-	position.x += angle_x;
+	position.y += trans_y;
+	position.x += trans_x;
 
 	gl_Position = position + trans;
 	f_color = v_color;

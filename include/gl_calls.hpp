@@ -27,8 +27,8 @@ typedef struct {
 	GLuint shader_program;
 
 	// The uniform locations:
-	GLint angle_y_loc;
-	GLint angle_x_loc;
+	GLint trans_y_loc;
+	GLint trans_x_loc;
 
 	std::vector<gl_obj_t> vec_obj;
 
@@ -40,8 +40,8 @@ typedef struct {
 
 	// The model:
 	double time;
-	GLfloat angle_y;
-	GLfloat angle_x;
+	GLfloat trans_y;
+	GLfloat trans_x;
 	GLuint shading_case;
 	int count = 0;
 
