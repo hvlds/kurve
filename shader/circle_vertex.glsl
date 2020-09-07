@@ -10,9 +10,13 @@ out vec4 f_color;
 
 void main()
 {
+	// Distance from the camera
+	vec4 trans = vec4(0.0, 0.0, 0.0, 1.0);
+
 	vec4 position = v_position;
 	position.y += angle_y;
 	position.x += angle_x;
-	gl_Position = position;
+
+	gl_Position = position + trans;
 	f_color = v_color;
 }

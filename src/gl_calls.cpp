@@ -162,6 +162,7 @@ void init_shader_program(user_data_t* user_data)
 
 	GLuint shader_program = glCreateProgram();
 	gl_check_error("glCreateProgram");
+	std::cout << "Shader Program ID: " << shader_program << std::endl;
 
 	// Attach both shaders to the program:
 	glAttachShader(shader_program, vertex_shader);
@@ -292,29 +293,15 @@ void init_uniforms(user_data_t* user_data)
 	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
 }
 
-void init_player_data(user_data_t* user_data, int pos) {
-	std::cout << "Init player: " << pos << std::endl;
-
+void init_circle_vertex_data(user_data_t* user_data) {
 	// Triangle data:
-	std::vector<vertex_data_t> vertex_data;
-	if(pos == 1) {
-		vertex_data =
+	std::vector<vertex_data_t> vertex_data =
 		{
-			{ .position = { -1, 0, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
-			{ .position = {  0, 0, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
-			{ .position = {  0,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // right / up
+			{ .position = { -1, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
+			{ .position = {  1, -1, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
+			{ .position = {  1,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // right / up
 			{ .position = {  -1,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // left / up
 		};
-	} else {
-		vertex_data =
-		{
-			{ .position = { 0, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
-			{ .position = {  1, -1, 0 }, .color = { 0x00, 0x10, 0x00 } }, // right / down
-			{ .position = {  1,  0, 0 }, .color = { 0x00, 0x0F, 0xFF } }, // right / up
-			{ .position = {  0,  0, 0 }, .color = { 0x00, 0x0F, 0xFF } }, // left / up
-		};
-	}
-
 	user_data->vertex_data_count += 4;
 
 	// TODO: blackbox! Create a VAO.
@@ -377,8 +364,8 @@ void init_player_data(user_data_t* user_data, int pos) {
 
 void init_vertex_data(user_data_t* user_data)
 {
-	init_player_data(user_data, 1);
-	init_player_data(user_data, 2);
+	init_circle_vertex_data(user_data);
+	init_circle_vertex_data(user_data);
 }
 
 void init_model(user_data_t* user_data)
@@ -402,7 +389,7 @@ void init_gl(GLFWwindow* window)
 	init_model(user_data);
 
 	// Initialize our vertex data:
-	init_vertex_data(user_data);
+	init_circle_vertex_data(user_data);
 
 	// Obtain the internal size of the framebuffer:
 	int fb_width, fb_height;
@@ -476,8 +463,24 @@ void draw_gl(GLFWwindow* window)
 		glBindVertexArray(meta_obj.vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
 		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		if (user_data->count == 0) {
+			user_data->angle_y = (GLfloat) 0.5;
+			glUniform1f(user_data->angle_y_loc, user_data->angle_y);
+
+			user_data->angle_x = (GLfloat) 0.5;
+			glUniform1f(user_data->angle_x_loc, user_data->angle_x);
+			user_data->count++;
+		} else if (user_data->count == 1) {
+			user_data->angle_y = (GLfloat) 0;
+			glUniform1f(user_data->angle_y_loc, user_data->angle_y);
+
+			user_data->angle_x = (GLfloat) 0;
+			glUniform1f(user_data->angle_x_loc, user_data->angle_x);
+			user_data->count++;
+		}
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		gl_check_error("glDrawElements");
 	}
 }

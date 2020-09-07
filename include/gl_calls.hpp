@@ -42,6 +42,7 @@ typedef struct {
 	GLfloat angle_y;
 	GLfloat angle_x;
 	GLuint shading_case;
+	int count = 0;
 
 } user_data_t;
 
