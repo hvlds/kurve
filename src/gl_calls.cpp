@@ -1,4 +1,11 @@
+#include <vector>
+#include <iostream>
+
 #include "gl_calls.hpp"
+
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 extern "C" {
 	#include <stdio.h>
@@ -7,8 +14,6 @@ extern "C" {
 	#include "obj.h"
 	#include "bitmap.h"
 }
-#include <vector>
-#include <iostream>
 
 #define MODEL_PATH "./models/ring"
 #define TEX_PATH "./models/logo.bmp"
