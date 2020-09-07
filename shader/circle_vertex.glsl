@@ -5,13 +5,14 @@ layout(location = 1) in vec4 v_color;
 // Uniforms:
 uniform float angle_y;
 uniform float angle_x;
+uniform float triangleBlock;
 
 out vec4 f_color;
 
 void main()
 {
 	// Distance from the camera
-	vec4 trans = vec4(0.0, 0.0, 0.0, 1.0);
+	vec4 trans = vec4(0.0, 0.0, 0.0, triangleBlock);
 
 	vec4 position = v_position;
 	position.y += angle_y;

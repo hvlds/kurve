@@ -14,7 +14,8 @@ typedef struct {
 	GLuint vao; // Vertex array object
 	GLuint vbo; // Vertex buffer object
 	GLuint ebo; // Element buffer object
-} meta_obj_t; 
+	GLuint ubo; // Uniform buffer object
+} gl_obj_t; 
 
 
 typedef struct {
@@ -29,7 +30,7 @@ typedef struct {
 	GLint angle_y_loc;
 	GLint angle_x_loc;
 
-	std::vector<meta_obj_t> vec_meta;
+	std::vector<gl_obj_t> vec_obj;
 
 	// The texture object:
 	GLuint tex;

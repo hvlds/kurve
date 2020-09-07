@@ -353,13 +353,24 @@ void init_circle_vertex_data(user_data_t* user_data) {
 	glEnableVertexAttribArray(ATTRIB_COLOR);
 	gl_check_error("glEnableVertexAttribArray [color]");
 
+	// Generate and bind a uniform buffer object:
+	GLuint block_index = glGetUniformBlockIndex(
+		user_data->shader_program, "triangleBlock");
+	GLuint ubo;
+	glGenBuffers(1, &ubo);
+	GLfloat zoom = 1.0;
+	glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(GLfloat), &zoom, GL_STREAM_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
 	// Store the VBO inside our user data:
-	meta_obj_t meta_obj = {
+	gl_obj_t meta_obj = {
 		vao,
 		vbo,
-		ebo
+		ebo,
+		ubo
 	};
-	user_data->vec_meta.push_back(meta_obj);
+	user_data->vec_obj.push_back(meta_obj);
 }
 
 void init_vertex_data(user_data_t* user_data)
@@ -459,10 +470,11 @@ void draw_gl(GLFWwindow* window)
 
 	// Draw our stuff!
 	// Parameters: primitive type, start index, count
-	for (auto meta_obj : user_data->vec_meta) {
+	for (auto meta_obj : user_data->vec_obj) {
 		glBindVertexArray(meta_obj.vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
 		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
+		glBindBuffer(GL_UNIFORM_BUFFER, meta_obj.ubo);
 
 		if (user_data->count == 0) {
 			user_data->angle_y = (GLfloat) 0.5;
@@ -495,7 +507,7 @@ void teardown_gl(GLFWwindow* window)
 	gl_check_error("glDeleteProgram");
 
 	// Delete the VAO:
-	for (auto meta_obj : user_data->vec_meta) {
+	for (auto meta_obj : user_data->vec_obj) {
 		glDeleteVertexArrays(1, &meta_obj.vao);
 		gl_check_error("glDeleteVertexArrays");
 		
