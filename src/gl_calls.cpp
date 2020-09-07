@@ -287,15 +287,20 @@ void init_texture(user_data_t* user_data)
 
 void init_uniforms(user_data_t* user_data)
 {
-	// Y angle:
+	// Y trans:
 	user_data->trans_y_loc = glGetUniformLocation(user_data->shader_program, "trans_y");
 	gl_check_error("glGetUniformLocation [trans_y]");
 	//check_error(user_data->angle_y_loc >= 0, "Failed to obtain uniform location for angle_y.");
 
-	// X angle:
+	// X trans:
 	user_data->trans_x_loc = glGetUniformLocation(user_data->shader_program, "trans_x");
 	gl_check_error("glGetUniformLocation [trans_x]");
 	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
+
+
+	// Trans
+	user_data->trans_loc = glGetUniformLocation(user_data->shader_program, "trans");
+	gl_check_error("glGetUniformLocation [trans]");
 }
 
 void init_circle_vertex_data(user_data_t* user_data) {
@@ -463,6 +468,12 @@ void update_gl(GLFWwindow* window)
 
 	glUniform1f(user_data->trans_x_loc, user_data->trans_x);
 	gl_check_error("glUniform1f [angle_x]");
+
+	glm::mat4 trans = glm::mat4(0.2f);
+	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));  
+	glUniformMatrix4fv(user_data->trans_loc, 1, GL_FALSE, glm::value_ptr(trans));
+	gl_check_error("glUniformMatrix4fv [trans]");
 }
 
 void draw_gl(GLFWwindow* window)
@@ -480,22 +491,6 @@ void draw_gl(GLFWwindow* window)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
 		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
 		glBindBuffer(GL_UNIFORM_BUFFER, meta_obj.ubo);
-
-		if (user_data->count == 0) {
-			user_data->trans_y = (GLfloat) 0.5;
-			glUniform1f(user_data->trans_y_loc, user_data->trans_y);
-
-			user_data->trans_x = (GLfloat) 0.5;
-			glUniform1f(user_data->trans_x_loc, user_data->trans_x);
-			user_data->count++;
-		} else if (user_data->count == 1) {
-			user_data->trans_y = (GLfloat) 0;
-			glUniform1f(user_data->trans_y_loc, user_data->trans_y);
-
-			user_data->trans_x = (GLfloat) 0;
-			glUniform1f(user_data->trans_x_loc, user_data->trans_x);
-			user_data->count++;
-		}
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		gl_check_error("glDrawElements");

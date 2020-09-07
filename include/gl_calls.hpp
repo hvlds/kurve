@@ -29,6 +29,7 @@ typedef struct {
 	// The uniform locations:
 	GLint trans_y_loc;
 	GLint trans_x_loc;
+	GLint trans_loc;
 
 	std::vector<gl_obj_t> vec_obj;
 
