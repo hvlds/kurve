@@ -297,10 +297,14 @@ void init_uniforms(user_data_t* user_data)
 	gl_check_error("glGetUniformLocation [trans_x]");
 	//check_error(user_data->angle_x_loc >= 0, "Failed to obtain uniform location for angle_x.");
 
-
 	// Trans
 	user_data->trans_loc = glGetUniformLocation(user_data->shader_program, "trans");
 	gl_check_error("glGetUniformLocation [trans]");
+
+	// Trans_vector
+	user_data->trans_vec_loc = glGetUniformLocation(user_data->shader_program, "trans_vec");
+	gl_check_error("glGetUniformLocation [trans_vec]");
+
 }
 
 void init_circle_vertex_data(user_data_t* user_data) {
@@ -322,6 +326,8 @@ void init_circle_vertex_data(user_data_t* user_data) {
 
 	glBindVertexArray(vao);
 	gl_check_error("glBindVertexArray");
+
+	std::cout << "VAO: " << vao << std::endl;
 
 	// Generate and bind an element buffer object:
 	GLuint ebo;
@@ -394,6 +400,11 @@ void init_model(user_data_t* user_data)
 	user_data->time = glfwGetTime();
 	user_data->trans_y = 0;
 	user_data->trans_x = 0;
+
+
+	GLfloat v[4] = {1, -1, 1, -1};
+	// glUniform1fv(glGetUniformLocation(user_data->shader_program, "trans_vec[0]"), 4, v);
+	glUniform1fv(user_data->trans_vec_loc, 4, v);
 }
 
 void init_gl(GLFWwindow* window)
@@ -410,6 +421,7 @@ void init_gl(GLFWwindow* window)
 	init_model(user_data);
 
 	// Initialize our vertex data:
+	init_circle_vertex_data(user_data);
 	init_circle_vertex_data(user_data);
 
 	// Obtain the internal size of the framebuffer:
@@ -468,12 +480,6 @@ void update_gl(GLFWwindow* window)
 
 	glUniform1f(user_data->trans_x_loc, user_data->trans_x);
 	gl_check_error("glUniform1f [angle_x]");
-
-	glm::mat4 trans = glm::mat4(0.2f);
-	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));  
-	glUniformMatrix4fv(user_data->trans_loc, 1, GL_FALSE, glm::value_ptr(trans));
-	gl_check_error("glUniformMatrix4fv [trans]");
 }
 
 void draw_gl(GLFWwindow* window)
@@ -485,14 +491,14 @@ void draw_gl(GLFWwindow* window)
 	gl_check_error("glClear");
 
 	// Draw our stuff!
-	// Parameters: primitive type, start index, count
 	for (auto meta_obj : user_data->vec_obj) {
 		glBindVertexArray(meta_obj.vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
 		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
 		glBindBuffer(GL_UNIFORM_BUFFER, meta_obj.ubo);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2);
 		gl_check_error("glDrawElements");
 	}
 }
