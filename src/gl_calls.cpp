@@ -311,17 +311,22 @@ void init_circle_vertex_data(user_data_t* user_data) {
 	// Triangle data:
 	std::vector<vertex_data_t> vertex_data;
 	
-	int parts{100};
+	int parts{200};
+	double radius{1};
 	double delta_angle{(2*3.14159265)/parts};
 	double angle{0};
 
 	for (int i = 0; i < parts; i++) {
-		double x{cos(angle)};
-		double y{sin(angle)};
+		double x{radius*cos(angle)};
+		double y{radius*sin(angle)};
 		angle += delta_angle;
-		std::cout << angle << std::endl;
+		std::cout 
+			<< "angle: " << angle
+			<< " x: " << x
+			<< " y: " << y
+			<< std::endl;
 		vertex_data.push_back(
-			{ .position = { static_cast<float>(x), static_cast<float>(y), 0 }, .color = { 0xFF, 0x00, 0x00 } }
+			{ .position = { static_cast<float>(x), static_cast<float>(y), 0 }, .color = { 0xFF, 0xFF, 0x00 } }
 		);
 	}
 
@@ -362,7 +367,7 @@ void init_circle_vertex_data(user_data_t* user_data) {
 	gl_check_error("glBindBuffer");
 
 	// Upload the vertex data to the GPU:
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, parts * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
 	gl_check_error("glBufferData");
 
 	// Position attribute:
@@ -510,7 +515,7 @@ void draw_gl(GLFWwindow* window)
 
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2);
-		glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 100, 2);
+		glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 200, 2);
 		gl_check_error("glDrawElements");
 	}
 }
