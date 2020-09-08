@@ -13,7 +13,7 @@ extern "C" {
 typedef struct {
 	GLuint vao; // Vertex array object
 	GLuint vbo; // Vertex buffer object
-	GLuint ebo; // Element buffer object
+	// GLuint ebo; // Element buffer object
 	GLuint ubo; // Uniform buffer object
 } gl_obj_t; 
 

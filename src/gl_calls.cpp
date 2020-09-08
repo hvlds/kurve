@@ -309,13 +309,24 @@ void init_uniforms(user_data_t* user_data)
 
 void init_circle_vertex_data(user_data_t* user_data) {
 	// Triangle data:
-	std::vector<vertex_data_t> vertex_data =
-		{
-			{ .position = { -1, -1, 0 }, .color = { 0xFF, 0x00, 0x00 } }, // left / down
-			{ .position = {  1, -1, 0 }, .color = { 0x00, 0xFF, 0x00 } }, // right / down
-			{ .position = {  1,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // right / up
-			{ .position = {  -1,  1, 0 }, .color = { 0x00, 0x00, 0xFF } }, // left / up
-		};
+	std::vector<vertex_data_t> vertex_data;
+	
+	int parts{100};
+	double delta_angle{(2*3.14159265)/parts};
+	double angle{0};
+
+	for (int i = 0; i < parts; i++) {
+		double x{cos(angle)};
+		double y{sin(angle)};
+		angle += delta_angle;
+		std::cout << angle << std::endl;
+		vertex_data.push_back(
+			{ .position = { static_cast<float>(x), static_cast<float>(y), 0 }, .color = { 0xFF, 0x00, 0x00 } }
+		);
+	}
+
+	std::cout << "Vertex in circle: " << vertex_data.size() << std::endl;
+
 	user_data->vertex_data_count += 4;
 
 	// TODO: blackbox! Create a VAO.
@@ -330,16 +341,16 @@ void init_circle_vertex_data(user_data_t* user_data) {
 	std::cout << "VAO: " << vao << std::endl;
 
 	// Generate and bind an element buffer object:
-	GLuint ebo;
-    glGenBuffers(1, &ebo);
+	// GLuint ebo;
+    // glGenBuffers(1, &ebo);
 
-    GLuint elements[] = {
-        0, 1, 2,
-        2, 3, 0
-    };
+    // GLuint elements[] = {
+    //     0, 1, 2,
+    //     2, 3, 0
+    // };
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+	// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
 	// Generate and bind a vertex buffer object:
 	GLuint vbo;
@@ -383,7 +394,7 @@ void init_circle_vertex_data(user_data_t* user_data) {
 	gl_obj_t meta_obj = {
 		vao,
 		vbo,
-		ebo,
+		// ebo,
 		ubo
 	};
 	user_data->vec_obj.push_back(meta_obj);
@@ -493,12 +504,13 @@ void draw_gl(GLFWwindow* window)
 	// Draw our stuff!
 	for (auto meta_obj : user_data->vec_obj) {
 		glBindVertexArray(meta_obj.vao);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
+		// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meta_obj.ebo);
 		glBindBuffer(GL_ARRAY_BUFFER, meta_obj.vbo);
 		glBindBuffer(GL_UNIFORM_BUFFER, meta_obj.ubo);
 
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2);
+		// glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2);
+		glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 100, 2);
 		gl_check_error("glDrawElements");
 	}
 }
@@ -517,8 +529,8 @@ void teardown_gl(GLFWwindow* window)
 		glDeleteVertexArrays(1, &meta_obj.vao);
 		gl_check_error("glDeleteVertexArrays");
 		
-		glDeleteBuffers(1, &meta_obj.ebo);
-		gl_check_error("glDeleteBuffers");
+		// glDeleteBuffers(1, &meta_obj.ebo);
+		// gl_check_error("glDeleteBuffers");
 
 		glDeleteBuffers(1, &meta_obj.vbo);
 		gl_check_error("glDeleteBuffers");
