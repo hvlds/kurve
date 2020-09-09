@@ -301,9 +301,13 @@ void init_uniforms(user_data_t* user_data)
 	user_data->trans_loc = glGetUniformLocation(user_data->shader_program, "trans");
 	gl_check_error("glGetUniformLocation [trans]");
 
-	// Trans_vector
-	user_data->trans_vec_loc = glGetUniformLocation(user_data->shader_program, "trans_vec");
-	gl_check_error("glGetUniformLocation [trans_vec]");
+	// Trans_vector_x
+	user_data->trans_vec_x_loc = glGetUniformLocation(user_data->shader_program, "trans_vec_x");
+	gl_check_error("glGetUniformLocation [trans_vec_x]");
+
+	// Trans_vector_y
+	user_data->trans_vec_y_loc = glGetUniformLocation(user_data->shader_program, "trans_vec_y");
+	gl_check_error("glGetUniformLocation [trans_vec_y]");
 
 }
 
@@ -407,8 +411,10 @@ void init_circle_vertex_data(user_data_t* user_data) {
 
 void init_vertex_data(user_data_t* user_data)
 {
-	init_circle_vertex_data(user_data);
-	init_circle_vertex_data(user_data);
+	int circle_count = 4;
+	for (int i = 0; i < circle_count; i++) {
+		init_circle_vertex_data(user_data);
+	}
 }
 
 void init_model(user_data_t* user_data)
@@ -418,9 +424,11 @@ void init_model(user_data_t* user_data)
 	user_data->trans_x = 0;
 
 
-	GLfloat v[4] = {1, -1, 1, -1};
+	GLfloat v_x[4] = {1, -1, -1, 1};
+	GLfloat v_y[4] = {1, -1, 1, -1};
 	// glUniform1fv(glGetUniformLocation(user_data->shader_program, "trans_vec[0]"), 4, v);
-	glUniform1fv(user_data->trans_vec_loc, 4, v);
+	glUniform1fv(user_data->trans_vec_x_loc, 4, v_x);
+	glUniform1fv(user_data->trans_vec_y_loc, 4, v_y);
 }
 
 void init_gl(GLFWwindow* window)
@@ -515,7 +523,7 @@ void draw_gl(GLFWwindow* window)
 
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2);
-		glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 200, 2);
+		glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 200, 4);
 		gl_check_error("glDrawElements");
 	}
 }
