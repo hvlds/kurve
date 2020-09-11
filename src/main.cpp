@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+
 #include "gl_calls.hpp"
+#include "game.hpp"
 
 // Very naughty hack to fix a Cygwin linker error when using the MinGW GLFW binaries ... :(
 #ifdef __CYGWIN__
@@ -83,6 +85,9 @@ int main(void)
 
 	// Initialize everything related to OpenGL:
 	init_gl(window);
+
+	Game game(window);
+	game.loop();
 
 	while (!glfwWindowShouldClose(window))
 	{
