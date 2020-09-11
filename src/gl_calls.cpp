@@ -324,11 +324,6 @@ void init_circle_vertex_data(user_data_t* user_data) {
 		double x{radius*cos(angle)};
 		double y{radius*sin(angle)};
 		angle += delta_angle;
-		std::cout 
-			<< "angle: " << angle
-			<< " x: " << x
-			<< " y: " << y
-			<< std::endl;
 		vertex_data.push_back(
 			{ .position = { static_cast<float>(x), static_cast<float>(y), 0 }, .color = { 0xFF, 0xFF, 0x00 } }
 		);
@@ -500,10 +495,10 @@ void update_gl(GLFWwindow* window)
 
 	// Update the uniform:
 	glUniform1f(user_data->trans_y_loc, user_data->trans_y);
-	gl_check_error("glUniform1f [angle_y]");
+	std::cout << user_data->trans_y_loc << std::endl;
 
 	glUniform1f(user_data->trans_x_loc, user_data->trans_x);
-	gl_check_error("glUniform1f [angle_x]");
+	gl_check_error("glUniform1f [trans_x]");
 }
 
 void draw_gl(GLFWwindow* window)
