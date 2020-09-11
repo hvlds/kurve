@@ -15,8 +15,8 @@ extern "C" {
 	#include "bitmap.h"
 }
 
-#define MODEL_PATH "./models/ring"
-#define TEX_PATH "./models/logo.bmp"
+#define MODEL_PATH "./models/ring" // Doesn't exists!
+#define TEX_PATH "./models/logo.bmp" // Doesn't exists!
 #define Y_ANGULAR_VELOCITY 2
 
 void check_error(int condition, const char* error_text)
@@ -156,11 +156,11 @@ void init_shader_program(user_data_t* user_data)
 {
 	// Create the vertex shader:
 	printf("Compiling vertex shader ...\n");
-	GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, "../shader/circle_vertex.glsl", "Vertex shader");
+	GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, "../shader/circle.vs", "Vertex shader");
 
 	// Create the fragment shader:
 	printf("Compiling fragment shader ...\n");
-	GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, "../shader/circle_fragment.glsl", "Fragment shader");
+	GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, "../shader/circle.fs", "Fragment shader");
 
 	// Create an empty shader program:
 	printf("Creating shader program ...\n");
