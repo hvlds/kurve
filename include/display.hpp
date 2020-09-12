@@ -17,7 +17,13 @@ void framebuffer_size_callback(GLFWwindow* window, int fb_width, int fb_height);
 
 void window_size_callback(GLFWwindow* window, int width, int height);
 
-GLFWwindow* get_window(user_data_t* user_data);
-
+class Display {
+   public:
+    GLFWwindow* window;
+    user_data_t* user_data;
+    Display(user_data_t* user_data);
+    GLFWwindow* get_window();
+    int terminate();
+};
 
 #endif

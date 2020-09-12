@@ -22,8 +22,9 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 	user_data->window_height = height;
 }
 
-GLFWwindow* get_window(user_data_t* user_data) {
-    printf("Hello triangle!\n");
+Display::Display(user_data_t* user_data) {
+	this->user_data = user_data;
+	printf("Hello triangle!\n");
 
 	// Specify our error callback func:
 	// Then initialize GLFW itself.
@@ -43,16 +44,16 @@ GLFWwindow* get_window(user_data_t* user_data) {
 	// Create a GLFW window:
 	printf("Creating window ...\n");
 
-	GLFWwindow* window = glfwCreateWindow(
-        user_data->window_width, 
-        user_data->window_height, 
+	this->window = glfwCreateWindow(
+        this->user_data->window_width, 
+        this->user_data->window_height, 
         "Hello triangle", 
         NULL, 
         NULL);
-	check_error(window != NULL, "Failed to create window.");
+	check_error(this->window != NULL, "Failed to create window.");
 
 	// Make the OpenGL context of the window the current one:
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(this->window);
 
 	// Loader function:
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -61,14 +62,27 @@ GLFWwindow* get_window(user_data_t* user_data) {
 	glfwSwapInterval(1);
 
 	// Specify remaining callbacks:
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetWindowSizeCallback(window, window_size_callback);
+	glfwSetFramebufferSizeCallback(this->window, framebuffer_size_callback);
+	glfwSetWindowSizeCallback(this->window, window_size_callback);
 
 	// Store a pointer to our user data inside the window:
-	glfwSetWindowUserPointer(window, user_data);
+	glfwSetWindowUserPointer(this->window, this->user_data);
 
 	// Initialize everything related to OpenGL:
-	init_gl(window);
+	init_gl(this->window);
+}
 
-    return window;
+GLFWwindow* Display::get_window() {
+	return this->window;
+}
+
+int Display::terminate() {
+	teardown_gl(this->window);
+
+	// Destroy the window:
+	glfwDestroyWindow(this->window);
+
+	// Terminate GLFW:
+	glfwTerminate();
+	return 0;
 }

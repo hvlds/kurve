@@ -15,18 +15,14 @@ int main(void)
 		.window_height = 600,
 	};
 
-	GLFWwindow* window = get_window(&user_data);
+	Display display(&user_data);
+
+	GLFWwindow* window = display.get_window();
 
 	Game game(window);
 	game.loop();	
 
-	teardown_gl(window);
-
-	// Destroy the window:
-	glfwDestroyWindow(window);
-
-	// Terminate GLFW:
-	glfwTerminate();
+	display.terminate();
 
 	return 0;
 }
