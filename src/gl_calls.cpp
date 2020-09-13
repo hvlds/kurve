@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "gl_calls.hpp"
+#include "user.hpp"
 
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>

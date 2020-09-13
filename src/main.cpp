@@ -5,6 +5,7 @@
 #include "gl_calls.hpp"
 #include "game.hpp"
 #include "display.hpp"
+#include "user.hpp"
 
 int main(void)
 {

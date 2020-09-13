@@ -10,6 +10,7 @@ extern "C" {
 }
 #include <iostream>
 #include "gl_calls.hpp"
+#include "user.hpp"
 
 void error_callback(int error, const char* description);
 

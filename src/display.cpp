@@ -1,5 +1,6 @@
 #include "display.hpp"
 #include "gl_calls.hpp"
+#include "user.hpp"
 #include <iostream>
 
 void error_callback(int error, const char* description)
