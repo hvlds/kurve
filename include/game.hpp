@@ -19,9 +19,10 @@ enum GameState {
 };
 
 class Game {
-   public:
+   private:
     GameState state;
     GLFWwindow* window;
+   public:
     Game(GLFWwindow* window);
     int loop();
 };

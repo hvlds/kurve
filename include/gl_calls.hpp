@@ -17,12 +17,6 @@ typedef struct {
 	GLuint ubo; // Uniform buffer object
 } gl_obj_t; 
 
-typedef struct
-{
-	GLfloat position[3];
-	GLubyte color[3];
-} vertex_data_t;
-
 // Vertex attributes:
 #define ATTRIB_POSITION 0
 #define ATTRIB_COLOR 1

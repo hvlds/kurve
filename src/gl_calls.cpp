@@ -3,6 +3,7 @@
 
 #include "gl_calls.hpp"
 #include "user.hpp"
+#include "mesh.hpp"
 
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
