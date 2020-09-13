@@ -2,20 +2,20 @@
 #define GLCALLS_HPP
 
 extern "C" {
-	// Include the GLAD loader *before* including GLFW!
-	#include "glad/glad.h"
-	
-	// Include the GLFW library (should be the same for all OS):
-	#include <GLFW/glfw3.h>
+// Include the GLAD loader *before* including GLFW!
+#include "glad/glad.h"
+
+// Include the GLFW library (should be the same for all OS):
+#include <GLFW/glfw3.h>
 }
 #include <vector>
 
 typedef struct {
-	GLuint vao; // Vertex array object
-	GLuint vbo; // Vertex buffer object
-	// GLuint ebo; // Element buffer object
-	GLuint ubo; // Uniform buffer object
-} gl_obj_t; 
+    GLuint vao;  // Vertex array object
+    GLuint vbo;  // Vertex buffer object
+    // GLuint ebo; // Element buffer object
+    GLuint ubo;  // Uniform buffer object
+} gl_obj_t;
 
 // Vertex attributes:
 #define ATTRIB_POSITION 0
