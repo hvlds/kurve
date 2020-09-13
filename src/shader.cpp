@@ -15,6 +15,10 @@ Shader::Shader(const char* path) {
     free(shader_source);
 }
 
+GLuint Shader::get_id() {
+	return this->id;
+}
+
 char* Shader::read_from_file(const char* path) {
     // Open the file:
     FILE* file = fopen(path, "rb");
