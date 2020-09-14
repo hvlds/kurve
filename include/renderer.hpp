@@ -1,14 +1,14 @@
-#ifndef MODEL_HPP
-#define MODEL_HPP
+#ifndef RENDERER_HPP
+#define RENDERER_HPP
 
 #include "mesh.hpp"
 #include <vector>
 
-class Model {
+class Renderer {
    private:
     std::vector<Mesh> meshes;
    public:
-    Model();
+    Renderer();
     void draw();
 };
 

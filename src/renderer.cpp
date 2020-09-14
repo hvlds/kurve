@@ -1,6 +1,6 @@
-#include "model.hpp"
+#include "renderer.hpp"
 
-void Model::draw() {
+void Renderer::draw() {
     for (auto mesh : meshes) {
         mesh.draw();
     }
