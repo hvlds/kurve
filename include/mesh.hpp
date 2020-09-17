@@ -12,17 +12,22 @@ extern "C" {
 }
 
 class Mesh {
-   private:
+   protected:
     GLuint vao; // Vertex array object
 	GLuint vbo; // Vertex buffer object
 	// GLuint ebo; // Element buffer object
 	GLuint ubo; // Uniform buffer object
     int id;
-    void bind();
+    void bind() {
+        glBindVertexArray(this->vao);
+        glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+        glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
+    }
    public:
-    Mesh();
-    int get_id();
-    void draw();
+    int get_id() {
+        return this->id;
+    }
+    void draw() {};
     void init();
 };
 

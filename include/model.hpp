@@ -18,15 +18,16 @@ extern "C" {
 }
 
 class Model {
-   private:
+   protected:
     Mesh mesh;
     GLuint shader_id;
     user_data_t* user_data;
 
    public:
-    Model(std::string vs_path, std::string fs_path, user_data_t* user_data);
-    void update();
-    void draw();
+    virtual void update() = 0;
+    void draw() {
+        this->mesh.draw();
+    }
 };
 
 #endif

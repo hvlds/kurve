@@ -408,7 +408,7 @@ void init_gl(GLFWwindow* window) {
     user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
 
     // Initialize our shader program:
-    init_shader_program(user_data);
+    //init_shader_program(user_data);
 
     // Initialize our uniforms:
     init_uniforms(user_data);
@@ -417,7 +417,7 @@ void init_gl(GLFWwindow* window) {
     init_model(user_data);
 
     // Initialize our vertex data:
-    init_circle_vertex_data(user_data);
+    //init_circle_vertex_data(user_data);
 
     // Obtain the internal size of the framebuffer:
     int fb_width, fb_height;
@@ -466,7 +466,7 @@ void update_gl(GLFWwindow* window) {
 
     // Update the uniform:
     glUniform1f(user_data->trans_y_loc, user_data->trans_y);
-    std::cout << user_data->trans_y_loc << std::endl;
+    gl_check_error("glUniform1f [trans_y]");
 
     glUniform1f(user_data->trans_x_loc, user_data->trans_x);
     gl_check_error("glUniform1f [trans_x]");

@@ -1,9 +1,15 @@
 #include "game.hpp"
+#include "shader.hpp"
+#include "player_model.hpp"
+#include "mesh.hpp"
 #include "gl_calls.hpp"
 
 Game::Game(GLFWwindow* window) {
     this->window = window;
-	
+	user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+
+	PlayerModel player_1(user_data);
+
 	// Initialize everything related to OpenGL:
 	init_gl(this->window);
 }
