@@ -67,9 +67,6 @@ Display::Display(user_data_t* user_data) {
 
 	// Store a pointer to our user data inside the window:
 	glfwSetWindowUserPointer(this->window, this->user_data);
-
-	// Initialize everything related to OpenGL:
-	init_gl(this->window);
 }
 
 GLFWwindow* Display::get_window() {

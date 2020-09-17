@@ -3,6 +3,9 @@
 
 Game::Game(GLFWwindow* window) {
     this->window = window;
+	
+	// Initialize everything related to OpenGL:
+	init_gl(this->window);
 }
 
 int Game::loop() {
