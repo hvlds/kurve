@@ -13,10 +13,9 @@ class Shader {
    private:
     GLuint id;
     static char* read_from_file(const char* path);
-    static GLuint compile(GLenum type, const char* shader_path, const char* shader_tag);
-
    public:
     Shader(const char* path);
+    static GLuint compile(GLenum type, const char* shader_path, const char* shader_tag);
     GLuint compile();
     GLuint get_id();
 };

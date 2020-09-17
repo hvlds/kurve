@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <iostream>
 
 #include "gl_calls.hpp"
 #include "game.hpp"
@@ -17,7 +18,6 @@ int main(void)
 	};
 
 	Display display(&user_data);
-
 	GLFWwindow* window = display.get_window();
 
 	Game game(window);

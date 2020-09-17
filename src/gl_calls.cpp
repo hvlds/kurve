@@ -308,7 +308,7 @@ void init_circle_vertex_data(user_data_t* user_data) {
         double y{radius * sin(angle)};
         angle += delta_angle;
         vertex_data.push_back(
-            {.position = {static_cast<float>(x), static_cast<float>(y), 0}, .color = {0xFF, 0xFF, 0x00}});
+            {.position = {static_cast<float>(x), static_cast<float>(y), 0}, .color = {0xFF, 0x00, 0xFF}});
     }
 
     std::cout << "Vertex in circle: " << vertex_data.size() << std::endl;
@@ -417,7 +417,6 @@ void init_gl(GLFWwindow* window) {
     init_model(user_data);
 
     // Initialize our vertex data:
-    init_circle_vertex_data(user_data);
     init_circle_vertex_data(user_data);
 
     // Obtain the internal size of the framebuffer:

@@ -25,7 +25,6 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 
 Display::Display(user_data_t* user_data) {
 	this->user_data = user_data;
-	printf("Hello triangle!\n");
 
 	// Specify our error callback func:
 	// Then initialize GLFW itself.
