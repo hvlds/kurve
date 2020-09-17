@@ -9,12 +9,17 @@ extern "C" {
 #include <GLFW/glfw3.h>
 }
 
+#include <string>
+
+#include "user.hpp"
+
 class Shader {
    private:
     GLuint id;
     static char* read_from_file(const char* path);
+
    public:
-    Shader(const char* path);
+    Shader(std::string vs_path, std::string fs_path, user_data_t* user_data);
     static GLuint compile(GLenum type, const char* shader_path, const char* shader_tag);
     GLuint compile();
     GLuint get_id();

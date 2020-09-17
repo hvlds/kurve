@@ -25,6 +25,7 @@ class Model {
 
    public:
     Model(std::string vs_path, std::string fs_path, user_data_t* user_data);
+    void update();
     void draw();
 };
 
