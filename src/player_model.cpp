@@ -14,3 +14,7 @@ PlayerModel::PlayerModel(user_data_t* user_data){
 void PlayerModel::update() {
 
 }
+
+void PlayerModel::init_uniforms() {
+    
+}

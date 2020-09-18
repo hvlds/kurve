@@ -10,6 +10,7 @@ extern "C" {
 	// Include the GLFW library (should be the same for all OS):
 	#include <GLFW/glfw3.h>
 }
+#include "model.hpp"
 
 enum GameState {
     GAME_ACTIVE,
@@ -22,6 +23,7 @@ class Game {
    private:
     GameState state;
     GLFWwindow* window;
+    std::vector<Model*> models;
    public:
     Game(GLFWwindow* window);
     int loop();

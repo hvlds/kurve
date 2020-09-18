@@ -25,6 +25,7 @@ class Model {
 
    public:
     virtual void update() = 0;
+    virtual void init_uniforms() = 0;
     void draw() {
         this->mesh.draw();
     }
