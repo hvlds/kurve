@@ -29,20 +29,28 @@ PlayerMesh::PlayerMesh() {
     }
 
     // TODO: blackbox! Create a VAO.
-    glGenVertexArrays(1, &this->vao);
+    GLuint vao;
+
+    glGenVertexArrays(1, &vao);
     gl_check_error("glGenVertexArrays");
 
-    glBindVertexArray(this->vao);
+    glBindVertexArray(vao);
     gl_check_error("glBindVertexArray");
 
-    std::cout << "VAO: " << this->vao << std::endl;
+    this->vao = vao;
+    std::cout << "VAO: " << vao << std::endl;
 
     // Generate and bind a vertex buffer object:
-    glGenBuffers(1, &this->vbo);
+    GLuint vbo;
+
+    glGenBuffers(1, &vbo);
     gl_check_error("glGenBuffers");
 
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     gl_check_error("glBindBuffer");
+    
+    this->vbo = vbo;
+    std::cout << "VBO: " << vbo << std::endl;
 
     // Upload the vertex data to the GPU:
     glBufferData(GL_ARRAY_BUFFER, parts * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
@@ -62,15 +70,7 @@ PlayerMesh::PlayerMesh() {
 
     glEnableVertexAttribArray(ATTRIB_COLOR);
     gl_check_error("glEnableVertexAttribArray [color]");
-
-    // Generate and bind a uniform buffer object:
-    GLuint block_index = glGetUniformBlockIndex(
-        this->ubo, "triangleBlock");
-    glGenBuffers(1, &this->ubo);
-    GLfloat zoom = 1.0;
-    glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
-    glBufferData(GL_UNIFORM_BUFFER, sizeof(GLfloat), &zoom, GL_STREAM_DRAW);
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    
 }
 
 void PlayerMesh::draw() {

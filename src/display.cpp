@@ -24,6 +24,8 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 }
 
 Display::Display(user_data_t* user_data) {
+	std::cout << "Creating display" << std::endl;
+	
 	this->user_data = user_data;
 
 	// Specify our error callback func:

@@ -25,26 +25,28 @@ Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
     // Create an empty shader program:
     printf("Creating shader program ...\n");
 
-    this->id = glCreateProgram();
+    GLuint shader_program;
+
+    shader_program = glCreateProgram();
     gl_check_error("glCreateProgram");
-    std::cout << "Shader Program ID: " << this->id << std::endl;
+    std::cout << "Shader Program ID: " << shader_program << std::endl;
 
     // Attach both shaders to the program:
-    glAttachShader(this->id, vertex_shader);
+    glAttachShader(shader_program, vertex_shader);
     gl_check_error("glAttachShader [vertex]");
 
-    glAttachShader(this->id, fragment_shader);
+    glAttachShader(shader_program, fragment_shader);
     gl_check_error("glAttachShader [fragment]");
 
     // Link the shader program:
-    glLinkProgram(this->id);
+    glLinkProgram(shader_program);
     gl_check_error("glLinkProgram");
 
     // Detach the shaders after linking:
-    glDetachShader(this->id, vertex_shader);
+    glDetachShader(shader_program, vertex_shader);
     gl_check_error("glDetachShader [vertex]");
 
-    glDetachShader(this->id, fragment_shader);
+    glDetachShader(shader_program, fragment_shader);
     gl_check_error("glDetachShader [fragment]");
 
     // Delete the shaders:
@@ -57,16 +59,16 @@ Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
     // Check the link status:
     GLint success;
 
-    glGetProgramiv(this->id, GL_LINK_STATUS, &success);
+    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
     gl_check_error("glGetProgramiv");
 
     if (success) {
         // Use the program from now on:
-        glUseProgram(this->id);
+        glUseProgram(shader_program);
         gl_check_error("glUseProgram");
 
         // Store it inside our user data struct:
-        *shader_id = this->id;
+        *shader_id = shader_program;
 
         // We can now release the shader compiler.
         glReleaseShaderCompiler();
@@ -77,7 +79,7 @@ Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
 
     // Extract the length of the error message (including '\0'):
     GLint info_length = 0;
-    glGetProgramiv(this->id, GL_INFO_LOG_LENGTH, &info_length);
+    glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &info_length);
     gl_check_error("glGetProgramiv");
 
     if (info_length > 1) {
@@ -85,7 +87,7 @@ Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
         char* info = (char*)malloc(info_length);
         check_error(info != NULL, "Failed to allocate memory for error message.");
 
-        glGetProgramInfoLog(this->id, info_length, NULL, info);
+        glGetProgramInfoLog(shader_program, info_length, NULL, info);
         gl_check_error("glGetProgramInfoLog");
 
         fprintf(stderr, "Error linking shader program: %s\n", info);
@@ -93,10 +95,6 @@ Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
     } else {
         fprintf(stderr, "No info log from the shader compiler :(\n");
     }
-}
-
-GLuint Shader::get_id() {
-	return this->id;
 }
 
 char* Shader::read_from_file(const char* path) {

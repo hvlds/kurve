@@ -37,14 +37,12 @@ void gl_check_error(const char* error_text) {
     }
 }
 
-
 void init_gl(GLFWwindow* window) {
     std::cout << "init_gl" << std::endl;
+    
     // Obtain the internal size of the framebuffer:
     int fb_width, fb_height;
     glfwGetFramebufferSize(window, &fb_width, &fb_height);
-    std::cout << "fb_width: " << fb_width << std::endl;
-    std::cout << "fb_height: " << fb_height << std::endl;
 
     // Align the viewport to the framebuffer:
     glViewport(0, 0, fb_width, fb_height);

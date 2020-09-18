@@ -62,10 +62,12 @@ void PlayerModel::init_uniforms() {
     // Y trans:
     this->trans_y_loc = glGetUniformLocation(this->shader_id, "trans_y");
     gl_check_error("glGetUniformLocation [trans_y]");
+    check_error(this->trans_y_loc >= 0, "Failed to obtain uniform location for trans_y.");
 
     // X trans:
     this->trans_x_loc = glGetUniformLocation(this->shader_id, "trans_x");
     gl_check_error("glGetUniformLocation [trans_x]");
+    check_error(this->trans_x_loc >= 0, "Failed to obtain uniform location for trans_x.");
 }
 
 void PlayerModel::init_values() {

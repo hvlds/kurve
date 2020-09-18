@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <iostream>
+#include <memory>
 
 extern "C" {
 	// Include the GLAD loader *before* including GLFW!
@@ -23,7 +24,7 @@ class Game {
    private:
     GameState state;
     GLFWwindow* window;
-    std::vector<Model*> models;
+    std::vector<std::shared_ptr<Model>> models;
    public:
     Game(GLFWwindow* window);
     void loop();

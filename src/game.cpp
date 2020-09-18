@@ -5,16 +5,14 @@
 #include "gl_calls.hpp"
 
 #include <vector>
+#include <memory>
 
 Game::Game(GLFWwindow* window) {
     this->window = window;
-	user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
 
-	PlayerModel player_1;
+	auto player_1 = std::make_shared<PlayerModel>();
+	this->models.push_back(player_1);
 
-	this->models.push_back(&player_1);
-
-	// Initialize everything related to OpenGL:
 	init_gl(this->window);
 }
 
