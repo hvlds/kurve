@@ -26,7 +26,8 @@ class Game {
     std::vector<Model*> models;
    public:
     Game(GLFWwindow* window);
-    int loop();
+    void loop();
+    void terminate();
 };
 
 #endif

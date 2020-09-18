@@ -20,10 +20,14 @@ int main(void)
 	Display display(&user_data);
 	GLFWwindow* window = display.get_window();
 
+	std::cout << "Init game" << std::endl;
 	Game game(window);
+
+	std::cout << "Starting game loop" << std::endl;
 	game.loop();	
 
-	display.terminate();
+	std::cout << "Terminating game" << std::endl;
+	game.terminate();
 
 	return 0;
 }

@@ -10,9 +10,16 @@ extern "C" {
 
 // Include the GLFW library (should be the same for all OS):
 #include <GLFW/glfw3.h>
+
+#include <math.h>
 }
 
+#define Y_ANGULAR_VELOCITY 2
+
 class PlayerModel : public Model {
+   protected: 
+    virtual void init_uniforms() override;
+    virtual void init_values() override;
    public:
     // The uniforms locations
     GLint trans_y_loc;
@@ -23,9 +30,8 @@ class PlayerModel : public Model {
     GLfloat trans_y;
     GLfloat trans_x;
 
-    PlayerModel(user_data_t* user_data);
-    virtual void update() override;
-    virtual void init_uniforms() override;
+    PlayerModel();
+    virtual void update(GLFWwindow* window) override;
 };
 
 #endif

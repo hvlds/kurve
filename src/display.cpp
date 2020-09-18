@@ -72,14 +72,3 @@ Display::Display(user_data_t* user_data) {
 GLFWwindow* Display::get_window() {
 	return this->window;
 }
-
-int Display::terminate() {
-	teardown_gl(this->window);
-
-	// Destroy the window:
-	glfwDestroyWindow(this->window);
-
-	// Terminate GLFW:
-	glfwTerminate();
-	return 0;
-}

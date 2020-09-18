@@ -6,7 +6,8 @@
 
 class PlayerMesh: public Mesh {
    public:
-    PlayerMesh(user_data_t* user_data);
+    PlayerMesh();
+    void draw();
 };
 
 #endif

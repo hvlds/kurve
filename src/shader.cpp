@@ -11,9 +11,7 @@ extern "C" {
 #include "bitmap.h"
 }
 
-Shader::Shader(std::string vs_path, std::string fs_path, user_data_t* user_data) {
-    user_data = user_data;
-
+Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
     // Create the vertex shader:
     printf("Compiling vertex shader ...\n");
     GLuint vertex_shader = Shader::compile(
@@ -68,7 +66,7 @@ Shader::Shader(std::string vs_path, std::string fs_path, user_data_t* user_data)
         gl_check_error("glUseProgram");
 
         // Store it inside our user data struct:
-        user_data->shader_program = this->id;
+        *shader_id = this->id;
 
         // We can now release the shader compiler.
         glReleaseShaderCompiler();

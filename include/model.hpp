@@ -19,13 +19,13 @@ extern "C" {
 
 class Model {
    protected:
+    user_data_t* user_data;
+    virtual void init_uniforms() = 0;
+    virtual void init_values() = 0;
+   public:
     Mesh mesh;
     GLuint shader_id;
-    user_data_t* user_data;
-
-   public:
-    virtual void update() = 0;
-    virtual void init_uniforms() = 0;
+    virtual void update(GLFWwindow* window) = 0;
     void draw() {
         this->mesh.draw();
     }

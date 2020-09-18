@@ -11,7 +11,7 @@ extern "C" {
 #include "obj.h"
 }
 
-PlayerMesh::PlayerMesh(user_data_t* user_data) {
+PlayerMesh::PlayerMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
@@ -27,10 +27,6 @@ PlayerMesh::PlayerMesh(user_data_t* user_data) {
         vertex_data.push_back(
             {.position = {static_cast<float>(x), static_cast<float>(y), 0}, .color = {0xFF, 0x00, 0xFF}});
     }
-
-    std::cout << "Vertex in circle: " << vertex_data.size() << std::endl;
-
-    user_data->vertex_data_count += 4;
 
     // TODO: blackbox! Create a VAO.
     glGenVertexArrays(1, &this->vao);
@@ -69,18 +65,17 @@ PlayerMesh::PlayerMesh(user_data_t* user_data) {
 
     // Generate and bind a uniform buffer object:
     GLuint block_index = glGetUniformBlockIndex(
-        user_data->shader_program, "triangleBlock");
+        this->ubo, "triangleBlock");
     glGenBuffers(1, &this->ubo);
     GLfloat zoom = 1.0;
     glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
     glBufferData(GL_UNIFORM_BUFFER, sizeof(GLfloat), &zoom, GL_STREAM_DRAW);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
 
-    // Store the VBO inside our user data:
-    gl_obj_t meta_obj = {
-        this->vao,
-        this->vbo,
-        // ebo,
-        this->ubo};
-    user_data->vec_obj.push_back(meta_obj);
+void PlayerMesh::draw() {
+    this->bind();
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 200);
+    gl_check_error("glDrawArrays");
 }

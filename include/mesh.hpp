@@ -15,7 +15,6 @@ class Mesh {
    protected:
     GLuint vao; // Vertex array object
 	GLuint vbo; // Vertex buffer object
-	// GLuint ebo; // Element buffer object
 	GLuint ubo; // Uniform buffer object
     int id;
     void bind() {
@@ -24,8 +23,15 @@ class Mesh {
         glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
     }
    public:
-    int get_id() {
-        return this->id;
+    void terminate() {
+        glDeleteVertexArrays(1, &this->vao);
+        gl_check_error("glDeleteVertexArrays");
+
+        glDeleteBuffers(1, &this->vbo);
+        gl_check_error("glDeleteBuffers");
+
+        glDeleteBuffers(1, &this->ubo);
+        gl_check_error("glDeleteBuffers");
     }
     void draw() {};
     void init();

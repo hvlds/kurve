@@ -19,7 +19,7 @@ class Shader {
     static char* read_from_file(const char* path);
 
    public:
-    Shader(std::string vs_path, std::string fs_path, user_data_t* user_data);
+    Shader(std::string vs_path, std::string fs_path, GLuint* shader_id);
     static GLuint compile(GLenum type, const char* shader_path, const char* shader_tag);
     GLuint compile();
     GLuint get_id();
