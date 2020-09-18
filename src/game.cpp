@@ -11,8 +11,8 @@ Game::Game(GLFWwindow* window) {
     this->window = window;
 
 	GLfloat x1, y1;
-	x1 = 1.0;
-	y1 = 1.0;
+	x1 = 4.0;
+	y1 = 4.0;
 	auto player_1 = std::make_shared<PlayerModel>(x1, y1);
 	player_1->set_keys(GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN);
 	this->models.push_back(player_1);

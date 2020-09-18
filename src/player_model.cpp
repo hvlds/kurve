@@ -21,6 +21,10 @@ PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
     this->start_pos_x = x;
     this->start_pos_y = y;
     this->init_values();
+
+    // Add initial positions into the point vector
+    Point point{x, y};
+    this->points.push_back(point);
 }
 
 void PlayerModel::draw() {
@@ -35,25 +39,41 @@ void PlayerModel::update(GLFWwindow* window) {
     double time_delta = new_time - this->time;
 
     this->time = new_time;
+    GLfloat x_diff = 0;
+    GLfloat y_diff = 0;
 
-    int right_state = glfwGetKey(window, this->left_key);
+    int right_state = glfwGetKey(window, this->right_key);
     if (right_state == GLFW_PRESS) {
-        this->trans_x = fmod(this->trans_x + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+        x_diff = (Y_ANGULAR_VELOCITY * time_delta);
+        this->trans_x = this->trans_x + x_diff;
     }
 
-    int left_state = glfwGetKey(window, this->right_key);
+    int left_state = glfwGetKey(window, this->left_key);
     if (left_state == GLFW_PRESS) {
-        this->trans_x = fmod(this->trans_x + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+        x_diff = (-Y_ANGULAR_VELOCITY * time_delta);
+        this->trans_x = this->trans_x + x_diff;
     }
 
-    int up_state = glfwGetKey(window, this->down_key);
+    int up_state = glfwGetKey(window, this->up_key);
     if (up_state == GLFW_PRESS) {
-        this->trans_y = fmod(this->trans_y + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+        y_diff = (Y_ANGULAR_VELOCITY * time_delta);
+        this->trans_y = this->trans_y + y_diff;
     }
 
-    int down_state = glfwGetKey(window, this->up_key);
+    int down_state = glfwGetKey(window, this->down_key);
     if (down_state == GLFW_PRESS) {
-        this->trans_y = fmod(this->trans_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
+        y_diff = (-Y_ANGULAR_VELOCITY * time_delta);
+        this->trans_y = this->trans_y + y_diff;
+    }
+
+    // There was a movement, add a new point!
+    if (x_diff != 0 || y_diff !=0) {
+        Point last_point = this->points.back();
+        Point point{
+            last_point.x + x_diff,
+            last_point.y + y_diff
+        };
+        this->points.push_back(point); 
     }
 
     // Update the uniform:

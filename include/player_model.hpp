@@ -4,6 +4,7 @@
 #include "model.hpp"
 #include "user.hpp"
 #include "player_mesh.hpp"
+#include "point.hpp"
 
 extern "C" {
 // Include the GLAD loader *before* including GLFW!
@@ -15,6 +16,8 @@ extern "C" {
 #include <math.h>
 }
 
+#include <vector>
+
 #define Y_ANGULAR_VELOCITY 2
 
 class PlayerModel : public Model {
@@ -22,7 +25,7 @@ class PlayerModel : public Model {
     virtual void init_uniforms() override;
     virtual void init_values() override;
     std::shared_ptr<PlayerMesh> player_mesh;
-    
+    std::vector<Point> points;
     // Controls
     int left_key;
     int right_key;
