@@ -7,10 +7,9 @@
 #include "player_mesh.hpp"
 #include "shader.hpp"
 
-PlayerModel::PlayerModel() {
+PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
     // Compile and add the shaders
     Shader shader("../shader/circle.vs", "../shader/circle.fs", &this->shader_id);
-
     // Init the uniforms
     this->init_uniforms();
 
@@ -19,10 +18,13 @@ PlayerModel::PlayerModel() {
     this->mesh = player_mesh;
 
     // Init the values of the model
+    this->start_pos_x = x;
+    this->start_pos_y = y;
     this->init_values();
 }
 
 void PlayerModel::draw() {
+    glUseProgram(this->shader_id);
     this->mesh->draw();
 }    
 
@@ -72,10 +74,26 @@ void PlayerModel::init_uniforms() {
     this->trans_x_loc = glGetUniformLocation(this->shader_id, "trans_x");
     gl_check_error("glGetUniformLocation [trans_x]");
     check_error(this->trans_x_loc >= 0, "Failed to obtain uniform location for trans_x.");
+
+    // Start pos Y:
+    this->start_pos_y_loc = glGetUniformLocation(this->shader_id, "start_pos_y");
+    gl_check_error("glGetUniformLocation [trans_y]");
+    check_error(this->start_pos_y_loc >= 0, "Failed to obtain uniform location for start_pos_y.");
+
+    // Start pos X:
+    this->start_pos_x_loc = glGetUniformLocation(this->shader_id, "start_pos_x");
+    gl_check_error("glGetUniformLocation [trans_x]");
+    check_error(this->start_pos_x_loc >= 0, "Failed to obtain uniform location for start_pos_x.");
 }
 
 void PlayerModel::init_values() {
     this->time = glfwGetTime();
     this->trans_y = 0;
     this->trans_x = 0;
+
+    glUniform1f(this->start_pos_x_loc, this->start_pos_x);
+    gl_check_error("glUniform1f [start_pos_x]");
+
+    glUniform1f(this->start_pos_y_loc, this->start_pos_y);
+    gl_check_error("glUniform1f [start_pos_y]");
 }

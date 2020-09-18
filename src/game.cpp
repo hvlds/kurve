@@ -10,8 +10,17 @@
 Game::Game(GLFWwindow* window) {
     this->window = window;
 
-	auto player_1 = std::make_shared<PlayerModel>();
+	GLfloat x1, y1;
+	x1 = 1.0;
+	y1 = 1.0;
+	auto player_1 = std::make_shared<PlayerModel>(x1, y1);
 	this->models.push_back(player_1);
+
+	GLfloat x2, y2;
+	x2 = -4.0;
+	y2 = -4.0;
+	auto player_2 = std::make_shared<PlayerModel>(x2, y2);
+	this->models.push_back(player_2);
 
 	init_gl(this->window);
 }

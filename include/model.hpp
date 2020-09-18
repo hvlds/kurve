@@ -28,9 +28,6 @@ class Model {
     GLuint shader_id;
     virtual void update(GLFWwindow* window) = 0;
     virtual void draw() = 0;
-    // void draw() {
-    //     this->mesh->draw();
-    // }
 };
 
 #endif

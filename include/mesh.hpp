@@ -15,7 +15,6 @@ class Mesh {
    protected:
     GLuint vao; // Vertex array object
 	GLuint vbo; // Vertex buffer object
-    int id;
     void bind() {
         glBindVertexArray(this->vao);
         glBindBuffer(GL_ARRAY_BUFFER, this->vbo);

@@ -26,13 +26,18 @@ class PlayerModel : public Model {
     // The uniforms locations
     GLint trans_y_loc;
     GLint trans_x_loc;
+    GLfloat start_pos_y_loc;
+    GLfloat start_pos_x_loc;
+
+    double time;
 
     // The Uniform values
-    double time;
     GLfloat trans_y;
     GLfloat trans_x;
+    GLfloat start_pos_y;
+    GLfloat start_pos_x;
 
-    PlayerModel();
+    PlayerModel(GLfloat x, GLfloat y);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
 };
