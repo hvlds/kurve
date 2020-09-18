@@ -8,7 +8,7 @@ uniform float trans_x;
 out vec4 f_color;
 
 void main()
-{
+{	
 	vec4 position = v_position;
 	position.y += trans_y;
 	position.x += trans_x;

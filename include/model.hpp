@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "mesh.hpp"
 #include "shader.hpp"
@@ -23,12 +24,13 @@ class Model {
     virtual void init_uniforms() = 0;
     virtual void init_values() = 0;
    public:
-    Mesh mesh;
+    std::shared_ptr<Mesh> mesh;
     GLuint shader_id;
     virtual void update(GLFWwindow* window) = 0;
-    void draw() {
-        this->mesh.draw();
-    }
+    virtual void draw() = 0;
+    // void draw() {
+    //     this->mesh->draw();
+    // }
 };
 
 #endif

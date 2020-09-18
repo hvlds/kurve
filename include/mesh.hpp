@@ -28,7 +28,7 @@ class Mesh {
         glDeleteBuffers(1, &this->vbo);
         gl_check_error("glDeleteBuffers");
     }
-    void draw() {};
+    virtual void draw() = 0;
     void init();
 };
 

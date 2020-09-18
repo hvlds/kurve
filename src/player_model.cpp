@@ -15,12 +15,16 @@ PlayerModel::PlayerModel() {
     this->init_uniforms();
 
     // Add the mesh
-    PlayerMesh mesh;
-    this->mesh = mesh;
+    auto player_mesh = std::make_shared<PlayerMesh>();
+    this->mesh = player_mesh;
 
     // Init the values of the model
     this->init_values();
 }
+
+void PlayerModel::draw() {
+    this->mesh->draw();
+}    
 
 void PlayerModel::update(GLFWwindow* window) {
     // Update the time and calculate the delta:

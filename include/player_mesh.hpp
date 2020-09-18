@@ -7,7 +7,7 @@
 class PlayerMesh: public Mesh {
    public:
     PlayerMesh();
-    void draw();
+    virtual void draw() override;
 };
 
 #endif

@@ -20,18 +20,15 @@ void Game::loop() {
     while (!glfwWindowShouldClose(this->window))
 	{
 		// Update the models:
-		std::cout << "Update models" << std::endl;
 		for (auto model : models) {
 			model->update(this->window);
 		}
 
-		std::cout << "Clear buffer bit" << std::endl;
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);
 		gl_check_error("glClear");
 
 		// Draw the models:
-		std::cout << "Draw models" << std::endl;
 		for (auto model : models) {
 			model->draw();
 		}
@@ -50,7 +47,7 @@ void Game::terminate() {
 		glDeleteProgram(model->shader_id);
     	gl_check_error("glDeleteProgram");
 
-		model->mesh.terminate();
+		model->mesh->terminate();
 	}
 
 	// Destroy the window:

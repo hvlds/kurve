@@ -75,7 +75,6 @@ PlayerMesh::PlayerMesh() {
 
 void PlayerMesh::draw() {
     this->bind();
-
     glDrawArrays(GL_TRIANGLE_FAN, 0, 200);
     gl_check_error("glDrawArrays");
 }
