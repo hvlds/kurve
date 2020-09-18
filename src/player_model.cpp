@@ -30,6 +30,7 @@ void PlayerModel::draw() {
 
 void PlayerModel::update(GLFWwindow* window) {
     // Update the time and calculate the delta:
+    glUseProgram(this->shader_id);
     double new_time = glfwGetTime();
     double time_delta = new_time - this->time;
 
