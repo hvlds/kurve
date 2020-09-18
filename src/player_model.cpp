@@ -36,22 +36,22 @@ void PlayerModel::update(GLFWwindow* window) {
 
     this->time = new_time;
 
-    int right_state = glfwGetKey(window, GLFW_KEY_LEFT);
+    int right_state = glfwGetKey(window, this->left_key);
     if (right_state == GLFW_PRESS) {
         this->trans_x = fmod(this->trans_x + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
     }
 
-    int left_state = glfwGetKey(window, GLFW_KEY_RIGHT);
+    int left_state = glfwGetKey(window, this->right_key);
     if (left_state == GLFW_PRESS) {
         this->trans_x = fmod(this->trans_x + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
     }
 
-    int up_state = glfwGetKey(window, GLFW_KEY_DOWN);
+    int up_state = glfwGetKey(window, this->down_key);
     if (up_state == GLFW_PRESS) {
         this->trans_y = fmod(this->trans_y + (-Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
     }
 
-    int down_state = glfwGetKey(window, GLFW_KEY_UP);
+    int down_state = glfwGetKey(window, this->up_key);
     if (down_state == GLFW_PRESS) {
         this->trans_y = fmod(this->trans_y + (Y_ANGULAR_VELOCITY * time_delta), 2 * M_PI);
     }
@@ -97,4 +97,11 @@ void PlayerModel::init_values() {
 
     glUniform1f(this->start_pos_y_loc, this->start_pos_y);
     gl_check_error("glUniform1f [start_pos_y]");
+}
+
+void PlayerModel::set_keys(int left_key, int right_key, int up_key, int down_key) {
+    this->left_key = left_key;
+    this->right_key = right_key;
+    this->up_key = up_key;
+    this->down_key = down_key;
 }

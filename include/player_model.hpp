@@ -22,6 +22,12 @@ class PlayerModel : public Model {
     virtual void init_uniforms() override;
     virtual void init_values() override;
     std::shared_ptr<PlayerMesh> player_mesh;
+    
+    // Controls
+    int left_key;
+    int right_key;
+    int up_key;
+    int down_key;
    public:
     // The uniforms locations
     GLint trans_y_loc;
@@ -37,9 +43,11 @@ class PlayerModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
+
     PlayerModel(GLfloat x, GLfloat y);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
+    void set_keys(int left_key, int right_key, int up_key, int down_key);
 };
 
 #endif

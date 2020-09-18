@@ -14,12 +14,14 @@ Game::Game(GLFWwindow* window) {
 	x1 = 1.0;
 	y1 = 1.0;
 	auto player_1 = std::make_shared<PlayerModel>(x1, y1);
+	player_1->set_keys(GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN);
 	this->models.push_back(player_1);
 
 	GLfloat x2, y2;
 	x2 = -4.0;
 	y2 = -4.0;
 	auto player_2 = std::make_shared<PlayerModel>(x2, y2);
+	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 	this->models.push_back(player_2);
 
 	init_gl(this->window);
