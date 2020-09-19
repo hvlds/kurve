@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "shader.hpp"
 #include "player_model.hpp"
+#include "line_model.hpp"
 #include "mesh.hpp"
 #include "gl_calls.hpp"
 
@@ -23,6 +24,9 @@ Game::Game(GLFWwindow* window) {
 	auto player_2 = std::make_shared<PlayerModel>(x2, y2);
 	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 	this->models.push_back(player_2);
+
+	auto line = std::make_shared<LineModel>();
+	player_1->add_line_model(line);
 
 	init_gl(this->window);
 }

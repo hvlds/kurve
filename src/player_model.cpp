@@ -9,13 +9,13 @@
 
 PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
     // Compile and add the shaders
-    Shader shader("../shader/circle.vs", "../shader/circle.fs", &this->shader_id);
+    Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
     // Init the uniforms
     this->init_uniforms();
 
     // Add the mesh
-    auto player_mesh = std::make_shared<PlayerMesh>();
-    this->mesh = player_mesh;
+    auto mesh = std::make_shared<PlayerMesh>();
+    this->mesh = mesh;
 
     // Init the values of the model
     this->start_pos_x = x;
@@ -30,6 +30,10 @@ PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
 void PlayerModel::draw() {
     glUseProgram(this->shader_id);
     this->mesh->draw();
+
+    if (this->line_model != nullptr) {
+        line_model->draw();
+    }
 }    
 
 void PlayerModel::update(GLFWwindow* window) {
@@ -73,7 +77,12 @@ void PlayerModel::update(GLFWwindow* window) {
             last_point.x + x_diff,
             last_point.y + y_diff
         };
-        this->points.push_back(point); 
+        this->points.push_back(point);
+
+        if (this->line_model != nullptr) {          
+            this->line_model->add_point(point);
+            this->line_model->update(window); 
+        }
     }
 
     // Update the uniform:
@@ -124,4 +133,8 @@ void PlayerModel::set_keys(int left_key, int right_key, int up_key, int down_key
     this->right_key = right_key;
     this->up_key = up_key;
     this->down_key = down_key;
+}
+
+void PlayerModel::add_line_model(std::shared_ptr<LineModel> line_model) {
+    this->line_model = line_model;
 }

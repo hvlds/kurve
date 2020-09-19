@@ -2,21 +2,51 @@
 
 #include <iostream>
 
+void LineMesh::update() {
+    this->bind();
+    std::vector<vertex_data_t> vertex_data;
+
+    for (auto point : this->points) {
+        vertex_data.push_back(
+            {
+                .position = {
+                    static_cast<float>(point.x), 
+                    static_cast<float>(point.y), 
+                    0
+                }, 
+                .color = {0xFF, 0x00, 0x00}
+            }
+        );
+    }
+
+    // Upload the vertex data to the GPU:
+    glBufferData(
+        GL_ARRAY_BUFFER, 
+        this->points.size() * sizeof(vertex_data_t), 
+        (const GLvoid*)vertex_data.data(), 
+        GL_DYNAMIC_DRAW);
+    gl_check_error("glBufferData");
+
+}
+
 void LineMesh::set_points(std::vector<Point> points) {
     this->points = points;
 }
 
+void LineMesh::add_point(Point point) {
+    this->points.push_back(point);
+}
+
 LineMesh::LineMesh(Point first_point) {
     std::vector<vertex_data_t> vertex_data;
-
     vertex_data.push_back(
         {
             .position = {
-                static_cast<float>(first_point.x), 
-                static_cast<float>(first_point.y), 
+                static_cast<float>(first_point.x/10), 
+                static_cast<float>(first_point.y/10), 
                 0
             }, 
-            .color = {0xFF, 0x00, 0xFF}
+            .color = {0xFF, 0x00, 0x00}
         }
     );
 

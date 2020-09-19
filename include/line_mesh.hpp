@@ -14,6 +14,8 @@ class LineMesh: public Mesh {
     LineMesh(Point first_point);
     virtual void draw() override;
     void set_points(std::vector<Point> points);
+    void add_point(Point point);
+    void update();
 };
 
 #endif

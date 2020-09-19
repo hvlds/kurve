@@ -4,6 +4,7 @@
 #include "model.hpp"
 #include "user.hpp"
 #include "player_mesh.hpp"
+#include "line_model.hpp"
 #include "point.hpp"
 
 extern "C" {
@@ -17,6 +18,7 @@ extern "C" {
 }
 
 #include <vector>
+#include <memory>
 
 #define Y_ANGULAR_VELOCITY 2
 
@@ -25,6 +27,7 @@ class PlayerModel : public Model {
     virtual void init_uniforms() override;
     virtual void init_values() override;
     std::vector<Point> points;
+    std::shared_ptr<LineModel> line_model;
     // Controls
     int left_key;
     int right_key;
@@ -45,11 +48,11 @@ class PlayerModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-
     PlayerModel(GLfloat x, GLfloat y);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     void set_keys(int left_key, int right_key, int up_key, int down_key);
+    void add_line_model(std::shared_ptr<LineModel> line_model);
 };
 
 #endif
