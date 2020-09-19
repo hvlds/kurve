@@ -39,22 +39,30 @@ void LineMesh::add_point(Point point) {
     GLfloat numerator{point.y - this->last_point.y};
     GLfloat denominator{point.x - this->last_point.x};
     GLfloat slope{0};
+    GLfloat r{0.1};
+
+    Point left_point, right_point;
 
     if (denominator != 0) {
         slope = numerator / denominator;
+        left_point = {
+            point.x + -1 * (GLfloat)sin(slope) * r,
+            point.y + (GLfloat)cos(slope) * r
+        };
+        right_point = {
+            point.x + (GLfloat)sin(slope) * r,
+            point.y + -1 * (GLfloat)cos(slope) * r
+        };
+    } else {
+        left_point = {
+            point.x + -r,
+            point.y + r
+        };
+        right_point = {
+            point.x + r,
+            point.y + -r
+        };
     }
-
-    std::cout << "Slope: " << slope << std::endl;
-    GLfloat r{0.1};
-
-    Point left_point{
-        point.x + -1 * (GLfloat)cos(slope) * r,
-        point.y + (GLfloat)sin(slope) * r
-    };
-    Point right_point{
-        point.x + (GLfloat)cos(slope) * r,
-        point.y + -1 * (GLfloat)sin(slope) * r
-    };
 
     std::cout << "Original point: " << point.x << " " << point.y << std::endl;
     std::cout << "Left point: " << left_point.x << " " << left_point.y << std::endl;
