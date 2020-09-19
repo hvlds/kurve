@@ -4,10 +4,8 @@
 
 extern "C" {
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 
-#include "bitmap.h"
 #include "obj.h"
 }
 
@@ -24,7 +22,11 @@ PlayerMesh::PlayerMesh() {
         double y{radius * sin(angle)};
         angle += delta_angle;
         vertex_data.push_back(
-            {.position = {static_cast<float>(x), static_cast<float>(y), 0}, .color = {0xFF, 0x00, 0xFF}});
+            {
+                .position = {static_cast<float>(x), static_cast<float>(y), 0}, 
+                .color = {0xFF, 0x00, 0xFF}
+            }
+        );
     }
 
     // TODO: blackbox! Create a VAO.
@@ -52,15 +54,32 @@ PlayerMesh::PlayerMesh() {
     std::cout << "VBO: " << vbo << std::endl;
 
     // Upload the vertex data to the GPU:
-    glBufferData(GL_ARRAY_BUFFER, parts * sizeof(vertex_data_t), (const GLvoid*)vertex_data.data(), GL_STATIC_DRAW);
+    glBufferData(
+        GL_ARRAY_BUFFER, 
+        parts * sizeof(vertex_data_t), 
+        (const GLvoid*)vertex_data.data(), 
+        GL_STATIC_DRAW);
     gl_check_error("glBufferData");
 
     // Position attribute:
-    // Number of attribute, number of components, data type, normalize, stride, pointer (= offset)
-    glVertexAttribPointer(ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_data_t), (GLvoid*)offsetof(vertex_data_t, position));
+    // Number of attribute, number of components, 
+    // data type, normalize, stride, pointer (= offset)
+    glVertexAttribPointer(
+        ATTRIB_POSITION, 
+        3, 
+        GL_FLOAT, 
+        GL_FALSE, 
+        sizeof(vertex_data_t), 
+        (GLvoid*)offsetof(vertex_data_t, position));
     gl_check_error("glVertexAttribPointer [position]");
 
-    glVertexAttribPointer(ATTRIB_COLOR, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vertex_data_t), (GLvoid*)offsetof(vertex_data_t, color));
+    glVertexAttribPointer(
+        ATTRIB_COLOR, 
+        3, 
+        GL_UNSIGNED_BYTE, 
+        GL_TRUE, 
+        sizeof(vertex_data_t), 
+        (GLvoid*)offsetof(vertex_data_t, color));
     gl_check_error("glVertexAttribPointer [color]");
 
     // Enable the attributes:

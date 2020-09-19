@@ -3,11 +3,17 @@
 
 #include "mesh.hpp"
 #include "user.hpp"
+#include "point.hpp"
+
+#include <vector>
 
 class LineMesh: public Mesh {
+   protected:
+    std::vector<Point> points;    
    public:
-    LineMesh();
+    LineMesh(Point first_point);
     virtual void draw() override;
+    void set_points(std::vector<Point> points);
 };
 
 #endif
