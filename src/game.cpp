@@ -25,9 +25,6 @@ Game::Game(GLFWwindow* window) {
 	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 	this->models.push_back(player_2);
 
-	auto line = std::make_shared<LineModel>();
-	player_1->add_line_model(line);
-
 	init_gl(this->window);
 }
 
