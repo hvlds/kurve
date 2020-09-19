@@ -18,6 +18,7 @@ extern "C" {
 }
 
 #include <vector>
+#include <array>
 #include <memory>
 
 #define Y_ANGULAR_VELOCITY 2
@@ -33,6 +34,8 @@ class PlayerModel : public Model {
     int right_key;
     int up_key;
     int down_key;
+    // color
+    std::array<GLubyte, 3> color;
    public:
     // The uniforms locations
     GLint trans_y_loc;
@@ -48,7 +51,7 @@ class PlayerModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-    PlayerModel(GLfloat x, GLfloat y);
+    PlayerModel(GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     void set_keys(int left_key, int right_key, int up_key, int down_key);

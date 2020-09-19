@@ -25,11 +25,13 @@ class LineModel : public Model {
     virtual void init_values() override;
     std::vector<Point> points;
     std::shared_ptr<LineMesh> line_mesh;
+    std::array<GLubyte, 3> color;
    public:
-    LineModel(Point point);
+    LineModel(Point point, std::array<GLubyte, 3> color);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     void add_point(Point point);
+    void set_color(std::array<GLubyte, 3> color);
 };
 
 #endif

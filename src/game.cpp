@@ -12,16 +12,18 @@ Game::Game(GLFWwindow* window) {
     this->window = window;
 
 	GLfloat x1, y1;
-	x1 = 4.0;
-	y1 = 4.0;
-	auto player_1 = std::make_shared<PlayerModel>(x1, y1);
+	x1 = 1.0;
+	y1 = 1.0;
+	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
+	auto player_1 = std::make_shared<PlayerModel>(x1, y1, color_1);
 	player_1->set_keys(GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN);
 	this->models.push_back(player_1);
 
 	GLfloat x2, y2;
-	x2 = -4.0;
-	y2 = -4.0;
-	auto player_2 = std::make_shared<PlayerModel>(x2, y2);
+	x2 = -1.0;
+	y2 = -1.0;
+	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
+	auto player_2 = std::make_shared<PlayerModel>(x2, y2, color_2);
 	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 	this->models.push_back(player_2);
 

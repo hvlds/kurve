@@ -6,7 +6,7 @@ out vec4 f_color;
 
 void main()
 {	
-	vec4 trans = vec4(0, 0, 0.0, 10.0);
+	vec4 trans = vec4(0, 0, 0.0, 1.0);
 
 	gl_Position = v_position;
 	f_color = v_color;

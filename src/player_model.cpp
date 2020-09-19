@@ -7,7 +7,9 @@
 #include "player_mesh.hpp"
 #include "shader.hpp"
 
-PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
+PlayerModel::PlayerModel(GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {
+    this->color = color;
+
     // Compile and add the shaders
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
     // Init the uniforms
@@ -27,9 +29,8 @@ PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
     this->points.push_back(point);
 
     // Create a line model for the player
-    auto line = std::make_shared<LineModel>(point);
+    auto line = std::make_shared<LineModel>(point, this->color);
     this->line_model = line;
-
 }
 
 void PlayerModel::draw() {

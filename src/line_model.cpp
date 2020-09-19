@@ -1,10 +1,12 @@
 #include "line_model.hpp"
 #include "point.hpp"
 
-LineModel::LineModel(Point point) {
+LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
+    this->color = color;
+
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
 
-    auto mesh = std::make_shared<LineMesh>(point);
+    auto mesh = std::make_shared<LineMesh>(point, this->color);
     this->line_mesh = mesh;
 
     this->points.push_back(point);
@@ -30,4 +32,8 @@ void LineModel::init_values() {
 void LineModel::add_point(Point point) {
     this->points.push_back(point);
     this->line_mesh->add_point(point);
+}
+
+void LineModel::set_color(std::array<GLubyte, 3> color) {
+    this->color = color;
 }
