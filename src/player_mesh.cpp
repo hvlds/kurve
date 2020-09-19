@@ -13,7 +13,7 @@ PlayerMesh::PlayerMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
-    double radius{0.2};
+    double radius{0.1};
     double delta_angle{(2 * 3.14159265) / parts};
     double angle{0};
 
