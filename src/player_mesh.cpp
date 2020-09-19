@@ -15,12 +15,11 @@ PlayerMesh::PlayerMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
-    int parts{200};
     double radius{1};
     double delta_angle{(2 * 3.14159265) / parts};
     double angle{0};
 
-    for (int i = 0; i < parts; i++) {
+    for (int i = 0; i < this->parts; i++) {
         double x{radius * cos(angle)};
         double y{radius * sin(angle)};
         angle += delta_angle;
@@ -70,11 +69,10 @@ PlayerMesh::PlayerMesh() {
 
     glEnableVertexAttribArray(ATTRIB_COLOR);
     gl_check_error("glEnableVertexAttribArray [color]");
-    
 }
 
 void PlayerMesh::draw() {
     this->bind();
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 200);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, this->parts);
     gl_check_error("glDrawArrays");
 }

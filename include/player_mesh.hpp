@@ -5,6 +5,8 @@
 #include "user.hpp"
 
 class PlayerMesh: public Mesh {
+   protected:
+    int parts = 6;
    public:
     PlayerMesh();
     virtual void draw() override;

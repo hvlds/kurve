@@ -24,7 +24,6 @@ class PlayerModel : public Model {
    protected: 
     virtual void init_uniforms() override;
     virtual void init_values() override;
-    std::shared_ptr<PlayerMesh> player_mesh;
     std::vector<Point> points;
     // Controls
     int left_key;
