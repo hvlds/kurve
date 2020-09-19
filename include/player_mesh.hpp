@@ -6,7 +6,7 @@
 
 class PlayerMesh: public Mesh {
    protected:
-    int parts = 6;
+    int parts = 300;
    public:
     PlayerMesh();
     virtual void draw() override;

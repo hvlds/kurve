@@ -26,7 +26,7 @@ class LineModel : public Model {
     std::vector<Point> points;
     std::shared_ptr<LineMesh> line_mesh;
    public:
-    LineModel();
+    LineModel(Point point);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     void add_point(Point point);

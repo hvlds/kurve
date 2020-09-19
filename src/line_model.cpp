@@ -1,15 +1,13 @@
 #include "line_model.hpp"
 #include "point.hpp"
 
-LineModel::LineModel() {
+LineModel::LineModel(Point point) {
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
 
-    Point first_point{1.0, 1.0};
-
-    auto mesh = std::make_shared<LineMesh>(first_point);
+    auto mesh = std::make_shared<LineMesh>(point);
     this->line_mesh = mesh;
 
-    this->points.push_back(first_point);
+    this->points.push_back(point);
 }
 
 void LineModel::update(GLFWwindow* window) {

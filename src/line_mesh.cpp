@@ -1,6 +1,7 @@
 #include "line_mesh.hpp"
 
 #include <iostream>
+#include <cmath>
 
 void LineMesh::update() {
     this->bind();
@@ -10,8 +11,8 @@ void LineMesh::update() {
         vertex_data.push_back(
             {
                 .position = {
-                    static_cast<float>(point.x), 
-                    static_cast<float>(point.y), 
+                    static_cast<GLfloat>(point.x), 
+                    static_cast<GLfloat>(point.y), 
                     0
                 }, 
                 .color = {0xFF, 0x00, 0x00}
@@ -34,7 +35,34 @@ void LineMesh::set_points(std::vector<Point> points) {
 }
 
 void LineMesh::add_point(Point point) {
-    this->points.push_back(point);
+    // Create left point
+    GLfloat numerator{point.y - this->last_point.y};
+    GLfloat denominator{point.x - this->last_point.x};
+    GLfloat slope{0};
+
+    if (denominator != 0) {
+        slope = numerator / denominator;
+    }
+
+    std::cout << "Slope: " << slope << std::endl;
+    GLfloat r{0.1};
+
+    Point left_point{
+        point.x + -1 * (GLfloat)cos(slope) * r,
+        point.y + (GLfloat)sin(slope) * r
+    };
+    Point right_point{
+        point.x + (GLfloat)cos(slope) * r,
+        point.y + -1 * (GLfloat)sin(slope) * r
+    };
+
+    std::cout << "Original point: " << point.x << " " << point.y << std::endl;
+    std::cout << "Left point: " << left_point.x << " " << left_point.y << std::endl;
+    std::cout << "Right point: " << right_point.x << " " << right_point.y << std::endl;
+    
+    this->last_point = point;
+    this->points.push_back(left_point);
+    this->points.push_back(right_point);
 }
 
 LineMesh::LineMesh(Point first_point) {
@@ -113,7 +141,7 @@ LineMesh::LineMesh(Point first_point) {
 }
 
 void LineMesh::draw() {
-    this->bind();
-    glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
+    this->bind();    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, this->points.size());
     gl_check_error("glDrawArrays");
 }

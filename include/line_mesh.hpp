@@ -9,7 +9,8 @@
 
 class LineMesh: public Mesh {
    protected:
-    std::vector<Point> points;    
+    std::vector<Point> points;
+    Point last_point;    
    public:
     LineMesh(Point first_point);
     virtual void draw() override;

@@ -22,13 +22,14 @@ PlayerModel::PlayerModel(GLfloat x, GLfloat y) {
     this->start_pos_y = y;
     this->init_values();
 
-    // Create a line model for the player
-    auto line = std::make_shared<LineModel>();
-    this->line_model = line;
-
     // Add initial positions into the point vector
     Point point{x, y};
     this->points.push_back(point);
+
+    // Create a line model for the player
+    auto line = std::make_shared<LineModel>(point);
+    this->line_model = line;
+
 }
 
 void PlayerModel::draw() {
