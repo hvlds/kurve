@@ -23,8 +23,12 @@ PlayerMesh::PlayerMesh() {
         angle += delta_angle;
         vertex_data.push_back(
             {
-                .position = {static_cast<float>(x), static_cast<float>(y), 0}, 
-                .color = {0xFF, 0x00, 0xFF}
+                .position = {
+                    static_cast<GLfloat>(x), 
+                    static_cast<GLfloat>(y), 
+                    0
+                }, 
+                .color = {0xFF, 0xFF, 0x00}
             }
         );
     }

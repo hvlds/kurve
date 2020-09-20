@@ -21,7 +21,7 @@ extern "C" {
 #include <array>
 #include <memory>
 
-#define Y_ANGULAR_VELOCITY 2
+#define VELOCITY 1
 
 class PlayerModel : public Model {
    protected: 

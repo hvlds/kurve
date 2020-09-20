@@ -1,5 +1,6 @@
 #include "line_model.hpp"
 #include "point.hpp"
+#include <iostream>
 
 LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
     this->color = color;
@@ -30,6 +31,7 @@ void LineModel::init_values() {
 }
 
 void LineModel::add_point(Point point) {
+    auto last_point = this->points.back();
     this->points.push_back(point);
     this->line_mesh->add_point(point);
 }

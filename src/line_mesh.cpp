@@ -80,8 +80,8 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
     vertex_data.push_back(
         {
             .position = {
-                static_cast<float>(first_point.x/10), 
-                static_cast<float>(first_point.y/10), 
+                static_cast<GLfloat>(first_point.x), 
+                static_cast<GLfloat>(first_point.y), 
                 0
             }, 
             .color = {this->color[0], this->color[1], this->color[2]}

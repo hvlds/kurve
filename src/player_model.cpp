@@ -54,34 +54,37 @@ void PlayerModel::update(GLFWwindow* window) {
 
     int right_state = glfwGetKey(window, this->right_key);
     if (right_state == GLFW_PRESS) {
-        x_diff = (Y_ANGULAR_VELOCITY * time_delta);
+        x_diff = static_cast<GLfloat>((VELOCITY * time_delta));
         this->trans_x = this->trans_x + x_diff;
     }
 
     int left_state = glfwGetKey(window, this->left_key);
     if (left_state == GLFW_PRESS) {
-        x_diff = (-Y_ANGULAR_VELOCITY * time_delta);
+        x_diff = static_cast<GLfloat>((-VELOCITY * time_delta));
         this->trans_x = this->trans_x + x_diff;
     }
 
     int up_state = glfwGetKey(window, this->up_key);
     if (up_state == GLFW_PRESS) {
-        y_diff = (Y_ANGULAR_VELOCITY * time_delta);
+        y_diff = static_cast<GLfloat>((VELOCITY * time_delta));
         this->trans_y = this->trans_y + y_diff;
     }
 
     int down_state = glfwGetKey(window, this->down_key);
     if (down_state == GLFW_PRESS) {
-        y_diff = (-Y_ANGULAR_VELOCITY * time_delta);
+        y_diff = static_cast<GLfloat>((-VELOCITY * time_delta));
         this->trans_y = this->trans_y + y_diff;
     }
 
     // There was a movement, add a new point!
     if (x_diff != 0 || y_diff !=0) {
         Point last_point = this->points.back();
+        
+        std::cout << "Last Point[Player]: " << last_point.x << " " << last_point.y << std::endl;
+
         Point point{
-            last_point.x + x_diff,
-            last_point.y + y_diff
+            this->trans_x + x_diff + this->start_pos_x,
+            this->trans_y + y_diff + this->start_pos_y
         };
         this->points.push_back(point);
 
