@@ -27,11 +27,11 @@ enum ModelType {
 class Model {
    protected:
     user_data_t* user_data;
-    ModelType model_type;
     virtual void init_uniforms() = 0;
     virtual void init_values() = 0;
    public:
     std::shared_ptr<Mesh> mesh;
+    ModelType model_type;
     GLuint shader_id;
     virtual void update(GLFWwindow* window) = 0;
     virtual void draw() = 0;

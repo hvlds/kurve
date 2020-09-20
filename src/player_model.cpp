@@ -6,9 +6,11 @@
 #include "player_mesh.hpp"
 #include "shader.hpp"
 
-PlayerModel::PlayerModel(GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {
+PlayerModel::PlayerModel(
+    int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {        
     this->model_type = MODEL_PLAYER;
     this->color = color;
+    this->id = id;
 
     // Compile and add the shaders
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);

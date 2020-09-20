@@ -2,11 +2,13 @@
 #include "shader.hpp"
 #include "player_model.hpp"
 #include "border_model.hpp"
+#include "model.hpp"
 #include "mesh.hpp"
 #include "gl_calls.hpp"
 
 #include <vector>
 #include <memory>
+#include <map>
 
 Game::Game(GLFWwindow* window) {
     this->window = window;
@@ -15,7 +17,7 @@ Game::Game(GLFWwindow* window) {
 	x1 = 1.0;
 	y1 = 1.0;
 	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
-	auto player_1 = std::make_shared<PlayerModel>(x1, y1, color_1);
+	auto player_1 = std::make_shared<PlayerModel>(1, x1, y1, color_1);
 	player_1->set_keys(GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN);
 	this->models.push_back(player_1);
 
@@ -23,7 +25,7 @@ Game::Game(GLFWwindow* window) {
 	x2 = -1.0;
 	y2 = -1.0;
 	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
-	auto player_2 = std::make_shared<PlayerModel>(x2, y2, color_2);
+	auto player_2 = std::make_shared<PlayerModel>(2, x2, y2, color_2);
 	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 	this->models.push_back(player_2);
 
