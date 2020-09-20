@@ -12,6 +12,7 @@ extern "C" {
 	#include <GLFW/glfw3.h>
 }
 #include "model.hpp"
+#include "player_model.hpp"
 
 enum GameState {
     GAME_ACTIVE,

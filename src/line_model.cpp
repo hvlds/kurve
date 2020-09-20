@@ -3,6 +3,7 @@
 #include <iostream>
 
 LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
+    this->model_type = MODEL_LINE;
     this->color = color;
 
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
@@ -38,4 +39,8 @@ void LineModel::add_point(Point point) {
 
 void LineModel::set_color(std::array<GLubyte, 3> color) {
     this->color = color;
+}
+
+std::vector<Point> LineModel::get_points() {
+    return this->points;
 }

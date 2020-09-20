@@ -18,7 +18,7 @@ BorderMesh::BorderMesh() {
                     static_cast<GLfloat>(point.y), 
                     0
                 }, 
-                .color = {0xFF, 0x99, 0x00}
+                .color = {0xFF, 0xFF, 0x00}
             }
         );
     } 

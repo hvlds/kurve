@@ -18,9 +18,16 @@ extern "C" {
 #include <GLFW/glfw3.h>
 }
 
+enum ModelType {
+    MODEL_PLAYER, // Player (yellow circle a.k.a head of the line)
+    MODEL_LINE, // Line of the player
+    MODEL_BORDER // Border of the game
+};
+
 class Model {
    protected:
     user_data_t* user_data;
+    ModelType model_type;
     virtual void init_uniforms() = 0;
     virtual void init_values() = 0;
    public:

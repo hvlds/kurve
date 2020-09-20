@@ -32,6 +32,7 @@ class LineModel : public Model {
     virtual void draw() override;
     void add_point(Point point);
     void set_color(std::array<GLubyte, 3> color);
+    std::vector<Point> get_points();
 };
 
 #endif

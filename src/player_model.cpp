@@ -1,4 +1,3 @@
-
 #include "player_model.hpp"
 
 #include <iostream>
@@ -8,6 +7,7 @@
 #include "shader.hpp"
 
 PlayerModel::PlayerModel(GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {
+    this->model_type = MODEL_PLAYER;
     this->color = color;
 
     // Compile and add the shaders
@@ -143,4 +143,12 @@ void PlayerModel::set_keys(int left_key, int right_key, int up_key, int down_key
 
 void PlayerModel::add_line_model(std::shared_ptr<LineModel> line_model) {
     this->line_model = line_model;
+}
+
+Point PlayerModel::get_position() {
+    return this->points.back();
+}
+
+std::vector<Point> PlayerModel::get_line_points() {
+    return this->points;
 }

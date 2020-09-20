@@ -56,6 +56,8 @@ class PlayerModel : public Model {
     virtual void draw() override;
     void set_keys(int left_key, int right_key, int up_key, int down_key);
     void add_line_model(std::shared_ptr<LineModel> line_model);
+    Point get_position();
+    std::vector<Point> get_line_points();
 };
 
 #endif
