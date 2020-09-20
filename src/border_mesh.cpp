@@ -1,53 +1,27 @@
 #include "border_mesh.hpp"
+#include "point.hpp"
 #include <iostream>
 
 BorderMesh::BorderMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
-    vertex_data.push_back(
-        {
-            .position = {
-                static_cast<GLfloat>(0.9), 
-                static_cast<GLfloat>(0.9), 
-                0
-            }, 
-            .color = {0xFF, 0xFF, 0x00}
-        }
-    );
+    std::vector<Point> points = {
+        {0.9, 0.9}, {-0.9, 0.9}, {-0.9, -0.9}, {0.9, -0.9}
+    };
 
-    vertex_data.push_back(
-        {
-            .position = {
-                static_cast<GLfloat>(-0.9), 
-                static_cast<GLfloat>(0.9), 
-                0
-            }, 
-            .color = {0xFF, 0xFF, 0x00}
-        }
-    );
-
-    vertex_data.push_back(
-        {
-            .position = {
-                static_cast<GLfloat>(-0.9), 
-                static_cast<GLfloat>(-0.9), 
-                0
-            }, 
-            .color = {0xFF, 0xFF, 0x00}
-        }
-    );
-
-    vertex_data.push_back(
-        {
-            .position = {
-                static_cast<GLfloat>(0.9), 
-                static_cast<GLfloat>(-0.9), 
-                0
-            }, 
-            .color = {0xFF, 0xFF, 0x00}
-        }
-    );    
+    for (auto point : points) {
+        vertex_data.push_back(
+            {
+                .position = {
+                    static_cast<GLfloat>(point.x), 
+                    static_cast<GLfloat>(point.y), 
+                    0
+                }, 
+                .color = {0xFF, 0x99, 0x00}
+            }
+        );
+    } 
 
     // TODO: blackbox! Create a VAO.
     GLuint vao;
