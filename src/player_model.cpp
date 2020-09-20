@@ -79,9 +79,6 @@ void PlayerModel::update(GLFWwindow* window) {
     // There was a movement, add a new point!
     if (x_diff != 0 || y_diff !=0) {
         Point last_point = this->points.back();
-        
-        std::cout << "Last Point[Player]: " << last_point.x << " " << last_point.y << std::endl;
-
         Point point{
             this->trans_x + x_diff + this->start_pos_x,
             this->trans_y + y_diff + this->start_pos_y

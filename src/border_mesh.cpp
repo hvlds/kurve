@@ -1,35 +1,53 @@
-#include "player_mesh.hpp"
-
+#include "border_mesh.hpp"
 #include <iostream>
 
-extern "C" {
-#include <math.h>
-#include <stdlib.h>
-}
-
-PlayerMesh::PlayerMesh() {
+BorderMesh::BorderMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
-    double radius{0.05};
-    double delta_angle{(2 * 3.14159265) / parts};
-    double angle{0};
+    vertex_data.push_back(
+        {
+            .position = {
+                static_cast<GLfloat>(0.9), 
+                static_cast<GLfloat>(0.9), 
+                0
+            }, 
+            .color = {0xFF, 0xFF, 0x00}
+        }
+    );
 
-    for (int i = 0; i < this->parts; i++) {
-        double x{radius * cos(angle)};
-        double y{radius * sin(angle)};
-        angle += delta_angle;
-        vertex_data.push_back(
-            {
-                .position = {
-                    static_cast<GLfloat>(x), 
-                    static_cast<GLfloat>(y), 
-                    0
-                }, 
-                .color = {0xFF, 0xFF, 0x00}
-            }
-        );
-    }
+    vertex_data.push_back(
+        {
+            .position = {
+                static_cast<GLfloat>(-0.9), 
+                static_cast<GLfloat>(0.9), 
+                0
+            }, 
+            .color = {0xFF, 0xFF, 0x00}
+        }
+    );
+
+    vertex_data.push_back(
+        {
+            .position = {
+                static_cast<GLfloat>(-0.9), 
+                static_cast<GLfloat>(-0.9), 
+                0
+            }, 
+            .color = {0xFF, 0xFF, 0x00}
+        }
+    );
+
+    vertex_data.push_back(
+        {
+            .position = {
+                static_cast<GLfloat>(0.9), 
+                static_cast<GLfloat>(-0.9), 
+                0
+            }, 
+            .color = {0xFF, 0xFF, 0x00}
+        }
+    );    
 
     // TODO: blackbox! Create a VAO.
     GLuint vao;
@@ -58,7 +76,7 @@ PlayerMesh::PlayerMesh() {
     // Upload the vertex data to the GPU:
     glBufferData(
         GL_ARRAY_BUFFER, 
-        parts * sizeof(vertex_data_t), 
+        4 * sizeof(vertex_data_t), 
         (const GLvoid*)vertex_data.data(), 
         GL_STATIC_DRAW);
     gl_check_error("glBufferData");
@@ -92,8 +110,8 @@ PlayerMesh::PlayerMesh() {
     gl_check_error("glEnableVertexAttribArray [color]");
 }
 
-void PlayerMesh::draw() {
+void BorderMesh::draw() {
     this->bind();
-    glDrawArrays(GL_TRIANGLE_FAN, 0, this->parts);
+    glDrawArrays(GL_LINE_LOOP, 0 , 4);
     gl_check_error("glDrawArrays");
 }

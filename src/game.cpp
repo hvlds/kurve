@@ -1,7 +1,7 @@
 #include "game.hpp"
 #include "shader.hpp"
 #include "player_model.hpp"
-#include "line_model.hpp"
+#include "border_model.hpp"
 #include "mesh.hpp"
 #include "gl_calls.hpp"
 
@@ -26,6 +26,9 @@ Game::Game(GLFWwindow* window) {
 	auto player_2 = std::make_shared<PlayerModel>(x2, y2, color_2);
 	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 	this->models.push_back(player_2);
+
+	auto border = std::make_shared<BorderModel>();
+	this->models.push_back(border);
 
 	init_gl(this->window);
 }
