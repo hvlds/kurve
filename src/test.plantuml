@@ -1,0 +1,178 @@
+@startuml
+
+class mech 
+mech --> border_mech
+mech --> line_mesh
+mech --> PlayerMesh
+
+class mech {
+  
+    #GLuint vao // Vertex array object
+	#GLuint vbo // Vertex buffer object
+    #void bind() 
+
+    +void terminate()
+    +virtual void draw() = 0
+    +void init()
+}
+
+class border_mech {
+    +BorderMesh()
+    +virtual void draw() override
+}
+
+class border_model {
+
+    #virtual void init_uniforms() override;
+    #virtual void init_values() override;
+   
+    +BorderModel();
+    +virtual void update(GLFWwindow* window) override;
+    +virtual void draw() override;
+}
+class display {
+    - window: GLFWwindow* 
+    - user_data: user_data_t* 
+
+    + Display(user_data_t* user_data)
+    + get_window(): GLFWwindow*
+    + terminate(): int
+}
+class game {
+ 
+    - state :GameState
+    - window :GLFWwindow*
+    -std::vector<std::shared_ptr<Model>> models;
+    -std::shared_ptr<PlayerManager> player_manager;
+
+    +Game(GLFWwindow* window)
+    +loop(): void
+    +terminate(): void
+} 
+    enum GameState<GAMECLASS> {
+    GAME_ACTIVE
+    GAME_MENU
+    GAME_WIN
+    GAME_OVER
+}
+
+class line_mesh {
+
+    #std::vector<Point> points;
+    #Point last_point;
+    #std::array<GLubyte, 3> color;    
+
+    +LineMesh(Point first_point, std::array<GLubyte, 3> color);
+    +virtual void draw() override;
+    +void set_points(std::vector<Point> points);
+    +void add_point(Point point);
+    +void update();
+}
+class line_model {
+  
+    #virtual void init_uniforms() override
+    #virtual void init_values() override
+    #std::vector<Point> points
+    #std::shared_ptr<LineMesh> line_mesh
+    #std::array<GLubyte, 3> color
+
+    // The uniforms locations
+    +GLint start_pos_y_loc
+    +GLint start_pos_x_loc
+
+    // The uniforms values
+    +GLfloat start_pos_y
+    +GLfloat start_pos_x
+
+    +LineModel(Point point, std::array<GLubyte, 3> color)
+    +virtual void update(GLFWwindow* window) override
+    +virtual void draw() override
+    +void add_point(Point point)
+    +void set_color(std::array<GLubyte, 3> color)
+    +std::vector<Point> get_points()
+}
+class model
+model --> border_model
+model --> line_model
+model --> PlayerModel
+class model {
+ 
+    #user_data_t* user_data
+    #virtual void init_uniforms() = 0
+    #virtual void init_values() = 0
+
+    +std::shared_ptr<Mesh> mesh
+    +ModelType model_type
+    +GLuint shader_id
+    +virtual void update(GLFWwindow* window) = 0
+    +virtual void draw() = 0
+}
+class player_manager {
+   
+    #std::map<int, std::shared_ptr<PlayerModel>> players;
+   
+    +PlayerManager()
+    +void add_player(Control control,std::array<GLubyte, 3> color)
+    +int get_new_id()
+    +void update(GLFWwindow* window)
+    +void draw()
+}
+class player_model {
+       
+    #virtual void init_uniforms() override;
+    #virtual void init_values() override;
+
+    #std::vector<Point> points;
+    #std::shared_ptr<LineModel> line_model;
+
+    #int id;
+    #Control control;
+    #std::array<GLubyte, 3> color;
+
+   
+    // The uniforms locations
+    +GLint trans_y_loc;
+    +GLint trans_x_loc;
+    +GLfloat start_pos_y_loc;
+    +GLfloat start_pos_x_loc;
+
+    +double time;
+
+    // The Uniform values
+    +GLfloat trans_y;
+    +GLfloat trans_x;
+    +GLfloat start_pos_y;
+    +GLfloat start_pos_x;
+
+    +PlayerModel(int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
+    +virtual void update(GLFWwindow* window) override;
+    +virtual void draw() override;
+    +void set_keys(Control control);
+    +void add_line_model(std::shared_ptr<LineModel> line_model);
+    +Point get_position();
+    +std::vector<Point> get_line_points();
+}
+class Control<<(S,#FF7700)struct>>{
+    +int left_key 
+    +int right_key
+    +int up_key
+    +int down_key
+}
+class Point <<(S,#FF7700)struct>> {
+    +GLfloat x
+    +GLfloat y
+}
+class shader {
+      
+    -{static} char* read_from_file(const char* path);
+
+    +Shader(std::string vs_path, std::string fs_path, GLuint* shader_id);
+    +static GLuint compile(GLenum type, const char* shader_path, const char* shader_tag);
+    +GLuint compile();
+}
+class user<<(S,#FF7700)struct>> {
+    +int window_width;
+    +int window_height;
+}
+
+@enduml
