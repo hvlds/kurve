@@ -25,7 +25,7 @@ PlayerModel::PlayerModel(
     // Init the values of the model
     this->start_pos_x = x;
     this->start_pos_y = y;
-    this->init_values();
+    this->init_values();    
 
     // Add initial positions into the point vector
     Point point{x, y};
@@ -87,7 +87,6 @@ void PlayerModel::update(GLFWwindow* window) {
             this->trans_y + y_diff + this->start_pos_y
         };
         this->points.push_back(point);
-
         if (this->line_model != nullptr) {          
             this->line_model->add_point(point);
             this->line_model->update(window); 
@@ -116,12 +115,12 @@ void PlayerModel::init_uniforms() {
 
     // Start pos Y:
     this->start_pos_y_loc = glGetUniformLocation(this->shader_id, "start_pos_y");
-    gl_check_error("glGetUniformLocation [trans_y]");
+    gl_check_error("glGetUniformLocation [start_pos_y]");
     check_error(this->start_pos_y_loc >= 0, "Failed to obtain uniform location for start_pos_y.");
 
     // Start pos X:
     this->start_pos_x_loc = glGetUniformLocation(this->shader_id, "start_pos_x");
-    gl_check_error("glGetUniformLocation [trans_x]");
+    gl_check_error("glGetUniformLocation [start_pos_x]");
     check_error(this->start_pos_x_loc >= 0, "Failed to obtain uniform location for start_pos_x.");
 }
 

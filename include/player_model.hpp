@@ -20,7 +20,7 @@ extern "C" {
 #include <memory>
 #include <vector>
 
-#define VELOCITY 1
+#define VELOCITY 10
 
 struct Control {
     int left_key; 

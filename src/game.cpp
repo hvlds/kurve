@@ -22,14 +22,14 @@ Game::Game(GLFWwindow* window) {
 		GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN
 	};
 	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
-	player_manager->add_player(control_1, color_1);
+	this->player_manager->add_player(control_1, color_1);
 
 
 	Control control_2 = {
 		GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S
 	};
 	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
-	player_manager->add_player(control_2, color_2);
+	this->player_manager->add_player(control_2, color_2);
 
 	auto border = std::make_shared<BorderModel>();
 	this->models.push_back(border);

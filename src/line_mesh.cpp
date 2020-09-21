@@ -7,7 +7,7 @@ void LineMesh::update() {
     this->bind();
     std::vector<vertex_data_t> vertex_data;
 
-    for (auto point : this->points) {
+    for (auto point : this->points) {        
         vertex_data.push_back(
             {
                 .position = {
@@ -39,7 +39,7 @@ void LineMesh::add_point(Point point) {
     GLfloat numerator{point.y - this->last_point.y};
     GLfloat denominator{point.x - this->last_point.x};
     GLfloat slope{0};
-    GLfloat r{0.025};
+    GLfloat r{1};
 
     Point left_point, right_point;
 

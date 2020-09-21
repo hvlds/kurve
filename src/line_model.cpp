@@ -14,8 +14,10 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
     this->line_mesh = mesh;
 
     // Init the values of the model
-    this->start_pos_x = point.x;
-    this->start_pos_y = point.y;
+    std::cout << "x: " << point.x << " y: " << point.y << std::endl;
+    this->start_pos_x = point.x - point.x * 2; 
+    this->start_pos_y = point.y - point.y * 2;
+    
     this->init_values();
 
     this->points.push_back(point);
