@@ -59,6 +59,19 @@ std::vector<Point> PlayerManager::get_all_points() {
     return all_points;
 }
 
+std::vector<Point> PlayerManager::get_player_points(int id) {
+    std::shared_ptr<PlayerModel> player = this->players.at(id);
+    std::vector<Point> all_points = player->get_line_points();
+    std::size_t point_count = all_points.size();
+    int limit = 20;
+    if (point_count >= limit) {
+        for (int i = 0; i < limit; i++) {
+            all_points.pop_back();
+        }
+    }
+    return all_points;
+}
+
 std::vector<Point> PlayerManager::get_oponent_points(int id) {
     std::vector<Point> oponent_points{};
     for (auto item : this->players) {
@@ -88,12 +101,21 @@ void PlayerManager::detect_collisions() {
     for (auto item : this->players) {
         int id = item.first;
         auto oponent_points = this->get_oponent_points(id);
+        auto own_points = this->get_player_points(id);
         std::shared_ptr<PlayerModel> player = item.second;
         Point position = player->get_position();
         for (auto point : oponent_points) {
             double distance = get_distance(point, position);
-            if (distance < 1) {
-                std::cout << "Collision with Player" << std::endl;
+            if (distance < 1.5) {
+                std::cout << "Collision with player!" << std::endl;
+            }
+        }
+        if (own_points.size() > 10) {
+            for (auto point : own_points) {
+                double distance = get_distance(point, position);
+                if (distance < 1.5) {
+                    std::cout << "Collision with your own line!" << std::endl;
+                }
             }
         }
     }

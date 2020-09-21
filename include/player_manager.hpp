@@ -28,6 +28,7 @@ class PlayerManager {
     void update(GLFWwindow* window);
     std::vector<Point> get_all_points();
     std::vector<Point> get_oponent_points(int id);
+    std::vector<Point> get_player_points(int id);
     Point get_player_position(int id);
     std::vector<int> get_ids();
     void detect_collisions();
