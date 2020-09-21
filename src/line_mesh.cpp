@@ -39,7 +39,7 @@ void LineMesh::add_point(Point point) {
     GLfloat numerator{point.y - this->last_point.y};
     GLfloat denominator{point.x - this->last_point.x};
     GLfloat slope{0};
-    GLfloat r{1};
+    GLfloat r{0.5};
 
     Point left_point, right_point;
 

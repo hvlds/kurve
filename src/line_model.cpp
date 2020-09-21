@@ -15,8 +15,8 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
 
     // Init the values of the model
     std::cout << "x: " << point.x << " y: " << point.y << std::endl;
-    this->start_pos_x = point.x - point.x * 2; 
-    this->start_pos_y = point.y - point.y * 2;
+    this->start_pos_x = 0; 
+    this->start_pos_y = 0;
     
     this->init_values();
 

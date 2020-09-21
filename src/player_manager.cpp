@@ -12,11 +12,9 @@ void PlayerManager::add_player(
     std::array<GLubyte, 3> color) {    
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
-    // int random_x= 3; 
-    // int random_y= -3;
-
-    GLfloat x = (GLfloat)random_x / 100;
-    GLfloat y = (GLfloat)random_y / 100;
+    
+    GLfloat x = (GLfloat) random_x / 10;
+    GLfloat y = (GLfloat) random_y / 10;
 
     int new_id = this->get_new_id();
     auto player = std::make_shared<PlayerModel>(new_id, x, y, color);
