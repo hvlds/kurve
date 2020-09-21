@@ -2,6 +2,7 @@
 #define PLAYER_MANAGER_HPP
 
 #include "player_model.hpp"
+#include "point.hpp"
 
 extern "C" {
 // Include the GLAD loader *before* including GLFW!
@@ -13,6 +14,7 @@ extern "C" {
 
 #include <map>
 #include <memory>
+#include <vector>
 
 class PlayerManager {
    protected:
@@ -24,6 +26,11 @@ class PlayerManager {
         std::array<GLubyte, 3> color);
     int get_new_id();
     void update(GLFWwindow* window);
+    std::vector<Point> get_all_points();
+    std::vector<Point> get_oponent_points(int id);
+    Point get_player_position(int id);
+    std::vector<int> get_ids();
+    void detect_collisions();
     void draw();
 };
 

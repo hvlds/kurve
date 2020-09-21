@@ -4,6 +4,7 @@
 #include "border_model.hpp"
 #include "model.hpp"
 #include "mesh.hpp"
+#include "point.hpp"
 #include "player_manager.hpp"
 #include "gl_calls.hpp"
 
@@ -45,6 +46,9 @@ void Game::loop() {
 			model->update(this->window);
 		}
 		this->player_manager->update(this->window);
+
+		// Detect the collisions
+		player_manager->detect_collisions();
 
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);

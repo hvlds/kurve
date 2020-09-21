@@ -12,7 +12,7 @@ void PlayerManager::add_player(
     std::array<GLubyte, 3> color) {    
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
-    
+
     GLfloat x = (GLfloat) random_x / 10;
     GLfloat y = (GLfloat) random_y / 10;
 
@@ -46,4 +46,56 @@ void PlayerManager::draw() {
     for (auto item : this->players) {
         item.second->draw();
     }
+}
+
+std::vector<Point> PlayerManager::get_all_points() {
+    std::vector<Point> all_points{};
+    for (auto item : this->players) {
+        auto temp_points = item.second->get_line_points();
+        for (auto point : temp_points) {
+            all_points.push_back(point);
+        }
+    }
+    return all_points;
+}
+
+std::vector<Point> PlayerManager::get_oponent_points(int id) {
+    std::vector<Point> oponent_points{};
+    for (auto item : this->players) {
+        if (item.first != id) {
+            auto temp_points = item.second->get_line_points();
+            for (auto point : temp_points) {
+                oponent_points.push_back(point);
+            }
+        }
+    }
+    return oponent_points;
+}
+
+Point PlayerManager::get_player_position(int id) {
+    return this->players.at(id)->get_position();
+}
+
+std::vector<int> PlayerManager::get_ids() {
+    std::vector<int> keys;
+    for (auto item : this->players) {
+        keys.push_back(item.first);
+    }
+    return keys;
+}
+
+void PlayerManager::detect_collisions() {
+    for (auto item : this->players) {
+        int id = item.first;
+        auto oponent_points = this->get_oponent_points(id);
+        std::shared_ptr<PlayerModel> player = item.second;
+        Point position = player->get_position();
+        for (auto point : oponent_points) {
+            double distance = get_distance(point, position);
+            if (distance < 1) {
+                std::cout << "Collision with Player" << std::endl;
+            }
+        }
+    }
+
 }
