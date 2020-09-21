@@ -27,6 +27,14 @@ class LineModel : public Model {
     std::shared_ptr<LineMesh> line_mesh;
     std::array<GLubyte, 3> color;
    public:
+    // The uniforms locations
+    GLint start_pos_y_loc;
+    GLint start_pos_x_loc;
+
+    // The uniforms values
+    GLfloat start_pos_y;
+    GLfloat start_pos_x;
+
     LineModel(Point point, std::array<GLubyte, 3> color);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;

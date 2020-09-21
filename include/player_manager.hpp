@@ -22,6 +22,9 @@ class PlayerManager {
     void add_player(
         Control control,
         std::array<GLubyte, 3> color);
+    int get_new_id();
+    void update(GLFWwindow* window);
+    void draw();
 };
 
 #endif

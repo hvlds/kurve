@@ -4,6 +4,7 @@
 #include "border_model.hpp"
 #include "model.hpp"
 #include "mesh.hpp"
+#include "player_manager.hpp"
 #include "gl_calls.hpp"
 
 #include <vector>
@@ -11,29 +12,24 @@
 #include <map>
 
 Game::Game(GLFWwindow* window) {
+	std::cout << "---- INIT GAME ----" << std::endl;
     this->window = window;
+	
+	auto player_manager = std::make_shared<PlayerManager>();
+	this->player_manager = player_manager;
 
-	GLfloat x1, y1;
-	x1 = 1.0;
-	y1 = 1.0;
-	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
-	auto player_1 = std::make_shared<PlayerModel>(1, x1, y1, color_1);
-	Control player_1_control = {
+	Control control_1 = {
 		GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN
 	};
-	player_1->set_keys(player_1_control);
-	this->models.push_back(player_1);
+	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
+	player_manager->add_player(control_1, color_1);
 
-	GLfloat x2, y2;
-	x2 = -1.0;
-	y2 = -1.0;
-	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
-	auto player_2 = std::make_shared<PlayerModel>(2, x2, y2, color_2);
-	Control player_2_control = {
+
+	Control control_2 = {
 		GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S
 	};
-	player_2->set_keys(player_2_control);
-	this->models.push_back(player_2);
+	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
+	player_manager->add_player(control_2, color_2);
 
 	auto border = std::make_shared<BorderModel>();
 	this->models.push_back(border);
@@ -48,6 +44,7 @@ void Game::loop() {
 		for (auto model : models) {
 			model->update(this->window);
 		}
+		this->player_manager->update(this->window);
 
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -57,6 +54,7 @@ void Game::loop() {
 		for (auto model : models) {
 			model->draw();
 		}
+		this->player_manager->draw();
 
 		// Swap the buffers to avoid tearing:
 		glfwSwapBuffers(this->window);

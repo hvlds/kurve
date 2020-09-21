@@ -7,7 +7,8 @@
 #include "shader.hpp"
 
 PlayerModel::PlayerModel(
-    int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {        
+    int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {       
+    std::cout << "---- INIT PLAYER ----" << std::endl;
     this->model_type = MODEL_PLAYER;
     this->color = color;
     this->id = id;

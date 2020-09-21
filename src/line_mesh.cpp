@@ -39,7 +39,7 @@ void LineMesh::add_point(Point point) {
     GLfloat numerator{point.y - this->last_point.y};
     GLfloat denominator{point.x - this->last_point.x};
     GLfloat slope{0};
-    GLfloat r{0.05};
+    GLfloat r{0.025};
 
     Point left_point, right_point;
 
@@ -63,10 +63,6 @@ void LineMesh::add_point(Point point) {
             point.y
         };
     }
-
-    // std::cout << "Original point: " << point.x << " " << point.y << std::endl;
-    // std::cout << "Left point: " << left_point.x << " " << left_point.y << std::endl;
-    // std::cout << "Right point: " << right_point.x << " " << right_point.y << std::endl;
     
     this->last_point = point;
     this->points.push_back(left_point);
@@ -152,8 +148,6 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 
 void LineMesh::draw() {
     this->bind();
-    // glEnable(GL_LINE_SMOOTH);
-    // glEnable(GL_BLEND);    
     glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
     gl_check_error("glDrawArrays");
 }

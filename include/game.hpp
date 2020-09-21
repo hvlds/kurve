@@ -13,6 +13,7 @@ extern "C" {
 }
 #include "model.hpp"
 #include "player_model.hpp"
+#include "player_manager.hpp"
 
 enum GameState {
     GAME_ACTIVE,
@@ -26,6 +27,7 @@ class Game {
     GameState state;
     GLFWwindow* window;
     std::vector<std::shared_ptr<Model>> models;
+    std::shared_ptr<PlayerManager> player_manager;
    public:
     Game(GLFWwindow* window);
     void loop();
