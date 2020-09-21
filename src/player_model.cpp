@@ -54,25 +54,25 @@ void PlayerModel::update(GLFWwindow* window) {
     GLfloat x_diff = 0;
     GLfloat y_diff = 0;
 
-    int right_state = glfwGetKey(window, this->right_key);
+    int right_state = glfwGetKey(window, this->control.right_key);
     if (right_state == GLFW_PRESS) {
         x_diff = static_cast<GLfloat>((VELOCITY * time_delta));
         this->trans_x = this->trans_x + x_diff;
     }
 
-    int left_state = glfwGetKey(window, this->left_key);
+    int left_state = glfwGetKey(window, this->control.left_key);
     if (left_state == GLFW_PRESS) {
         x_diff = static_cast<GLfloat>((-VELOCITY * time_delta));
         this->trans_x = this->trans_x + x_diff;
     }
 
-    int up_state = glfwGetKey(window, this->up_key);
+    int up_state = glfwGetKey(window, this->control.up_key);
     if (up_state == GLFW_PRESS) {
         y_diff = static_cast<GLfloat>((VELOCITY * time_delta));
         this->trans_y = this->trans_y + y_diff;
     }
 
-    int down_state = glfwGetKey(window, this->down_key);
+    int down_state = glfwGetKey(window, this->control.down_key);
     if (down_state == GLFW_PRESS) {
         y_diff = static_cast<GLfloat>((-VELOCITY * time_delta));
         this->trans_y = this->trans_y + y_diff;
@@ -136,11 +136,8 @@ void PlayerModel::init_values() {
     gl_check_error("glUniform1f [start_pos_y]");
 }
 
-void PlayerModel::set_keys(int left_key, int right_key, int up_key, int down_key) {
-    this->left_key = left_key;
-    this->right_key = right_key;
-    this->up_key = up_key;
-    this->down_key = down_key;
+void PlayerModel::set_keys(Control control) {
+    this->control = control;
 }
 
 void PlayerModel::add_line_model(std::shared_ptr<LineModel> line_model) {

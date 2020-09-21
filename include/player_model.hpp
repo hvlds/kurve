@@ -22,6 +22,13 @@ extern "C" {
 
 #define VELOCITY 1
 
+struct Control {
+    int left_key; 
+    int right_key; 
+    int up_key;
+    int down_key;
+};
+
 class PlayerModel : public Model {
    protected:
     virtual void init_uniforms() override;
@@ -29,14 +36,9 @@ class PlayerModel : public Model {
 
     std::vector<Point> points;
     std::shared_ptr<LineModel> line_model;
-    int id;
 
-    // Controls
-    int left_key;
-    int right_key;
-    int up_key;
-    int down_key;
-    // color
+    int id;
+    Control control;
     std::array<GLubyte, 3> color;
 
    public:
@@ -57,7 +59,7 @@ class PlayerModel : public Model {
     PlayerModel(int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
-    void set_keys(int left_key, int right_key, int up_key, int down_key);
+    void set_keys(Control control);
     void add_line_model(std::shared_ptr<LineModel> line_model);
     Point get_position();
     std::vector<Point> get_line_points();

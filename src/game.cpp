@@ -18,7 +18,10 @@ Game::Game(GLFWwindow* window) {
 	y1 = 1.0;
 	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
 	auto player_1 = std::make_shared<PlayerModel>(1, x1, y1, color_1);
-	player_1->set_keys(GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN);
+	Control player_1_control = {
+		GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN
+	};
+	player_1->set_keys(player_1_control);
 	this->models.push_back(player_1);
 
 	GLfloat x2, y2;
@@ -26,7 +29,10 @@ Game::Game(GLFWwindow* window) {
 	y2 = -1.0;
 	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
 	auto player_2 = std::make_shared<PlayerModel>(2, x2, y2, color_2);
-	player_2->set_keys(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
+	Control player_2_control = {
+		GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S
+	};
+	player_2->set_keys(player_2_control);
 	this->models.push_back(player_2);
 
 	auto border = std::make_shared<BorderModel>();
