@@ -148,6 +148,6 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 
 void LineMesh::draw() {
     this->bind();
-    glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, this->points.size());
     gl_check_error("glDrawArrays");
 }

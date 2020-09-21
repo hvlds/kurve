@@ -48,7 +48,7 @@ void Game::loop() {
 		this->player_manager->update(this->window);
 
 		// Detect the collisions
-		player_manager->detect_collisions();
+		//player_manager->detect_collisions();
 
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);

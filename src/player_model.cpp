@@ -12,6 +12,8 @@ PlayerModel::PlayerModel(
     this->model_type = MODEL_PLAYER;
     this->color = color;
     this->id = id;
+    Point point{x, y};
+    this->last_point = point;
 
     // Compile and add the shaders
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
@@ -28,7 +30,6 @@ PlayerModel::PlayerModel(
     this->init_values();    
 
     // Add initial positions into the point vector
-    Point point{x, y};
     this->points.push_back(point);
 
     // Create a line model for the player
@@ -50,6 +51,7 @@ void PlayerModel::update(GLFWwindow* window) {
     glUseProgram(this->shader_id);
     double new_time = glfwGetTime();
     double time_delta = new_time - this->time;
+    double speed = M_PI / 3; 
 
     this->time = new_time;
     GLfloat x_diff = 0;
@@ -57,40 +59,31 @@ void PlayerModel::update(GLFWwindow* window) {
 
     int right_state = glfwGetKey(window, this->control.right_key);
     if (right_state == GLFW_PRESS) {
-        x_diff = static_cast<GLfloat>((VELOCITY * time_delta));
-        this->trans_x = this->trans_x + x_diff;
+        x_diff = static_cast<GLfloat>((-speed * time_delta));        
     }
 
     int left_state = glfwGetKey(window, this->control.left_key);
     if (left_state == GLFW_PRESS) {
-        x_diff = static_cast<GLfloat>((-VELOCITY * time_delta));
-        this->trans_x = this->trans_x + x_diff;
+        x_diff = static_cast<GLfloat>((speed * time_delta));
     }
 
-    int up_state = glfwGetKey(window, this->control.up_key);
-    if (up_state == GLFW_PRESS) {
-        y_diff = static_cast<GLfloat>((VELOCITY * time_delta));
-        this->trans_y = this->trans_y + y_diff;
+    if (x_diff != 0) {
+        this->speed_x = this->speed_x * cos(x_diff) - this->speed_y * sin(x_diff);
+        this->speed_y = this->speed_x * sin(x_diff) + this->speed_y * cos(x_diff);
     }
+    
+    this->trans_x += this->speed_x;
+    this->trans_y += this->speed_y;
 
-    int down_state = glfwGetKey(window, this->control.down_key);
-    if (down_state == GLFW_PRESS) {
-        y_diff = static_cast<GLfloat>((-VELOCITY * time_delta));
-        this->trans_y = this->trans_y + y_diff;
-    }
-
-    // There was a movement, add a new point!
-    if (x_diff != 0 || y_diff !=0) {
-        Point last_point = this->points.back();
-        Point point{
-            this->trans_x + x_diff + this->start_pos_x,
-            this->trans_y + y_diff + this->start_pos_y
-        };
-        this->points.push_back(point);
-        if (this->line_model != nullptr) {          
-            this->line_model->add_point(point);
-            this->line_model->update(window); 
-        }
+    Point last_point = this->points.back();
+    Point point{
+        this->trans_x + this->speed_x + this->start_pos_x,
+        this->trans_y + this->speed_y + this->start_pos_y
+    };
+    this->points.push_back(point);
+    if (this->line_model != nullptr) {          
+        this->line_model->add_point(point);
+        this->line_model->update(window); 
     }
 
     // Update the uniform:
@@ -126,8 +119,17 @@ void PlayerModel::init_uniforms() {
 
 void PlayerModel::init_values() {
     this->time = glfwGetTime();
-    this->trans_y = 0;
     this->trans_x = 0;
+    this->trans_y = 0;
+
+    this->speed_x = 0.05;
+    this->speed_y = 0;    
+
+    glUniform1f(this->trans_y_loc, this->trans_y);
+    gl_check_error("glUniform1f [trans_y]");
+
+    glUniform1f(this->trans_x_loc, this->trans_x);
+    gl_check_error("glUniform1f [trans_x]");
 
     glUniform1f(this->start_pos_x_loc, this->start_pos_x);
     gl_check_error("glUniform1f [start_pos_x]");

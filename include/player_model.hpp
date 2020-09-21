@@ -49,6 +49,9 @@ class PlayerModel : public Model {
     GLfloat start_pos_x_loc;
 
     double time;
+    Point last_point;
+    GLfloat speed_x;
+    GLfloat speed_y;
 
     // The Uniform values
     GLfloat trans_y;
