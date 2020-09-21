@@ -53,6 +53,11 @@ void PlayerModel::update(GLFWwindow* window) {
     double time_delta = new_time - this->time;
     double speed = M_PI / 3; 
 
+    if (this->trans_x + this->start_pos_x >= 18.5 
+        || this->trans_x + this->start_pos_x <= -18.5) return;
+    if (this->trans_y + this->start_pos_y >= 18.5 
+        || this->trans_y + this->start_pos_y <= -18.5) return;
+
     this->time = new_time;
     GLfloat x_diff = 0;
     GLfloat y_diff = 0;
