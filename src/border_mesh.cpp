@@ -7,7 +7,7 @@ BorderMesh::BorderMesh() {
     std::vector<vertex_data_t> vertex_data;
 
     std::vector<Point> points = {
-        {0.9, 0.9}, {-0.9, 0.9}, {-0.9, -0.9}, {0.9, -0.9}
+        {0.65, 0.9}, {-0.9, 0.9}, {-0.9, -0.9}, {0.65, -0.9}
     };
 
     for (auto point : points) {

@@ -60,8 +60,8 @@ void Game::loop() {
 		}
 		this->player_manager->draw();
 
-		this->font->RenderText("Hola", 0.0f, 0.0f, 1.0f, glm::vec3(0.9, 0.0f, 0.0f));
-		this->font->RenderText("Test", 0.0f, 0.0f, 1.0f, glm::vec3(0.3, 0.7f, 0.9f));
+		this->font->draw_text("Player 1", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
+		this->font->draw_text("Player 2", 400.0f, 350.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Detect the collisions
 		player_manager->detect_collisions();

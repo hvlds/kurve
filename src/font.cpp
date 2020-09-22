@@ -85,7 +85,7 @@ Font::Font() {
     glBindVertexArray(0);    
 }
 
-void Font::RenderText(
+void Font::draw_text(
     std::string text, 
     float x, 
     float y, 

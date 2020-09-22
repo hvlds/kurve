@@ -35,7 +35,7 @@ class Font {
     GLuint shader_id;
    public:
     Font();
-    void RenderText(std::string text, 
+    void draw_text(std::string text, 
                     float x, 
                     float y, 
                     float scale, 
