@@ -52,6 +52,7 @@ class PlayerModel : public Model {
     Point last_point;
     GLfloat speed_x;
     GLfloat speed_y;
+    bool is_active;
 
     // The Uniform values
     GLfloat trans_y;

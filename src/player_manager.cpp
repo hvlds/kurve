@@ -107,6 +107,7 @@ void PlayerManager::detect_collisions() {
         for (auto point : oponent_points) {
             double distance = Point::get_distance(point, position);
             if (distance < 1) {
+                player->is_active = false;
                 std::cout << "Collision with player!" << std::endl;
             }
         }
@@ -114,10 +115,20 @@ void PlayerManager::detect_collisions() {
             for (auto point : own_points) {
                 double distance = Point::get_distance(point, position);
                 if (distance < 1) {
+                    player->is_active = false;
                     std::cout << "Collision with your own line!" << std::endl;
                 }
             }
         }
     }
+}
 
+std::vector<int> PlayerManager::get_active_players() {
+    std::vector<int> active_ids;
+    for (auto item : this->players) {
+        if (item.second->is_active == true) {
+            active_ids.push_back(item.first);
+        }
+    }  
+    return active_ids;
 }

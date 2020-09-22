@@ -32,6 +32,7 @@ class PlayerManager {
     Point get_player_position(int id);
     std::vector<int> get_ids();
     void detect_collisions();
+    std::vector<int> get_active_players();
     void draw();
 };
 

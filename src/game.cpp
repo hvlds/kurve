@@ -48,7 +48,14 @@ void Game::loop() {
 		this->player_manager->update(this->window);
 
 		// Detect the collisions
-		//player_manager->detect_collisions();
+		player_manager->detect_collisions();
+
+		// Check how many players are still active
+		auto active_players = player_manager->get_active_players();
+		if (active_players.size() <= 1) {
+			std::cout << "GAME OVER!" << std::endl;
+			return;
+ 		}
 
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);
