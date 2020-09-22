@@ -11,7 +11,10 @@
 class LineMesh: public Mesh {
    protected:
     std::vector<Point> points;
+    std::vector<Point> line_points;
+    Point actual_point;
     Point last_point;
+    Point second_last_point;
     std::array<GLubyte, 3> color;    
    public:
     LineMesh(Point first_point, std::array<GLubyte, 3> color);

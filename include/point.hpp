@@ -19,9 +19,10 @@ class Vector {
     GLfloat x;
     GLfloat y;
     Vector(Point start, Point end);
-    double get_lenght();
-    static GLfloat dot_product(Vector v1, Vector v2);
-    static GLfloat cross_product(Vector v1, Vector v2);
+    double get_length();
+    static double dot_product(Vector v1, Vector v2);
+    static double cross_product(Vector v1, Vector v2);
+    static double angle(Vector v1, Vector v2);
 };
 
 

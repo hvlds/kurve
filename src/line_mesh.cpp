@@ -4,30 +4,31 @@
 #include <cmath>
 
 void LineMesh::update() {
-    this->bind();
-    std::vector<vertex_data_t> vertex_data;
+    if (this->points.size() > 0 ) {
+        this->bind();
+        std::vector<vertex_data_t> vertex_data;
 
-    for (auto point : this->points) {        
-        vertex_data.push_back(
-            {
-                .position = {
-                    static_cast<GLfloat>(point.x), 
-                    static_cast<GLfloat>(point.y), 
-                    0
-                }, 
-                .color = {this->color[0], this->color[1], this->color[2]}
-            }
-        );
+        for (auto point : this->points) {        
+            vertex_data.push_back(
+                {
+                    .position = {
+                        static_cast<GLfloat>(point.x), 
+                        static_cast<GLfloat>(point.y), 
+                        0
+                    }, 
+                    .color = {this->color[0], this->color[1], this->color[2]}
+                }
+            );
+        }
+
+        // Upload the vertex data to the GPU:
+        glBufferData(
+            GL_ARRAY_BUFFER, 
+            this->points.size() * sizeof(vertex_data_t), 
+            (const GLvoid*)vertex_data.data(), 
+            GL_DYNAMIC_DRAW);
+        gl_check_error("glBufferData");
     }
-
-    // Upload the vertex data to the GPU:
-    glBufferData(
-        GL_ARRAY_BUFFER, 
-        this->points.size() * sizeof(vertex_data_t), 
-        (const GLvoid*)vertex_data.data(), 
-        GL_DYNAMIC_DRAW);
-    gl_check_error("glBufferData");
-
 }
 
 void LineMesh::set_points(std::vector<Point> points) {
@@ -35,80 +36,80 @@ void LineMesh::set_points(std::vector<Point> points) {
 }
 
 void LineMesh::add_point(Point point) {
-    // Create left point
-    GLfloat numerator{point.y - this->last_point.y};
-    GLfloat denominator{point.x - this->last_point.x};
-    GLfloat slope{0};
-    GLfloat r{0.5};
-
-    Point left_point, right_point;
-
-    if (denominator != 0) {
-        // slope = numerator / denominator;
-        slope = M_PI - (numerator / denominator); 
-        if (denominator > 0 && numerator < 0) {
-            left_point = {
-                point.x + r * cos(slope),
-                point.y + r * sin(slope)};
-            right_point = {
-                point.x - r * cos(slope),
-                point.y - r * sin(slope)};
-        } else if (denominator > 0 && numerator > 0) {
-            left_point = {
-                point.x - r * cos(slope),
-                point.y + r * sin(slope)};
-            right_point = {
-                point.x + r * cos(slope),
-                point.y - r * sin(slope)};
-        } else if (denominator < 0 && numerator < 0) {
-            left_point = {
-                point.x + r * cos(slope),
-                point.y - r * sin(slope)};
-            right_point = {
-                point.x + r * cos(slope),
-                point.y + r * sin(slope)};
-        } else if (denominator < 0 && numerator > 0) {
-            left_point = {
-                point.x - r * cos(slope),
-                point.y - r * sin(slope)};
-            right_point = {
-                point.x + r * cos(slope),
-                point.y + r * sin(slope)};
-        }
+    if (this->line_points.size() == 0) {
+        this->line_points.push_back(point);
+    } else if (this->line_points.size() == 1) {
+        this->last_point = this->line_points.back();
+        this->line_points.push_back(point);
     } else {
-        left_point = {
-            point.x -r,
-            point.y
-        };
-        right_point = {
-            point.x + r,
-            point.y
-        };
+        this->second_last_point = this->last_point;
+        this->last_point = this->line_points.back();
+
+        Vector v1{this->last_point, this->second_last_point}; // second last - last
+        Vector v2{this->last_point, point}; // actual - last
+        
+        double angle = Vector::angle(v1, v2);
+        std::cout << "angle: " << angle << std::endl;
+        double direction = Vector::cross_product(v1, v2);
+        direction = round(direction);
+        std::cout << "direction: " << direction << std::endl;
+
+        GLfloat r{4};
+        Point left_point, right_point, left_diff, right_diff;
+
+        if (direction < 0) {
+            // Rotation clockwise
+            angle = angle / 2;
+            left_point = {
+                v2.x * (GLfloat)cos(M_PI - angle) - v2.y * (GLfloat)sin(M_PI - angle),
+                v2.x * (GLfloat)sin(M_PI - angle) + v2.y * (GLfloat)cos(M_PI - angle)};
+            right_point = {
+                v2.x * (GLfloat)cos(-angle) - v2.y * (GLfloat)sin(-angle),
+                v2.x * (GLfloat)sin(-angle) + v2.y * (GLfloat)cos(-angle)};
+
+        } else if (direction > 0) {
+            // Rotation anti-clockwise
+            angle = angle / 2;
+            left_point = {
+                v2.x * (GLfloat)cos(angle) - v2.y * (GLfloat)sin(angle),
+                v2.x * (GLfloat)sin(angle) + v2.y * (GLfloat)cos(angle)};
+            right_point = {
+                v2.x * (GLfloat)cos(-M_PI + angle) - v2.y * (GLfloat)sin(-M_PI + angle),
+                v2.x * (GLfloat)sin(-M_PI + angle) + v2.y * (GLfloat)cos(-M_PI + angle)};
+        } else {
+            angle = M_PI/2;
+            left_point = {
+                v2.x * (GLfloat)cos(angle) - v2.y * (GLfloat)sin(angle),
+                v2.x * (GLfloat)sin(angle) + v2.y * (GLfloat)cos(angle)};
+            right_point = {
+                v2.x * (GLfloat)cos(-angle) - v2.y * (GLfloat)sin(-angle),
+                v2.x * (GLfloat)sin(-angle) + v2.y * (GLfloat)cos(-angle)};
+        }
+
+        // angle = M_PI/2;
+        // left_point = {
+        //     v2.x * (GLfloat)cos(angle) - v2.y * (GLfloat)sin(angle),
+        //     v2.x * (GLfloat)sin(angle) + v2.y * (GLfloat)cos(angle)};
+        // right_point = {
+        //     v2.x * (GLfloat)cos(-angle) - v2.y * (GLfloat)sin(-angle),
+        //     v2.x * (GLfloat)sin(-angle) + v2.y * (GLfloat)cos(-angle)};
+
+        left_point.x *= r;
+        left_point.y *= r;
+        right_point.x *= r;
+        right_point.y *= r;
+
+        left_point.x += this->last_point.x;
+        left_point.y += this->last_point.y;
+
+        right_point.x += this->last_point.x;
+        right_point.y += this->last_point.y;
+
+        this->line_points.push_back(point);
+        this->points.push_back(left_point);
+        this->points.push_back(right_point);
     }
-    // if (denominator != 0) {
-    //     slope = (numerator / denominator;
-    //     left_point = {
-    //         point.x + -1 * (GLfloat)sin(slope) * r,
-    //         point.y + (GLfloat)cos(slope) * r
-    //     };
-    //     right_point = {
-    //         point.x + (GLfloat)sin(slope) * r,
-    //         point.y + -1 * (GLfloat)cos(slope) * r
-    //     };
-    // } else {
-    //     left_point = {
-    //         point.x -r,
-    //         point.y
-    //     };
-    //     right_point = {
-    //         point.x + r,
-    //         point.y
-    //     };
-    // }
-    
-    this->last_point = point;
-    this->points.push_back(left_point);
-    this->points.push_back(right_point);
+
 }
 
 LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
@@ -189,7 +190,9 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 }
 
 void LineMesh::draw() {
-    this->bind();
-    glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
-    gl_check_error("glDrawArrays");
+    if (this->points.size() > 0) {
+        this->bind();
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, this->points.size());
+        gl_check_error("glDrawArrays");
+    }
 }

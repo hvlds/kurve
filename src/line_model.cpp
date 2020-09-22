@@ -20,7 +20,8 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
     
     this->init_values();
 
-    this->points.push_back(point);
+    // this->points.push_back(point);
+    this->add_point(point);
 }
 
 void LineModel::update(GLFWwindow* window) {
@@ -33,6 +34,7 @@ void LineModel::draw() {
 }
 
 void LineModel::init_uniforms() {
+    std::cout << "Init uniforms" << std::endl;
     // Start pos Y:
     this->start_pos_y_loc = glGetUniformLocation(this->shader_id, "start_pos_y");
     gl_check_error("glGetUniformLocation [start_pos_y]");
@@ -45,7 +47,7 @@ void LineModel::init_uniforms() {
 }
 
 void LineModel::init_values() {
-    std::cout << "Init uniforms" << std::endl;
+    std::cout << "Init values" << std::endl;
     glUniform1f(this->start_pos_x_loc, this->start_pos_x);
     gl_check_error("glUniform1f [start_pos_x]");
 
@@ -54,7 +56,9 @@ void LineModel::init_values() {
 }
 
 void LineModel::add_point(Point point) {
-    auto last_point = this->points.back();
+    if (this->points.size() > 0) {
+        auto last_point = this->points.back();
+    }
     this->points.push_back(point);
     this->line_mesh->add_point(point);
 }
