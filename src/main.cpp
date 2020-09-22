@@ -8,6 +8,11 @@
 #include "display.hpp"
 #include "user.hpp"
 
+extern "C" {
+#include "ft2build.h"
+#include FT_FREETYPE_H  
+} 
+
 int main(void)
 {
 	// Create our user data struct:
@@ -16,6 +21,19 @@ int main(void)
 		.window_width = 800,
 		.window_height = 600,
 	};
+
+	// Testing FreeType
+	FT_Library ft;
+	if (FT_Init_FreeType(&ft)) {
+		std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+		return -1;
+	}
+
+	FT_Face face;
+	if (FT_New_Face(ft, "../fonts/UbuntuMono-R.ttf", 0, &face)) {
+		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+		return -1;
+	}
 
 	Display display(&user_data);
 	GLFWwindow* window = display.get_window();
