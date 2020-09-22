@@ -19,6 +19,7 @@ class Vector {
     GLfloat x;
     GLfloat y;
     Vector(Point start, Point end);
+    Vector(GLfloat x, GLfloat y);
     double get_length();
     static double dot_product(Vector v1, Vector v2);
     static double cross_product(Vector v1, Vector v2);

@@ -51,7 +51,7 @@ void PlayerModel::update(GLFWwindow* window) {
     glUseProgram(this->shader_id);
     double new_time = glfwGetTime();
     double time_delta = new_time - this->time;
-    double speed = 2; 
+    double speed = 3.5; 
 
     if (this->trans_x + this->start_pos_x >= 18.25 
         || this->trans_x + this->start_pos_x <= -18.25) return;
@@ -59,26 +59,32 @@ void PlayerModel::update(GLFWwindow* window) {
         || this->trans_y + this->start_pos_y <= -18.25) return;
 
     this->time = new_time;
-    GLfloat x_diff = 0;
-    GLfloat y_diff = 0;
+    GLfloat angle_diff = 0;
 
     int right_state = glfwGetKey(window, this->control.right_key);
     if (right_state == GLFW_PRESS) {
-        x_diff = static_cast<GLfloat>((-speed * time_delta));        
+        angle_diff = static_cast<GLfloat>((-speed * time_delta));        
     }
 
     int left_state = glfwGetKey(window, this->control.left_key);
     if (left_state == GLFW_PRESS) {
-        x_diff = static_cast<GLfloat>((speed * time_delta));
+        angle_diff = static_cast<GLfloat>((speed * time_delta));
     }
 
-    if (x_diff != 0) {
-        this->speed_x = this->speed_x * cos(x_diff) - this->speed_y * sin(x_diff);
-        this->speed_y = this->speed_x * sin(x_diff) + this->speed_y * cos(x_diff);
-    } else {
-        this->speed_x += 0;
-        this->speed_y += 0;
+    std::cout << "Angle diff: " << angle_diff << std::endl;
+
+    Vector speed_vec{this->speed_x, this->speed_y};
+
+    if (angle_diff != 0) {
+        GLfloat temp_x = speed_vec.x / speed_vec.get_length();
+        GLfloat temp_y = speed_vec.y / speed_vec.get_length();
+        this->speed_x = temp_x * cos(angle_diff) - temp_y * sin(angle_diff);
+        this->speed_y = temp_x * sin(angle_diff) + temp_y * cos(angle_diff);
+        this->speed_x *= 0.1;
+        this->speed_y *= 0.1;
     }
+
+    std::cout << "Speed length: " << speed_vec.get_length() << std::endl;
     
     this->trans_x += this->speed_x;
     this->trans_y += this->speed_y;    

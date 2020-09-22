@@ -11,6 +11,11 @@ Vector::Vector(Point start, Point end) {
     this->y = end.y - start.y;
 }
 
+Vector::Vector(GLfloat x, GLfloat y) {
+    this->x = x;
+    this->y = y;
+}
+
 double Vector::get_length() {
     double length = sqrt(pow(this->x, 2) + pow(this->y, 2));
     return length;

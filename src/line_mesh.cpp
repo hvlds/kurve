@@ -96,7 +96,7 @@ void LineMesh::add_point(Point point) {
         right_point.x += this->last_point.x;
         right_point.y += this->last_point.y;
 
-        std::cout << "Diameter: " << Point::get_distance(left_point, right_point) << std::endl;
+        // std::cout << "Diameter: " << Point::get_distance(left_point, right_point) << std::endl;
 
         this->line_points.push_back(point);
         this->points.push_back(left_point);
@@ -185,7 +185,7 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 void LineMesh::draw() {
     if (this->points.size() > 0) {
         this->bind();
-        glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, this->points.size());
         gl_check_error("glDrawArrays");
     }
 }
