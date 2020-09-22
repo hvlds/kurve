@@ -14,6 +14,7 @@ extern "C" {
 #include "model.hpp"
 #include "player_model.hpp"
 #include "player_manager.hpp"
+#include "font.hpp"
 
 enum GameState {
     GAME_ACTIVE,
@@ -28,8 +29,10 @@ class Game {
     GLFWwindow* window;
     std::vector<std::shared_ptr<Model>> models;
     std::shared_ptr<PlayerManager> player_manager;
+    std::shared_ptr<Font> font;    
    public:
     Game(GLFWwindow* window);
+    int generate_fonts();
     void loop();
     void terminate();
 };

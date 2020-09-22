@@ -7,6 +7,7 @@
 #include "point.hpp"
 #include "player_manager.hpp"
 #include "gl_calls.hpp"
+#include "font.hpp"
 
 #include <vector>
 #include <memory>
@@ -25,7 +26,6 @@ Game::Game(GLFWwindow* window) {
 	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
 	this->player_manager->add_player(control_1, color_1);
 
-
 	Control control_2 = {
 		GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S
 	};
@@ -36,6 +36,12 @@ Game::Game(GLFWwindow* window) {
 	this->models.push_back(border);
 
 	init_gl(this->window);
+
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	auto font = std::make_shared<Font>();
+	this->font = font;
 }
 
 void Game::loop() {
@@ -49,8 +55,11 @@ void Game::loop() {
 
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);
-		gl_check_error("glClear");
+		gl_check_error("glClear");		
 
+		this->font->RenderText("This is sample text", 0.0f, 0.0f, 10.0f, glm::vec3(0.9, 0.8f, 0.2f));
+		this->font->RenderText("This is sample text", 0.0f, 0.0f, 10.5f, glm::vec3(0.3, 0.7f, 0.9f));
+		
 		// Draw the models:
 		for (auto model : models) {
 			model->draw();
