@@ -76,12 +76,11 @@ void PlayerModel::update(GLFWwindow* window) {
     Vector speed_vec{this->speed_x, this->speed_y};
 
     if (angle_diff != 0) {
-        GLfloat temp_x = speed_vec.x / speed_vec.get_length();
-        GLfloat temp_y = speed_vec.y / speed_vec.get_length();
-        this->speed_x = temp_x * cos(angle_diff) - temp_y * sin(angle_diff);
-        this->speed_y = temp_x * sin(angle_diff) + temp_y * cos(angle_diff);
-        this->speed_x *= 0.1;
-        this->speed_y *= 0.1;
+        GLfloat temp_speed_x = this->speed_x;
+        GLfloat temp_speed_y = this->speed_y;
+
+        this->speed_x = temp_speed_x * cos(angle_diff) - temp_speed_y * sin(angle_diff);
+        this->speed_y = temp_speed_x * sin(angle_diff) + temp_speed_y * cos(angle_diff);
     }
 
     std::cout << "Speed length: " << speed_vec.get_length() << std::endl;
