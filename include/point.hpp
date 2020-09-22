@@ -7,11 +7,22 @@ extern "C" {
 #include "math.h"
 }
 
-struct Point {
+class Point {
+   public:
     GLfloat x;
     GLfloat y;
+    static double get_distance(Point p1, Point p2);
 };
 
-double get_distance(Point p1, Point p2);
+class Vector {
+   public:
+    GLfloat x;
+    GLfloat y;
+    Vector(Point start, Point end);
+    double get_lenght();
+    static GLfloat dot_product(Vector v1, Vector v2);
+    static GLfloat cross_product(Vector v1, Vector v2);
+};
+
 
 #endif

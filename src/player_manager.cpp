@@ -105,14 +105,14 @@ void PlayerManager::detect_collisions() {
         std::shared_ptr<PlayerModel> player = item.second;
         Point position = player->get_position();
         for (auto point : oponent_points) {
-            double distance = get_distance(point, position);
+            double distance = Point::get_distance(point, position);
             if (distance < 1) {
                 std::cout << "Collision with player!" << std::endl;
             }
         }
         if (own_points.size() > 20) {
             for (auto point : own_points) {
-                double distance = get_distance(point, position);
+                double distance = Point::get_distance(point, position);
                 if (distance < 1) {
                     std::cout << "Collision with your own line!" << std::endl;
                 }

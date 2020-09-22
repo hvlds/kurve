@@ -44,15 +44,37 @@ void LineMesh::add_point(Point point) {
     Point left_point, right_point;
 
     if (denominator != 0) {
-        slope = numerator / denominator;
-        left_point = {
-            point.x + -1 * (GLfloat)sin(slope) * r,
-            point.y + (GLfloat)cos(slope) * r
-        };
-        right_point = {
-            point.x + (GLfloat)sin(slope) * r,
-            point.y + -1 * (GLfloat)cos(slope) * r
-        };
+        // slope = numerator / denominator;
+        slope = M_PI - (numerator / denominator); 
+        if (denominator > 0 && numerator < 0) {
+            left_point = {
+                point.x + r * cos(slope),
+                point.y + r * sin(slope)};
+            right_point = {
+                point.x - r * cos(slope),
+                point.y - r * sin(slope)};
+        } else if (denominator > 0 && numerator > 0) {
+            left_point = {
+                point.x - r * cos(slope),
+                point.y + r * sin(slope)};
+            right_point = {
+                point.x + r * cos(slope),
+                point.y - r * sin(slope)};
+        } else if (denominator < 0 && numerator < 0) {
+            left_point = {
+                point.x + r * cos(slope),
+                point.y - r * sin(slope)};
+            right_point = {
+                point.x + r * cos(slope),
+                point.y + r * sin(slope)};
+        } else if (denominator < 0 && numerator > 0) {
+            left_point = {
+                point.x - r * cos(slope),
+                point.y - r * sin(slope)};
+            right_point = {
+                point.x + r * cos(slope),
+                point.y + r * sin(slope)};
+        }
     } else {
         left_point = {
             point.x -r,
@@ -63,6 +85,26 @@ void LineMesh::add_point(Point point) {
             point.y
         };
     }
+    // if (denominator != 0) {
+    //     slope = (numerator / denominator;
+    //     left_point = {
+    //         point.x + -1 * (GLfloat)sin(slope) * r,
+    //         point.y + (GLfloat)cos(slope) * r
+    //     };
+    //     right_point = {
+    //         point.x + (GLfloat)sin(slope) * r,
+    //         point.y + -1 * (GLfloat)cos(slope) * r
+    //     };
+    // } else {
+    //     left_point = {
+    //         point.x -r,
+    //         point.y
+    //     };
+    //     right_point = {
+    //         point.x + r,
+    //         point.y
+    //     };
+    // }
     
     this->last_point = point;
     this->points.push_back(left_point);
@@ -148,6 +190,6 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 
 void LineMesh::draw() {
     this->bind();
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, this->points.size());
+    glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
     gl_check_error("glDrawArrays");
 }
