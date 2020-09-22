@@ -49,13 +49,17 @@ void LineMesh::add_point(Point point) {
         Vector v2{this->last_point, point}; // actual - last
         
         double angle = Vector::angle(v1, v2);
-        std::cout << "angle: " << angle << std::endl;
+        // std::cout << "angle: " << angle << std::endl;
         double direction = Vector::cross_product(v1, v2);
         direction = round(direction);
-        std::cout << "direction: " << direction << std::endl;
+        // std::cout << "direction: " << direction << std::endl;
 
-        GLfloat r{4};
+        GLfloat r{0.5};
         Point left_point, right_point, left_diff, right_diff;
+
+        double v2_length = v2.get_length();
+        v2.x = (v2.x / (GLfloat) v2_length) * r;
+        v2.y = (v2.y / (GLfloat) v2_length) * r;
 
         if (direction < 0) {
             // Rotation clockwise
@@ -86,24 +90,13 @@ void LineMesh::add_point(Point point) {
                 v2.x * (GLfloat)sin(-angle) + v2.y * (GLfloat)cos(-angle)};
         }
 
-        // angle = M_PI/2;
-        // left_point = {
-        //     v2.x * (GLfloat)cos(angle) - v2.y * (GLfloat)sin(angle),
-        //     v2.x * (GLfloat)sin(angle) + v2.y * (GLfloat)cos(angle)};
-        // right_point = {
-        //     v2.x * (GLfloat)cos(-angle) - v2.y * (GLfloat)sin(-angle),
-        //     v2.x * (GLfloat)sin(-angle) + v2.y * (GLfloat)cos(-angle)};
-
-        left_point.x *= r;
-        left_point.y *= r;
-        right_point.x *= r;
-        right_point.y *= r;
-
         left_point.x += this->last_point.x;
         left_point.y += this->last_point.y;
 
         right_point.x += this->last_point.x;
         right_point.y += this->last_point.y;
+
+        std::cout << "Diameter: " << Point::get_distance(left_point, right_point) << std::endl;
 
         this->line_points.push_back(point);
         this->points.push_back(left_point);
@@ -192,7 +185,7 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 void LineMesh::draw() {
     if (this->points.size() > 0) {
         this->bind();
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, this->points.size());
+        glDrawArrays(GL_LINE_STRIP, 0, this->points.size());
         gl_check_error("glDrawArrays");
     }
 }

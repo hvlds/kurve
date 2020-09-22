@@ -51,7 +51,7 @@ void PlayerModel::update(GLFWwindow* window) {
     glUseProgram(this->shader_id);
     double new_time = glfwGetTime();
     double time_delta = new_time - this->time;
-    double speed = M_PI / 3; 
+    double speed = 2; 
 
     if (this->trans_x + this->start_pos_x >= 18.25 
         || this->trans_x + this->start_pos_x <= -18.25) return;
@@ -75,15 +75,18 @@ void PlayerModel::update(GLFWwindow* window) {
     if (x_diff != 0) {
         this->speed_x = this->speed_x * cos(x_diff) - this->speed_y * sin(x_diff);
         this->speed_y = this->speed_x * sin(x_diff) + this->speed_y * cos(x_diff);
+    } else {
+        this->speed_x += 0;
+        this->speed_y += 0;
     }
     
     this->trans_x += this->speed_x;
-    this->trans_y += this->speed_y;
+    this->trans_y += this->speed_y;    
 
     Point last_point = this->points.back();
     Point point{
-        this->trans_x + this->speed_x + this->start_pos_x,
-        this->trans_y + this->speed_y + this->start_pos_y
+        this->trans_x + this->start_pos_x,
+        this->trans_y + this->start_pos_y
     };
     this->points.push_back(point);
     if (this->line_model != nullptr) {          
@@ -127,7 +130,7 @@ void PlayerModel::init_values() {
     this->trans_x = 0;
     this->trans_y = 0;
 
-    this->speed_x = 0.05;
+    this->speed_x = 0.1;
     this->speed_y = 0;    
 
     glUniform1f(this->trans_y_loc, this->trans_y);
