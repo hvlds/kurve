@@ -55,10 +55,17 @@ void PlayerModel::update(GLFWwindow* window) {
         double time_delta = new_time - this->time;
         double speed = 2.5; 
 
-        if (this->trans_x + this->start_pos_x >= 18.25 
-            || this->trans_x + this->start_pos_x <= -18.25) return;
-        if (this->trans_y + this->start_pos_y >= 18.25 
-            || this->trans_y + this->start_pos_y <= -18.25) return;
+        if (this->trans_x + this->start_pos_x >= 18.5 
+            || this->trans_x + this->start_pos_x <= -18.5) {
+            this->is_active = false;
+            return;
+        }
+
+        if (this->trans_y + this->start_pos_y >= 18.5 
+            || this->trans_y + this->start_pos_y <= -18.5) {
+            this->is_active = false;
+            return;
+        }
 
         this->time = new_time;
         GLfloat angle_diff = 0;

@@ -47,16 +47,6 @@ void Game::loop() {
 		}
 		this->player_manager->update(this->window);
 
-		// Detect the collisions
-		player_manager->detect_collisions();
-
-		// Check how many players are still active
-		auto active_players = player_manager->get_active_players();
-		if (active_players.size() <= 1) {
-			std::cout << "GAME OVER!" << std::endl;
-			return;
- 		}
-
 		// Clear the color buffer -> background color:
 		glClear(GL_COLOR_BUFFER_BIT);
 		gl_check_error("glClear");
@@ -66,6 +56,16 @@ void Game::loop() {
 			model->draw();
 		}
 		this->player_manager->draw();
+
+		// Detect the collisions
+		player_manager->detect_collisions();
+
+		// Check how many players are still active
+		auto active_players = player_manager->get_active_players();
+		if (active_players.size() <= 1) {
+			std::cout << "GAME OVER!" << std::endl;
+			return;
+ 		}
 
 		// Swap the buffers to avoid tearing:
 		glfwSwapBuffers(this->window);
