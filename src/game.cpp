@@ -35,13 +35,10 @@ Game::Game(GLFWwindow* window) {
 	auto border = std::make_shared<BorderModel>();
 	this->models.push_back(border);
 
-	init_gl(this->window);
-
-	glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	auto font = std::make_shared<Font>();
 	this->font = font;
+
+	init_gl(this->window);
 }
 
 void Game::loop() {
@@ -57,14 +54,14 @@ void Game::loop() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		gl_check_error("glClear");		
 
-		this->font->RenderText("This is sample text", 0.0f, 0.0f, 10.0f, glm::vec3(0.9, 0.8f, 0.2f));
-		this->font->RenderText("This is sample text", 0.0f, 0.0f, 10.5f, glm::vec3(0.3, 0.7f, 0.9f));
-		
 		// Draw the models:
 		for (auto model : models) {
 			model->draw();
 		}
 		this->player_manager->draw();
+
+		this->font->RenderText("Hola", 0.0f, 0.0f, 1.0f, glm::vec3(0.9, 0.0f, 0.0f));
+		this->font->RenderText("Test", 0.0f, 0.0f, 1.0f, glm::vec3(0.3, 0.7f, 0.9f));
 
 		// Detect the collisions
 		player_manager->detect_collisions();

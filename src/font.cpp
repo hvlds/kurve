@@ -4,7 +4,7 @@
 
 Font::Font() {
     // Testing FreeType
-    std::cout << "---- Testing Freetyp ----" << std::endl;
+    std::cout << "---- INIT FONT ----" << std::endl;
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
@@ -67,17 +67,22 @@ Font::Font() {
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
 
-    glm::mat4 projection = glm::ortho(1.0f, 1.0f, 1.0f, 1.0f);
-
     glGenVertexArrays(1, &this->VAO);
-    glGenBuffers(1, &this->VBO);
     glBindVertexArray(this->VAO);
+
+    glGenBuffers(1, &this->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+
+    std::cout << "VAO: " << this->VAO << std::endl;
+    std::cout << "VBO: " << this->VBO << std::endl;
+    
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+    
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    glBindVertexArray(0);    
 }
 
 void Font::RenderText(
@@ -91,7 +96,7 @@ void Font::RenderText(
     glUniform3f(glGetUniformLocation(this->shader_id, "textColor"), color.x, color.y, color.z);
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(this->VAO);
-
+    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
     // iterate through all characters
     std::string::const_iterator c;
     for (c = text.begin(); c != text.end(); c++)
@@ -127,5 +132,4 @@ void Font::RenderText(
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-
 }

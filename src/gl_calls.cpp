@@ -17,8 +17,6 @@ extern "C" {
 #include "bitmap.h"
 }
 
-#define MODEL_PATH "./models/ring"    // Doesn't exists!
-#define TEX_PATH "./models/logo.bmp"  // Doesn't exists!
 #define Y_ANGULAR_VELOCITY 2
 
 void check_error(int condition, const char* error_text) {
@@ -51,4 +49,8 @@ void init_gl(GLFWwindow* window) {
     // Specify the clear color:
     glClearColor(0.1, 0.1, 0.1, 1);
     gl_check_error("glClearColor");
+
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
