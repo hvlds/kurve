@@ -50,7 +50,7 @@ BorderMesh::BorderMesh() {
     // Upload the vertex data to the GPU:
     glBufferData(
         GL_ARRAY_BUFFER, 
-        4 * sizeof(vertex_data_t), 
+        vertex_data.size() * sizeof(vertex_data_t), 
         (const GLvoid*)vertex_data.data(), 
         GL_STATIC_DRAW);
     gl_check_error("glBufferData");
