@@ -3,8 +3,63 @@
 #include <ctime>
 #include <iostream>
 
-PlayerManager::PlayerManager() {
+PlayerManager::PlayerManager(GLFWwindow* window) {
     srand((unsigned) time(0));
+    this->window = window;       
+}
+
+void PlayerManager::add_players() {
+    user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+    std::cout << user_data->is_player_1_active << std::endl;
+
+    if (user_data->is_player_1_active == true) {
+        Control control_1 = {
+            GLFW_KEY_LEFT_CONTROL, GLFW_KEY_LEFT_ALT
+        };
+        std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
+        this->add_player(control_1, color_1);
+    }
+
+    if (user_data->is_player_2_active == true) {
+        Control control_2 = {
+            GLFW_KEY_1, GLFW_KEY_Q
+        };
+        std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
+        this->add_player(control_2, color_2);
+    }
+    
+    if (user_data->is_player_3_active == true) {
+        Control control_3 = {
+            GLFW_KEY_M, GLFW_KEY_COMMA
+        };
+        std::array<GLubyte, 3> color_3 = {0xFF, 0xFF, 0x00};
+        this->add_player(control_3, color_3);
+    }
+
+    if (user_data->is_player_4_active == true) {
+        Control control_4 = {
+            GLFW_KEY_LEFT, GLFW_KEY_RIGHT 
+        };
+        std::array<GLubyte, 3> color_4 = {0x00, 0x00, 0xFF};
+        this->add_player(control_4, color_4);
+    }
+
+    if (user_data->is_player_5_active == true) {
+        Control control_5 = {
+            GLFW_KEY_O, GLFW_KEY_P
+        };
+        std::array<GLubyte, 3> color_5 = {0xDD, 0x00, 0xDD};
+        this->add_player(control_5, color_5);
+    }
+
+    if (user_data->is_player_6_active == true) {
+        Control control_6 = {
+            GLFW_KEY_B, GLFW_KEY_N
+        };
+        std::array<GLubyte, 3> color_6 = {0xDD, 0xDD, 0xDD};
+        this->add_player(control_6, color_6);
+    } 
+
 }
 
 void PlayerManager::add_player(

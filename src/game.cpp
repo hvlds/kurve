@@ -21,20 +21,8 @@ Game::Game(GLFWwindow* window) {
 	auto menu = std::make_shared<Menu>(window);
 	this->menu = menu;
 	
-	auto player_manager = std::make_shared<PlayerManager>();
+	auto player_manager = std::make_shared<PlayerManager>(window);
 	this->player_manager = player_manager;
-
-	Control control_1 = {
-		GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP, GLFW_KEY_DOWN
-	};
-	std::array<GLubyte, 3> color_1 = {0xFF, 0x00, 0x00};
-	this->player_manager->add_player(control_1, color_1);
-
-	Control control_2 = {
-		GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S
-	};
-	std::array<GLubyte, 3> color_2 = {0x00, 0xFF, 0x00};
-	this->player_manager->add_player(control_2, color_2);
 
 	auto border = std::make_shared<BorderModel>();
 	this->models.push_back(border);
@@ -54,7 +42,13 @@ void Game::loop() {
 			glClear(GL_COLOR_BUFFER_BIT);
 			gl_check_error("glClear");	
 			this->menu->draw();
-		} else if(game_state == GAME_ACTIVE || game_state == GAME_PAUSE) {		
+		} else if(game_state == GAME_ACTIVE || game_state == GAME_PAUSE) {
+			
+			if (this->count == 0) {
+				this->player_manager->add_players();
+				this->count++;
+			}
+
 			// Update the models:
 			for (auto model : models) {
 				model->update(this->window);
@@ -90,8 +84,9 @@ void Game::loop() {
 			// Check how many players are still active
 			auto active_players = player_manager->get_active_players();
 			if (active_players.size() <= 1) {
-				std::cout << "GAME OVER!" << std::endl;
-				return;
+				// std::cout << "GAME OVER!" << std::endl;
+				user_data->game_state = GAME_PAUSE;
+				// return;
 			}
 		}
 
@@ -139,7 +134,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		// Confirmation keys: activate player
 		if (user_data->is_player_1_active == false && key == GLFW_KEY_LEFT_CONTROL) {
 			user_data->is_player_1_active = true;
-		}
+		} 
 		if (user_data->is_player_2_active == false && key == GLFW_KEY_1) {
 			user_data->is_player_2_active = true;
 		}
@@ -155,7 +150,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (user_data->is_player_6_active == false && key == GLFW_KEY_B) {
 			user_data->is_player_6_active = true;
 		}
-		
+	
 		// Cancellation keys: deactivate player
 		if (user_data->is_player_1_active == true && key == GLFW_KEY_LEFT_ALT) {
 			user_data->is_player_1_active = false;

@@ -19,8 +19,9 @@ extern "C" {
 class PlayerManager {
    protected:
     std::map<int, std::shared_ptr<PlayerModel>> players;
+    GLFWwindow* window;
    public:
-    PlayerManager();
+    PlayerManager(GLFWwindow* window);
     void add_player(
         Control control,
         std::array<GLubyte, 3> color);
@@ -34,6 +35,7 @@ class PlayerManager {
     void detect_collisions();
     std::vector<int> get_active_players();
     void draw();
+    void add_players();
 };
 
 #endif

@@ -24,9 +24,7 @@ extern "C" {
 
 struct Control {
     int left_key; 
-    int right_key; 
-    int up_key;
-    int down_key;
+    int right_key;
 };
 
 class PlayerModel : public Model {

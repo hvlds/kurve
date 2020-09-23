@@ -1,6 +1,8 @@
 #include "menu.hpp"
 #include "user.hpp"
 
+#include <iostream>
+
 Menu::Menu(GLFWwindow* window) {
     this->window = window;
 

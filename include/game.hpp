@@ -23,7 +23,8 @@ class Game {
     std::vector<std::shared_ptr<Model>> models;
     std::shared_ptr<PlayerManager> player_manager;
     std::shared_ptr<Font> font; 
-    std::shared_ptr<Menu> menu;   
+    std::shared_ptr<Menu> menu;  
+    int count; 
    public:
     Game(GLFWwindow* window);
     int generate_fonts();
