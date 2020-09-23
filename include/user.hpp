@@ -25,6 +25,12 @@ typedef struct {
     int window_width;
     int window_height;
     GameState game_state;
+    bool is_player_1_active;
+    bool is_player_2_active;
+    bool is_player_3_active;
+    bool is_player_4_active;
+    bool is_player_5_active;
+    bool is_player_6_active;
     
 } user_data_t;
 

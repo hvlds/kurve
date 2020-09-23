@@ -9,14 +9,34 @@ Menu::Menu(GLFWwindow* window) {
 }
 
 void Menu::draw() {
-    
-    this->font->draw_text("press ENTER to start", -250.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    this->font->draw_text("Player 1 <1 Q>", -500.0f, 400.0f, 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-    this->font->draw_text("Player 2 <L.Ctrl L.Alt>", -500.0f, 300.0f, 1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-    this->font->draw_text("Player 3 <M ,>", -500.0f, 200.0f, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-    this->font->draw_text("Player 4 <L.Arrow R.Arrow>", -500.0f, 100.0f, 1.0f, glm::vec3(1.0f, 1.0f, 0.0f));
-    this->font->draw_text("Player 5 <o p>", -500.0f, 0.0f, 1.0f, glm::vec3(1.0f, 0.11f, 0.68f));
-    this->font->draw_text("Player 6 <b n>", -500.0f, -100.0f, 1.0f, glm::vec3(0.7f, 0.7f, 0.7f));
+    user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(this->window);
+
+    if (user_data->is_player_1_active == true) {
+        this->font->draw_text("READY", 200.0f, 400.0f, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+    }
+    if (user_data->is_player_2_active == true) {
+        this->font->draw_text("READY", 200.0f, 300.0f, 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    }
+    if (user_data->is_player_3_active == true) {
+        this->font->draw_text("READY", 200.0f, 200.0f, 1.0f, glm::vec3(1.0f, 1.0f, 0.0f));
+    }
+    if (user_data->is_player_4_active == true) {
+        this->font->draw_text("READY", 200.0f, 100.0f, 1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    }
+    if (user_data->is_player_5_active == true) {
+        this->font->draw_text("READY", 200.0f, 0.0f, 1.0f, glm::vec3(1.0f, 0.11f, 0.68f));
+    }
+    if (user_data->is_player_6_active == true) {
+        this->font->draw_text("READY", 200.0f, -100.0f, 1.0f, glm::vec3(0.7f, 0.7f, 0.7f));
+    }
+
+    this->font->draw_text("Press ENTER to start", -250.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    this->font->draw_text("Gryffindor <L.Ctrl L.Alt>", -500.0f, 400.0f, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+    this->font->draw_text("Slytherin  <1 Q>", -500.0f, 300.0f, 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    this->font->draw_text("Hufflepuff <M ,>", -500.0f, 200.0f, 1.0f, glm::vec3(1.0f, 1.0f, 0.0f));
+    this->font->draw_text("Ravenclaw  <L.Arrow R.Arrow>", -500.0f, 100.0f, 1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    this->font->draw_text("Muggle     <O P>", -500.0f, 0.0f, 1.0f, glm::vec3(1.0f, 0.11f, 0.68f));
+    this->font->draw_text("Squib      <B N>", -500.0f, -100.0f, 1.0f, glm::vec3(0.7f, 0.7f, 0.7f));
 
 }
 

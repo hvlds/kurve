@@ -16,7 +16,13 @@ int main(void) {
         {
             .window_width = 800,
             .window_height = 600,
-            .game_state = GAME_MENU
+            .game_state = GAME_MENU,
+            .is_player_1_active = false,
+            .is_player_2_active = false,
+            .is_player_3_active = false,
+            .is_player_4_active = false,
+            .is_player_5_active = false,
+            .is_player_6_active = false
         };
 
     Display display(&user_data);

@@ -51,6 +51,8 @@ void Game::loop() {
 		user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
 		GameState game_state = user_data->game_state; 
 		if(game_state == GAME_MENU) {
+			glClear(GL_COLOR_BUFFER_BIT);
+			gl_check_error("glClear");	
 			this->menu->draw();
 		} else if(game_state == GAME_ACTIVE || game_state == GAME_PAUSE) {		
 			// Update the models:
@@ -70,7 +72,7 @@ void Game::loop() {
 			this->player_manager->draw();
 
 			this->font->draw_text("Gryffindor", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
-			this->font->draw_text("Slytherin", 400.0f, 375.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+			this->font->draw_text("Slytherin", 400.0f, 350.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 			user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
 			GameState game_state = user_data->game_state;
@@ -119,9 +121,65 @@ void Game::terminate() {
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {	
 	user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
-
+	GameState game_state = user_data->game_state; 
+	
 	if(action == GLFW_RELEASE) {
 		return;	
+	}
+
+	if(game_state == GAME_MENU) {
+		if (key == GLFW_KEY_ENTER) {
+			// GAME_MENU -> GAME_ACTIVE
+			if (user_data->game_state == GAME_MENU) {
+				user_data->game_state = GAME_ACTIVE;
+			} 
+		}
+		// Links: L.Ctrl - 1 - M - L.Arrow - O - B
+		
+		// Confirmation keys: activate player
+		if (user_data->is_player_1_active == false && key == GLFW_KEY_LEFT_CONTROL) {
+			user_data->is_player_1_active = true;
+		}
+		if (user_data->is_player_2_active == false && key == GLFW_KEY_1) {
+			user_data->is_player_2_active = true;
+		}
+		if (user_data->is_player_3_active == false && key == GLFW_KEY_M) {
+			user_data->is_player_3_active = true;
+		}
+		if (user_data->is_player_4_active == false && key == GLFW_KEY_LEFT) {
+			user_data->is_player_4_active = true;
+		}
+		if (user_data->is_player_5_active == false && key == GLFW_KEY_O) {
+			user_data->is_player_5_active = true;
+		}
+		if (user_data->is_player_6_active == false && key == GLFW_KEY_B) {
+			user_data->is_player_6_active = true;
+		}
+		
+		// Cancellation keys: deactivate player
+		if (user_data->is_player_1_active == true && key == GLFW_KEY_LEFT_ALT) {
+			user_data->is_player_1_active = false;
+		}
+		
+		if (user_data->is_player_2_active == true && key == GLFW_KEY_Q) {
+			user_data->is_player_2_active = false;
+		}
+		if (user_data->is_player_3_active == true && key == GLFW_KEY_COMMA) {
+			user_data->is_player_3_active = false;
+		}
+		
+		if (user_data->is_player_4_active == true && key == GLFW_KEY_RIGHT) {
+			user_data->is_player_4_active = false;
+		}
+		
+		if (user_data->is_player_5_active == true && key == GLFW_KEY_P) {
+			user_data->is_player_5_active = false;
+		}
+		
+		if (user_data->is_player_6_active == true && key == GLFW_KEY_N) {
+			user_data->is_player_6_active = false;
+		}		
+
 	}
 
 	if (key == GLFW_KEY_SPACE) {
@@ -130,12 +188,5 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		} else if (user_data->game_state == GAME_ACTIVE) {
 			user_data->game_state = GAME_PAUSE;
 		}
-	}
-
-	if (key == GLFW_KEY_ENTER) {
-		// GAME_MENU -> GAME_ACTIVE
-		if (user_data->game_state == GAME_MENU) {
-			user_data->game_state = GAME_ACTIVE;
-		} 
 	}
 }
