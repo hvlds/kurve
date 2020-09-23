@@ -16,16 +16,8 @@ extern "C" {
 #include "player_manager.hpp"
 #include "font.hpp"
 
-enum GameState {
-    GAME_ACTIVE,
-    GAME_MENU,
-    GAME_WIN,
-    GAME_OVER
-};
-
 class Game {
    private:
-    GameState state;
     GLFWwindow* window;
     std::vector<std::shared_ptr<Model>> models;
     std::shared_ptr<PlayerManager> player_manager;
@@ -36,5 +28,8 @@ class Game {
     void loop();
     void terminate();
 };
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 
 #endif

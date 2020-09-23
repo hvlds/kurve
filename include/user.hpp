@@ -12,10 +12,19 @@ extern "C" {
 
 #include "gl_calls.hpp"
 
+enum GameState {
+    GAME_ACTIVE,
+    GAME_MENU,
+    GAME_WIN,
+    GAME_OVER, 
+    GAME_PAUSE
+};
+
 typedef struct {
     // Dimensions of the window:
     int window_width;
     int window_height;
+    GameState game_state;
     
 } user_data_t;
 

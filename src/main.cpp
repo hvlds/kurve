@@ -16,6 +16,7 @@ int main(void) {
         {
             .window_width = 800,
             .window_height = 600,
+            .game_state = GAME_PAUSE
         };
 
     Display display(&user_data);

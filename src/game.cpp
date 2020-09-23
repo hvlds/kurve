@@ -39,11 +39,11 @@ Game::Game(GLFWwindow* window) {
 	this->font = font;
 
 	init_gl(this->window);
+	glfwSetKeyCallback(window, key_callback);
 }
 
 void Game::loop() {
-    while (!glfwWindowShouldClose(this->window))
-	{
+    while (!glfwWindowShouldClose(this->window)) {		
 		// Update the models:
 		for (auto model : models) {
 			model->update(this->window);
@@ -95,4 +95,20 @@ void Game::terminate() {
 
 	// Terminate GLFW:
 	glfwTerminate();
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {	
+	user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+
+	if(action == GLFW_RELEASE) {
+		return;	
+	} 
+
+    if(key == GLFW_KEY_SPACE) {
+		if (user_data->game_state == GAME_PAUSE) {
+			user_data->game_state = GAME_ACTIVE;
+		} else if (user_data->game_state == GAME_ACTIVE) {
+			user_data->game_state = GAME_PAUSE;
+		}
+	}
 }
