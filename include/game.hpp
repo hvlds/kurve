@@ -30,6 +30,7 @@ class Game {
     int generate_fonts();
     void loop();
     void terminate();
+    int get_player_count();
 };
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

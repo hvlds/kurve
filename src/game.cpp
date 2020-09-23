@@ -64,9 +64,41 @@ void Game::loop() {
 				model->draw();
 			}
 			this->player_manager->draw();
-
-			this->font->draw_text("Gryffindor", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
-			this->font->draw_text("Slytherin", 400.0f, 350.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+			
+			// Show the right player names
+			int player_count = this->get_player_count();
+			float y_pos = 400.0f;
+			float count = 0;
+			if (user_data->is_player_1_active == true) {
+				y_pos = y_pos - 50.0f ;
+				this->font->draw_text("Gryffindor", 400.0f, y_pos, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
+				count += 1.0f;
+			}
+			if (user_data->is_player_2_active == true) {
+				y_pos = y_pos - 50.0f ;
+				this->font->draw_text("Slytherin", 400.0f, y_pos, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+				count += 1.0f;
+			}
+			if (user_data->is_player_3_active == true) {
+				y_pos = y_pos - 50.0f ;
+				this->font->draw_text("Hufflepuff", 400.0f, y_pos, 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
+				count += 1.0f;
+			}
+			if (user_data->is_player_4_active == true) {
+				y_pos = y_pos - 50.0f;
+				this->font->draw_text("Ravenclaw", 400.0f, y_pos, 0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+				count += 1.0f;
+			}
+			if (user_data->is_player_5_active == true) {
+				y_pos = y_pos - 50.0f ;
+				this->font->draw_text("Muggle", 400.0f, y_pos, 0.5f, glm::vec3(1.0f, 0.11f, 0.68f));
+				count += 1.0f;
+			}
+			if (user_data->is_player_6_active == true) {
+				y_pos = y_pos - 50.0f ;
+				this->font->draw_text("Squib", 400.0f, y_pos, 0.5f, glm::vec3(0.7f, 0.7f, 0.7f));
+				count += 1.0f;
+			}
 
 			user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
 			GameState game_state = user_data->game_state;
@@ -126,7 +158,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_ENTER) {
 			// GAME_MENU -> GAME_ACTIVE
 			if (user_data->game_state == GAME_MENU) {
-				user_data->game_state = GAME_ACTIVE;
+				int player_count = 0;
+				if (user_data->is_player_1_active == true) player_count++;
+				if (user_data->is_player_2_active == true) player_count++;
+				if (user_data->is_player_3_active == true) player_count++;
+				if (user_data->is_player_4_active == true) player_count++;
+				if (user_data->is_player_5_active == true) player_count++;
+				if (user_data->is_player_6_active == true) player_count++;
+
+				if(player_count >= 2) user_data->game_state = GAME_ACTIVE;
 			} 
 		}
 		// Links: L.Ctrl - 1 - M - L.Arrow - O - B
@@ -184,4 +224,18 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			user_data->game_state = GAME_PAUSE;
 		}
 	}
+}
+
+int Game::get_player_count() {
+	user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(this->window);
+	 
+	int player_count = 0;
+	if (user_data->is_player_1_active == true) player_count++;
+	if (user_data->is_player_2_active == true) player_count++;
+	if (user_data->is_player_3_active == true) player_count++;
+	if (user_data->is_player_4_active == true) player_count++;
+	if (user_data->is_player_5_active == true) player_count++;
+	if (user_data->is_player_6_active == true) player_count++;
+	
+	return player_count;
 }
