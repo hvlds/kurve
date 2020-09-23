@@ -61,7 +61,7 @@ void PlayerModel::update(GLFWwindow* window) {
             double time_delta = new_time - this->time;
             double speed = 2.5; 
 
-            if (this->trans_x + this->start_pos_x >= 18.5 
+            if (this->trans_x + this->start_pos_x >= 13.5 
                 || this->trans_x + this->start_pos_x <= -18.5) {
                 this->is_active = false;
                 return;
