@@ -9,6 +9,7 @@
 #include "gl_calls.hpp"
 #include "font.hpp"
 
+
 #include <vector>
 #include <memory>
 #include <map>
@@ -16,6 +17,9 @@
 Game::Game(GLFWwindow* window) {
 	std::cout << "---- INIT GAME ----" << std::endl;
     this->window = window;
+
+	auto menu = std::make_shared<Menu>(window);
+	this->menu = menu;
 	
 	auto player_manager = std::make_shared<PlayerManager>();
 	this->player_manager = player_manager;
@@ -43,45 +47,51 @@ Game::Game(GLFWwindow* window) {
 }
 
 void Game::loop() {
-    while (!glfwWindowShouldClose(this->window)) {		
-		// Update the models:
-		for (auto model : models) {
-			model->update(this->window);
+    while (!glfwWindowShouldClose(this->window)) {
+		user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+		GameState game_state = user_data->game_state; 
+		if(game_state == GAME_MENU) {
+			this->menu->draw();
+		} else if(game_state == GAME_ACTIVE || game_state == GAME_PAUSE) {		
+			// Update the models:
+			for (auto model : models) {
+				model->update(this->window);
+			}
+			this->player_manager->update(this->window);
+
+			// Clear the color buffer -> background color:
+			glClear(GL_COLOR_BUFFER_BIT);
+			gl_check_error("glClear");		
+
+			// Draw the models:
+			for (auto model : models) {
+				model->draw();
+			}
+			this->player_manager->draw();
+
+			this->font->draw_text("Gryffindor", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
+			this->font->draw_text("Slytherin", 400.0f, 375.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+
+			user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+			GameState game_state = user_data->game_state;
+			if (game_state == GAME_PAUSE) {
+				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("to continue", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+			} else if (game_state == GAME_ACTIVE) {
+				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("to pause", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+			}
+
+			// Detect the collisions
+			player_manager->detect_collisions();
+
+			// Check how many players are still active
+			auto active_players = player_manager->get_active_players();
+			if (active_players.size() <= 1) {
+				std::cout << "GAME OVER!" << std::endl;
+				return;
+			}
 		}
-		this->player_manager->update(this->window);
-
-		// Clear the color buffer -> background color:
-		glClear(GL_COLOR_BUFFER_BIT);
-		gl_check_error("glClear");		
-
-		// Draw the models:
-		for (auto model : models) {
-			model->draw();
-		}
-		this->player_manager->draw();
-
-		this->font->draw_text("Gryffindor", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
-		this->font->draw_text("Slytherin", 400.0f, 375.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
-
-		user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
-   	 	GameState game_state = user_data->game_state;
-		if (game_state == GAME_PAUSE) {
-			this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-			this->font->draw_text("to continue", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-		} else if (game_state == GAME_ACTIVE) {
-			this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-			this->font->draw_text("to pause", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-		}
-
-		// Detect the collisions
-		player_manager->detect_collisions();
-
-		// Check how many players are still active
-		auto active_players = player_manager->get_active_players();
-		if (active_players.size() <= 1) {
-			std::cout << "GAME OVER!" << std::endl;
-			return;
- 		}
 
 		// Swap the buffers to avoid tearing:
 		glfwSwapBuffers(this->window);
@@ -112,13 +122,20 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 	if(action == GLFW_RELEASE) {
 		return;	
-	} 
+	}
 
-    if(key == GLFW_KEY_SPACE) {
+	if (key == GLFW_KEY_SPACE) {
 		if (user_data->game_state == GAME_PAUSE) {
 			user_data->game_state = GAME_ACTIVE;
 		} else if (user_data->game_state == GAME_ACTIVE) {
 			user_data->game_state = GAME_PAUSE;
 		}
+	}
+
+	if (key == GLFW_KEY_ENTER) {
+		// GAME_MENU -> GAME_ACTIVE
+		if (user_data->game_state == GAME_MENU) {
+			user_data->game_state = GAME_ACTIVE;
+		} 
 	}
 }
