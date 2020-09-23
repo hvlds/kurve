@@ -49,71 +49,78 @@ void PlayerModel::draw() {
 
 void PlayerModel::update(GLFWwindow* window) {
     // Update the time and calculate the delta:
-    if (this->is_active == true) {
-        glUseProgram(this->shader_id);
+    user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+    GameState game_state = user_data->game_state;
+    if (game_state == GAME_PAUSE) {
         double new_time = glfwGetTime();
-        double time_delta = new_time - this->time;
-        double speed = 2.5; 
-
-        if (this->trans_x + this->start_pos_x >= 18.5 
-            || this->trans_x + this->start_pos_x <= -18.5) {
-            this->is_active = false;
-            return;
-        }
-
-        if (this->trans_y + this->start_pos_y >= 18.5 
-            || this->trans_y + this->start_pos_y <= -18.5) {
-            this->is_active = false;
-            return;
-        }
-
         this->time = new_time;
-        GLfloat angle_diff = 0;
+    } else if (game_state == GAME_ACTIVE) {
+        if (this->is_active == true) {
+            glUseProgram(this->shader_id);
+            double new_time = glfwGetTime();
+            double time_delta = new_time - this->time;
+            double speed = 2.5; 
 
-        int right_state = glfwGetKey(window, this->control.right_key);
-        if (right_state == GLFW_PRESS) {
-            angle_diff = static_cast<GLfloat>((-speed * time_delta));        
+            if (this->trans_x + this->start_pos_x >= 18.5 
+                || this->trans_x + this->start_pos_x <= -18.5) {
+                this->is_active = false;
+                return;
+            }
+
+            if (this->trans_y + this->start_pos_y >= 18.5 
+                || this->trans_y + this->start_pos_y <= -18.5) {
+                this->is_active = false;
+                return;
+            }
+
+            this->time = new_time;
+            GLfloat angle_diff = 0;
+
+            int right_state = glfwGetKey(window, this->control.right_key);
+            if (right_state == GLFW_PRESS) {
+                angle_diff = static_cast<GLfloat>((-speed * time_delta));        
+            }
+
+            int left_state = glfwGetKey(window, this->control.left_key);
+            if (left_state == GLFW_PRESS) {
+                angle_diff = static_cast<GLfloat>((speed * time_delta));
+            }
+
+            // std::cout << "Angle diff: " << angle_diff << std::endl;
+
+            Vector speed_vec{this->speed_x, this->speed_y};
+
+            if (angle_diff != 0) {
+                GLfloat temp_speed_x = this->speed_x;
+                GLfloat temp_speed_y = this->speed_y;
+
+                this->speed_x = temp_speed_x * cos(angle_diff) - temp_speed_y * sin(angle_diff);
+                this->speed_y = temp_speed_x * sin(angle_diff) + temp_speed_y * cos(angle_diff);
+            }
+
+            // std::cout << "Speed length: " << speed_vec.get_length() << std::endl;
+            
+            this->trans_x += this->speed_x;
+            this->trans_y += this->speed_y;    
+
+            Point last_point = this->points.back();
+            Point point{
+                this->trans_x + this->start_pos_x,
+                this->trans_y + this->start_pos_y
+            };
+            this->points.push_back(point);
+            if (this->line_model != nullptr) {          
+                this->line_model->add_point(point);
+                this->line_model->update(window); 
+            }
+
+            // Update the uniform:
+            glUniform1f(this->trans_y_loc, this->trans_y);
+            gl_check_error("glUniform1f [trans_y]");
+
+            glUniform1f(this->trans_x_loc, this->trans_x);
+            gl_check_error("glUniform1f [trans_x]");
         }
-
-        int left_state = glfwGetKey(window, this->control.left_key);
-        if (left_state == GLFW_PRESS) {
-            angle_diff = static_cast<GLfloat>((speed * time_delta));
-        }
-
-        // std::cout << "Angle diff: " << angle_diff << std::endl;
-
-        Vector speed_vec{this->speed_x, this->speed_y};
-
-        if (angle_diff != 0) {
-            GLfloat temp_speed_x = this->speed_x;
-            GLfloat temp_speed_y = this->speed_y;
-
-            this->speed_x = temp_speed_x * cos(angle_diff) - temp_speed_y * sin(angle_diff);
-            this->speed_y = temp_speed_x * sin(angle_diff) + temp_speed_y * cos(angle_diff);
-        }
-
-        // std::cout << "Speed length: " << speed_vec.get_length() << std::endl;
-        
-        this->trans_x += this->speed_x;
-        this->trans_y += this->speed_y;    
-
-        Point last_point = this->points.back();
-        Point point{
-            this->trans_x + this->start_pos_x,
-            this->trans_y + this->start_pos_y
-        };
-        this->points.push_back(point);
-        if (this->line_model != nullptr) {          
-            this->line_model->add_point(point);
-            this->line_model->update(window); 
-        }
-
-        // Update the uniform:
-        glUniform1f(this->trans_y_loc, this->trans_y);
-        gl_check_error("glUniform1f [trans_y]");
-
-        glUniform1f(this->trans_x_loc, this->trans_x);
-        gl_check_error("glUniform1f [trans_x]");
     }
 }
 

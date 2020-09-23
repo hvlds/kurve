@@ -60,8 +60,18 @@ void Game::loop() {
 		}
 		this->player_manager->draw();
 
-		this->font->draw_text("Player 1", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
-		this->font->draw_text("Player 2", 400.0f, 350.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+		this->font->draw_text("Gryffindor", 400.0f, 400.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
+		this->font->draw_text("Slytherin", 400.0f, 375.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+   	 	GameState game_state = user_data->game_state;
+		if (game_state == GAME_PAUSE) {
+			this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+			this->font->draw_text("to continue", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+		} else if (game_state == GAME_ACTIVE) {
+			this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+			this->font->draw_text("to pause", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+		}
 
 		// Detect the collisions
 		player_manager->detect_collisions();
