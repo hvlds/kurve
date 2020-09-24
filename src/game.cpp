@@ -18,6 +18,8 @@ Game::Game(GLFWwindow* window) {
 	std::cout << "---- INIT GAME ----" << std::endl;
     this->window = window;
 
+	this->has_players = false;
+
 	auto menu = std::make_shared<Menu>(window);
 	this->menu = menu;
 	
@@ -44,9 +46,9 @@ void Game::loop() {
 			this->menu->draw();
 		} else if(game_state == GAME_ACTIVE || game_state == GAME_PAUSE) {
 			
-			if (this->count == 0) {
+			if (this->has_players == false) {
 				this->player_manager->add_players();
-				this->count++;
+				this->has_players = true;
 			}
 
 			// Update the models:
@@ -69,35 +71,15 @@ void Game::loop() {
 			int player_count = this->get_player_count();
 			float y_pos = 400.0f;
 			float count = 0;
-			if (user_data->is_player_1_active == true) {
-				y_pos = y_pos - 50.0f ;
-				this->font->draw_text("Gryffindor", 400.0f, y_pos, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
-				count += 1.0f;
-			}
-			if (user_data->is_player_2_active == true) {
-				y_pos = y_pos - 50.0f ;
-				this->font->draw_text("Slytherin", 400.0f, y_pos, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
-				count += 1.0f;
-			}
-			if (user_data->is_player_3_active == true) {
-				y_pos = y_pos - 50.0f ;
-				this->font->draw_text("Hufflepuff", 400.0f, y_pos, 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
-				count += 1.0f;
-			}
-			if (user_data->is_player_4_active == true) {
-				y_pos = y_pos - 50.0f;
-				this->font->draw_text("Ravenclaw", 400.0f, y_pos, 0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
-				count += 1.0f;
-			}
-			if (user_data->is_player_5_active == true) {
-				y_pos = y_pos - 50.0f ;
-				this->font->draw_text("Muggle", 400.0f, y_pos, 0.5f, glm::vec3(1.0f, 0.11f, 0.68f));
-				count += 1.0f;
-			}
-			if (user_data->is_player_6_active == true) {
-				y_pos = y_pos - 50.0f ;
-				this->font->draw_text("Squib", 400.0f, y_pos, 0.5f, glm::vec3(0.7f, 0.7f, 0.7f));
-				count += 1.0f;
+
+			for(auto player_info : *user_data->player_info) {
+				std::string name = player_info.name;
+				auto color = player_info.menu_color;
+				if(player_info.is_active == true) {
+					y_pos = y_pos - 50.0f ;
+					this->font->draw_text(name, 400.0f, y_pos, 0.5f, color);
+					count += 1.0f;
+				}
 			}
 
 			user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
@@ -159,62 +141,25 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			// GAME_MENU -> GAME_ACTIVE
 			if (user_data->game_state == GAME_MENU) {
 				int player_count = 0;
-				if (user_data->is_player_1_active == true) player_count++;
-				if (user_data->is_player_2_active == true) player_count++;
-				if (user_data->is_player_3_active == true) player_count++;
-				if (user_data->is_player_4_active == true) player_count++;
-				if (user_data->is_player_5_active == true) player_count++;
-				if (user_data->is_player_6_active == true) player_count++;
-
+				for (auto player_info : *user_data->player_info) {
+					if(player_info.is_active) {
+						player_count++;
+					}
+				}
 				if(player_count >= 2) user_data->game_state = GAME_ACTIVE;
 			} 
 		}
-		// Links: L.Ctrl - 1 - M - L.Arrow - O - B
 		
 		// Confirmation keys: activate player
-		if (user_data->is_player_1_active == false && key == GLFW_KEY_LEFT_CONTROL) {
-			user_data->is_player_1_active = true;
-		} 
-		if (user_data->is_player_2_active == false && key == GLFW_KEY_1) {
-			user_data->is_player_2_active = true;
+		for (auto player_info : *user_data->player_info) {
+			if(player_info.is_active == false && key == player_info.control.left_key) {
+				user_data->player_info->at(player_info.id - 1).is_active = true;
+			}
+			
+			if(player_info.is_active == true && key == player_info.control.right_key) {
+				user_data->player_info->at(player_info.id - 1).is_active = false;
+			}
 		}
-		if (user_data->is_player_3_active == false && key == GLFW_KEY_M) {
-			user_data->is_player_3_active = true;
-		}
-		if (user_data->is_player_4_active == false && key == GLFW_KEY_LEFT) {
-			user_data->is_player_4_active = true;
-		}
-		if (user_data->is_player_5_active == false && key == GLFW_KEY_O) {
-			user_data->is_player_5_active = true;
-		}
-		if (user_data->is_player_6_active == false && key == GLFW_KEY_B) {
-			user_data->is_player_6_active = true;
-		}
-	
-		// Cancellation keys: deactivate player
-		if (user_data->is_player_1_active == true && key == GLFW_KEY_LEFT_ALT) {
-			user_data->is_player_1_active = false;
-		}
-		
-		if (user_data->is_player_2_active == true && key == GLFW_KEY_Q) {
-			user_data->is_player_2_active = false;
-		}
-		if (user_data->is_player_3_active == true && key == GLFW_KEY_COMMA) {
-			user_data->is_player_3_active = false;
-		}
-		
-		if (user_data->is_player_4_active == true && key == GLFW_KEY_RIGHT) {
-			user_data->is_player_4_active = false;
-		}
-		
-		if (user_data->is_player_5_active == true && key == GLFW_KEY_P) {
-			user_data->is_player_5_active = false;
-		}
-		
-		if (user_data->is_player_6_active == true && key == GLFW_KEY_N) {
-			user_data->is_player_6_active = false;
-		}		
-
 	}
 
 	if (key == GLFW_KEY_SPACE) {
@@ -228,14 +173,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int Game::get_player_count() {
 	user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(this->window);
-	 
 	int player_count = 0;
-	if (user_data->is_player_1_active == true) player_count++;
-	if (user_data->is_player_2_active == true) player_count++;
-	if (user_data->is_player_3_active == true) player_count++;
-	if (user_data->is_player_4_active == true) player_count++;
-	if (user_data->is_player_5_active == true) player_count++;
-	if (user_data->is_player_6_active == true) player_count++;
+	for (auto player_info : *user_data->player_info) {
+		if (player_info.is_active == true) {
+			player_count++;
+		}
+	}
 	
 	return player_count;
 }

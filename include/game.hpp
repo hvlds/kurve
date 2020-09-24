@@ -24,7 +24,7 @@ class Game {
     std::shared_ptr<PlayerManager> player_manager;
     std::shared_ptr<Font> font; 
     std::shared_ptr<Menu> menu;  
-    int count; 
+    bool has_players;
    public:
     Game(GLFWwindow* window);
     int generate_fonts();

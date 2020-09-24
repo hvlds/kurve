@@ -22,11 +22,6 @@ extern "C" {
 
 #define VELOCITY 10
 
-struct Control {
-    int left_key; 
-    int right_key;
-};
-
 class PlayerModel : public Model {
    protected:
     virtual void init_uniforms() override;
