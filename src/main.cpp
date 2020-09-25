@@ -55,8 +55,8 @@ int main(void) {
         .name = "Ravenclaw",
         .menu_text = "Ravenclaw  <L.Arrow R.Arrow>",
         .control = {GLFW_KEY_LEFT, GLFW_KEY_RIGHT},
-        .color = {0x00, 0x00, 0xFF},
-        .menu_color = glm::vec3(0.0f, 0.0f, 1.0f),
+        .color = {0x00, 0x66, 0xFF},
+        .menu_color = glm::vec3(0.0f, 0.5f, 1.0f),
         .score = 0
     };
 
