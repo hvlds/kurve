@@ -156,7 +156,7 @@ void PlayerManager::update_score() {
     std::vector<int> alive_vec = this->get_alive_players();
     if (alive_vec.size() == 1) {
         int last_id = alive_vec.back();
-        user_data->player_info->at(last_id - 1).score += last_id;
+        user_data->player_info->at(last_id - 1).score += this->players.size();
     }
 }
 

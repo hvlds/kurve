@@ -104,7 +104,6 @@ void Game::loop() {
 				player_manager->update_score();
 				player_manager->reset();
 				user_data->game_state = GAME_PAUSE;
-				// return;
 			}
 		}
 
