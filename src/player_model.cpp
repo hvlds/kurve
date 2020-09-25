@@ -153,7 +153,17 @@ void PlayerModel::init_values() {
     this->trans_y = 0;
 
     this->speed_x = 0.1;
-    this->speed_y = 0;    
+    this->speed_y = 0;
+
+    // Generate a random initial speed vector
+    GLfloat temp_speed_x = this->speed_x;
+    GLfloat temp_speed_y = this->speed_y;
+
+    int random_value= -300 + (rand() % 500);
+    double angle = random_value / 10;
+
+    this->speed_x = temp_speed_x * cos(angle) - temp_speed_y * sin(angle);
+    this->speed_y = temp_speed_x * sin(angle) + temp_speed_y * cos(angle);    
 
     glUniform1f(this->trans_y_loc, this->trans_y);
     gl_check_error("glUniform1f [trans_y]");
