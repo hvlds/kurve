@@ -77,7 +77,10 @@ void Game::loop() {
 				auto color = player_info.menu_color;
 				if(player_info.is_active == true) {
 					y_pos = y_pos - 50.0f ;
-					this->font->draw_text(name, 400.0f, y_pos, 0.5f, color);
+					// auto points_text = std::to_string(player_info.points);
+					auto points_text = "500";
+					this->font->draw_text(name, 450.0f, y_pos, 0.6f, color);
+					this->font->draw_text(points_text, 400.0f, y_pos, 0.6f, color);
 					count += 1.0f;
 				}
 			}
@@ -85,11 +88,11 @@ void Game::loop() {
 			user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
 			GameState game_state = user_data->game_state;
 			if (game_state == GAME_PAUSE) {
-				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-				this->font->draw_text("to continue", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("to continue", 400.0f, -325.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
 			} else if (game_state == GAME_ACTIVE) {
-				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-				this->font->draw_text("to pause", 400.0f, -325.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("to pause", 400.0f, -325.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
 			}
 
 			// Detect the collisions

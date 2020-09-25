@@ -41,6 +41,7 @@ typedef struct {
     Control control;
     std::array<GLubyte, 3> color;
     glm::vec3 menu_color;
+    int points;
 } player_info_t;
 
 typedef struct {
@@ -49,13 +50,6 @@ typedef struct {
     int window_height;
     GameState game_state;
     std::vector<player_info_t>* player_info;
-    bool is_player_1_active;
-    bool is_player_2_active;
-    bool is_player_3_active;
-    bool is_player_4_active;
-    bool is_player_5_active;
-    bool is_player_6_active;
-    
 } user_data_t;
 
 #endif

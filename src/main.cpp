@@ -23,7 +23,8 @@ int main(void) {
         .menu_text = "Gryffindor <L.Ctrl L.Alt>",
         .control = {GLFW_KEY_LEFT_CONTROL, GLFW_KEY_LEFT_ALT},
         .color = {0xFF, 0x00, 0x00},
-        .menu_color = glm::vec3(1.0f, 0.0f, 0.0f)
+        .menu_color = glm::vec3(1.0f, 0.0f, 0.0f),
+        .points = 0
     };
 
     player_info_t player_2 = {
@@ -33,7 +34,8 @@ int main(void) {
         .menu_text = "Slytherin  <1 Q>",
         .control = {GLFW_KEY_1, GLFW_KEY_Q},
         .color = {0x00, 0xFF, 0x00},
-        .menu_color = glm::vec3(0.0f, 1.0f, 0.0f)
+        .menu_color = glm::vec3(0.0f, 1.0f, 0.0f),
+        .points = 0
     };
 
     player_info_t player_3 = {
@@ -43,7 +45,8 @@ int main(void) {
         .menu_text = "Hufflepuff <M ,>",
         .control = {GLFW_KEY_M, GLFW_KEY_COMMA },
         .color = {0xFF, 0xFF, 0x00},
-        .menu_color = glm::vec3(1.0f, 1.0f, 0.0f)
+        .menu_color = glm::vec3(1.0f, 1.0f, 0.0f),
+        .points = 0
     };
 
     player_info_t player_4 = {
@@ -53,7 +56,8 @@ int main(void) {
         .menu_text = "Ravenclaw  <L.Arrow R.Arrow>",
         .control = {GLFW_KEY_LEFT, GLFW_KEY_RIGHT},
         .color = {0x00, 0x00, 0xFF},
-        .menu_color = glm::vec3(0.0f, 0.0f, 1.0f)
+        .menu_color = glm::vec3(0.0f, 0.0f, 1.0f),
+        .points = 0
     };
 
     player_info_t player_5 = {
@@ -63,7 +67,8 @@ int main(void) {
         .menu_text = "Muggle     <O P",
         .control = {GLFW_KEY_O, GLFW_KEY_P},
         .color = {0xDD, 0x00, 0xDD},
-        .menu_color =glm::vec3(1.0f, 0.11f, 0.68f)
+        .menu_color =glm::vec3(1.0f, 0.11f, 0.68f),
+        .points = 0
     };
 
     player_info_t player_6 = {
@@ -73,7 +78,8 @@ int main(void) {
         .menu_text = "Squib      <B N>",
         .control = {GLFW_KEY_B, GLFW_KEY_N},
         .color = {0xDD, 0xDD, 0xDD},
-        .menu_color = glm::vec3(0.7f, 0.7f, 0.7f)
+        .menu_color = glm::vec3(0.7f, 0.7f, 0.7f),
+        .points = 0
     };
     
     std::vector<player_info_t> player_info = {
@@ -92,12 +98,6 @@ int main(void) {
             .window_height = 600,
             .game_state = GAME_MENU,
             .player_info = &player_info
-            // .is_player_1_active = false,
-            // .is_player_2_active = false,
-            // .is_player_3_active = false,
-            // .is_player_4_active = false,
-            // .is_player_5_active = false,
-            // .is_player_6_active = false
         };
 
     Display display(&user_data);
