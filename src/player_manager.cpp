@@ -145,3 +145,26 @@ std::vector<int> PlayerManager::get_alive_players() {
     }  
     return alive_ids;
 }
+
+void PlayerManager::update_score() {
+    user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    int local_score = 0;
+    for (int dead_player_id : this->dead_players) {
+        user_data->player_info->at(dead_player_id - 1).score += local_score;
+        local_score++; 
+    }
+    std::vector<int> alive_vec = this->get_alive_players();
+    if (alive_vec.size() == 1) {
+        int last_id = alive_vec.back();
+        user_data->player_info->at(last_id - 1).score += last_id;
+    }
+}
+
+void PlayerManager::reset() {
+    // Clear the map with user and vector with dead players
+    this->players.clear();
+    this->dead_players.clear();
+
+    // Add again the players (in different positions)
+    this->add_players();
+}

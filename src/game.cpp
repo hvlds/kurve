@@ -77,10 +77,9 @@ void Game::loop() {
 				auto color = player_info.menu_color;
 				if(player_info.is_active == true) {
 					y_pos = y_pos - 50.0f ;
-					// auto points_text = std::to_string(player_info.points);
-					auto points_text = "500";
+					auto score_text = std::to_string(player_info.score);
 					this->font->draw_text(name, 450.0f, y_pos, 0.6f, color);
-					this->font->draw_text(points_text, 400.0f, y_pos, 0.6f, color);
+					this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color);
 					count += 1.0f;
 				}
 			}
@@ -102,6 +101,8 @@ void Game::loop() {
 			auto active_players = player_manager->get_alive_players();
 			if (active_players.size() <= 1) {
 				// std::cout << "GAME OVER!" << std::endl;
+				player_manager->update_score();
+				player_manager->reset();
 				user_data->game_state = GAME_PAUSE;
 				// return;
 			}

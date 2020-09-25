@@ -41,7 +41,7 @@ typedef struct {
     Control control;
     std::array<GLubyte, 3> color;
     glm::vec3 menu_color;
-    int points;
+    int score;
 } player_info_t;
 
 typedef struct {
