@@ -23,6 +23,7 @@ class PlayerManager {
    public:
     PlayerManager(GLFWwindow* window);
     void add_player(
+        int id,
         Control control,
         std::array<GLubyte, 3> color);
     int get_new_id();

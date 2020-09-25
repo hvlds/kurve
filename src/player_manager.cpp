@@ -16,13 +16,15 @@ void PlayerManager::add_players() {
         if(player_info.is_active == true) {
             auto color = player_info.color;
             auto control = player_info.control;
-            this->add_player(control, color);
+            int id = player_info.id;
+            this->add_player(id, control, color);
         }
     }
    
 }
 
 void PlayerManager::add_player(
+    int id,
     Control control,
     std::array<GLubyte, 3> color) {    
     int random_x= -100 + (rand() % 200);
@@ -31,11 +33,10 @@ void PlayerManager::add_player(
     GLfloat x = (GLfloat) random_x / 10;
     GLfloat y = (GLfloat) random_y / 10;
 
-    int new_id = this->get_new_id();
-    auto player = std::make_shared<PlayerModel>(new_id, x, y, color);
+    auto player = std::make_shared<PlayerModel>(id, x, y, color);
     player->set_keys(control);
 
-    this->players.insert({new_id, player});
+    this->players.insert({id, player});
 }
 
 int PlayerManager::get_new_id() {
