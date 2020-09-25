@@ -15,6 +15,13 @@ extern "C" {
 
 class Shader {
    private:
+    /**
+     * @brief Read a GLSL shader file. The extension doesn't need a particular
+     * format.
+     * 
+     * @param path Path of the shader file
+     * @return char* Output buffer of the file
+     */
     static char* read_from_file(const char* path);
 
    public:

@@ -9,7 +9,6 @@
 #include "gl_calls.hpp"
 #include "font.hpp"
 
-
 #include <vector>
 #include <memory>
 #include <map>
@@ -155,7 +154,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 						player_count++;
 					}
 				}
-				if(player_count >= 2) user_data->game_state = GAME_ACTIVE;
+				if(player_count >= 2) user_data->game_state = GAME_TRANSITION;
 			} 
 		}
 		

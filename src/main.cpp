@@ -64,7 +64,7 @@ int main(void) {
         .is_active = false,
         .id = 5,
         .name = "Muggle",
-        .menu_text = "Muggle     <O P",
+        .menu_text = "Muggle     <O P>",
         .control = {GLFW_KEY_O, GLFW_KEY_P},
         .color = {0xDD, 0x00, 0xDD},
         .menu_color =glm::vec3(1.0f, 0.11f, 0.68f),

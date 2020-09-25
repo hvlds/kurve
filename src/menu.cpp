@@ -15,6 +15,7 @@ void Menu::draw() {
 
     float pos = -100.0f;
     float pos_name_y = 400.0f;
+    int active_counter = 0;
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;
@@ -25,14 +26,18 @@ void Menu::draw() {
         
         if(is_active == true) {
             this->font->draw_text("READY", 200.0f, pos_name_y + pos, 1.0f, menu_color);
+            active_counter++;
         }
 
         this->font->draw_text(menu_text, -500.0f, pos_name_y+pos, 1.0f, menu_color);
         pos_name_y -= 100.0f;
     }
     
-    this->font->draw_text("Press ENTER to start", -250.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    this->font->draw_text("and press the left key of the player to join the party", -335.0f, 500.0f + pos, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));  
+    this->font->draw_text("Press the left key of the player to join the party", -400.0f, -275.0f + pos, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    if (active_counter >= 2) {
+        this->font->draw_text("Press ENTER to start", -150.0f, -350.0f + pos, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
+    }  
 }
 
 void Menu::update() {
