@@ -44,7 +44,10 @@ void Game::loop() {
 			glClear(GL_COLOR_BUFFER_BIT);
 			gl_check_error("glClear");	
 			this->menu->draw();
-		} else if(game_state == GAME_ACTIVE || game_state == GAME_PAUSE) {
+		} else if(
+			game_state == GAME_ACTIVE 
+			|| game_state == GAME_PAUSE 
+			|| game_state == GAME_TRANSITION) {
 			
 			if (this->has_players == false) {
 				this->player_manager->add_players();
@@ -92,6 +95,9 @@ void Game::loop() {
 			} else if (game_state == GAME_ACTIVE) {
 				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
 				this->font->draw_text("to pause", 400.0f, -325.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
+			} else if (game_state == GAME_TRANSITION) {
+				this->font->draw_text("Press SPACE", 400.0f, -300.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
+				this->font->draw_text("to start", 400.0f, -325.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f));
 			}
 
 			// Detect the collisions
@@ -103,7 +109,7 @@ void Game::loop() {
 				// std::cout << "GAME OVER!" << std::endl;
 				player_manager->update_score();
 				player_manager->reset();
-				user_data->game_state = GAME_PAUSE;
+				user_data->game_state = GAME_TRANSITION;
 			}
 		}
 
@@ -170,6 +176,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			user_data->game_state = GAME_ACTIVE;
 		} else if (user_data->game_state == GAME_ACTIVE) {
 			user_data->game_state = GAME_PAUSE;
+		} else if (user_data->game_state == GAME_TRANSITION) {
+			user_data->game_state = GAME_ACTIVE;
 		}
 	}
 }

@@ -30,7 +30,8 @@ enum GameState {
     GAME_MENU,
     GAME_WIN,
     GAME_OVER, 
-    GAME_PAUSE
+    GAME_PAUSE,
+    GAME_TRANSITION
 };
 
 typedef struct {
