@@ -14,10 +14,17 @@ Menu::Menu(GLFWwindow* window) {
 void Menu::draw() {
     user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
 
-    float pos = -100.0f;
+    float pos = -200.0f;
     float pos_name_y = 350.0f;
     float ready_extra_margin = 150.0f;
     int active_counter = 0;
+
+    this->font->draw_text(
+        "             <Left Right>",
+        -500.0f,
+        pos_name_y + pos + 75,
+        0.75f,
+        glm::vec3(1.0f, 1.0f, 1.0f));
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;
@@ -31,7 +38,7 @@ void Menu::draw() {
                 "READY",
                 200.0f + ready_extra_margin,
                 pos_name_y + pos,
-                0.9f,
+                0.75f,
                 menu_color);
             active_counter++;
         }
@@ -40,29 +47,29 @@ void Menu::draw() {
             menu_text, 
             -500.0f, 
             pos_name_y + pos, 
-            0.9f, 
+            0.75f, 
             menu_color);
-        pos_name_y -= 100.0f;
+        pos_name_y -= 75.0f;
     }
 
     this->font->draw_text(
         "Press the left key of the player to join the party",
-        -400.0f,
-        -275.0f + pos,
+        -420.0f,
+        -225.0f + pos,
         0.7f,
         glm::vec3(1.0f, 1.0f, 1.0f));
     this->font->draw_text(
         "Achtung, die Kurve!",
-        -300.0f,
-        550.0f + pos,
+        -330.0f,
+        450.0f,
         1.5f,
         glm::vec3(1.0f, 1.0f, 1.0f));
 
     if (active_counter >= 2) {
         this->font->draw_text(
             "Press ENTER to start",
-            -150.0f,
-            -350.0f + pos,
+            -180.0f,
+            -300.0f + pos,
             0.7f,
             glm::vec3(1.0f, 1.0f, 1.0f));
     }
