@@ -70,3 +70,18 @@ void LineModel::set_color(std::array<GLubyte, 3> color) {
 std::vector<Point> LineModel::get_points() {
     return this->points;
 }
+
+void LineModel::clear() {
+    this->points.clear();
+    line_mesh->clear();
+}
+
+void LineModel::set_start_position(Point point) {
+    glUseProgram(this->shader_id);
+    
+    this->add_point(point);
+    this->start_pos_x = 0; 
+    this->start_pos_y = 0;
+
+    this->init_values();
+}

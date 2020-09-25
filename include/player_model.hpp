@@ -59,8 +59,10 @@ class PlayerModel : public Model {
     void set_keys(Control control);
     void add_line_model(std::shared_ptr<LineModel> line_model);
     Point get_position();
+    void set_position(Point point);
     int get_id();
     std::vector<Point> get_line_points();
+    void clear();
 };
 
 #endif

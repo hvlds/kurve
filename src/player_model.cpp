@@ -187,3 +187,24 @@ std::vector<Point> PlayerModel::get_line_points() {
 int PlayerModel::get_id() {
     return this->id;
 }
+
+void PlayerModel::clear() {
+    // Delete the trace of positions (points)
+    this->points.clear();
+
+    // Clear the line of the player
+    this->line_model->clear();
+}
+
+void PlayerModel::set_position(Point point) {
+    glUseProgram(this->shader_id);
+    this->points.push_back(point);
+
+    this->last_point = point;
+    this->start_pos_x = point.x;
+    this->start_pos_y = point.y;
+    
+    this->init_values();
+
+    this->line_model->set_start_position(point);
+}

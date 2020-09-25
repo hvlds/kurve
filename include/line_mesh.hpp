@@ -22,6 +22,7 @@ class LineMesh: public Mesh {
     void set_points(std::vector<Point> points);
     void add_point(Point point);
     void update();
+    void clear();
 };
 
 #endif

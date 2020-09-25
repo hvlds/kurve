@@ -21,24 +21,25 @@ class PlayerManager {
     std::map<int, std::shared_ptr<PlayerModel>> players;
     std::vector<int> dead_players;
     GLFWwindow* window;
+    void reset_player(int id);
+    std::vector<Point> get_oponent_trace(int id);
+    std::vector<Point> get_player_trace(int id);
+    Point get_player_position(int id);
    public:
     PlayerManager(GLFWwindow* window);
     void add_player(
         int id,
         Control control,
         std::array<GLubyte, 3> color);
-    int get_new_id();
     void update(GLFWwindow* window);
     std::vector<Point> get_all_points();
-    std::vector<Point> get_oponent_trace(int id);
-    std::vector<Point> get_player_trace(int id);
-    Point get_player_position(int id);
     void detect_collisions();
     std::vector<int> get_alive_players();
+    void add_players();
     void update_score();
     void draw();
-    void add_players();
     void reset();
+
 };
 
 #endif

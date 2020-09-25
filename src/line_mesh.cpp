@@ -189,3 +189,8 @@ void LineMesh::draw() {
         gl_check_error("glDrawArrays");
     }
 }
+
+void LineMesh::clear() {
+    this->line_points.clear();
+    this->points.clear();   
+}

@@ -41,6 +41,8 @@ class LineModel : public Model {
     void add_point(Point point);
     void set_color(std::array<GLubyte, 3> color);
     std::vector<Point> get_points();
+    void set_start_position(Point point);
+    void clear();
 };
 
 #endif

@@ -38,19 +38,6 @@ void PlayerManager::add_player(
     this->players.insert({id, player});
 }
 
-int PlayerManager::get_new_id() {
-    int new_id = 0;
-    if (!this->players.empty()) {
-        for (auto item : this->players) {
-            if (item.first > new_id) {
-                new_id = item.first;
-            }
-        }
-    }
-    new_id++;
-    return new_id;
-}
-
 void PlayerManager::update(GLFWwindow* window) {
     for (auto item : this->players) {
         item.second->update(window);
@@ -160,11 +147,28 @@ void PlayerManager::update_score() {
     }
 }
 
+void PlayerManager::reset_player(int id) {
+    std::shared_ptr<PlayerModel> player = this->players.at(id);
+
+    int random_x= -100 + (rand() % 200);
+    int random_y= -100 + (rand() % 200);
+
+    GLfloat x = (GLfloat) random_x / 10;
+    GLfloat y = (GLfloat) random_y / 10;
+    
+    Point new_position{x, y};
+
+    player->set_position(new_position);
+    player->clear();
+}
+
 void PlayerManager::reset() {
     // Clear the map with user and vector with dead players
-    this->players.clear();
     this->dead_players.clear();
 
-    // Add again the players (in different positions)
-    this->add_players();
+    std::cout << "---- RESET PLAYERS ----" << std::endl;
+    for (auto item : this->players) {
+        item.second->is_alive = true;
+        this->reset_player(item.first);
+    }
 }
