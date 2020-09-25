@@ -158,8 +158,8 @@ void PlayerManager::reset_player(int id) {
     
     Point new_position{x, y};
 
-    player->set_position(new_position);
     player->clear();
+    player->set_position(new_position);
 }
 
 void PlayerManager::reset() {

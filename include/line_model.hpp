@@ -28,8 +28,8 @@ class LineModel : public Model {
     std::array<GLubyte, 3> color;
    public:
     // The uniforms locations
-    GLint start_pos_y_loc;
     GLint start_pos_x_loc;
+    GLint start_pos_y_loc;
 
     // The uniforms values
     GLfloat start_pos_y;

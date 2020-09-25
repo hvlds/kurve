@@ -25,6 +25,7 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
 }
 
 void LineModel::update(GLFWwindow* window) {
+    glUseProgram(this->shader_id);
     this->line_mesh->update();
 }
 

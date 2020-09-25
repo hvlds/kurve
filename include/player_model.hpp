@@ -28,7 +28,8 @@ class PlayerModel : public Model {
     virtual void init_values() override;
 
     std::vector<Point> points;
-    std::shared_ptr<LineModel> line_model;
+    std::vector<std::shared_ptr<LineModel>> lines;
+    int blank_count = 0;
 
     int id;
     Control control;
@@ -57,7 +58,6 @@ class PlayerModel : public Model {
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     void set_keys(Control control);
-    void add_line_model(std::shared_ptr<LineModel> line_model);
     Point get_position();
     void set_position(Point point);
     int get_id();

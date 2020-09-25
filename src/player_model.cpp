@@ -35,15 +35,15 @@ PlayerModel::PlayerModel(
 
     // Create a line model for the player
     auto line = std::make_shared<LineModel>(point, this->color);
-    this->line_model = line;
+    this->lines.push_back(line);
 }
 
 void PlayerModel::draw() {
     glUseProgram(this->shader_id);
     this->mesh->draw();
 
-    if (this->line_model != nullptr) {
-        line_model->draw();
+    for (auto line : this->lines) {
+        line->draw();
     }
 }    
 
@@ -103,18 +103,34 @@ void PlayerModel::update(GLFWwindow* window) {
             this->trans_x += this->speed_x;
             this->trans_y += this->speed_y;    
 
-            Point last_point = this->points.back();
             Point point{
                 this->trans_x + this->start_pos_x,
                 this->trans_y + this->start_pos_y
             };
-            this->points.push_back(point);
-            if (this->line_model != nullptr) {          
-                this->line_model->add_point(point);
-                this->line_model->update(window); 
+
+
+            if (this->lines.back()->get_points().size() < 100) {
+                Point last_point = this->points.back();
+                this->points.push_back(point);
+                this->lines.back()->add_point(point);
+                this->lines.back()->update(window);
+            } else {
+                if (this->blank_count <= 15) {
+                    this->blank_count++;
+                } else {
+                    Point last_point = this->points.back();
+                    auto line = std::make_shared<LineModel>(point, this->color);
+                    this->lines.push_back(line);
+
+                    this->lines.back()->add_point(point);
+                    this->lines.back()->update(window);
+                    this->blank_count = 0;
+                }
             }
 
             // Update the uniform:
+            glUseProgram(this->shader_id);
+
             glUniform1f(this->trans_y_loc, this->trans_y);
             gl_check_error("glUniform1f [trans_y]");
 
@@ -182,9 +198,6 @@ void PlayerModel::set_keys(Control control) {
     this->control = control;
 }
 
-void PlayerModel::add_line_model(std::shared_ptr<LineModel> line_model) {
-    this->line_model = line_model;
-}
 
 Point PlayerModel::get_position() {
     return this->points.back();
@@ -202,19 +215,26 @@ void PlayerModel::clear() {
     // Delete the trace of positions (points)
     this->points.clear();
 
-    // Clear the line of the player
-    this->line_model->clear();
+    // Clear the lines of the player
+    for (auto line : this->lines) {
+        line->clear();
+    }
+
+    // Clear the vector with the lines
+    this->lines.clear();
 }
 
 void PlayerModel::set_position(Point point) {
     glUseProgram(this->shader_id);
     this->points.push_back(point);
 
+    this->blank_count = 0;
     this->last_point = point;
     this->start_pos_x = point.x;
     this->start_pos_y = point.y;
     
     this->init_values();
 
-    this->line_model->set_start_position(point);
+    auto line = std::make_shared<LineModel>(point, this->color);
+    this->lines.push_back(line);
 }
