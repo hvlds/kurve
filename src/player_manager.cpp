@@ -20,7 +20,6 @@ void PlayerManager::add_players() {
             this->add_player(id, control, color);
         }
     }
-   
 }
 
 void PlayerManager::add_player(
@@ -75,7 +74,7 @@ std::vector<Point> PlayerManager::get_all_points() {
     return all_points;
 }
 
-std::vector<Point> PlayerManager::get_player_points(int id) {
+std::vector<Point> PlayerManager::get_player_trace(int id) {
     std::shared_ptr<PlayerModel> player = this->players.at(id);
     std::vector<Point> all_points = player->get_line_points();
     std::size_t point_count = all_points.size();
@@ -88,7 +87,7 @@ std::vector<Point> PlayerManager::get_player_points(int id) {
     return all_points;
 }
 
-std::vector<Point> PlayerManager::get_oponent_points(int id) {
+std::vector<Point> PlayerManager::get_oponent_trace(int id) {
     std::vector<Point> oponent_points{};
     for (auto item : this->players) {
         if (item.first != id) {
@@ -105,46 +104,44 @@ Point PlayerManager::get_player_position(int id) {
     return this->players.at(id)->get_position();
 }
 
-std::vector<int> PlayerManager::get_ids() {
-    std::vector<int> keys;
-    for (auto item : this->players) {
-        keys.push_back(item.first);
-    }
-    return keys;
-}
-
 void PlayerManager::detect_collisions() {
     for (auto item : this->players) {
         int id = item.first;
-        auto oponent_points = this->get_oponent_points(id);
-        auto own_points = this->get_player_points(id);
+        auto oponent_points = this->get_oponent_trace(id);
+        auto own_points = this->get_player_trace(id);
         std::shared_ptr<PlayerModel> player = item.second;
         Point position = player->get_position();
         for (auto point : oponent_points) {
             double distance = Point::get_distance(point, position);
             if (distance < 0.5) {
-                player->is_active = false;
-                std::cout << "Collision with player!" << std::endl;
+                if (player->is_alive == true) {
+                    player->is_alive = false;
+                    std::cout << "Collision with player!" << std::endl;
+                    this->dead_players.push_back(player->get_id());
+                }
             }
         }
         if (own_points.size() > 20) {
             for (auto point : own_points) {
                 double distance = Point::get_distance(point, position);
                 if (distance < 0.5) {
-                    player->is_active = false;
-                    std::cout << "Collision with your own line!" << std::endl;
+                    if (player->is_alive == true) {
+                        player->is_alive = false;
+                        std::cout << "Collision with your own line!" << std::endl;
+                        this->dead_players.push_back(player->get_id());
+                    }
                 }
             }
         }
     }
 }
 
-std::vector<int> PlayerManager::get_active_players() {
-    std::vector<int> active_ids;
+std::vector<int> PlayerManager::get_alive_players() {
+    std::vector<int> alive_ids;
     for (auto item : this->players) {
-        if (item.second->is_active == true) {
-            active_ids.push_back(item.first);
+        if (item.second->is_alive == true) {
+            alive_ids.push_back(item.first);
         }
     }  
-    return active_ids;
+    return alive_ids;
 }

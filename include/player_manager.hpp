@@ -19,6 +19,7 @@ extern "C" {
 class PlayerManager {
    protected:
     std::map<int, std::shared_ptr<PlayerModel>> players;
+    std::vector<int> dead_players;
     GLFWwindow* window;
    public:
     PlayerManager(GLFWwindow* window);
@@ -29,12 +30,11 @@ class PlayerManager {
     int get_new_id();
     void update(GLFWwindow* window);
     std::vector<Point> get_all_points();
-    std::vector<Point> get_oponent_points(int id);
-    std::vector<Point> get_player_points(int id);
+    std::vector<Point> get_oponent_trace(int id);
+    std::vector<Point> get_player_trace(int id);
     Point get_player_position(int id);
-    std::vector<int> get_ids();
     void detect_collisions();
-    std::vector<int> get_active_players();
+    std::vector<int> get_alive_players();
     void draw();
     void add_players();
 };

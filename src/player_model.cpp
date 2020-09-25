@@ -12,7 +12,7 @@ PlayerModel::PlayerModel(
     this->model_type = MODEL_PLAYER;
     this->color = color;
     this->id = id;
-    this->is_active = true;
+    this->is_alive = true;
     Point point{x, y};
     this->last_point = point;
 
@@ -55,7 +55,7 @@ void PlayerModel::update(GLFWwindow* window) {
         double new_time = glfwGetTime();
         this->time = new_time;
     } else if (game_state == GAME_ACTIVE) {
-        if (this->is_active == true) {
+        if (this->is_alive == true) {
             glUseProgram(this->shader_id);
             double new_time = glfwGetTime();
             double time_delta = new_time - this->time;
@@ -63,13 +63,13 @@ void PlayerModel::update(GLFWwindow* window) {
 
             if (this->trans_x + this->start_pos_x >= 13.5 
                 || this->trans_x + this->start_pos_x <= -18.5) {
-                this->is_active = false;
+                this->is_alive = false;
                 return;
             }
 
             if (this->trans_y + this->start_pos_y >= 18.5 
                 || this->trans_y + this->start_pos_y <= -18.5) {
-                this->is_active = false;
+                this->is_alive = false;
                 return;
             }
 
@@ -182,4 +182,8 @@ Point PlayerModel::get_position() {
 
 std::vector<Point> PlayerModel::get_line_points() {
     return this->points;
+}
+
+int PlayerModel::get_id() {
+    return this->id;
 }

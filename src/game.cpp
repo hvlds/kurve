@@ -99,7 +99,7 @@ void Game::loop() {
 			player_manager->detect_collisions();
 
 			// Check how many players are still active
-			auto active_players = player_manager->get_active_players();
+			auto active_players = player_manager->get_alive_players();
 			if (active_players.size() <= 1) {
 				// std::cout << "GAME OVER!" << std::endl;
 				user_data->game_state = GAME_PAUSE;

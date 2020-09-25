@@ -45,7 +45,7 @@ class PlayerModel : public Model {
     Point last_point;
     GLfloat speed_x;
     GLfloat speed_y;
-    bool is_active;
+    bool is_alive;
 
     // The Uniform values
     GLfloat trans_y;
@@ -59,6 +59,7 @@ class PlayerModel : public Model {
     void set_keys(Control control);
     void add_line_model(std::shared_ptr<LineModel> line_model);
     Point get_position();
+    int get_id();
     std::vector<Point> get_line_points();
 };
 
