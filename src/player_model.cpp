@@ -13,8 +13,13 @@ PlayerModel::PlayerModel(
     this->color = color;
     this->id = id;
     this->is_alive = true;
+    
+    // Set an initial random length for the first line
+    this->random_length = 70 + (rand() % 120);
+    
     Point point{x, y};
     this->last_point = point;
+
 
     // Compile and add the shaders
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
@@ -109,7 +114,7 @@ void PlayerModel::update(GLFWwindow* window) {
             };
 
 
-            if (this->lines.back()->get_points().size() < 100) {
+            if (this->lines.back()->get_points().size() < this->random_length) {
                 Point last_point = this->points.back();
                 this->points.push_back(point);
                 this->lines.back()->add_point(point);
@@ -124,7 +129,10 @@ void PlayerModel::update(GLFWwindow* window) {
 
                     this->lines.back()->add_point(point);
                     this->lines.back()->update(window);
+
+                    // Set the blank count to null and add a new random length
                     this->blank_count = 0;
+                    this->random_length = 70 + (rand() % 120);
                 }
             }
 

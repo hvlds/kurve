@@ -30,6 +30,7 @@ class PlayerModel : public Model {
     std::vector<Point> points;
     std::vector<std::shared_ptr<LineModel>> lines;
     int blank_count = 0;
+    int random_length;
 
     int id;
     Control control;
