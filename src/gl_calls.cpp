@@ -36,7 +36,7 @@ void gl_check_error(const char* error_text) {
 }
 
 void init_gl(GLFWwindow* window) {
-    std::cout << "init_gl" << std::endl;
+    std::cout << "---- INIT GL ----" << std::endl;
     
     // Obtain the internal size of the framebuffer:
     int fb_width, fb_height;

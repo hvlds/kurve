@@ -25,6 +25,7 @@ class PlayerManager {
     std::vector<Point> get_oponent_trace(int id);
     std::vector<Point> get_player_trace(int id);
     Point get_player_position(int id);
+    int max_score;
    public:
     PlayerManager(GLFWwindow* window);
     void add_player(
@@ -35,8 +36,11 @@ class PlayerManager {
     std::vector<Point> get_all_points();
     void detect_collisions();
     std::vector<int> get_alive_players();
+    int get_players_count();
     void add_players();
     void update_score();
+    void check_score();
+    int get_max_score();
     void draw();
     void reset();
     void terminate();

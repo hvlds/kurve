@@ -6,11 +6,27 @@ SidePanel::SidePanel(GLFWwindow* window, std::shared_ptr<Font> font) {
     this->font = font;
 }
 
-void SidePanel::draw(int player_count) {
+void SidePanel::draw(int player_count, int max_score) {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     // Show the right player names
     float y_pos = 400.0f;
     float count = 0;
+
+    // Draw the score at the top of the Side Panel
+    this->font->draw_text(
+        std::to_string(max_score),
+        460.0f,
+        500.0f,
+        1.0f,
+        glm::vec3(1.0f, 1.0f, 1.0f)
+    );
+    this->font->draw_text(
+        "MAX. SCORE",
+        410.0f,
+        450.0f,
+        0.7f,
+        glm::vec3(1.0f, 1.0f, 1.0f)
+    );
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;

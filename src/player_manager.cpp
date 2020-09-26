@@ -20,6 +20,10 @@ void PlayerManager::add_players() {
             this->add_player(id, control, color);
         }
     }
+
+    // Calculate the max score for the party
+    int players_count = static_cast<int>(this->players.size());
+    this->max_score = players_count * 5;
 }
 
 void PlayerManager::add_player(
@@ -147,6 +151,15 @@ void PlayerManager::update_score() {
     }
 }
 
+void PlayerManager::check_score() {
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    std::pair<int, int> best_score;
+    for (auto item : this->players) {
+        int id = item.first;
+        int score = user_data->player_info->at(id - 1).score;
+    }
+}
+
 void PlayerManager::reset_player(int id) {
     std::shared_ptr<PlayerModel> player = this->players.at(id);
 
@@ -171,6 +184,14 @@ void PlayerManager::reset() {
         item.second->is_alive = true;
         this->reset_player(item.first);
     }
+}
+
+int PlayerManager::get_players_count() {
+    return this->players.size();
+}
+
+int PlayerManager::get_max_score() {
+    return this->max_score;
 }
 
 void PlayerManager::terminate() {

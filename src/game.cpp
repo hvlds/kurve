@@ -27,7 +27,6 @@ Game::Game(GLFWwindow* window) {
     this->menu = std::make_shared<Menu>(window, this->font);
     this->side_panel = std::make_shared<SidePanel>(window, this->font);
     this->player_manager = std::make_shared<PlayerManager>(window);
-
     this->border_model = std::make_shared<BorderModel>();
 
     init_gl(this->window);
@@ -47,6 +46,7 @@ void Game::loop() {
             || game_state == GAME_PAUSE 
             || game_state == GAME_TRANSITION) {
             if (this->has_players == false) {
+                // Generate the players
                 this->player_manager->add_players();
                 this->has_players = true;
             }
@@ -62,7 +62,9 @@ void Game::loop() {
             // Draw the models:
             this->border_model->draw();
             this->player_manager->draw();
-            this->side_panel->draw(this->get_player_count());
+            this->side_panel->draw(
+                this->get_player_count(),
+                this->player_manager->get_max_score());
 
             // Detect the collisions
             player_manager->detect_collisions();
@@ -70,7 +72,6 @@ void Game::loop() {
             // Check how many players are still active
             auto active_players = player_manager->get_alive_players();
             if (active_players.size() <= 1) {
-                // std::cout << "GAME OVER!" << std::endl;
                 player_manager->update_score();
                 player_manager->reset();
                 user_data->game_state = GAME_TRANSITION;
