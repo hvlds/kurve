@@ -1,5 +1,5 @@
-#ifndef MENU_HPP
-#define MENU_HPP
+#ifndef SIDE_PANEL_HPP
+#define SIDE_PANEL_HPP
 
 extern "C" {
 // Include the GLAD loader *before* including GLFW!
@@ -11,16 +11,14 @@ extern "C" {
 #include "font.hpp"
 #include <memory>
 
-
-class Menu {
-   protected:
+class SidePanel {
+   private:
     GLFWwindow* window;
-    std::shared_ptr<Font> font;
+    std::shared_ptr<Font> font; 
    public:
-    Menu(GLFWwindow* window, std::shared_ptr<Font> font);
+    SidePanel(GLFWwindow* window, std::shared_ptr<Font> font);
     void draw();
     void update();
-
 };
 
 #endif

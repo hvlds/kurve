@@ -4,10 +4,8 @@
 
 #include "user.hpp"
 
-Menu::Menu(GLFWwindow* window) {
+Menu::Menu(GLFWwindow* window, std::shared_ptr<Font> font) {
     this->window = window;
-
-    auto font = std::make_shared<Font>();
     this->font = font;
 }
 

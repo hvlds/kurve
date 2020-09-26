@@ -66,6 +66,7 @@ void PlayerModel::update(GLFWwindow* window) {
             double time_delta = new_time - this->time;
             double speed = 2.5; 
 
+            // Check that the player is inside of the yellow limit
             if (this->trans_x + this->start_pos_x >= 13.5 
                 || this->trans_x + this->start_pos_x <= -18.5) {
                 this->is_alive = false;
@@ -81,6 +82,7 @@ void PlayerModel::update(GLFWwindow* window) {
             this->time = new_time;
             GLfloat angle_diff = 0;
 
+            // Update the angle diferential
             int right_state = glfwGetKey(window, this->control.right_key);
             if (right_state == GLFW_PRESS) {
                 angle_diff = static_cast<GLfloat>((-speed * time_delta));        
@@ -91,11 +93,10 @@ void PlayerModel::update(GLFWwindow* window) {
                 angle_diff = static_cast<GLfloat>((speed * time_delta));
             }
 
-            // std::cout << "Angle diff: " << angle_diff << std::endl;
-
             Vector speed_vec{this->speed_x, this->speed_y};
 
             if (angle_diff != 0) {
+                // Rotate the speed vector
                 GLfloat temp_speed_x = this->speed_x;
                 GLfloat temp_speed_y = this->speed_y;
 
@@ -103,8 +104,6 @@ void PlayerModel::update(GLFWwindow* window) {
                 this->speed_y = temp_speed_x * sin(angle_diff) + temp_speed_y * cos(angle_diff);
             }
 
-            // std::cout << "Speed length: " << speed_vec.get_length() << std::endl;
-            
             this->trans_x += this->speed_x;
             this->trans_y += this->speed_y;    
 
@@ -113,16 +112,18 @@ void PlayerModel::update(GLFWwindow* window) {
                 this->trans_y + this->start_pos_y
             };
 
-
             if (this->lines.back()->get_points().size() < this->random_length) {
+                // Draw the line
                 Point last_point = this->points.back();
                 this->points.push_back(point);
                 this->lines.back()->add_point(point);
                 this->lines.back()->update(window);
             } else {
                 if (this->blank_count <= 15) {
+                    // Still moving, but without drawing a line
                     this->blank_count++;
                 } else {
+                    // Initialize a new line and add the first point
                     Point last_point = this->points.back();
                     auto line = std::make_shared<LineModel>(point, this->color);
                     this->lines.push_back(line);

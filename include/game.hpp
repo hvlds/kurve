@@ -16,6 +16,7 @@ extern "C" {
 #include "player_manager.hpp"
 #include "font.hpp"
 #include "menu.hpp"
+#include "side_panel.hpp"
 
 class Game {
    private:
@@ -24,6 +25,7 @@ class Game {
     std::shared_ptr<PlayerManager> player_manager;
     std::shared_ptr<Font> font; 
     std::shared_ptr<Menu> menu;  
+    std::shared_ptr<SidePanel> side_panel;
     bool has_players;
    public:
     Game(GLFWwindow* window);

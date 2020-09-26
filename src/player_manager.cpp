@@ -172,3 +172,7 @@ void PlayerManager::reset() {
         this->reset_player(item.first);
     }
 }
+
+void PlayerManager::terminate() {
+    this->players.clear();
+}

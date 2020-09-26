@@ -13,6 +13,8 @@
 #include "player_model.hpp"
 #include "point.hpp"
 #include "shader.hpp"
+#include "menu.hpp"
+#include "side_panel.hpp"
 
 Game::Game(GLFWwindow* window) {
     std::cout << "---- INIT GAME ----" << std::endl;
@@ -20,17 +22,15 @@ Game::Game(GLFWwindow* window) {
 
     this->has_players = false;
 
-    auto menu = std::make_shared<Menu>(window);
-    this->menu = menu;
+    this->font = std::make_shared<Font>();
 
-    auto player_manager = std::make_shared<PlayerManager>(window);
-    this->player_manager = player_manager;
+    this->menu = std::make_shared<Menu>(window, this->font);
+    this->side_panel = std::make_shared<SidePanel>(
+        window, this->font);
+    this->player_manager = std::make_shared<PlayerManager>(window);
 
     auto border = std::make_shared<BorderModel>();
     this->models.push_back(border);
-
-    auto font = std::make_shared<Font>();
-    this->font = font;
 
     init_gl(this->window);
     glfwSetKeyCallback(window, key_callback);
@@ -149,6 +149,7 @@ void Game::loop() {
 }
 
 void Game::terminate() {
+    std::cout << "---- TERMINATE GAME ----" << std::endl;
     for (auto model : models) {
         // Delete the shader program
         glDeleteProgram(model->shader_id);
@@ -156,6 +157,9 @@ void Game::terminate() {
 
         model->mesh->terminate();
     }
+
+    // Terminate the PlayerManager
+    this->player_manager->terminate();
 
     // Destroy the window:
     glfwDestroyWindow(this->window);

@@ -39,7 +39,7 @@ class PlayerManager {
     void update_score();
     void draw();
     void reset();
-
+    void terminate();
 };
 
 #endif
