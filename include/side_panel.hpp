@@ -15,10 +15,16 @@ class SidePanel {
    private:
     GLFWwindow* window;
     std::shared_ptr<Font> font; 
+    int id_winner;
+    int full_frames = 0;
+    int blank_frames = 0;
+    int max_frames = 10;
    public:
     SidePanel(GLFWwindow* window, std::shared_ptr<Font> font);
     void draw(int player_count, int max_score);
+    void set_winner(int id);
     void update();
+
 };
 
 #endif

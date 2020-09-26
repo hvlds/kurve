@@ -42,7 +42,8 @@ void Game::loop() {
             gl_check_error("glClear");
             this->menu->draw();
         } else if (
-            game_state == GAME_ACTIVE 
+            game_state == GAME_ACTIVE
+            || game_state == GAME_WIN 
             || game_state == GAME_PAUSE 
             || game_state == GAME_TRANSITION) {
             if (this->has_players == false) {
@@ -74,7 +75,10 @@ void Game::loop() {
             if (active_players.size() <= 1) {
                 player_manager->update_score();
                 player_manager->reset();
-                user_data->game_state = GAME_TRANSITION;
+                int id_winner = active_players.back();
+                this->side_panel->set_winner(id_winner);
+                // user_data->game_state = GAME_TRANSITION;
+                user_data->game_state = GAME_WIN;
             }
         }
 
@@ -146,6 +150,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         } else if (user_data->game_state == GAME_ACTIVE) {
             user_data->game_state = GAME_PAUSE;
         } else if (user_data->game_state == GAME_TRANSITION) {
+            user_data->game_state = GAME_ACTIVE;
+        } else if (user_data->game_state == GAME_WIN) {
             user_data->game_state = GAME_ACTIVE;
         }
     }

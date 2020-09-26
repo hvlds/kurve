@@ -138,6 +138,8 @@ std::vector<int> PlayerManager::get_alive_players() {
 }
 
 void PlayerManager::update_score() {
+
+    //ZURÜCK
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     int local_score = 0;
     for (int dead_player_id : this->dead_players) {
@@ -152,6 +154,7 @@ void PlayerManager::update_score() {
 }
 
 void PlayerManager::check_score() {
+    //zurück
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     std::pair<int, int> best_score;
     for (auto item : this->players) {
