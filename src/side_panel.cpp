@@ -87,7 +87,7 @@ void SidePanel::draw(int player_count, int max_score) {
             -325.0f,
             0.7f,
             glm::vec3(1.0f, 1.0f, 1.0f));
-    } else if (game_state == GAME_TRANSITION) {
+    } else if (game_state == GAME_TRANSITION || game_state == GAME_WIN) {
         this->font->draw_text(
             "Press SPACE",
             400.0f,
