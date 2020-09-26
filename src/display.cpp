@@ -46,6 +46,8 @@ Display::Display(user_data_t* user_data) {
 	// Create a GLFW window:
 	printf("Creating window ...\n");
 
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
 	this->window = glfwCreateWindow(
         this->user_data->window_width, 
         this->user_data->window_height, 
