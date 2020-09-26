@@ -177,7 +177,7 @@ void PlayerModel::init_values() {
     this->trans_x = 0;
     this->trans_y = 0;
 
-    this->speed_x = 0.075;
+    this->speed_x = 0.09;
     this->speed_y = 0;
 
     // Generate a random initial speed vector
