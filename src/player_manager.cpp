@@ -104,7 +104,7 @@ void PlayerManager::detect_collisions() {
         Point position = player->get_position();
         for (auto point : oponent_points) {
             double distance = Point::get_distance(point, position);
-            if (distance < 0.5) {
+            if (distance < 0.2) {
                 if (player->is_alive == true) {
                     player->is_alive = false;
                     std::cout << "Collision with player!" << std::endl;
@@ -115,7 +115,7 @@ void PlayerManager::detect_collisions() {
         if (own_points.size() > 20) {
             for (auto point : own_points) {
                 double distance = Point::get_distance(point, position);
-                if (distance < 0.5) {
+                if (distance < 0.2) {
                     if (player->is_alive == true) {
                         player->is_alive = false;
                         std::cout << "Collision with your own line!" << std::endl;

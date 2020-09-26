@@ -54,7 +54,7 @@ void LineMesh::add_point(Point point) {
         direction = round(direction);
         // std::cout << "direction: " << direction << std::endl;
 
-        GLfloat r{0.25};
+        GLfloat r{0.1};
         Point left_point, right_point, left_diff, right_diff;
 
         double v2_length = v2.get_length();
