@@ -17,7 +17,7 @@ class SidePanel {
     std::shared_ptr<Font> font; 
    public:
     SidePanel(GLFWwindow* window, std::shared_ptr<Font> font);
-    void draw();
+    void draw(int player_count);
     void update();
 };
 

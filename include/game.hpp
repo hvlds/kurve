@@ -12,7 +12,7 @@ extern "C" {
 	#include <GLFW/glfw3.h>
 }
 #include "model.hpp"
-#include "player_model.hpp"
+#include "border_model.hpp"
 #include "player_manager.hpp"
 #include "font.hpp"
 #include "menu.hpp"
@@ -21,7 +21,7 @@ extern "C" {
 class Game {
    private:
     GLFWwindow* window;
-    std::vector<std::shared_ptr<Model>> models;
+    std::shared_ptr<BorderModel> border_model;
     std::shared_ptr<PlayerManager> player_manager;
     std::shared_ptr<Font> font; 
     std::shared_ptr<Menu> menu;  

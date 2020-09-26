@@ -25,12 +25,10 @@ Game::Game(GLFWwindow* window) {
     this->font = std::make_shared<Font>();
 
     this->menu = std::make_shared<Menu>(window, this->font);
-    this->side_panel = std::make_shared<SidePanel>(
-        window, this->font);
+    this->side_panel = std::make_shared<SidePanel>(window, this->font);
     this->player_manager = std::make_shared<PlayerManager>(window);
 
-    auto border = std::make_shared<BorderModel>();
-    this->models.push_back(border);
+    this->border_model = std::make_shared<BorderModel>();
 
     init_gl(this->window);
     glfwSetKeyCallback(window, key_callback);
@@ -38,23 +36,23 @@ Game::Game(GLFWwindow* window) {
 
 void Game::loop() {
     while (!glfwWindowShouldClose(this->window)) {
-        user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+        auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
         GameState game_state = user_data->game_state;
         if (game_state == GAME_MENU) {
             glClear(GL_COLOR_BUFFER_BIT);
             gl_check_error("glClear");
             this->menu->draw();
         } else if (
-            game_state == GAME_ACTIVE || game_state == GAME_PAUSE || game_state == GAME_TRANSITION) {
+            game_state == GAME_ACTIVE 
+            || game_state == GAME_PAUSE 
+            || game_state == GAME_TRANSITION) {
             if (this->has_players == false) {
                 this->player_manager->add_players();
                 this->has_players = true;
             }
 
-            // Update the models:
-            for (auto model : models) {
-                model->update(this->window);
-            }
+            // Update
+            this->border_model->update(this->window);
             this->player_manager->update(this->window);
 
             // Clear the color buffer -> background color:
@@ -62,70 +60,9 @@ void Game::loop() {
             gl_check_error("glClear");
 
             // Draw the models:
-            for (auto model : models) {
-                model->draw();
-            }
+            this->border_model->draw();
             this->player_manager->draw();
-
-            // Show the right player names
-            int player_count = this->get_player_count();
-            float y_pos = 400.0f;
-            float count = 0;
-
-            for (auto player_info : *user_data->player_info) {
-                std::string name = player_info.name;
-                auto color = player_info.menu_color;
-                if (player_info.is_active == true) {
-                    y_pos = y_pos - 50.0f;
-                    auto score_text = std::to_string(player_info.score);
-                    this->font->draw_text(name, 450.0f, y_pos, 0.6f, color);
-                    this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color);
-                    count += 1.0f;
-                }
-            }
-
-            user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
-            GameState game_state = user_data->game_state;
-            if (game_state == GAME_PAUSE) {
-                this->font->draw_text(
-                    "Press SPACE",
-                    400.0f,
-                    -300.0f,
-                    0.7f,
-                    glm::vec3(1.0f, 1.0f, 1.0f));
-                this->font->draw_text(
-                    "to continue",
-                    400.0f,
-                    -325.0f,
-                    0.7f,
-                    glm::vec3(1.0f, 1.0f, 1.0f));
-            } else if (game_state == GAME_ACTIVE) {
-                this->font->draw_text(
-                    "Press SPACE",
-                    400.0f,
-                    -300.0f,
-                    0.7f,
-                    glm::vec3(1.0f, 1.0f, 1.0f));
-                this->font->draw_text(
-                    "to pause",
-                    400.0f,
-                    -325.0f,
-                    0.7f,
-                    glm::vec3(1.0f, 1.0f, 1.0f));
-            } else if (game_state == GAME_TRANSITION) {
-                this->font->draw_text(
-                    "Press SPACE",
-                    400.0f,
-                    -300.0f,
-                    0.7f,
-                    glm::vec3(1.0f, 1.0f, 1.0f));
-                this->font->draw_text(
-                    "to start",
-                    400.0f,
-                    -325.0f,
-                    0.7f,
-                    glm::vec3(1.0f, 1.0f, 1.0f));
-            }
+            this->side_panel->draw(this->get_player_count());
 
             // Detect the collisions
             player_manager->detect_collisions();
@@ -150,13 +87,11 @@ void Game::loop() {
 
 void Game::terminate() {
     std::cout << "---- TERMINATE GAME ----" << std::endl;
-    for (auto model : models) {
-        // Delete the shader program
-        glDeleteProgram(model->shader_id);
-        gl_check_error("glDeleteProgram");
 
-        model->mesh->terminate();
-    }
+    // Terminate the Border Model
+    glDeleteProgram(this->border_model->shader_id);
+    gl_check_error("glDeleteProgram");
+    this->border_model->mesh->terminate();
 
     // Terminate the PlayerManager
     this->player_manager->terminate();
@@ -169,7 +104,7 @@ void Game::terminate() {
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
     GameState game_state = user_data->game_state;
 
     if (action == GLFW_RELEASE) {
@@ -192,11 +127,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
         // Confirmation keys: activate player
         for (auto player_info : *user_data->player_info) {
-            if (player_info.is_active == false && key == player_info.control.left_key) {
+            if (player_info.is_active == false 
+                && key == player_info.control.left_key) {
                 user_data->player_info->at(player_info.id - 1).is_active = true;
             }
 
-            if (player_info.is_active == true && key == player_info.control.right_key) {
+            if (player_info.is_active == true 
+                && key == player_info.control.right_key) {
                 user_data->player_info->at(player_info.id - 1).is_active = false;
             }
         }
@@ -214,7 +151,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 int Game::get_player_count() {
-    user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     int player_count = 0;
     for (auto player_info : *user_data->player_info) {
         if (player_info.is_active == true) {

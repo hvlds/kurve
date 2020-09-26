@@ -10,7 +10,7 @@ PlayerManager::PlayerManager(GLFWwindow* window) {
 
 void PlayerManager::add_players() {
     std::cout << "---- ADD PLAYERS ----" << std::endl;
-    user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
     
     for(auto player_info : *user_data->player_info) {
         if(player_info.is_active == true) {
@@ -134,7 +134,7 @@ std::vector<int> PlayerManager::get_alive_players() {
 }
 
 void PlayerManager::update_score() {
-    user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     int local_score = 0;
     for (int dead_player_id : this->dead_players) {
         user_data->player_info->at(dead_player_id - 1).score += local_score;

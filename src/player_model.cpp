@@ -54,7 +54,7 @@ void PlayerModel::draw() {
 
 void PlayerModel::update(GLFWwindow* window) {
     // Update the time and calculate the delta:
-    user_data_t* user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+    auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
     GameState game_state = user_data->game_state;
     if (game_state == GAME_PAUSE) {
         double new_time = glfwGetTime();
