@@ -64,7 +64,7 @@ void PlayerModel::update(GLFWwindow* window) {
             glUseProgram(this->shader_id);
             double new_time = glfwGetTime();
             double time_delta = new_time - this->time;
-            double speed = 2.5; 
+            double speed = 3.0; 
 
             // Check that the player is inside of the yellow limit
             if (this->trans_x + this->start_pos_x >= 13.5 
@@ -177,7 +177,7 @@ void PlayerModel::init_values() {
     this->trans_x = 0;
     this->trans_y = 0;
 
-    this->speed_x = 0.1;
+    this->speed_x = 0.075;
     this->speed_y = 0;
 
     // Generate a random initial speed vector
