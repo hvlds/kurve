@@ -155,6 +155,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             user_data->game_state = GAME_ACTIVE;
         }
     }
+    if (key == GLFW_KEY_ESCAPE) {
+        glfwWindowShouldClose(window);
+    }  
 }
 
 int Game::get_player_count() {

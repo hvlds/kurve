@@ -114,7 +114,6 @@ void PlayerModel::update(GLFWwindow* window) {
 
             if (this->lines.back()->get_points().size() < this->random_length) {
                 // Draw the line
-                Point last_point = this->points.back();
                 this->points.push_back(point);
                 this->lines.back()->add_point(point);
                 this->lines.back()->update(window);
@@ -124,7 +123,6 @@ void PlayerModel::update(GLFWwindow* window) {
                     this->blank_count++;
                 } else {
                     // Initialize a new line and add the first point
-                    Point last_point = this->points.back();
                     auto line = std::make_shared<LineModel>(point, this->color);
                     this->lines.push_back(line);
 
@@ -136,6 +134,9 @@ void PlayerModel::update(GLFWwindow* window) {
                     this->random_length = 70 + (rand() % 120);
                 }
             }
+            
+            // Set the current position of the player
+            this->last_point = point;
 
             // Update the uniform:
             glUseProgram(this->shader_id);
@@ -209,7 +210,7 @@ void PlayerModel::set_keys(Control control) {
 
 
 Point PlayerModel::get_position() {
-    return this->points.back();
+    return this->last_point;
 }
 
 std::vector<Point> PlayerModel::get_line_points() {
