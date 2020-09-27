@@ -102,6 +102,8 @@ void PlayerManager::detect_collisions() {
         auto own_points = this->get_player_trace(id);
         std::shared_ptr<PlayerModel> player = item.second;
         Point position = player->get_position();
+
+        // Collisions with other players
         for (auto point : oponent_points) {
             double distance = Point::get_distance(point, position);
             if (distance < 0.34) {
@@ -112,6 +114,8 @@ void PlayerManager::detect_collisions() {
                 }
             }
         }
+
+        // Collisions with all the lines (include of the base player)
         if (own_points.size() > 20) {
             for (auto point : own_points) {
                 double distance = Point::get_distance(point, position);

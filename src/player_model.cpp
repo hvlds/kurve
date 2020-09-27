@@ -20,7 +20,6 @@ PlayerModel::PlayerModel(
     Point point{x, y};
     this->last_point = point;
 
-
     // Compile and add the shaders
     Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
     // Init the uniforms

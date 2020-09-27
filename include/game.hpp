@@ -27,6 +27,7 @@ class Game {
     std::shared_ptr<Menu> menu;  
     std::shared_ptr<SidePanel> side_panel;
     bool has_players;
+    int show_win_frames = 0;
    public:
     Game(GLFWwindow* window);
     int generate_fonts();

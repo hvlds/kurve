@@ -46,15 +46,24 @@ void Game::loop() {
             || game_state == GAME_WIN 
             || game_state == GAME_PAUSE 
             || game_state == GAME_TRANSITION) {
+
+            // Generate the players in the first loop iteration
             if (this->has_players == false) {
-                // Generate the players
                 this->player_manager->add_players();
                 this->has_players = true;
             }
+            
+            if (game_state != GAME_WIN) {
+                // Update
+                this->border_model->update(this->window);
+                this->player_manager->update(this->window);
 
-            // Update
-            this->border_model->update(this->window);
-            this->player_manager->update(this->window);
+                // Detect the collisions
+                player_manager->detect_collisions();
+                
+                // Update the scores
+                player_manager->update_score();
+            }
 
             // Clear the color buffer -> background color:
             glClear(GL_COLOR_BUFFER_BIT);
@@ -65,20 +74,21 @@ void Game::loop() {
             this->player_manager->draw();
             this->side_panel->draw(
                 this->get_player_count(),
-                this->player_manager->get_max_score());
-
-            // Detect the collisions
-            player_manager->detect_collisions();
+                this->player_manager->get_max_score());           
 
             // Check how many players are still active
-            auto active_players = player_manager->get_alive_players();
-            if (active_players.size() <= 1) {
-                player_manager->update_score();
-                player_manager->reset();
-                int id_winner = active_players.back();
+            auto players_alive = player_manager->get_alive_players();
+            
+            if (players_alive.size() <= 1) {
+                int id_winner = players_alive.back();
                 this->side_panel->set_winner(id_winner);
-                user_data->game_state = GAME_WIN;
-                // player_manager->check_score();
+                if (this->show_win_frames < 100) {
+                    this->show_win_frames++;
+                    user_data->game_state = GAME_WIN;
+                } else {
+                    this->show_win_frames = 0;
+                    player_manager->reset();
+                }
             }
         }
 
