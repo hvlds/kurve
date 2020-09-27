@@ -77,8 +77,8 @@ void Game::loop() {
                 player_manager->reset();
                 int id_winner = active_players.back();
                 this->side_panel->set_winner(id_winner);
-                // user_data->game_state = GAME_TRANSITION;
                 user_data->game_state = GAME_WIN;
+                // player_manager->check_score();
             }
         }
 

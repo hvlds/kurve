@@ -138,8 +138,6 @@ std::vector<int> PlayerManager::get_alive_players() {
 }
 
 void PlayerManager::update_score() {
-
-    //ZURÜCK
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     int local_score = 0;
     for (int dead_player_id : this->dead_players) {
@@ -154,13 +152,27 @@ void PlayerManager::update_score() {
 }
 
 void PlayerManager::check_score() {
-    //zurück
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     std::pair<int, int> best_score;
+    bool is_first = true;
     for (auto item : this->players) {
         int id = item.first;
         int score = user_data->player_info->at(id - 1).score;
+        if (is_first) {
+            // Set the first score as the best score
+            best_score = std::make_pair(id, score);
+            is_first = false;
+        } else {
+            if (score > best_score.second) {
+                // Check if the new score is better than the actual best score
+                best_score = std::make_pair(id, score);
+            }
+        }
     }
+    if (best_score.second >= this->max_score) {
+        user_data->game_state = GAME_OVER;
+    }
+
 }
 
 void PlayerManager::reset_player(int id) {
