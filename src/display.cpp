@@ -16,10 +16,23 @@ void framebuffer_size_callback(GLFWwindow* window, int fb_width, int fb_height)
 	int width = user_data->window_width;
 	int height = user_data->window_height;
 
-	int xoffset = static_cast<int>(round((fb_width - 700)/2));
-	int yoffset = static_cast<int>(round((fb_height - 700)/2));
+	int xoffset, yoffset;
+	int new_height, new_width;
 
-	glViewport(xoffset, yoffset, 700, 700);
+	double ratio = fb_width / fb_height;
+	if (ratio >= 1) {
+		new_width = fb_height;
+		new_height = fb_height;
+		xoffset = static_cast<int>(round((fb_width - new_width)/2));
+		yoffset = 0;
+	} else {
+		new_width = fb_width;
+		new_height = fb_width;
+		xoffset = 0;
+		yoffset = static_cast<int>(round((fb_height - new_width)/2));
+	}
+
+	glViewport(xoffset, yoffset, new_width, new_height);
 	gl_check_error("glViewport");
 }
 
@@ -54,7 +67,7 @@ Display::Display(user_data_t* user_data) {
 	// Create a GLFW window:
 	printf("Creating window ...\n");
 
-	// glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	this->window = glfwCreateWindow(
         this->user_data->window_width, 
