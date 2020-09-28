@@ -1,0 +1,91 @@
+\documentclass[doktyp=studarbeit]{TUBAFarbeiten}
+
+\usepackage{selinput}% Auswahl der Dateikodierung (ansi,latin1,utf8,...)
+\usepackage[T1]{fontenc}% Einstellung Fontencoding
+\usepackage{amsmath}
+\usepackage[section]{placeins}
+%\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{csquotes}% Einstellung zu Anführungszeichen; wird von biblatex.sty gefordert
+
+\newcommand\tab[1][5mm]{\hspace*{#1}}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+	\SelectInputMappings{adieresis={ä},germandbls={ß},Euro={€}}% Zeichenzuordnung für selinput.sty
+
+% Packages for images and caption in figures
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+\usepackage{subcaption}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+\usepackage[backend=biber,sortlocale=de_DE_phonebook]{biblatex}
+\addbibresource{references.bib}
+
+%\usepackage{setspace}% Einstellungen Zeilenabstand
+	%\onehalfspacing% Einstellungen Zeilenabstand
+
+\TUBAFFakultaet{Fakultät für Mathematik und Informatik}
+\TUBAFInstitut{Institut für Informatik}
+
+\TUBAFTitel[OpenGL Game: Achtung, die Kurve!]{OpenGL Game: Achtung, die Kurve!}
+\TUBAFBetreuer{M.Sc. Jonas Treumer}
+\TUBAFKorrektor{M.Sc. Ben Lorenz}
+\TUBAFAutor[Al Nomer/Valdés]{Simon Al Nomer\newline Hernán Felipe Valdés González}
+\TUBAFStudiengang{Bachelor Angewandte Informatik}
+\TUBAFMatrikel{12\,345\newline 63\,952}
+\TUBAFDatum[2020-10-19]{19. Oktober 2020}
+
+\begin{document}
+
+\maketitle
+
+\TUBAFErklaerungsseite
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addsec{Zusammenfassung}% wird die KLassenoption kapitel=true gewählt, so muß hier \addchap{Zusammenfassung} stehen
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\KOMAoptions{
+	listof=totoc	% Abbildungs- und Tabellenverzeichnis im Inhaltsverzeichnis
+}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+
+
+
+\printbibliography[heading=bibintoc]
+\end{document}
