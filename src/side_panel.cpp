@@ -24,8 +24,8 @@ void SidePanel::draw(int player_count, int max_score) {
         glm::vec3(1.0f, 1.0f, 1.0f)
     );
     this->font->draw_text(
-        "MAX. SCORE",
-        410.0f,
+        "Goal",
+        450.0f,
         450.0f,
         0.7f,
         glm::vec3(1.0f, 1.0f, 1.0f)
@@ -87,7 +87,7 @@ void SidePanel::draw(int player_count, int max_score) {
             -325.0f,
             0.7f,
             glm::vec3(1.0f, 1.0f, 1.0f));
-    } else if (game_state == GAME_TRANSITION || game_state == GAME_WIN) {
+    } else if (game_state == GAME_TRANSITION) {
         this->font->draw_text(
             "Press SPACE",
             400.0f,

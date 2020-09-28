@@ -88,6 +88,7 @@ void Game::loop() {
                 } else {
                     this->show_win_frames = 0;
                     player_manager->reset();
+                    user_data->game_state = GAME_TRANSITION;
                 }
             }
         }
@@ -161,9 +162,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             user_data->game_state = GAME_PAUSE;
         } else if (user_data->game_state == GAME_TRANSITION) {
             user_data->game_state = GAME_ACTIVE;
-        } else if (user_data->game_state == GAME_WIN) {
-            user_data->game_state = GAME_ACTIVE;
-        }
+        } 
+        // else if (user_data->game_state == GAME_WIN) {
+        //     user_data->game_state = GAME_ACTIVE;
+        // }
     }
     if (key == GLFW_KEY_ESCAPE) {
         glfwWindowShouldClose(window);
