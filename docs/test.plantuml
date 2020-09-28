@@ -1,11 +1,11 @@
 @startuml
 
-class mech 
-mech --> border_mech
-mech --> line_mesh
-mech --> PlayerMesh
+class mesh 
+mesh --> border_mesh
+mesh --> line_mesh
+mesh --> PlayerMesh
 
-class mech {
+class mesh {
   
     #GLuint vao // Vertex array object
 	#GLuint vbo // Vertex buffer object
@@ -38,6 +38,10 @@ class display {
     + get_window(): GLFWwindow*
     + terminate(): int
 }
+game "1" *--* "1" player_model : contains
+game "1" *--* "1" border_model : contains
+
+
 class game {
  
     - state :GameState
@@ -107,6 +111,7 @@ class model {
     +virtual void update(GLFWwindow* window) = 0
     +virtual void draw() = 0
 }
+player_manager "1" *-- "many" player_model : contains
 class player_manager {
    
     #std::map<int, std::shared_ptr<PlayerModel>> players;
@@ -117,6 +122,8 @@ class player_manager {
     +void update(GLFWwindow* window)
     +void draw()
 }
+
+player_model "1" *--* "1" player_mesh : contains
 class player_model {
        
     #virtual void init_uniforms() override;
