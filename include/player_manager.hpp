@@ -34,11 +34,45 @@ class PlayerManager {
         std::array<GLubyte, 3> color);
     void update(GLFWwindow* window);
     std::vector<Point> get_all_points();
+
+    /**
+     * @brief Detect all the collisions between players and lines.
+     * Players with players and players with lines.
+     * 
+     */
     void detect_collisions();
+
+    /**
+     * @brief Get a vector with the IDs of all the players that are
+     * still alive
+     * 
+     * @return std::vector<int> A vector with the IDs
+     */
     std::vector<int> get_alive_players();
+
+    /**
+     * @brief Get how many players are actually playing (max. 6)
+     * 
+     * @return int 
+     */
     int get_players_count();
+
+    /**
+     * @brief Add all the players that were confirmed in the Menu
+     * 
+     */
     void add_players();
+
+    /**
+     * @brief Update the scores for every player
+     * 
+     */
     void update_score();
+
+    /**
+     * @brief Check the score of every player and check if some
+     * 
+     */
     void check_score();
     int get_max_score();
     void draw();

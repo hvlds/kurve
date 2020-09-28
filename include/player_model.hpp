@@ -58,11 +58,29 @@ class PlayerModel : public Model {
     PlayerModel(int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
+    
+    /**
+     * @brief Set the keys to control the player
+     * 
+     * @param control A control struct with the right and left keys
+     */
     void set_keys(Control control);
     Point get_position();
     void set_position(Point point);
     int get_id();
+
+    /**
+     * @brief Get the points of the multiple lines of the player
+     * 
+     * @return std::vector<Point> A vector with all the points
+     */
     std::vector<Point> get_line_points();
+
+    /**
+     * @brief Remove all the stored points and lines of the model
+     * and set all the fields into their initial values.
+     * 
+     */
     void clear();
 };
 

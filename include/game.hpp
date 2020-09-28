@@ -29,10 +29,30 @@ class Game {
     bool has_players;
     int show_win_frames = 0;
    public:
+    /**
+     * @brief Construct a new Game object
+     * 
+     * @param window A pointer of the GLFWwindow object
+     */
     Game(GLFWwindow* window);
-    int generate_fonts();
+
+    /**
+     * @brief Start the main game loop
+     * 
+     */
     void loop();
+
+    /**
+     * @brief Terminate and clean all the generated objects
+     * 
+     */
     void terminate();
+
+    /**
+     * @brief Get the count of how many players are active
+     * 
+     * @return int The count of the players
+     */
     int get_player_count();
 };
 
