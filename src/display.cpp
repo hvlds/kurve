@@ -16,10 +16,10 @@ void framebuffer_size_callback(GLFWwindow* window, int fb_width, int fb_height)
 	int width = user_data->window_width;
 	int height = user_data->window_height;
 
-	int xoffset = static_cast<int>(round((fb_width - 800)/2));
-	int yoffset = static_cast<int>(round((fb_height - 600)/2));
+	int xoffset = static_cast<int>(round((fb_width - 700)/2));
+	int yoffset = static_cast<int>(round((fb_height - 700)/2));
 
-	glViewport(xoffset, yoffset, 800, 600);
+	glViewport(xoffset, yoffset, 700, 700);
 	gl_check_error("glViewport");
 }
 

@@ -94,8 +94,8 @@ int main(void) {
     // Create our user data struct:
     user_data_t user_data =
         {
-            .window_width = 800,
-            .window_height = 600,
+            .window_width = 700,
+            .window_height = 700,
             .game_state = GAME_MENU,
             .player_info = &player_info
         };
