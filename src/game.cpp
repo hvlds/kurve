@@ -28,6 +28,7 @@ Game::Game(GLFWwindow* window) {
     this->side_panel = std::make_shared<SidePanel>(window, this->font);
     this->player_manager = std::make_shared<PlayerManager>(window);
     this->border_model = std::make_shared<BorderModel>();
+    this->game_over = std::make_shared<GameOver>(window, this->font);
 
     init_gl(this->window);
     glfwSetKeyCallback(window, key_callback);
@@ -42,7 +43,9 @@ void Game::loop() {
             gl_check_error("glClear");
             this->menu->draw();
         } else if (game_state == GAME_OVER) {
-            return;
+            glClear(GL_COLOR_BUFFER_BIT);
+            gl_check_error("glClear");
+            this->game_over->draw();
         } else if (
             game_state == GAME_ACTIVE
             || game_state == GAME_WIN 

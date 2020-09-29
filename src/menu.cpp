@@ -10,7 +10,7 @@ Menu::Menu(GLFWwindow* window, std::shared_ptr<Font> font) {
 }
 
 void Menu::draw() {
-    user_data_t* user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
 
     float pos = -200.0f;
     float pos_name_y = 350.0f;

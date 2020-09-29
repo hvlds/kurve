@@ -17,6 +17,7 @@ extern "C" {
 #include "font.hpp"
 #include "menu.hpp"
 #include "side_panel.hpp"
+#include "game_over.hpp"
 
 class Game {
    private:
@@ -26,6 +27,7 @@ class Game {
     std::shared_ptr<Font> font; 
     std::shared_ptr<Menu> menu;  
     std::shared_ptr<SidePanel> side_panel;
+    std::shared_ptr<GameOver> game_over;
     bool has_players;
     int show_win_frames = 0;
    public:
