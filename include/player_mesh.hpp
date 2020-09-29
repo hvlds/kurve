@@ -9,6 +9,7 @@ class PlayerMesh: public Mesh {
     int parts = 300;
    public:
     PlayerMesh();
+    ~PlayerMesh();
     virtual void draw() override;
 };
 

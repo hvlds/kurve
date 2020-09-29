@@ -56,6 +56,7 @@ class PlayerModel : public Model {
     GLfloat start_pos_x;
 
     PlayerModel(int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
+    ~PlayerModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     

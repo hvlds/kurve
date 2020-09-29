@@ -36,6 +36,7 @@ class LineModel : public Model {
     GLfloat start_pos_x;
 
     LineModel(Point point, std::array<GLubyte, 3> color);
+    ~LineModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
     void add_point(Point point);

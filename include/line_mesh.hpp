@@ -18,6 +18,7 @@ class LineMesh: public Mesh {
     std::array<GLubyte, 3> color;    
    public:
     LineMesh(Point first_point, std::array<GLubyte, 3> color);
+    ~LineMesh();
     virtual void draw() override;
     void set_points(std::vector<Point> points);
     void add_point(Point point);

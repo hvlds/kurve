@@ -92,6 +92,15 @@ PlayerMesh::PlayerMesh() {
     gl_check_error("glEnableVertexAttribArray [color]");
 }
 
+PlayerMesh::~PlayerMesh() {
+    std::cout << "---- DESTROY PlayerMesh ----" << std::endl;
+    glDeleteVertexArrays(1, &this->vao);
+    gl_check_error("glDeleteVertexArrays");
+
+    glDeleteBuffers(1, &this->vbo);
+    gl_check_error("glDeleteBuffers");
+}
+
 void PlayerMesh::draw() {
     this->bind();
     glDrawArrays(GL_TRIANGLE_FAN, 0, this->parts);

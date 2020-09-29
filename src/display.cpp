@@ -68,6 +68,7 @@ Display::Display(user_data_t* user_data) {
 	printf("Creating window ...\n");
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	glfwWindowHint(GLFW_MAXIMIZED, GL_TRUE);
 
 	this->window = glfwCreateWindow(
         this->user_data->window_width, 
@@ -77,7 +78,7 @@ Display::Display(user_data_t* user_data) {
         NULL);
 	check_error(this->window != NULL, "Failed to create window.");
 
-	glfwSetWindowSizeLimits(this->window, 700, 700, GLFW_DONT_CARE, GLFW_DONT_CARE);
+	glfwSetWindowSizeLimits(this->window, 600, 600, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
 	// Make the OpenGL context of the window the current one:
 	glfwMakeContextCurrent(this->window);

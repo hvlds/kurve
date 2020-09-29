@@ -182,6 +182,15 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 
 }
 
+LineMesh::~LineMesh() {
+    std::cout << "---- DESTROY LineMesh ----" << std::endl;
+    glDeleteVertexArrays(1, &this->vao);
+    gl_check_error("glDeleteVertexArrays");
+
+    glDeleteBuffers(1, &this->vbo);
+    gl_check_error("glDeleteBuffers");
+}
+
 void LineMesh::draw() {
     if (this->points.size() > 0) {
         this->bind();

@@ -17,7 +17,7 @@
 #include "side_panel.hpp"
 
 Game::Game(GLFWwindow* window) {
-    std::cout << "---- INIT GAME ----" << std::endl;
+    std::cout << "---- INIT Game ----" << std::endl;
     this->window = window;
 
     this->has_players = false;
@@ -41,6 +41,8 @@ void Game::loop() {
             glClear(GL_COLOR_BUFFER_BIT);
             gl_check_error("glClear");
             this->menu->draw();
+        } else if (game_state == GAME_OVER) {
+            return;
         } else if (
             game_state == GAME_ACTIVE
             || game_state == GAME_WIN 
@@ -53,16 +55,14 @@ void Game::loop() {
                 this->has_players = true;
             }
             
+            // Update only in the active frames
             if (game_state != GAME_WIN) {
-                // Update
                 this->border_model->update(this->window);
                 this->player_manager->update(this->window);
 
-                // Detect the collisions
-                player_manager->detect_collisions();
-                
-                // Update the scores
+                player_manager->detect_collisions();                
                 player_manager->update_score();
+                player_manager->check_score();
             }
 
             // Clear the color buffer -> background color:
@@ -102,7 +102,7 @@ void Game::loop() {
 }
 
 void Game::terminate() {
-    std::cout << "---- TERMINATE GAME ----" << std::endl;
+    std::cout << "---- TERMINATE Game ----" << std::endl;
 
     // Terminate the Border Model
     glDeleteProgram(this->border_model->shader_id);

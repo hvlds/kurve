@@ -6,9 +6,10 @@
 #include "player_mesh.hpp"
 #include "shader.hpp"
 
+
 PlayerModel::PlayerModel(
     int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {       
-    std::cout << "---- INIT PLAYER ----" << std::endl;
+    std::cout << "---- INIT PlayerModel ----" << std::endl;
     this->model_type = MODEL_PLAYER;
     this->color = color;
     this->id = id;
@@ -40,6 +41,12 @@ PlayerModel::PlayerModel(
     // Create a line model for the player
     auto line = std::make_shared<LineModel>(point, this->color);
     this->lines.push_back(line);
+}
+
+PlayerModel::~PlayerModel() {
+    std::cout << "---- DESTROY PlayerModel ----" << std::endl;
+    glDeleteProgram(this->shader_id);
+    gl_check_error("glDeleteProgram");
 }
 
 void PlayerModel::draw() {

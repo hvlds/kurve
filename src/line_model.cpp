@@ -2,8 +2,9 @@
 #include "point.hpp"
 #include <iostream>
 
+
 LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
-    std::cout << "---- INIT LINE ----" << std::endl;
+    std::cout << "---- INIT LineModel ----" << std::endl;
     this->model_type = MODEL_LINE;
     this->color = color;
 
@@ -22,6 +23,12 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
 
     // this->points.push_back(point);
     this->add_point(point);
+}
+
+LineModel::~LineModel() {
+    std::cout << "---- DESTROY LineModel ----" << std::endl;
+    glDeleteProgram(this->shader_id);
+    gl_check_error("glDeleteProgram");
 }
 
 void LineModel::update(GLFWwindow* window) {
