@@ -1,7 +1,7 @@
 # Specify the minimum version for CMake
 
 cmake_minimum_required(VERSION 2.8)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-g")
 # Project's name
@@ -28,3 +28,12 @@ set (PROJECT_SOURCES main.cpp)
 add_executable(kurve ${all_SRCS})
 # link_libraries("-lglfw -ldl -lm")
 target_link_libraries(kurve m GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor assimp freetype)
+
+set_target_properties(kurve PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS ON
+)
+
+set(tool_dest "bin")
+install(TARGETS kurve DESTINATION "${tool_dest}")
