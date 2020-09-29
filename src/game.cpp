@@ -72,6 +72,7 @@ void Game::loop() {
                 if (new_state == GAME_OVER) {
                     user_data->game_state = new_state;
                     game_state = GAME_OVER;
+                    this->game_over->get_winner();
                     this->player_manager->terminate();
                 }
             }

@@ -15,10 +15,14 @@ class GameOver {
    private:
     GLFWwindow* window;
     std::shared_ptr<Font> font;
+    int full_frames = 0;
+    int blank_frames = 0;
+    int max_frames = 15;
    public:
     GameOver(GLFWwindow* window, std::shared_ptr<Font> font);
     void draw();
     void update();
+    int get_winner();
 };
 
 #endif
