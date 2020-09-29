@@ -85,6 +85,19 @@ Font::Font() {
     glBindVertexArray(0);    
 }
 
+Font::~Font() {
+    std::cout << "---- DESTROY Font ----" << std::endl;
+    // TODO: Fix the segmentation fault!
+    // glDeleteVertexArrays(1, &this->VAO);
+    // gl_check_error("glDeleteVertexArrays");
+
+    // glDeleteBuffers(1, &this->VBO);
+    // gl_check_error("glDeleteBuffers");
+
+    // glDeleteProgram(this->shader_id);
+    // gl_check_error("glDeleteProgram");
+}
+
 void Font::draw_text(
     std::string text, 
     float x, 
