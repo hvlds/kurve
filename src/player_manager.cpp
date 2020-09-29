@@ -102,32 +102,34 @@ void PlayerManager::detect_collisions() {
         auto own_points = this->get_player_trace(id);
         std::shared_ptr<PlayerModel> player = item.second;
         Point position = player->get_position();
-
-        // Collisions with other players
-        for (auto point : oponent_points) {
-            double distance = Point::get_distance(point, position);
-            if (distance < 0.32) {
-                if (player->is_alive == true) {
-                    player->is_alive = false;
-                    std::cout << "Collision with player!" << std::endl;
-                    this->dead_players.push_back(player->get_id());
-                }
-            }
-        }
-
-        // Collisions with all the lines (include of the base player)
-        if (own_points.size() > 20) {
-            for (auto point : own_points) {
+        if (player->is_alive == true) {
+            // Collisions with other players
+            for (auto point : oponent_points) {
                 double distance = Point::get_distance(point, position);
                 if (distance < 0.32) {
                     if (player->is_alive == true) {
                         player->is_alive = false;
-                        std::cout << "Collision with your own line!" << std::endl;
+                        std::cout << "Collision with player!" << std::endl;
                         this->dead_players.push_back(player->get_id());
                     }
                 }
             }
+
+            // Collisions with all the lines (include of the base player)
+            if (own_points.size() > 20 && player->is_alive == true) {
+                for (auto point : own_points) {
+                    double distance = Point::get_distance(point, position);
+                    if (distance < 0.32) {
+                        if (player->is_alive == true) {
+                            player->is_alive = false;
+                            std::cout << "Collision with your own line!" << std::endl;
+                            this->dead_players.push_back(player->get_id());
+                        }
+                    }
+                }
+            }
         }
+
     }
 }
 
