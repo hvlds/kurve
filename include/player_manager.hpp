@@ -2,6 +2,7 @@
 #define PLAYER_MANAGER_HPP
 
 #include "player_model.hpp"
+#include "user.hpp"
 #include "point.hpp"
 
 extern "C" {
@@ -73,7 +74,7 @@ class PlayerManager {
      * @brief Check the score of every player and check if some
      * 
      */
-    void check_score();
+    GameState check_score();
     int get_max_score();
     void draw();
     void reset();

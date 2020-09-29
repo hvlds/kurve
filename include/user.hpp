@@ -68,4 +68,6 @@ typedef struct {
     std::vector<player_info_t>* player_info;
 } user_data_t;
 
+void reset_player_info(GLFWwindow* window);
+
 #endif

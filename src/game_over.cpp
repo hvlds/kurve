@@ -47,6 +47,12 @@ void GameOver::draw() {
         }
     }
 
+    this->font->draw_text(
+        "Press SPACE to start a new party",
+        -300.0f,
+        -225.0f + pos,
+        0.7f,
+        glm::vec3(1.0f, 1.0f, 1.0f));
     
 }
 

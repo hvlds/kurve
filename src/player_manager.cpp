@@ -155,10 +155,11 @@ void PlayerManager::update_score() {
     }
 }
 
-void PlayerManager::check_score() {
+GameState PlayerManager::check_score() {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     std::pair<int, int> best_score;
     bool is_first = true;
+    GameState new_state = GAME_ACTIVE;
     for (auto item : this->players) {
         int id = item.first;
         int score = user_data->player_info->at(id - 1).score;
@@ -174,9 +175,11 @@ void PlayerManager::check_score() {
         }
     }
     if (best_score.second >= this->max_score) {
-        user_data->game_state = GAME_OVER;
+        // user_data->game_state = GAME_OVER;
+        new_state = GAME_OVER;
     }
 
+    return new_state;
 }
 
 void PlayerManager::reset_player(int id) {
@@ -215,4 +218,5 @@ int PlayerManager::get_max_score() {
 
 void PlayerManager::terminate() {
     this->players.clear();
+    this->dead_players.clear();
 }

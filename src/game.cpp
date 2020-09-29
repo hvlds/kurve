@@ -41,6 +41,7 @@ void Game::loop() {
         if (game_state == GAME_MENU) {
             glClear(GL_COLOR_BUFFER_BIT);
             gl_check_error("glClear");
+            this->has_players = false;
             this->menu->draw();
         } else if (game_state == GAME_OVER) {
             glClear(GL_COLOR_BUFFER_BIT);
@@ -65,33 +66,42 @@ void Game::loop() {
 
                 player_manager->detect_collisions();                
                 player_manager->update_score();
-                player_manager->check_score();
+
+                // Check if the actual score generates a GAME_OVER state
+                GameState new_state = player_manager->check_score();
+                if (new_state == GAME_OVER) {
+                    user_data->game_state = new_state;
+                    game_state = GAME_OVER;
+                    this->player_manager->terminate();
+                }
             }
-
-            // Clear the color buffer -> background color:
-            glClear(GL_COLOR_BUFFER_BIT);
-            gl_check_error("glClear");
-
-            // Draw the models:
-            this->border_model->draw();
-            this->player_manager->draw();
-            this->side_panel->draw(
-                this->get_player_count(),
-                this->player_manager->get_max_score());           
-
-            // Check how many players are still active
-            auto players_alive = player_manager->get_alive_players();
             
-            if (players_alive.size() <= 1) {
-                int id_winner = players_alive.back();
-                this->side_panel->set_winner(id_winner);
-                if (this->show_win_frames < 100) {
-                    this->show_win_frames++;
-                    user_data->game_state = GAME_WIN;
-                } else {
-                    this->show_win_frames = 0;
-                    player_manager->reset();
-                    user_data->game_state = GAME_TRANSITION;
+            if (game_state != GAME_OVER) {
+                // Clear the color buffer -> background color:
+                glClear(GL_COLOR_BUFFER_BIT);
+                gl_check_error("glClear");
+
+                // Draw the models:
+                this->border_model->draw();
+                this->player_manager->draw();
+                this->side_panel->draw(
+                    this->get_player_count(),
+                    this->player_manager->get_max_score());           
+
+                // Check how many players are still active
+                auto players_alive = player_manager->get_alive_players();
+                
+                if (players_alive.size() <= 1) {
+                    int id_winner = players_alive.back();
+                    this->side_panel->set_winner(id_winner);
+                    if (this->show_win_frames < 100) {
+                        this->show_win_frames++;
+                        user_data->game_state = GAME_WIN;
+                    } else {
+                        this->show_win_frames = 0;
+                        player_manager->reset();
+                        user_data->game_state = GAME_TRANSITION;
+                    }
                 }
             }
         }
@@ -165,14 +175,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             user_data->game_state = GAME_PAUSE;
         } else if (user_data->game_state == GAME_TRANSITION) {
             user_data->game_state = GAME_ACTIVE;
-        } 
-        // else if (user_data->game_state == GAME_WIN) {
-        //     user_data->game_state = GAME_ACTIVE;
-        // }
+        } else if (user_data->game_state == GAME_OVER) {
+            user_data->game_state = GAME_MENU;
+            reset_player_info(window);
+        }
     }
-    if (key == GLFW_KEY_ESCAPE) {
-        glfwWindowShouldClose(window);
-    }  
 }
 
 int Game::get_player_count() {
