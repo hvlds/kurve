@@ -28,6 +28,7 @@ class PlayerManager {
     Point get_player_position(int id);
     int max_score;
    public:
+    bool is_updated = false;
     PlayerManager(GLFWwindow* window);
     void add_player(
         int id,

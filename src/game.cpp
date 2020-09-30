@@ -63,8 +63,9 @@ void Game::loop() {
             if (game_state != GAME_WIN) {
                 this->border_model->update(this->window);
                 this->player_manager->update(this->window);
-
+                player_manager->is_updated = false;
                 player_manager->detect_collisions();                
+            } else {
                 player_manager->update_score();
 
                 // Check if the actual score generates a GAME_OVER state

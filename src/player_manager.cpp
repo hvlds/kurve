@@ -104,11 +104,17 @@ void PlayerManager::detect_collisions() {
         Point position = player->get_position();
 
         // Check if player is alive (collision with border)
-        if (player->is_alive == false) {
-            this->dead_players.push_back(player->get_id());
+        bool in_dead_players = false;
+        for (int id_dead : this->dead_players) {
+            if (id_dead == id) {
+                in_dead_players = true;
+                break;
+            }
         }
 
-        if (player->is_alive == true) {
+        if (player->is_alive == false && in_dead_players == false) {
+            this->dead_players.push_back(player->get_id());
+        } else {
             // Collisions with other players
             for (auto point : oponent_points) {
                 double distance = Point::get_distance(point, position);
@@ -117,6 +123,7 @@ void PlayerManager::detect_collisions() {
                         player->is_alive = false;
                         std::cout << "Collision with player!" << std::endl;
                         this->dead_players.push_back(player->get_id());
+                        break;
                     }
                 }
             }
@@ -130,6 +137,7 @@ void PlayerManager::detect_collisions() {
                             player->is_alive = false;
                             std::cout << "Collision with your own line!" << std::endl;
                             this->dead_players.push_back(player->get_id());
+                            break;
                         }
                     }
                 }
@@ -155,15 +163,20 @@ std::vector<int> PlayerManager::get_dead_players() {
 
 void PlayerManager::update_score() {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
-    int local_score = 0;
-    for (int dead_player_id : this->dead_players) {
-        user_data->player_info->at(dead_player_id - 1).score += local_score;
-        local_score++; 
-    }
-    std::vector<int> alive_vec = this->get_alive_players();
-    if (alive_vec.size() == 1) {
-        int last_id = alive_vec.back();
-        user_data->player_info->at(last_id - 1).score += this->players.size();
+    if (this->is_updated == false) {
+        int local_score = 0;
+        for (int dead_player_id : this->dead_players) {
+            user_data->player_info->at(dead_player_id - 1).score += local_score;
+            local_score++; 
+        }
+        
+        std::vector<int> alive_vec = this->get_alive_players();
+        if (alive_vec.size() == 1) {
+            int last_id = alive_vec.back();
+            user_data->player_info->at(last_id - 1).score += this->players.size();
+        }
+
+        this->is_updated = true;
     }
 }
 
