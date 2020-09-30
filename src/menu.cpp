@@ -65,7 +65,7 @@ void Menu::draw() {
 
     if (active_counter >= 2) {
         this->font->draw_text(
-            "Press ENTER to start",
+            "Press SPACE to start",
             -180.0f,
             -300.0f + pos,
             0.7f,

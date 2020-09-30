@@ -148,7 +148,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 
     if (game_state == GAME_MENU) {
-        if (key == GLFW_KEY_ENTER) {
+        if (key == GLFW_KEY_SPACE) {
             // GAME_MENU -> GAME_ACTIVE
             if (user_data->game_state == GAME_MENU) {
                 int player_count = 0;
@@ -173,18 +173,18 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 user_data->player_info->at(player_info.id - 1).is_active = false;
             }
         }
-    }
-
-    if (key == GLFW_KEY_SPACE) {
-        if (user_data->game_state == GAME_PAUSE) {
-            user_data->game_state = GAME_ACTIVE;
-        } else if (user_data->game_state == GAME_ACTIVE) {
-            user_data->game_state = GAME_PAUSE;
-        } else if (user_data->game_state == GAME_TRANSITION) {
-            user_data->game_state = GAME_ACTIVE;
-        } else if (user_data->game_state == GAME_OVER) {
-            user_data->game_state = GAME_MENU;
-            reset_player_info(window);
+    } else {
+        if (key == GLFW_KEY_SPACE) {
+            if (user_data->game_state == GAME_PAUSE) {
+                user_data->game_state = GAME_ACTIVE;
+            } else if (user_data->game_state == GAME_ACTIVE) {
+                user_data->game_state = GAME_PAUSE;
+            } else if (user_data->game_state == GAME_TRANSITION) {
+                user_data->game_state = GAME_ACTIVE;
+            } else if (user_data->game_state == GAME_OVER) {
+                user_data->game_state = GAME_MENU;
+                reset_player_info(window);
+            }
         }
     }
 }
