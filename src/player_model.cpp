@@ -220,7 +220,25 @@ Point PlayerModel::get_position() {
 }
 
 std::vector<Point> PlayerModel::get_line_points() {
-    return this->points;
+    std::vector<Point> player_points;
+
+    if (this->lines.size() != 0) {
+        for (auto line : this->lines) {
+            auto points = line->get_points();
+            if (points.size() > 4) {
+                // Remove begin and back of the vector (2 times)
+                points.erase(points.begin());
+                points.erase(points.begin());
+                points.pop_back();
+                points.pop_back();
+                for (auto point : points) {
+                    player_points.push_back(point);
+                }
+            }
+        }
+    }
+
+    return player_points;
 }
 
 int PlayerModel::get_id() {

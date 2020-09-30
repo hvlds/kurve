@@ -102,6 +102,12 @@ void PlayerManager::detect_collisions() {
         auto own_points = this->get_player_trace(id);
         std::shared_ptr<PlayerModel> player = item.second;
         Point position = player->get_position();
+
+        // Check if player is alive (collision with border)
+        if (player->is_alive == false) {
+            this->dead_players.push_back(player->get_id());
+        }
+
         if (player->is_alive == true) {
             // Collisions with other players
             for (auto point : oponent_points) {
