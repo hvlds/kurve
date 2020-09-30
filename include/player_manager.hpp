@@ -51,6 +51,8 @@ class PlayerManager {
      */
     std::vector<int> get_alive_players();
 
+    std::vector<int> get_dead_players();
+
     /**
      * @brief Get how many players are actually playing (max. 6)
      * 

@@ -91,9 +91,15 @@ void Game::loop() {
 
                 // Check how many players are still active
                 auto players_alive = player_manager->get_alive_players();
-                
-                if (players_alive.size() <= 1) {
-                    int id_winner = players_alive.back();
+                auto players_dead = player_manager->get_dead_players();
+
+                if (players_alive.size() <= 1 && players_dead.size() != 0) {
+                    int id_winner;
+                    if (players_alive.size() == 1) {
+                        id_winner = players_alive.back();
+                    } else {
+                        id_winner = players_dead.back();
+                    }
                     this->side_panel->set_winner(id_winner);
                     if (this->show_win_frames < 100) {
                         this->show_win_frames++;
