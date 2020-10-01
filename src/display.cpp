@@ -12,10 +12,6 @@ void error_callback(int error, const char* description)
 void framebuffer_size_callback(GLFWwindow* window, int fb_width, int fb_height)
 {
 	// glViewport(0, 0, fb_width, fb_height);
-	auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
-	int width = user_data->window_width;
-	int height = user_data->window_height;
-
 	int xoffset, yoffset;
 	int new_height, new_width;
 

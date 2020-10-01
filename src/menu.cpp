@@ -27,7 +27,7 @@ void Menu::draw() {
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;
         std::string menu_text = player_info.menu_text;
-        int id = player_info.id;
+        // int id = player_info.id;
         bool is_active = player_info.is_active;
         glm::vec3 menu_color = player_info.menu_color;
 

@@ -36,7 +36,7 @@ double Vector::angle(Vector v1, Vector v2) {
     dist_v1 = v1.get_length();
     dist_v2 = v2.get_length();
     double angle = 0;
-    if (dist_v1 != 0 & dist_v2 != 0) {
+    if ((dist_v1 != 0) && (dist_v2 != 0)) {
         angle = acos(
             Vector::dot_product(v1, v2) / (v1.get_length() * v2.get_length())
         );

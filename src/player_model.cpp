@@ -118,7 +118,8 @@ void PlayerModel::update(GLFWwindow* window) {
                 this->trans_y + this->start_pos_y
             };
 
-            if (this->lines.back()->get_points().size() < this->random_length) {
+            if (this->lines.back()->get_points().size() 
+                < static_cast<std::size_t>(this->random_length)) {
                 // Draw the line
                 this->points.push_back(point);
                 this->lines.back()->add_point(point);

@@ -69,9 +69,9 @@ std::vector<Point> PlayerManager::get_player_trace(int id) {
     std::shared_ptr<PlayerModel> player = this->players.at(id);
     std::vector<Point> all_points = player->get_line_points();
     std::size_t point_count = all_points.size();
-    int limit = 20;
+    std::size_t limit = 20;
     if (point_count >= limit) {
-        for (int i = 0; i < limit; i++) {
+        for (std::size_t i = 0; i < limit; i++) {
             all_points.pop_back();
         }
     }

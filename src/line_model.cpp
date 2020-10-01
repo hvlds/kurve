@@ -64,9 +64,9 @@ void LineModel::init_values() {
 }
 
 void LineModel::add_point(Point point) {
-    if (this->points.size() > 0) {
-        auto last_point = this->points.back();
-    }
+    // if (this->points.size() > 0) {
+    //     auto last_point = this->points.back();
+    // }
     this->points.push_back(point);
     this->line_mesh->add_point(point);
 }

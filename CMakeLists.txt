@@ -8,6 +8,8 @@ set(CMAKE_CXX_FLAGS "-g")
 
 project(kurve)
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -fsanitize=address  -fsanitize=leak -g -lasan")
+
 find_package(Freetype REQUIRED)
 
 include_directories(
