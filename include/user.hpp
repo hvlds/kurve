@@ -17,6 +17,7 @@ extern "C" {
 #include <map>
 #include <string>
 #include <vector>
+#include <array>
 
 /**
  * @brief A user can move left and right. The GLFW keys
