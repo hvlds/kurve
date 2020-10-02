@@ -3,12 +3,12 @@
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-g")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -g")
+set(CMAKE_LINKER_FLAGS_DEBUG " -fno-omit-frame-pointer -fsanitize=address")
 # Project's name
 
 project(kurve)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -fsanitize=address  -fsanitize=leak -g -lasan")
 
 find_package(Freetype REQUIRED)
 
@@ -28,8 +28,8 @@ set (PROJECT_SOURCES main.cpp)
 
 
 add_executable(kurve ${all_SRCS})
-# link_libraries("-lglfw -ldl -lm")
-target_link_libraries(kurve m GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor assimp freetype)
+link_libraries("-lglfw -ldl -lm")
+target_link_libraries(kurve m GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor freetype)
 
 set_target_properties(kurve PROPERTIES
     CXX_STANDARD 17
