@@ -27,7 +27,7 @@ PlayerModel::PlayerModel(
     this->init_uniforms();
 
     // Add the mesh
-    auto mesh = std::make_shared<PlayerMesh>();
+    auto mesh = std::make_shared<PlayerMesh>(this->color);
     this->mesh = mesh;
 
     // Init the values of the model

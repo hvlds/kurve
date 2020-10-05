@@ -7,7 +7,7 @@ extern "C" {
 #include <stdlib.h>
 }
 
-PlayerMesh::PlayerMesh() {
+PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
@@ -26,7 +26,7 @@ PlayerMesh::PlayerMesh() {
                     static_cast<GLfloat>(y), 
                     0
                 }, 
-                .color = {0xFF, 0xFF, 0x00}
+                .color = {color[0], color[1], color[2]}
             }
         );
     }
