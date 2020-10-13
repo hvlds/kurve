@@ -1,8 +1,8 @@
-@startuml
+@startuml UML
 
 class Mesh 
 Mesh --> BorderMesh
-Mesh --> line_Mesh
+Mesh --> LineMesh
 Mesh --> PlayerMesh
 
 class Mesh {
@@ -21,13 +21,13 @@ class vertex_data_t<<(S,#FF7700)struct>> {
     +color[3]: GLubyte
 }
 
-Bordermech "1" *--* "1" Bordermodel : contains
-class Bordermech {
+BorderMech "1" *--* "1" BorderModel : contains
+class BorderMech {
     +BorderMesh()
     +virtual void draw() override
 }
 
-class Bordermodel {
+class BorderModel {
 
     #virtual void init_uniforms() override;
     #virtual void init_values() override;
@@ -44,8 +44,8 @@ class Display {
     + get_window(): GLFWwindow*
     + terminate(): int
 }
-Game "1" *--* "1" Player_model : contains
-Game "1" *--* "1" Bordermodel : contains
+Game "1" *--* "1" PlayerManager : contains
+Game "1" *--* "1" BorderModel : contains
 Game "1" *--* "1" Font : contains
 Game "1" *--* "1" Menu : contains
 
@@ -54,7 +54,7 @@ class Game {
  
     -window: GLFWwindow* 
     -border_model: shared_ptr<BorderModel> 
-    -player_manager: shared_ptr<PlayerManager> 
+    -PlayerManager: shared_ptr<PlayerManager> 
     -font: shared_ptr<Font> 
     -menu: shared_ptr<Menu> 
     -panel: shared_ptr<SidePanel> 
@@ -73,8 +73,8 @@ class Game {
     GAME_OVER
 }
 
-Line_Mesh "1" *--* "1" Point : contains
-class Line_Mesh {
+LineMesh "1" *--* "1" Point : contains
+class LineMesh {
 
     #points: vector<Point> 
     #line_points: vector<Point> 
@@ -84,20 +84,20 @@ class Line_Mesh {
     #color: array<GLubyte, 3> 
 
     +LineMesh(Point first_point, std::array<GLubyte, 3> color)
-    +virtual void draw() override
-    +void set_points(std::vector<Point> points)
-    +void add_point(Point point)
-    +void update()
+    +virtual draw() override: void
+    +set_points(std::vector<Point> points): void
+    +add_point(Point point): void
+    +update():void
     +clear: void
 }
 
-Line_model "1" *--* "1" Point : contains
-class Line_model {
+LineModel "1" *--* "1" Point : contains
+class LineModel {
   
     #virtual void init_uniforms() override
     #virtual void init_values() override
     #points: vector<Point>
-    #line_Mesh: shared_ptr<LineMesh>
+    #LineMesh: shared_ptr<LineMesh>
     #color: array<GLubyte, 3>
 
     +GLint start_pos_y_loc
@@ -115,8 +115,8 @@ class Line_model {
     +clear(): void
 }
 class model
-model --> Bordermodel
-model --> line_model
+model --> BorderModel
+model --> LineModel
 model --> PlayerModel
 
 model "1" *--* "1" Mesh : contains
@@ -137,10 +137,10 @@ enum ModelType {
     MODEL_BORDER
 }
 
-Player_manager "1" *-- "many" Player_model : contains
-Player_manager "1" *-- "1" Point : contains
-Player_manager "1" *-- "1" Control : contains
-class Player_manager {
+PlayerManager "1" *-- "many" PlayerModel : contains
+PlayerManager "1" *-- "1" Point : contains
+PlayerManager "1" *-- "1" Control : contains
+class PlayerManager {
    
     #players: map<int, std::shared_ptr<PlayerModel>>
     #dead_players: vector<int>
@@ -151,11 +151,14 @@ class Player_manager {
     #get_player_position(int id): Point
     #max_score: int
 
+    +is_updated = false: bool
     +PlayerManager()
     +add_player(control: Control,color: array<GLubyte, 3> ): void
     +update(window: GLFWwindow*): void
     +get_all_points(): vector<Point>
+    +detect_collisions(): void
     +get_alive_players(): vector<int>
+    +get_dead_players(): vector<int>
     +add_players(): void
     +get_players_count(): int
     +update_score(): void
@@ -166,11 +169,11 @@ class Player_manager {
     +terminate(): void
 }
 
-Player_model "1" *--* "1" Player_Mesh : contains
-Player_model "1" *--* "1" Point : contains
-Player_model "1" *--* "1" Line_model : contains
-Player_model "1" *--* "1" Control : contains
-class Player_model {
+PlayerModel "1" *--* "1" PlayerMesh : contains
+PlayerModel "1" *--* "1" Point : contains
+PlayerModel "1" *--* "1" LineModel : contains
+PlayerModel "1" *--* "1" Control : contains
+class PlayerModel {
        
     #virtual void init_uniforms() override;
     #virtual void init_values() override;
@@ -228,8 +231,8 @@ class user<<(S,#FF7700)struct>> {
     +int window_height;
 }
 
-Side_panel "1" *--* "1" Font : contains
-class Side_panel {
+SidePanel "1" *--* "1" Font : contains
+class SidePanel {
     -window : GLFWwindow* 
     -Font: shared_ptr<Font> 
     -id_winner: int
@@ -270,5 +273,18 @@ class Control<<(S,#FF7700)struct>> {
     Size: ivec2       
     Bearing: ivec2     
     Advance: unsigned int
+}
+GameOver "1" *--* "1" Font : contains
+class GameOver {
+    -GLFWwindow* window;
+    -std::shared_ptr<Font> font;
+    -int full_frames = 0;
+    -int blank_frames = 0;
+    -int max_frames = 15;
+   
+    +GameOver(GLFWwindow* window, std::shared_ptr<Font> font);
+    +void draw();
+    +void update();
+    +int get_winner();
 }
 @enduml
