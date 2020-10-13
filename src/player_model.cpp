@@ -73,14 +73,14 @@ void PlayerModel::update(GLFWwindow* window) {
             double speed = 3.0; 
 
             // Check that the player is inside of the yellow limit
-            if (this->trans_x + this->start_pos_x >= 13.5 
-                || this->trans_x + this->start_pos_x <= -18.5) {
+            if (this->trans_x + this->start_pos_x >= 13.75 
+                || this->trans_x + this->start_pos_x <= -18.75) {
                 this->is_alive = false;
                 return;
             }
 
-            if (this->trans_y + this->start_pos_y >= 18.5 
-                || this->trans_y + this->start_pos_y <= -18.5) {
+            if (this->trans_y + this->start_pos_y >= 18.75 
+                || this->trans_y + this->start_pos_y <= -18.75) {
                 this->is_alive = false;
                 return;
             }
