@@ -1,0 +1,42 @@
+@startuml UML
+
+Game "1" *--* "1" PlayerManager : contains
+Game "1" *--* "1" BorderModel : contains
+Game "1" *--* "1" Font : contains
+Game "1" *--* "1" Menu : contains
+Game "1" *--* "1" SidePanel : contains
+Game "1" *--* "1" GameOver : contains
+
+class Game {
+ 
+
+} 
+
+class BorderModel {
+
+}
+
+class PlayerManager {
+ 
+}
+
+'SidePanel "1" *--* "1" Font : contains
+class SidePanel {
+
+}
+
+'Menu "1" *--* "1" Font : contains
+class Menu {
+
+}
+
+class Font {
+
+}
+
+'GameOver "1" *--* "1" Font : contains
+class GameOver {
+
+}
+
+@enduml
