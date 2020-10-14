@@ -22,16 +22,24 @@ file(GLOB all_SRCS
     ${FREETYPE_INCLUDE_DIRS}
 )
 
+# Configure the shader files
 file(GLOB SHADERS
     "${CMAKE_SOURCE_DIR}/shader/*.vs"
     "${CMAKE_SOURCE_DIR}/shader/*.fs"
 )
 file(COPY ${SHADERS} DESTINATION "${CMAKE_BINARY_DIR}/shader")
+#foreach(FILE ${FONTS})
+#    configure_file(${FILE} ${FILE} COPYONLY)
+#endforeach()
 
+# Configure the font files
 file(GLOB FONTS
     "${CMAKE_SOURCE_DIR}/fonts/UbuntuMono-R.ttf"
 )
 file(COPY ${FONTS} DESTINATION "${CMAKE_BINARY_DIR}/fonts")
+#foreach(FILE ${FONTS})
+#    configure_file(${FILE} ${FILE} COPYONLY)
+#endforeach()
 
 set (PROJECT_SOURCES main.cpp)
 
@@ -48,6 +56,6 @@ set_target_properties(kurve PROPERTIES
 set(tool_dest "bin")
 install(TARGETS kurve DESTINATION "${tool_dest}")
 
-set(files_dest "share/kurve")
+set(files_dest "${CMAKE_BINARY_DIR}")
 install(FILES ${SHADERS} DESTINATION "${files_dest}/shader")
 install(FILES ${FONTS} DESTINATION "${files_dest}/fonts")
