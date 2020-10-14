@@ -5,10 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -g")
 set(CMAKE_LINKER_FLAGS_DEBUG " -fno-omit-frame-pointer -fsanitize=address")
-# Project's name
 
 project(kurve)
-
 
 find_package(Freetype REQUIRED)
 
@@ -24,8 +22,18 @@ file(GLOB all_SRCS
     ${FREETYPE_INCLUDE_DIRS}
 )
 
-set (PROJECT_SOURCES main.cpp)
+file(GLOB SHADERS
+    "${CMAKE_SOURCE_DIR}/shader/*.vs"
+    "${CMAKE_SOURCE_DIR}/shader/*.fs"
+)
+file(COPY ${SHADERS} DESTINATION "${CMAKE_BINARY_DIR}/shader")
 
+file(GLOB FONTS
+    "${CMAKE_SOURCE_DIR}/fonts/UbuntuMono-R.ttf"
+)
+file(COPY ${FONTS} DESTINATION "${CMAKE_BINARY_DIR}/fonts")
+
+set (PROJECT_SOURCES main.cpp)
 
 add_executable(kurve ${all_SRCS})
 link_libraries("-lglfw -ldl -lm")
@@ -39,3 +47,7 @@ set_target_properties(kurve PROPERTIES
 
 set(tool_dest "bin")
 install(TARGETS kurve DESTINATION "${tool_dest}")
+
+set(files_dest "share/kurve")
+install(FILES ${SHADERS} DESTINATION "${files_dest}/shader")
+install(FILES ${FONTS} DESTINATION "${files_dest}/fonts")

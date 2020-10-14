@@ -13,7 +13,7 @@ Font::Font() {
     }
 
     FT_Face face;
-    if (FT_New_Face(ft, "../fonts/UbuntuMono-R.ttf", 0, &face)) {
+    if (FT_New_Face(ft, "fonts/UbuntuMono-R.ttf", 0, &face)) {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
         return;
     }
@@ -27,7 +27,7 @@ Font::Font() {
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);  // disable byte-alignment restriction
 
-    Shader shader("../shader/font.vs", "../shader/font.fs", &this->shader_id);
+    Shader shader("./shader/font.vs", "./shader/font.fs", &this->shader_id);
 
     for (unsigned char c = 0; c < 128; c++) {
         // load character glyph
