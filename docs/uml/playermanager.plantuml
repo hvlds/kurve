@@ -1,0 +1,13 @@
+@startuml UML
+
+PlayerManager "1" *-- "many" PlayerModel : contains
+PlayerManager "1" *-- "1" Point : contains
+PlayerManager "1" *-- "1" Control : contains
+Game "1" *--* "1" PlayerManager : contains
+
+class PlayerManager {
+ 
+}
+
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml UML
+Mesh --> BorderMesh
+Mesh --> LineMesh
+Mesh --> PlayerMesh
+model "1" *--* "1" Mesh : contains
+
+
+
+class Mesh {
+
+}
+class BorderMesh {
+
+}
+class LineMesh {
+
+}
+class PlayerMesh {
+
+}
+class model {
+
+}
+@enduml

@@ -1,0 +1,18 @@
+@startuml UML
+Model --> BorderModel
+Model --> LineModel
+Model --> PlayerModel
+
+class Model {
+
+}
+class BorderModel {
+
+}
+class LineModel {
+
+}
+class PlayerModel {
+
+}
+@enduml

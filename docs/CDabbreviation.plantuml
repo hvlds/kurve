@@ -13,8 +13,8 @@ class vertex_data_t<<(S,#FF7700)struct>> {
 
 }
 
-BorderMech "1" *--* "1" BorderModel : contains
-class BorderMech {
+BorderMesh "1" *--* "1" BorderModel : contains
+class BorderMesh {
 
 }
 
@@ -47,13 +47,13 @@ LineModel "1" *--* "1" Point : contains
 class LineModel {
 
 }
-class model
-model --> BorderModel
-model --> LineModel
-model --> PlayerModel
+class Model
+Model --> BorderModel
+Model --> LineModel
+Model --> PlayerModel
 
 model "1" *--* "1" Mesh : contains
-class model {
+class Model {
 
 }
 enum ModelType {

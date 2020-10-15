@@ -1,0 +1,10 @@
+@startuml UML
+Font "1" *--* "1" GameOver : contains
+Font "1" *--* "1" Menu : contains
+Font "1" *--* "1" SidePanel : contains
+Font "1" *--* "1" Game : contains
+
+class Font {
+
+}
+@enduml
