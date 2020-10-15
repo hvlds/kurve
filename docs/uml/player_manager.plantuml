@@ -1,0 +1,11 @@
+@startuml UML
+
+PlayerManager *-- "many" PlayerModel : contains
+class PlayerManager {
+ 
+}
+
+class PlayerModel {
+
+}
+@enduml

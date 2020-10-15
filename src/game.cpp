@@ -132,12 +132,6 @@ void Game::terminate() {
 
     // Terminate the PlayerManager
     this->player_manager->terminate();
-
-    // Destroy the window:
-    glfwDestroyWindow(this->window);
-
-    // Terminate GLFW:
-    glfwTerminate();
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
