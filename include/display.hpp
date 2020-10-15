@@ -25,7 +25,7 @@ class Display {
    public:
     Display(user_data_t* user_data);
     GLFWwindow* get_window();
-    int terminate();
+    void terminate();
 };
 
 #endif

@@ -1,0 +1,11 @@
+@startuml UML
+
+Menu -- "1" Font : contains
+'class Menu {
+' 
+'}
+'
+'class Font {
+'
+'}
+@enduml

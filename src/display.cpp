@@ -96,3 +96,11 @@ Display::Display(user_data_t* user_data) {
 GLFWwindow* Display::get_window() {
 	return this->window;
 }
+
+void Display::terminate() {
+	// Destroy the window:
+    glfwDestroyWindow(this->window);
+
+    // Terminate GLFW:
+    glfwTerminate();
+}

@@ -109,5 +109,7 @@ int main(void) {
 
     game.terminate();
 
+    display.terminate();
+
     return 0;
 }
