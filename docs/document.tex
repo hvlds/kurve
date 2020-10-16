@@ -150,6 +150,9 @@ Daten Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
 
 \subsection{GameState}
 
+Das Spiel benutzt das State Design-Pattern, in dem wir einen Zustandsautomat
+simulieren. Der Startzustand unseres Automaten ist GAME\_MENU. 
+
 \begin{figure}
     \centering
     \includegraphics[width=0.7\linewidth]{state_machine.png}
@@ -157,6 +160,35 @@ Daten Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
 	\label{fig:state-machine}
 \end{figure}
 
+\paragraph{GAME\_MENU}
+Es wird das Menü für den Auswahl von Spieler gezeigt. Man kann nur zu den
+nächsten Zustand gehen, GAME\_TRANSITION, in dem man mindestens 2 Spieler
+ihre Anwesenheit bestätigen und dann die SPACE-Taste gedrückt wird.
+\paragraph{GAME\_TRANSITION}
+Das Spiel ist bereit zu starten. Alle Spieler sind in ihren Plätze und ihren
+Position wird mit einem gefarbten Kreis gezeichnet. Um das Spiel zu starten
+muss die Leertaste gedrückt werden und der neuer Zustand wird GAME\_ACTIVE sein.
+Um zurück ins Menü zu gehen, muss die ESCAPE-Taste gedrück werden und der neuer
+Zustand wird GAME\_ESCAPE.
+\paragraph{GAME\_ACTIVE}
+Das Spiel läuft und die Spieler dürfen anderen schließen und in die Irre führen.
+Man kann in jedem Moment die SPACE-Taste drücken, um das Spiel zu pausieren,
+und der neuer Zustand wird GAME\_PAUSE. Man kann auch mit der ESCAPE-Taste das
+Spiel abbrechen und zurück ins Menü gehen, dann der neuer Zustand wird 
+GAME\_ESCAPE. Wenn nur ein Spieler übrig auf dem Feld ist, der Zustand wird 
+automatisch zu GAME\_WIN oder GAME\_OVER gehen, abhängig ob die maximalle 
+Punktzahl erreicht wurde oder nicht.
+\paragraph{GAME\_PAUSE}
+Das Spiel ist pausiert. Man kann zurück zu GAME\_ACTIVE mit der SPACE-Taste
+gehen oder zu GAME\_ESCAPE mit der ESCAPE-Taste.
+\paragraph{GAME\_ESCAPE}
+Zwischenzustand um die Daten wieder ins Default bringen. Es wird direkt zu 
+GAME\_MENU gehen.
+\paragraph{GAME\_WIN}
+Zwischenzustand um den Gewinner der Runde zu zeigen (mit einem blinken Namen).
+Nach ein paar Frames wird direkt zu GAME\_TRANSITION gehen umd eine neue Runde
+zu starten. 
+\paragraph{GAME\_OVER}
 
 \printbibliography[heading=bibintoc]
 \end{document}
