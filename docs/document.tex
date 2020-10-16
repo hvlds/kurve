@@ -106,14 +106,14 @@ zu spielen, oder das Bestehen einer Rangliste.
 2015 sammelte van den Burg ein Team um sich, um eine neue Version des Spiels in 
 HTML5 zu implementieren, welche im September 2016 auf den Markt kam.
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{dos-version.png}
 	\caption{Original DOS Version von Achtung, die Kurve! (1995)}
 	\label{fig:dos-version}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{flash-version.png}
 	\caption{Flash remake von Achtung, die Kurve! (2010)}
@@ -194,63 +194,109 @@ druck, geht man zu GAME\_MENU und startet alles von vorne.
 
 \subsection{Display}
 
+Die Klasse Display initialisiert und besitzt ein Instanz von GLFWwindow. 
+Ein Pointer von dem Fenster wird dann mit der Klasse Game mitgeteilt. 
+Display wird dann am Ende des Programms auch das Fenster schließen (beenden).
+
+Das Fenster hat ein ursprünglichen Ratio von 1:1 mit der Größe 700x700 pixels.
+Das Fenster wird sein Aspect Ratio behalten, in dem immer die kleinste Wert 
+zwischen Höhe und Breite nimmt und dann positioniert sich in der Mitte von der 
+gegende Position. z.B: Wenn die Höhe größer als die Breite ist, zentriert das 
+Fenster sich in der Mitte von der Höhe mit der Größe von der Breite. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\linewidth]{display-2.png}
+	\caption{Anpassung beim horizontallen Resize}
+	\label{fig:display-2}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\linewidth]{display-3.png}
+	\caption{Anpassung beim vertikallen Resize}
+	\label{fig:display-3}
+\end{figure}
+
 \subsection{Game}
 
-\subsection{LineMesh}
-\begin{figure}[!h]
+\section{Zeichnungen}
+
+\subsection{Player}
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{kreis-1.png}
+        \caption{Erstellung von den Punkten mit der Kreis-Gleichung}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{kreis-2.png}
+        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+    \end{subfigure}
+	\label{fig:circle}
+\end{figure}
+
+\subsection{Linien}
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-1.png}
 	\caption{Schritt 1}
 	\label{fig:line-1}
 \end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-2.png}
 	\caption{Schritt 2}
 	\label{fig:line-2}
 \end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-3.png}
 	\caption{Schritt 3}
 	\label{fig:line-3}
 \end{figure}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.5\linewidth]{Schlangenlinie-3.png}
-	\caption{Schritt 3}
-	\label{fig:line-3}
-\end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-4.png}
 	\caption{Schritt 4}
 	\label{fig:line-4}
 \end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-5.png}
 	\caption{Schritt 5}
 	\label{fig:line-5}
 \end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-6.png}
 	\caption{Schritt 6}
 	\label{fig:line-6}
 \end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-7.png}
 	\caption{Schritt 7}
 	\label{fig:line-7}
 \end{figure}
-\begin{figure}[!h]
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\linewidth]{Schlangenlinie-8.png}
 	\caption{Schritt 8}
 	\label{fig:line-8}
 \end{figure}
 
+\section{Projektdokumentation}
+
 \printbibliography[heading=bibintoc]
+
 \end{document}
