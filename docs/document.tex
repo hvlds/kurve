@@ -8,12 +8,12 @@
 \usepackage{xcolor}
 \usepackage{listings}
 % \usepackage{hyperref}
-\usepackage{csquotes}% Einstellung zu Anführungszeichen; wird von biblatex.sty gefordert
+\usepackage{csquotes}
 
 \newcommand\tab[1][5mm]{\hspace*{#1}}
 \newtheorem{thm}{Theorem}
 \newtheorem{lem}[thm]{Lemma}
-	\SelectInputMappings{adieresis={ä},germandbls={ß},Euro={€}}% Zeichenzuordnung für selinput.sty
+	\SelectInputMappings{adieresis={ä},germandbls={ß},Euro={€}}
 
 % Packages for images and caption in figures
 \usepackage{graphicx}
@@ -68,12 +68,12 @@
 
 \TUBAFErklaerungsseite
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\addsec{Zusammenfassung}% wird die KLassenoption kapitel=true gewählt, so muß hier \addchap{Zusammenfassung} stehen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addsec{Zusammenfassung}
 Implementierung des Spieles ''Achtung, die Kurve'' in C++ mit OpenGL für die 
 Lehreveranstaltung ''Multimedia''.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \KOMAoptions{
@@ -148,8 +148,35 @@ Spieler noch am Leben ist.
 Unseres Projekt hat als basis den Code, der zusammen während der Vorlesung 
 erstellt wurde, genommen und in C++ migriert. 
 Die Entscheidung, um das Spiel in C++ statt C zu programmieren, lag 
-insbesondere wegen der Standardbibliotheken von C++ und deren implementierten 
+insbesondere wegen der Standardbibliothek von C++ und deren implementierten 
 Daten Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
+
+Für die Softwarearchitektur wurde das State Pattern implementiert, um einen 
+endlichen Automaten zu simulieren und die Änderungen der Zuständen sind in der 
+Klasse \textit{Game} durchgeführt.
+
+Das Spiel wurde im Sinne von Szenen programmiert. Die Klasse \textit{Game}
+verhaltet sich als eine Szene sowie als eine Szene-Manager. Die anderen
+2 Szenen sind \textit{Menu} und \textit{GameOver}.
+
+Die Daten von dem laufenden Spiel, sowie die Anzahl an Spieler und ihren Punkten
+werden in einem Struct gespeichert, der dann in GLFW zur Verfügung gestellt wird.
+Dieser Struct heißt \textit{user\_data\_t}.
+
+\subsection{Game}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{Game.png}
+	\caption{UML Diagramm von der Klasse Game}
+	\label{fig:game-uml}
+\end{figure}
+
+Die zentrale Klasse unseres Projektes ist Game. In dieser Klasse werden die 
+Zustände von unseren Automat geändert. 
+
+In Game wird die Klasse Font initialisiert und dann mit anderen Anderen Klassen 
+mitgeteilt.
 
 \subsection{GameState}
 
@@ -208,20 +235,21 @@ gegende Position. z.B: Wenn die Höhe größer als die Breite ist, zentriert das
 Fenster sich in der Mitte von der Höhe mit der Größe von der Breite. 
 
 \begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\linewidth]{display-2.png}
-	\caption{Anpassung beim horizontallen Resize}
-	\label{fig:display-2}
+    \centering
+    \begin{subfigure}[b]{0.55\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{display-2.png}
+        \caption{Erstellung von den Punkten mit der Kreis-Gleichung}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{display-3.png}
+        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+    \end{subfigure}
+	\label{fig:display}
 \end{figure}
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\linewidth]{display-3.png}
-	\caption{Anpassung beim vertikallen Resize}
-	\label{fig:display-3}
-\end{figure}
 
-\subsection{Game}
 
 \section{Zeichnungen}
 
@@ -296,8 +324,11 @@ Fenster sich in der Mitte von der Höhe mit der Größe von der Breite.
 	\label{fig:line}
 \end{figure}
 
+\section{Kollisionen}
 
 \section{Projektdokumentation}
+
+\section{Benutzerhandbuch}
 
 \printbibliography[heading=bibintoc]
 

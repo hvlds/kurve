@@ -1,4 +1,4 @@
-@startuml UML
+@startuml Game
 
 Game *-- "1" PlayerManager : contains
 Game *-- "1" BorderModel : contains
