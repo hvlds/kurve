@@ -39,7 +39,8 @@ enum GameState {
     GAME_WIN,
     GAME_OVER,
     GAME_PAUSE,
-    GAME_TRANSITION
+    GAME_TRANSITION,
+    GAME_ESCAPE
 };
 
 /**

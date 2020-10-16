@@ -36,7 +36,7 @@ Game::Game(GLFWwindow* window) {
 
 void Game::loop() {
     while (!glfwWindowShouldClose(this->window)) {
-        auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+        auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
         GameState game_state = user_data->game_state;
         if (game_state == GAME_MENU) {
             glClear(GL_COLOR_BUFFER_BIT);
@@ -47,6 +47,12 @@ void Game::loop() {
             glClear(GL_COLOR_BUFFER_BIT);
             gl_check_error("glClear");
             this->game_over->draw();
+        } else if (game_state == GAME_ESCAPE) {
+            // Reset the players and go back to the menu
+            this->show_win_frames = 0;
+            user_data->game_state = GAME_MENU;
+            this->player_manager->terminate();
+            reset_player_info(this->window);
         } else if (
             game_state == GAME_ACTIVE
             || game_state == GAME_WIN 
@@ -180,6 +186,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 user_data->game_state = GAME_MENU;
                 reset_player_info(window);
             }
+        }
+        if (key == GLFW_KEY_ESCAPE) {
+            user_data->game_state = GAME_ESCAPE;
         }
     }
 }

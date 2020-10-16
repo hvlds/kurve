@@ -66,41 +66,53 @@ void SidePanel::draw(int player_count, int max_score) {
             "Press SPACE",
             400.0f,
             -300.0f,
-            0.7f,
+            0.6f,
             glm::vec3(1.0f, 1.0f, 1.0f));
         this->font->draw_text(
             "to continue",
             400.0f,
             -325.0f,
-            0.7f,
+            0.6f,
             glm::vec3(1.0f, 1.0f, 1.0f));
     } else if (game_state == GAME_ACTIVE) {
         this->font->draw_text(
             "Press SPACE",
             400.0f,
             -300.0f,
-            0.7f,
+            0.6f,
             glm::vec3(1.0f, 1.0f, 1.0f));
         this->font->draw_text(
             "to pause",
             400.0f,
             -325.0f,
-            0.7f,
+            0.6f,
             glm::vec3(1.0f, 1.0f, 1.0f));
     } else if (game_state == GAME_TRANSITION) {
         this->font->draw_text(
             "Press SPACE",
             400.0f,
             -300.0f,
-            0.7f,
+            0.6f,
             glm::vec3(1.0f, 1.0f, 1.0f));
         this->font->draw_text(
             "to start",
             400.0f,
             -325.0f,
-            0.7f,
+            0.6f,
             glm::vec3(1.0f, 1.0f, 1.0f));
     }
+    this->font->draw_text(
+            "Press ESCAPE",
+            400.0f,
+            -375.0f,
+            0.6f,
+            glm::vec3(1.0f, 1.0f, 1.0f));
+        this->font->draw_text(
+            "to restart",
+            400.0f,
+            -400.0f,
+            0.6f,
+            glm::vec3(1.0f, 1.0f, 1.0f));
 
 }
 
