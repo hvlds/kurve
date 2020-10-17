@@ -159,9 +159,9 @@ Das Spiel wurde im Sinne von Szenen programmiert. Die Klasse \textit{Game}
 verhaltet sich als eine Szene sowie als eine Szene-Manager. Die anderen
 2 Szenen sind \textit{Menu} und \textit{GameOver}.
 
-In dem Spiel wird User und Player differenziert. Das Spiel besitzt nur ein User,
-der die kontrolle über den Computer besitzt und die Player, die mehrere sein
-können.
+In dem Spiel wird zwischen User und Player differenziert. Das Spiel besitzt nur
+ein User, der die kontrolle über den Computer besitzt und mehrere Players, 
+welche die Kreise kontrollieren.
 
 \subsection{user\_data\_t}
 
@@ -255,17 +255,36 @@ zu starten.
 Es wird eine Liste mit der gesamten Punktzahl gezeigt. Wenn man den SPACE-Taste
 druck, geht man zu GAME\_MENU und startet alles von vorne.
 
+\subsection{Model und Mesh}
+Die Klassen \textit{Model} und \textit{Mesh} sind zwei abstrakte Klassen, welche
+als Basis Klasse angewandt werden.
+
+\paragraph{Mesh} 
+Ein \textit{Mesh} enthält die Punkte, die gezeichnet werden, das 
+Vertex Array Object (VAO) und das Vertex Buffer Object (VBO). 
+Die Klassen \textit{BorderMesh}, \textit{PlayerMesh} und \textit{LineMesh} 
+erben von \textit{Mesh}, welche die Funktion ''draw'' deklarieren müssen,
+um die Punkte zu zeichnen.
+
+\paragraph{Model} 
+Ein \textit{Model} enthält ein \textit{Mesh} und die ID von dem \textit{Shader},
+das angewandt wird. Ein \textit{Model} interagiert mit \textit{Game} und in
+dieser Klasse werden die Positionen und Transformation informiert werden, 
+durch die Funktion ''update''.
+
 \subsection{Display}
 
-Die Klasse Display initialisiert und besitzt ein Instanz von GLFWwindow. 
-Ein Pointer von dem Fenster wird dann mit der Klasse Game mitgeteilt. 
-Display wird dann am Ende des Programms auch das Fenster schließen (beenden).
+Die Klasse \textit{Display} initialisiert und besitzt ein Instanz von GLFWwindow. 
+Ein Pointer von dem Fenster wird dann mit der Klasse \textit{Game} mitgeteilt. 
+\textit{Display} wird dann am Ende des Programms auch das Fenster schließen 
+(beenden).
 
 Das Fenster hat ein ursprünglichen Ratio von 1:1 mit der Größe 700x700 pixels.
 Das Fenster wird sein Aspect Ratio behalten, in dem immer die kleinste Wert 
 zwischen Höhe und Breite nimmt und dann positioniert sich in der Mitte von der 
 gegende Position. z.B: Wenn die Höhe größer als die Breite ist, zentriert das 
-Fenster sich in der Mitte von der Höhe mit der Größe von der Breite. 
+Fenster sich in der Mitte von der Höhe mit der Größe von der Breite, der Rest
+wird ein mit einem schwarzen Padding gefüllt.
 
 \begin{figure}[!htb]
     \centering
