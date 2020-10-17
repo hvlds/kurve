@@ -25,7 +25,7 @@
 \definecolor{mPurple}{rgb}{0.58,0,0.82}
 \definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
 
-\lstdefinestyle{CStyle}{
+\lstdefinestyle{C++}{
     backgroundcolor=\color{backgroundColour},   
     commentstyle=\color{mGreen},
     keywordstyle=\color{magenta},
@@ -42,7 +42,7 @@
     showstringspaces=false,
     showtabs=false,                  
     tabsize=2,
-    language=C
+    language=C++
 }
 
 \usepackage[backend=biber,sortlocale=de_DE_phonebook]{biblatex}
@@ -159,9 +159,41 @@ Das Spiel wurde im Sinne von Szenen programmiert. Die Klasse \textit{Game}
 verhaltet sich als eine Szene sowie als eine Szene-Manager. Die anderen
 2 Szenen sind \textit{Menu} und \textit{GameOver}.
 
+In dem Spiel wird User und Player differenziert. Das Spiel besitzt nur ein User,
+der die kontrolle über den Computer besitzt und die Player, die mehrere sein
+können.
+
+\subsection{user\_data\_t}
+
 Die Daten von dem laufenden Spiel, sowie die Anzahl an Spieler und ihren Punkten
 werden in einem Struct gespeichert, der dann in GLFW zur Verfügung gestellt wird.
 Dieser Struct heißt \textit{user\_data\_t}.
+
+\begin{lstlisting}[style=C++]
+typedef struct {
+    int window_width;
+    int window_height;
+    GameState game_state;
+    std::vector<player_info_t>* player_info;
+} user_data_t;
+\end{lstlisting}
+
+\subsection{player\_info}
+Alle die Players werden am Anfang des Programmes in main.cpp addiert und dann
+im Menü werden als aktiv gesetzt.
+
+\begin{lstlisting}[style=C++]
+typedef struct {
+    bool is_active;
+    int id;
+    std::string name;
+    std::string menu_text;
+    Control control;
+    std::array<GLubyte, 3> color;
+    glm::vec3 menu_color;
+    int score;
+} player_info_t;
+\end{lstlisting}
 
 \subsection{Game}
 
@@ -172,16 +204,17 @@ Dieser Struct heißt \textit{user\_data\_t}.
 	\label{fig:game-uml}
 \end{figure}
 
-Die zentrale Klasse unseres Projektes ist Game. In dieser Klasse werden die 
-Zustände von unseren Automat geändert. 
-
-In Game wird die Klasse Font initialisiert und dann mit anderen Anderen Klassen 
-mitgeteilt.
+Die zentrale Klasse unseres Projektes ist \textit{Game}. In dieser Klasse 
+werden die Zustände von unseren Automat geändert und unterschiedliche Klassen 
+initialisiert und geteilt. In der Abb. \ref{fig:game-uml} steht die 
+Klassen, die dann im \textit{Game} initialisiert werden. Ein Beispiel ist die 
+Klasse \textit{Font}, die von der Erzeugung und Zeichnung von Text
+verantwortlich ist, wird nur einmal in \textit{Game} initialisiert.  
 
 \subsection{GameState}
 
-Das Spiel benutzt das State Design-Pattern, in dem wir einen Zustandsautomat
-simulieren. Der Startzustand unseres Automaten ist GAME\_MENU. 
+In der Abb. \ref{fig:state-machine} wird der Automat des Spieles dargestellt. 
+Der Startzustand unseres Automaten ist GAME\_MENU. 
 
 \begin{figure}
     \centering
@@ -292,53 +325,55 @@ Fenster sich in der Mitte von der Höhe mit der Größe von der Breite.
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-1.png}
-        \caption{Erstellung von den Punkten mit der Kreis-Gleichung}
+        \caption{Schritt 1}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-2.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 2}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-3.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 3}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-4.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 4}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-5.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 5}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-6.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 6}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-7.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 7}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-8.png}
-        \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+        \caption{Schritt 8}
     \end{subfigure}
-    \caption{Darstellung von GL\_TRIANGLE\_STRIP}
+    \caption{Erzeugung eines Linien-Segmenten}
 	\label{fig:line}
 \end{figure}
+
+\section{Bewegung}
 
 \section{Kollisionen}
 
