@@ -394,6 +394,52 @@ wird ein mit einem schwarzen Padding gefüllt.
 
 \section{Bewegung}
 
+Alle die \textit{PlayerModel}s starten mit einem gleichen 
+Geschwindigkeitsvektor $v$.
+
+\begin{equation}
+    v =
+    \begin{bmatrix}
+        0.09    \\
+        0
+    \end{bmatrix}
+\end{equation}
+
+Wenn ein Player initialisiert ist, wird einen randomisierten Winkel $\theta$ 
+erzeugt. Dann wird der Vektor $v$ in z rotiert, um einen neuen Vektor zu 
+erzeugen.
+
+\begin{equation}
+    \begin{bmatrix}
+        v'_{x} \\
+        v'_{y}     
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        cos(\theta) & -sin(\theta) \\
+        sin(\theta) & cost(\theta)
+    \end{bmatrix}
+    \begin{bmatrix}
+        v_{x} \\
+        v_{y}
+    \end{bmatrix}
+    \label{eq:rotation}
+\end{equation}
+
+In jedem Frame gibt es 3 Fälle für alle die aktive Players:
+
+\paragraph{Der Player druck keine Steuerungstaste}
+Der Geschwindigkeitsvektor $v$ bleibt gleich und der Player bewegt sich
+in die gleiche Richtung.
+
+\paragraph{Der Player druck die linke/rechte Taste}
+Der Geschwindigkeitsvektor $v$ wird wie in der Gleichung \ref{eq:rotation}
+rotiert.
+
+\paragraph{Der Player ist tot}
+Der Player wird nicht mehr geupdated, der Geschwindigkeitsvektor bleibt gleich
+aber er wird sich nicht bewegen.
+
 \section{Kollisionen}
 
 \section{Projektdokumentation}
