@@ -322,6 +322,7 @@ wird ein mit einem schwarzen Padding gefüllt.
 \section{Zeichnungen}
 
 \subsection{Player}
+
 \begin{figure}[!htb]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
@@ -334,10 +335,21 @@ wird ein mit einem schwarzen Padding gefüllt.
         \includegraphics[width=0.8\linewidth]{kreis-2.png}
         \caption{Darstellung von GL\_TRIANGLE\_STRIP}
     \end{subfigure}
-	\label{fig:circle}
+    \caption{Darstellung der Erstellung eines Kreises}
+    \label{fig:player}
 \end{figure}
 
+Jeder Spieler wird mit einem Kreis dargestellt. Die Kreise werden erstellt, in
+dem ausgewählte Punkte aus dem Kreis gesammelt werden und sie mit dem 
+OpenGL Flag GL\_TRIANGLE\_STRIP zeichnet. Eine Darstellung von dem Prozess
+wird in der Abb. \ref{fig:player} gezeigt.
+
 \subsection{Linien}
+
+Für die Zeichnung von dicken Linien wurde ein Algorithmus entwickelt.
+
+Sei $L$ ein Array mit den Punkten in dem der Player befand.
+Für die aller erste 2 Punkten in $L$ wird weiter
 
 \begin{figure}[!htb]
     \centering
@@ -441,6 +453,8 @@ Der Player wird nicht mehr geupdated, der Geschwindigkeitsvektor bleibt gleich
 aber er wird sich nicht bewegen.
 
 \section{Kollisionen}
+
+Als eine Vereinfachung werden alle Punkte in den Linien als Kreisen betrachtet.
 
 \section{Projektdokumentation}
 
