@@ -104,7 +104,7 @@ hinzugefügt wie zum Beispiel verschiedene Boni, die Möglichkeit, in einem Team
 zu spielen, oder das Bestehen einer Rangliste.
 
 2015 sammelte van den Burg ein Team um sich, um eine neue Version des Spiels in 
-HTML5 zu implementieren, welche im September 2016 auf den Markt kam.
+HTML5 zu implementieren, welche im September 2016 auf dem Markt kam.
 
 \begin{figure}[!htb]
     \centering
@@ -128,26 +128,26 @@ Kombination mit dem Stil der Flash Version.
 
 \subsection{Spielmechanik}
 
-Im Spiel können bis zu 6 Spieler zusammen mit einem Bildschirm und einer 
+Das Spiel können bis zu 6 Spieler zusammen an einem Bildschirm und mit einer 
 Tastatur spielen. Jeder Spieler besitzt zwei vorbestimmten Tasten, die rechts 
 und links symbolisieren. Um das Spiel zu starten, müssen mindestens 
-2 Spieler spielen.  Der Ziel vom Spiel ist, dass der Spieler am Leben 
-solange wie möglich bleibt.
+2 Spieler spielen. Das Ziel des Spiels ist es, dass ein Spieler solange wie
+möglich am Leben bleibt.
 
-Jeder Spieler wird mit einem Kreis dargestellt, der mit jeder Bewegung einen 
-Pfad mit der Farbe des Spielers hinterlässt. Der Spieler darf nur nach rechts 
-und links die Richtung seiner Bewegung ändern. Wenn der Spieler nicht reagiert, 
-wird er weiter in der alten Richtung sich bewegen.
+Jeder Spieler wird durch einen Kreis dargestellt, der mit jeder Bewegung einen 
+Pfad mit der Farbe des Spielers hinterlässt. Der Spieler kann sich nur nach
+rechts oder links drehen und damit die Richtung seiner Bewegung ändern. Wenn
+der Spieler nicht reagiert, bewegt er sich weiter in die alte Richtung.
 
 Ein Spieler verliert, wenn er gegen seine eigene Linie, die Linie anderen 
-Spieler,  oder den Rand gestoßen hat. Das Spiel ist zu Ende wenn nur ein 
-Spieler noch am Leben ist.
+Spieler oder den Rand stößt. Das Spiel ist zu Ende, wenn nur noch ein 
+Spieler am Leben ist.
 
 \section{Softwaredokumentation}
 
-Unseres Projekt hat als basis den Code, der zusammen während der Vorlesung 
-erstellt wurde, genommen und in C++ migriert. 
-Die Entscheidung, um das Spiel in C++ statt C zu programmieren, lag 
+Unseres Projekt hat den Code als Basis, der zusammen während der Vorlesung 
+erstellt wurde. Dieser Code wurde in C++ migriert. 
+Die Entscheidung, das Spiel in C++ statt C zu programmieren, lag 
 insbesondere wegen der Standardbibliothek von C++ und deren implementierten 
 Daten Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
 
@@ -525,6 +525,11 @@ Zentren wird mit der folgenden Gleichung gerechnet:
     \label{fig:collisions-1}
 \end{figure}
 
+\FloatBarrier
+In jedem Frame der Abstand zwischen jedem Player und jedem Punkt,
+sowie der Abstand zwischen jedem Player und der Abstand mit dem Border. 
+Der Prozess ist in der Abb. \ref{fig:collisions-2} dargestellt.
+
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.6\linewidth]{collisions-2.png}
@@ -532,27 +537,81 @@ Zentren wird mit der folgenden Gleichung gerechnet:
     \label{fig:collisions-2}
 \end{figure}
 
-\section{Projektdokumentation}
-
 \section{Benutzerhandbuch}
+
+\subsection{Installation}
+Das Projekt befindet sich in GitHub auf dem Repository 
+\url{https://github.com/h-valdes/kurve}. \\
+
+Installiere die Dependencies:
+\begin{enumerate}
+    \item GLFW
+    \item FreeType2
+\end{enumerate}
+
+Clone das Repository:
+\begin{lstlisting}[language=bash]
+$ git clone https://github.com/h-valdes/kurve.git
+\end{lstlisting}
+
+Estelle einen neuen Build Ordner auf dem Ordner des Repository und 
+kompiliere das Projekt:
+\begin{lstlisting}[language=bash]
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+\end{lstlisting}
+
+Um das Projekt zu starten:
+\begin{lstlisting}[language=bash]
+$ ./kurve
+\end{lstlisting}
+
+\FloatBarrier
+\subsection{Spielanweisungen}
+
+Es gibt 6 mögliche Spieler. Jeder Spieler hat 2 vordefinierten Steuerungstasten:
+
+\begin{table}
+    \centering
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Name & Links & Rechts \\
+        \hline
+        Gryffindor & L.Ctrl  & L.Alt \\
+        Slythering & 1       & Q \\
+        Hufflepuff & M       & , \\
+        Ravenclaw  & L.Arrow & R.Arrow \\
+        Muggle     & O       & P \\
+        Squib      & B       & N \\
+        \hline
+    \end{tabular}
+    \caption{Steuerungstasten von dem Spieler}
+\end{table}
+
+\FloatBarrier
+Um das Spiel zu starten, müssen mindestens 2 Spieler seine Anwesenheit 
+bestätigen. Die Bestätigung wird mit dem Drück seine respektive linken
+Steuerungstaste und zum abbrechen, soll man die rechte Steuerungstaste drücken.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\linewidth]{1.png}
+	\includegraphics[width=0.9\linewidth]{1.png}
 	\caption{Menü Szene.}
 	\label{fig:menu}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\linewidth]{2.png}
+	\includegraphics[width=0.9\linewidth]{2.png}
 	\caption{Bestätigung der Anwesenheit von Spieler.}
 	\label{fig:confirmation}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\linewidth]{5.png}
+	\includegraphics[width=0.9\linewidth]{5.png}
 	\caption{Ein Spiel pausiert.}
 	\label{fig:pause}
 \end{figure}
