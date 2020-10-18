@@ -46,6 +46,6 @@ Enjoy
 
 ## Screenshots
 
-![](docs/img/Gamefoto.png)
-![](docs/img/space to start.png)
-![](docs/img/pause\restart.png)
+![](docs/img/1.png)
+![](docs/img/2.png)
+![](docs/img/3.png)
