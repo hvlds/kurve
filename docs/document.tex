@@ -81,8 +81,8 @@ Lehreveranstaltung ''Multimedia''.
 }
 
 \tableofcontents
-\listoffigures
-\listoftables
+% \listoffigures
+% \listoftables
 
 \newpage
 
@@ -354,7 +354,6 @@ Wie bereits anfangs erwähnt, wird jeder Spieler durch einen Kreis dargestellt.
 Die Erstellung der Kreise erfolgt durch Randpunkte des Kreises, welche den gleichen Radius zum Mittelpunkt haben. Diese Randpunkte werden durch die Funktion OpenGL Flag GL\_TRIANGLE\_STRIP verbunden. Eine Darstellung des Prozesses
 ist in der Abb. \ref{fig:player} gezeigt.
 
-\FloatBarrier
 \subsection{Linien}
 
 Für das Zeichnen dicker Linien wurde ein Algorithmus entwickelt, der
@@ -545,6 +544,16 @@ Der Prozess ist in der Abb. \ref{fig:collisions-2} dargestellt.
     \caption{Der Player überprüft seinen Abstand mit allen Punkten in den Linien}
     \label{fig:collisions-2}
 \end{figure}
+
+\section{Projektdokumentation}
+
+Für die Entwicklung des Projektes wurde der IDE Visual Studio Code (VSCode) 
+ausgewählt. VSCode besitzt ein kostenloses Pluging, das das Pair Programming
+erlaubt, das LiveShare heißt. Im Kombination mit Skype könnten wir das Projekt
+gleichzeitig entwicklen.
+
+Für den Code wurde ein Github Repository erstellt, der uns erlaubt hat,
+asynchron zu arbeiten.
 
 \section{Benutzerhandbuch}
 
