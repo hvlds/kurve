@@ -450,7 +450,9 @@ In der Abb. \ref{fig:line} ist eine graphische Darstellung des Algorithmus darge
 
 \section{Bewegung}
 
-Alle die \textit{PlayerModel}s starten mit einem gleichen 
+\subsection{Startgeschwindigkeit}
+
+Alle \textit{PlayerModel}s starten mit dem gleichen 
 Geschwindigkeitsvektor $v$.
 
 \begin{equation}
@@ -461,8 +463,8 @@ Geschwindigkeitsvektor $v$.
     \end{bmatrix}
 \end{equation}
 
-Wenn ein Player initialisiert ist, wird einen randomisierten Winkel $\theta$ 
-erzeugt. Dann wird der Vektor $v$ in z rotiert, um einen neuen Vektor zu 
+Wenn ein Player initialisiert ist, wird ein randomisierten Winkel $\theta$ 
+erzeugt. Anschließend wird der Vektor $v$ in z rotiert, um einen neuen Vektor zu 
 erzeugen.
 
 \begin{equation}
@@ -482,13 +484,16 @@ erzeugen.
     \label{eq:rotation}
 \end{equation}
 
-In jedem Frame gibt es 3 Fälle für alle die aktive Players:
+Der Vektor $v$ wird durch $v'$ ersetzt.
 
-\paragraph{Der Player druck keine Steuerungstaste}
+\subsection{Im laufenden Spiel}
+In jedem Frame gibt es 3 Fälle für alle aktiven Player:
+
+\paragraph{Der Player drückt keine Steuerungstaste}
 Der Geschwindigkeitsvektor $v$ bleibt gleich und der Player bewegt sich
 in die gleiche Richtung.
 
-\paragraph{Der Player druck die linke/rechte Taste}
+\paragraph{Der Player drückt die linke/rechte Taste}
 Der Geschwindigkeitsvektor $v$ wird wie in der Gleichung \ref{eq:rotation}
 rotiert.
 
@@ -498,13 +503,12 @@ aber er wird sich nicht bewegen.
 
 \section{Kollisionen}
 
-Als eine Vereinfachung werden alle Punkte in den Linien als Kreisen betrachtet.
+Vereinfachend werden alle Punkte der Linien als Kreisen betrachtet.
 Da alle Elementen im Spiel als Kreisen betrachtet werden, kann man eine Kollision
-detektieren, in dem der Abstand zwischen beiden Kreisen kleiner als die Summe
-von ihren Radius ist.
+detektieren, wenn der Abstand zwischen beiden Kreisen kleiner als die Summe ihrer Radien sind.
 
-Sei $C_{1}$ und $C_{2}$ die Zentren von zwei Kreisen. Der Abstand zwischen den 
-Zentren wird mit der folgenden Gleichung gerechnet:
+Seien $C_{1}$ und $C_{2}$ die Zentren zweier Kreise. Der Abstand zwischen den 
+Zentren wird mit der folgenden Gleichung gberechnet:
 
 \begin{equation}
     d = \sqrt{(C_{1x} - C_{2x})^2 + (C_{1y} - C_{2y})^2}
@@ -534,8 +538,8 @@ Zentren wird mit der folgenden Gleichung gerechnet:
 \end{figure}
 
 \FloatBarrier
-In jedem Frame der Abstand zwischen jedem Player und jedem Punkt,
-sowie der Abstand zwischen jedem Player und der Abstand mit dem Border. 
+In jedem Frame wird der Abstand zwischen jedem Player und jedem Punkt,
+sowie der Abstand zwischen jedem Player und dem Border berechnet. 
 Der Prozess ist in der Abb. \ref{fig:collisions-2} dargestellt.
 
 \begin{figure}[!htb]
@@ -547,12 +551,12 @@ Der Prozess ist in der Abb. \ref{fig:collisions-2} dargestellt.
 
 \section{Projektdokumentation}
 
-Für die Entwicklung des Projektes wurde der IDE Visual Studio Code (VSCode) 
-ausgewählt. VSCode besitzt ein kostenloses Pluging, das das Pair Programming
-erlaubt, das LiveShare heißt. Im Kombination mit Skype könnten wir das Projekt
-gleichzeitig entwicklen.
+Für die Entwicklung des Projektes wurde die IDE Visual Studio Code (VSCode) 
+ausgewählt. VSCode besitzt ein kostenloses Pluging, welches das Pair Programming
+erlaubt, das LiveShare heißt. Im Kombination mit Skype konnte das Projekt
+gleichzeitig entwicklen werden.
 
-Für den Code wurde ein Github Repository erstellt, der uns erlaubt hat,
+Für den Code wurde ein Github Repository erstellt, welches es erlaubt hat,
 asynchron zu arbeiten.
 
 \section{Benutzerhandbuch}
@@ -561,19 +565,19 @@ asynchron zu arbeiten.
 Das Projekt befindet sich in GitHub auf dem Repository 
 \url{https://github.com/h-valdes/kurve}. \\
 
-Installiere die Dependencies:
+Installieren Sie die Dependencies:
 \begin{enumerate}
     \item GLFW
     \item FreeType2
 \end{enumerate}
 
-Clone das Repository:
+Clonen Sie das Repository:
 \begin{lstlisting}[language=bash]
 $ git clone https://github.com/h-valdes/kurve.git
 \end{lstlisting}
 
-Estelle einen neuen Build Ordner auf dem Ordner des Repository und 
-kompiliere das Projekt:
+Estellen Sie einen neuen Build Ordner auf dem Ordner des Repository und 
+kompilieren Sie das Projekt:
 \begin{lstlisting}[language=bash]
 $ mkdir build
 $ cd build
@@ -605,20 +609,20 @@ Es gibt 6 mögliche Spieler. Jeder Spieler hat 2 vordefinierten Steuerungstasten
         Squib      & B       & N \\
         \hline
     \end{tabular}
-    \caption{Steuerungstasten von dem Spieler}
+    \caption{Steuerungstasten der Spieler}
 \end{table}
 
 \FloatBarrier
-Um das Spiel zu starten, müssen mindestens 2 Spieler seine Anwesenheit 
-bestätigen. Die Bestätigung wird mit seiner respektiven linken
-Steuerungstaste durchgeführt. Zum abbrechen, soll die rechte Steuerungstaste 
+Um das Spiel zu starten, müssen mindestens 2 Spieler ihre Anwesenheit 
+bestätigen. Die Bestätigung wird mit ihrer respektiven linken
+Steuerungstaste durchgeführt. Zum abbrechen muss die rechte Steuerungstaste 
 gedrückt werden. \\
 
-Wenn nur ein Spieler übrig ist, wird die Runde zu Ende. Der Name des Gewinners
-wird kurz blinken und nach dem blinken, kann die nächste Runde mit der 
+Wenn nur ein Spieler übrig ist, wird die Runde beendet. Der Name des Gewinners
+blinkt kurz und nach dem Blinken kann die nächste Runde mit der 
 SPACE-Taste gestartet werden. \\
 
-Wenn ein Spieler die maximale Punktzahl erreicht hat, ist das Spiel zu Ende
+Wenn ein Spieler die maximale Punktzahl erreicht hat, ist das Spiel zu Ende.
 
 \printbibliography[heading=bibintoc]
 
