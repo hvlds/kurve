@@ -400,51 +400,58 @@ In der Abb. \ref{fig:line} ist eine graphische Darstellung des Algorithmus darge
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-1.png}
-        \caption{ursprünglichen Positionen des Players}
+        \caption{aufeinanderfolgende Positionen des Players}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-2.png}
-        \caption{Erstellung von Vektoren und Berechnung ihren Winkel}
+        \caption{Erstellung der Vektoren $\vec{v}_{1}$
+        und $\vec{v}_{2}$ und Berechnung ihres einschließenden Winkels}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-3.png}
-        \caption{Schritt 3}
+        \caption{Rotation von $\vec{v}_{2}$ in positive und negative
+        Drehrichtung}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-4.png}
-        \caption{Schritt 4}
+        \caption{Speicherung der Punkte $L_{1}$ und $R_{1}$ auf der
+        Rotationsgeraden im Abstand $r$ zu $P_{1}$}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-5.png}
-        \caption{Schritt 5}
+        \caption{Wiederholung des Schrittes \textbf{(b)} (Erstellung der
+        Vektoren aus dem vorletzten, letzten und aktuellen Punkt)}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-6.png}
-        \caption{Schritt 6}
+        \caption{Wiederholung des Schrittes \textbf{(c)} 
+        (Rotation des Vektors aus letztem und aktuellem Punkt in positive und 
+        negative Drehrichtung)}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-7.png}
-        \caption{Schritt 7}
+        \caption{Wiederholung des Schrittes \textbf{(d)} 
+        (Speicherung des linken und rechten Punktes auf der Rotationsgeraden)}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-8.png}
-        \caption{Schritt 8}
+        \caption{Verbinden der linken und rechten Punkten.}
     \end{subfigure}
-    \caption{Beispiel der Erzeugung eines Linien-Segmenten}
+    \caption{Beispiel der Erzeugung eines Linien-Segments}
 	\label{fig:line}
 \end{figure}
 
