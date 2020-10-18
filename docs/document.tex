@@ -352,7 +352,7 @@ Für die Zeichnung von dicken Linien wurde ein Algorithmus entwickelt, der
 in der Abb. \ref{fig:line-alg} dargestellt wird. 
 
 Um den Winkel zwischen zwei Vektoren zu rechnen wurde die folgende 
-trigonometrische Gleichung:
+trigonometrische Eigenschaft angewandt:
 
 \begin{equation}
     cos(\theta)=
@@ -362,58 +362,76 @@ trigonometrische Gleichung:
     }
 \end{equation}
 
+Für die Richtung der Drehung in der Linie wurde die z-Komponente der
+Kreuzprodukt zwischen $\vec{v}_{1}$ und $\vec{v}_{2}$ analysiert.
+
+\begin{equation}
+    \vec{v}_{3} = \vec{v}_{1} \times \vec{v}_{2}
+\end{equation}
+
+Es gibt 3 Fälle:
+\begin{enumerate}
+    \item $\vec{v}_{3z}$ > 0: Die Linie dreht sich nach Links
+    \item $\vec{v}_{3z}$ < 0: Die Linie dreht sich nach Rechts
+    \item $\vec{v}_{3z}$ = 0: Die Linie geht gerade
+\end{enumerate}
+
+Wenn die neue Punkte $L$ und $R$ gerechnet wurden, können in den LineMesh
+hinzugefügt werden.
+In der Abb. \ref{fig:line} wird eine graphische Darstellung des Algorithmus.
+
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.7\linewidth]{line.png}
+    \includegraphics[width=0.8\linewidth]{line.png}
     \caption{Flow-Diagramm von der Linien-Erzeugung Algorithmus}
     \label{fig:line-alg}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-1.png}
         \caption{Schritt 1}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-2.png}
         \caption{Schritt 2}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-3.png}
         \caption{Schritt 3}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-4.png}
         \caption{Schritt 4}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-5.png}
         \caption{Schritt 5}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-6.png}
         \caption{Schritt 6}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-7.png}
         \caption{Schritt 7}
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-8.png}
         \caption{Schritt 8}
@@ -473,6 +491,16 @@ aber er wird sich nicht bewegen.
 \section{Kollisionen}
 
 Als eine Vereinfachung werden alle Punkte in den Linien als Kreisen betrachtet.
+Da alle Elementen im Spiel als Kreisen betrachtet werden, kann man eine Kollision
+detektieren, in dem der Abstand zwischen beiden Kreisen kleiner als die Summe
+von ihren Radius ist.
+
+Sei $C_{1}$ und $C_{2}$ die Zentren von zwei Kreisen. Der Abstand zwischen den 
+Zentren wird mit der folgenden Gleichung gerechnet:
+
+\begin{equation}
+    d = \sqrt{(C_{1x} - C_{2x})^2 + (C_{1y} - C_{2y})^2}
+\end{equation}
 
 \begin{figure}[!htb]
     \centering
