@@ -268,14 +268,14 @@ als Basisklasse angewandt werden.
 Ein \textit{Mesh} enthält die Punkte, die gezeichnet werden, das 
 Vertex Array Object (VAO) und das Vertex Buffer Object (VBO). 
 Die Klassen \textit{BorderMesh}, \textit{PlayerMesh} und \textit{LineMesh} 
-erben von \textit{Mesh}, welche die Funktion ''draw'' deklarieren müssen,
+erben vom \textit{Mesh}. Diese Klassen müssen die Funktion ''draw'' deklarieren,
 um die Punkte zu zeichnen.
 
 \paragraph{Model} 
-Ein \textit{Model} enthält ein \textit{Mesh} und die ID von dem \textit{Shader},
-das angewandt wird. Ein \textit{Model} interagiert mit \textit{Game} und in
-dieser Klasse werden die Positionen und Transformation informiert werden, 
-durch die Funktion ''update''.
+Ein \textit{Model} enthält ein \textit{Mesh} und die ID des \textit{Shader},
+welches angewandt wird. Ein \textit{Model} interagiert mit \textit{Game}. In
+dieser Klasse werden die Positionen und Transformation durch die Funktion 
+''update'' informiert.
 
 \subsection{Display}
 
