@@ -92,12 +92,12 @@ Achtung, Die Kurve ist ein Multiplayer-Spiel, welches im Jahr 1995 von
 Filip Oščádal und Kamil Doležal in DOS entwickelt wurde. Im Jahr 2010 wurde 
 eine neue Version des Spiels unter dem Namen “Achtung, die Kurve! Flash Remake”
 veröffentlicht. Diese Version ist mit Adobe Flash von Geert van den Burg 
-entwickelt worden und kann online gespielt werden.
+entwickelt worden. Das Spiel kann von mehreren Spielern an einem Computer online gespielt werden.
 
 Nachdem das Spiel großen Zuspruch fand, beschloss van den Burg, sich mit 
 Robin Brouns zusammenzuschließen und eine Fortsetzung zu entwickeln, welche 
 2011 unter den Namen Curve Fever (Originaltitel “Achtung, die Kurve! 2”) 
-veröffentlicht wurde und online gespielt werden kann.
+veröffentlicht. Es kann online und mit Spielern aus dem Netz gespielt werden.
 
 In den folgenden Jahren wurden dem Spiel immer weiter neue Features 
 hinzugefügt wie zum Beispiel verschiedene Boni, die Möglichkeit, in einem Team 
@@ -135,9 +135,9 @@ und links symbolisieren. Um das Spiel zu starten, müssen mindestens
 möglich am Leben bleibt.
 
 Jeder Spieler wird durch einen Kreis dargestellt, der mit jeder Bewegung einen 
-Pfad mit der Farbe des Spielers hinterlässt. Der Spieler kann sich nur nach
+Pfad mit seiner Farbe hinterlässt. Der Spieler kann sich nur nach
 rechts oder links drehen und damit die Richtung seiner Bewegung ändern. Wenn
-der Spieler nicht reagiert, bewegt er sich weiter in die alte Richtung.
+der Spieler nicht reagiert, bewegt er sich weiter in die gleiche Richtung.
 
 Ein Spieler verliert, wenn er gegen seine eigene Linie, die Linie anderen 
 Spieler oder den Rand stößt. Das Spiel ist zu Ende, wenn nur noch ein 
@@ -147,25 +147,25 @@ Spieler am Leben ist.
 
 Unseres Projekt hat den Code als Basis, der zusammen während der Vorlesung 
 erstellt wurde. Dieser Code wurde in C++ migriert. 
-Die Entscheidung, das Spiel in C++ statt C zu programmieren, lag 
-insbesondere wegen der Standardbibliothek von C++ und deren implementierten 
-Daten Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
+Die Entscheidung, das Spiel in C++ statt in C zu programmieren, lag 
+insbesondere an der Standardbibliothek von C++ und deren implementierten 
+Daten-Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
 
 Für die Softwarearchitektur wurde das State Pattern implementiert, um einen 
-endlichen Automaten zu simulieren und die Änderungen der Zuständen sind in der 
+endlichen Automaten zu simulieren. Die Änderungen der Zuständen sind in der 
 Klasse \textit{Game} durchgeführt.
 
 Das Spiel wurde im Sinne von Szenen programmiert. Die Klasse \textit{Game}
-verhaltet sich als eine Szene sowie als eine Szene-Manager. Die anderen
-2 Szenen sind \textit{Menu} und \textit{GameOver}.
+verhält sich als eine Szene sowie als eine Szene-Manager. Die anderen
+zwei Szenen sind \textit{Menu} und \textit{GameOver}.
 
 In dem Spiel wird zwischen User und Player differenziert. Das Spiel besitzt nur
-ein User, der die kontrolle über den Computer besitzt und mehrere Players, 
+ein User, der die Kontrolle über den Computer besitzt und mehrere Player, 
 welche die Kreise kontrollieren.
 
 \subsection{user\_data\_t}
 
-Die Daten von dem laufenden Spiel, sowie die Anzahl an Spieler und ihren Punkten
+Die Daten des laufenden Spiels, sowie die Anzahl an Spieler und ihren Punkten
 werden in einem Struct gespeichert, der dann in GLFW zur Verfügung gestellt wird.
 Dieser Struct heißt \textit{user\_data\_t}.
 
@@ -179,8 +179,8 @@ typedef struct {
 \end{lstlisting}
 
 \subsection{player\_info}
-Alle die Players werden am Anfang des Programmes in main.cpp addiert und dann
-im Menü werden als aktiv gesetzt.
+Alle Player werden am Anfang des Programmes in main.cpp addiert und dann
+im Menü als aktiv gesetzt.
 
 \begin{lstlisting}[style=C++]
 typedef struct {
@@ -204,61 +204,65 @@ typedef struct {
 	\label{fig:game-uml}
 \end{figure}
 
-Die zentrale Klasse unseres Projektes ist \textit{Game}. In dieser Klasse 
-werden die Zustände von unseren Automat geändert und unterschiedliche Klassen 
+Die zentrale Klasse des Projektes ist \textit{Game}. In dieser Klasse 
+werden die Zustände des Automaten geändert und unterschiedliche Klassen 
 initialisiert und geteilt. In der Abb. \ref{fig:game-uml} steht die 
-Klassen, die dann im \textit{Game} initialisiert werden. Ein Beispiel ist die 
-Klasse \textit{Font}, die von der Erzeugung und Zeichnung von Text
-verantwortlich ist, wird nur einmal in \textit{Game} initialisiert.  
+Klassen, die anschließend im \textit{Game} initialisiert werden. 
+Ein Beispiel ist die Klasse \textit{Font}, die für die Erzeugung und für die
+Zeichnung von Texten verantwortlich ist. Sie wird nur einmal in \textit{Game}
+initialisiert und im Folgenden mit anderen Klassen geteilt.  
 
 \FloatBarrier
 \subsection{GameState}
 
 In der Abb. \ref{fig:state-machine} wird der Automat des Spieles dargestellt. 
-Der Startzustand unseres Automaten ist GAME\_MENU. 
+Der Startzustand des Automaten ist GAME\_MENU. 
 
 \begin{figure}
     \centering
     \includegraphics[width=0.7\linewidth]{state_machine.png}
-	\caption{Darstellung unseren Zustandsautomat}
+	\caption{Darstellung des Zustandsautomaten}
 	\label{fig:state-machine}
 \end{figure}
 
 \paragraph{GAME\_MENU}
-Es wird das Menü für den Auswahl von Spieler gezeigt. Man kann nur zu den
-nächsten Zustand gehen, GAME\_TRANSITION, in dem man mindestens 2 Spieler
+Es wird das Menü für den Auswahl von Spielern gezeigt. Es kann nur zu dem
+nächsten Zustand übergegangen werden (GAME\_TRANSITION), in dem mindestens 
+2 Spieler
 ihre Anwesenheit bestätigen und dann die SPACE-Taste gedrückt wird.
 \paragraph{GAME\_TRANSITION}
-Das Spiel ist bereit zu starten. Alle Spieler sind in ihren Plätze und ihren
-Position wird mit einem gefarbten Kreis gezeichnet. Um das Spiel zu starten
-muss die Leertaste gedrückt werden und der neuer Zustand wird GAME\_ACTIVE sein.
-Um zurück ins Menü zu gehen, muss die ESCAPE-Taste gedrück werden und der neuer
-Zustand wird GAME\_ESCAPE.
+Das Spiel ist bereit, zu starten. Alle Spieler sind auf ihren Plätzen und ihre
+Positionen werden mit einem gefärbten Kreis gezeichnet. Um das Spiel zu starten,
+muss die SPACE-Taste gedrückt werden und der neuer Zustand wird GAME\_ACTIVE. 
+Um zurück ins Menü zu gehen, muss die ESCAPE-Taste gedrück werden und 
+der neuer Zustand wird GAME\_ESCAPE.
 \paragraph{GAME\_ACTIVE}
-Das Spiel läuft und die Spieler dürfen anderen schließen und in die Irre führen.
-Man kann in jedem Moment die SPACE-Taste drücken, um das Spiel zu pausieren,
-und der neuer Zustand wird GAME\_PAUSE. Man kann auch mit der ESCAPE-Taste das
-Spiel abbrechen und zurück ins Menü gehen, dann der neuer Zustand wird 
-GAME\_ESCAPE. Wenn nur ein Spieler übrig auf dem Feld ist, der Zustand wird 
-automatisch zu GAME\_WIN oder GAME\_OVER gehen, abhängig ob die maximalle 
+Das Spiel läuft und die Spieler dürfen anderen umschließen und in die Irre führen.
+Es kann in jedem Moment die SPACE-Taste gedrückt werden, um das Spiel zu pausieren
+und der neuer Zustand wird GAME\_PAUSE. Es kann auch mit der ESCAPE-Taste das
+Spiel abgebrochen und zurück ins Menü gelangt werden. Dann wird der 
+neue Zustand GAME\_ESCAPE. 
+Wenn nur ein Spieler auf dem Feld übrig ist, wird der Zustand
+automatisch zu GAME\_WIN oder GAME\_OVER übergehen, abhängig ob die maximale 
 Punktzahl erreicht wurde oder nicht.
 \paragraph{GAME\_PAUSE}
-Das Spiel ist pausiert. Man kann zurück zu GAME\_ACTIVE mit der SPACE-Taste
-gehen oder zu GAME\_ESCAPE mit der ESCAPE-Taste.
+Das Spiel ist pausiert. Mit der SPACE-Taste kann zurück zu GAME\_ACTIVE 
+und mit der ESCAPE-Taste zu GAME\_ESCAPE übergegangen werden.
 \paragraph{GAME\_ESCAPE}
-Zwischenzustand um die Daten wieder ins Default bringen. Es wird direkt zu 
-GAME\_MENU gehen.
+ist ein Zwischenzustand, welcher die Daten wieder ins Default 
+bringt. Es wird direkt zu GAME\_MENU gegangen.
 \paragraph{GAME\_WIN}
-Zwischenzustand um den Gewinner der Runde zu zeigen (mit einem blinken Namen).
-Nach ein paar Frames wird direkt zu GAME\_TRANSITION gehen umd eine neue Runde
-zu starten. 
+ist ein Zwischenzustand, der den Gewinner der Runde anzeigt 
+(mit einem blinkenden Namen).
+Nach ein paar Frames wird direkt zu GAME\_TRANSITION gegangen, um eine 
+neue Runde zu starten. 
 \paragraph{GAME\_OVER}
-Es wird eine Liste mit der gesamten Punktzahl gezeigt. Wenn man den SPACE-Taste
-druck, geht man zu GAME\_MENU und startet alles von vorne.
+Es wird eine Liste mit der gesamten Punktzahl angezeigt. Wird die SPACE-Taste
+gedrückt, erscheint das GAME\_MENU und alles startet von vorne.
 
 \subsection{Model und Mesh}
 Die Klassen \textit{Model} und \textit{Mesh} sind zwei abstrakte Klassen, welche
-als Basis Klasse angewandt werden.
+als Basisklasse angewandt werden.
 
 \paragraph{Mesh} 
 Ein \textit{Mesh} enthält die Punkte, die gezeichnet werden, das 
