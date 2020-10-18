@@ -57,7 +57,7 @@
 \TUBAFTitel[OpenGL Game: Achtung, die Kurve!]{OpenGL Game: Achtung, die Kurve!}
 \TUBAFBetreuer{M.Sc. Jonas Treumer}
 \TUBAFKorrektor{M.Sc. Ben Lorenz}
-\TUBAFAutor[Al Nomer/Valdés]{Simon Al Nomer\newline Hernán Felipe Valdés González}
+\TUBAFAutor[Al Nomer/Valdés]{Simon Al Nomer und Hernán Felipe Valdés González}
 \TUBAFStudiengang{Bachelor Angewandte Informatik}
 \TUBAFMatrikel{64\,082\newline 63\,952}
 \TUBAFDatum[2020-10-19]{19. Oktober 2020}
@@ -279,17 +279,16 @@ dieser Klasse werden die Positionen und Transformation durch die Funktion
 
 \subsection{Display}
 
-Die Klasse \textit{Display} initialisiert und besitzt ein Instanz von GLFWwindow. 
-Ein Pointer von dem Fenster wird dann mit der Klasse \textit{Game} mitgeteilt. 
-\textit{Display} wird dann am Ende des Programms auch das Fenster schließen 
+Die Klasse \textit{Display} initialisiert und besitzt eine Instanz von GLFWwindow. 
+Ein Pointer des Fensters wird dann an die Klasse \textit{Game} übergeben. 
+Anschließend schließt \textit{Display} am Ende des Programms auch das Fenster 
 (beenden).
 
-Das Fenster hat ein ursprünglichen Ratio von 1:1 mit der Größe 700x700 pixels.
-Das Fenster wird sein Aspect Ratio behalten, in dem immer die kleinste Wert 
-zwischen Höhe und Breite nimmt und dann positioniert sich in der Mitte von der 
-gegende Position. z.B: Wenn die Höhe größer als die Breite ist, zentriert das 
-Fenster sich in der Mitte von der Höhe mit der Größe von der Breite, der Rest
-wird ein mit einem schwarzen Padding gefüllt.
+Das Fenster hat eine ursprüngliche Ratio von 1:1 mit einer Größe von 700x700 Pixel.
+Das Fenster behält sein Aspect Ratio, indem es immer den kleinsten Wert 
+zwischen Höhe und Breite nimmt und sich dann in der Mitte positioniert. Ist zum Beispiel die Höhe größer als die Breite, zentriert das 
+Fenster sich in der Mitte von der Höhe mit der Größe von der Breite. Der Rest
+wird mit einem schwarzen Padding gefüllt.
 
 \begin{figure}[!htb]
     \centering
@@ -323,6 +322,13 @@ wird ein mit einem schwarzen Padding gefüllt.
 	\label{fig:display-aspect-ratio}
 \end{figure}
 
+\FloatBarrier
+\subsection{Font}
+Für die Erstellung von Texten ist in Anlehnung an einem Tutorial \cite{learn-opengl}.
+Der Code wurde für das Projekt adaptiert. 
+Die Lösung basiert auf die Bibliothek FreeType. FreeType ist in der Lage,
+Schriftarten zu laden, Bitmap zu rendern und unterstützt mehrere Text-Operationen.
+
 
 \section{Zeichnungen}
 
@@ -344,18 +350,17 @@ wird ein mit einem schwarzen Padding gefüllt.
     \label{fig:player}
 \end{figure}
 
-Jeder Spieler wird mit einem Kreis dargestellt. Die Kreise werden erstellt, in
-dem ausgewählte Punkte aus dem Kreis gesammelt werden und sie mit dem 
-OpenGL Flag GL\_TRIANGLE\_STRIP zeichnet. Eine Darstellung von dem Prozess
-wird in der Abb. \ref{fig:player} gezeigt.
+Wie bereits anfangs erwähnt, wird jeder Spieler durch einen Kreis dargestellt. 
+Die Erstellung der Kreise erfolgt durch Randpunkte des Kreises, welche den gleichen Radius zum Mittelpunkt haben. Diese Randpunkte werden durch die Funktion OpenGL Flag GL\_TRIANGLE\_STRIP verbunden. Eine Darstellung des Prozesses
+ist in der Abb. \ref{fig:player} gezeigt.
 
 \FloatBarrier
 \subsection{Linien}
 
-Für die Zeichnung von dicken Linien wurde ein Algorithmus entwickelt, der
-in der Abb. \ref{fig:line-alg} dargestellt wird. 
+Für das Zeichnen dicker Linien wurde ein Algorithmus entwickelt, der
+in der Abb. \ref{fig:line-alg} dargestellt ist. 
 
-Um den Winkel zwischen zwei Vektoren zu rechnen wurde die folgende 
+Um den Winkel zwischen zwei Vektoren zu berechnen wurde die folgende 
 trigonometrische Eigenschaft angewandt:
 
 \begin{equation}
@@ -366,8 +371,8 @@ trigonometrische Eigenschaft angewandt:
     }
 \end{equation}
 
-Für die Richtung der Drehung in der Linie wurde die z-Komponente der
-Kreuzprodukt zwischen $\vec{v}_{1}$ und $\vec{v}_{2}$ analysiert.
+Für die Drehrichtung der Linie wurde die z-Komponente des
+Kreuzproduktes zwischen $\vec{v}_{1}$ und $\vec{v}_{2}$ analysiert.
 
 \begin{equation}
     \vec{v}_{3} = \vec{v}_{1} \times \vec{v}_{2}
@@ -375,14 +380,14 @@ Kreuzprodukt zwischen $\vec{v}_{1}$ und $\vec{v}_{2}$ analysiert.
 
 Es gibt 3 Fälle:
 \begin{enumerate}
-    \item $\vec{v}_{3z}$ > 0: Die Linie dreht sich nach Links
-    \item $\vec{v}_{3z}$ < 0: Die Linie dreht sich nach Rechts
-    \item $\vec{v}_{3z}$ = 0: Die Linie geht gerade
+    \item $\vec{v}_{3z}$ > 0: Die Linie dreht sich nach links
+    \item $\vec{v}_{3z}$ < 0: Die Linie dreht sich nach rechts
+    \item $\vec{v}_{3z}$ = 0: Die Linie ist gerade
 \end{enumerate}
 
-Wenn die neue Punkte $L$ und $R$ gerechnet wurden, können in den LineMesh
+Wenn die neuen Punkte $L$ und $R$ berechnet wurden, können sie in dem LineMesh
 hinzugefügt werden.
-In der Abb. \ref{fig:line} wird eine graphische Darstellung des Algorithmus.
+In der Abb. \ref{fig:line} ist eine graphische Darstellung des Algorithmus dargestellt.
 
 \begin{figure}[!htb]
     \centering
@@ -396,13 +401,13 @@ In der Abb. \ref{fig:line} wird eine graphische Darstellung des Algorithmus.
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-1.png}
-        \caption{Schritt 1}
+        \caption{ursprünglichen Positionen des Players}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{Schlangenlinie-2.png}
-        \caption{Schritt 2}
+        \caption{Erstellung von Vektoren und Berechnung ihren Winkel}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.35\textwidth}
@@ -440,7 +445,7 @@ In der Abb. \ref{fig:line} wird eine graphische Darstellung des Algorithmus.
         \includegraphics[width=1\linewidth]{Schlangenlinie-8.png}
         \caption{Schritt 8}
     \end{subfigure}
-    \caption{Erzeugung eines Linien-Segmenten}
+    \caption{Beispiel der Erzeugung eines Linien-Segmenten}
 	\label{fig:line}
 \end{figure}
 
@@ -596,8 +601,17 @@ Es gibt 6 mögliche Spieler. Jeder Spieler hat 2 vordefinierten Steuerungstasten
 
 \FloatBarrier
 Um das Spiel zu starten, müssen mindestens 2 Spieler seine Anwesenheit 
-bestätigen. Die Bestätigung wird mit dem Drück seine respektive linken
-Steuerungstaste und zum abbrechen, soll man die rechte Steuerungstaste drücken.
+bestätigen. Die Bestätigung wird mit seiner respektiven linken
+Steuerungstaste durchgeführt. Zum abbrechen, soll die rechte Steuerungstaste 
+gedrückt werden. \\
+
+Wenn nur ein Spieler übrig ist, wird die Runde zu Ende. Der Name des Gewinners
+wird kurz blinken und nach dem blinken, kann die nächste Runde mit der 
+SPACE-Taste gestartet werden. \\
+
+Wenn ein Spieler die maximale Punktzahl erreicht hat, ist das Spiel zu Ende
+
+\printbibliography[heading=bibintoc]
 
 \newpage
 \appendix
@@ -623,7 +637,5 @@ Steuerungstaste und zum abbrechen, soll man die rechte Steuerungstaste drücken.
 	\label{fig:pause}
 \end{figure}
 
-
-\printbibliography[heading=bibintoc]
 
 \end{document}
