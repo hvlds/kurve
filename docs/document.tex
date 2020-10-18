@@ -346,11 +346,12 @@ wird in der Abb. \ref{fig:player} gezeigt.
 
 \subsection{Linien}
 
-Für die Zeichnung von dicken Linien wurde ein Algorithmus entwickelt.
+Für die Zeichnung von dicken Linien wurde ein Algorithmus entwickelt, der
+in der Abb. \ref{fig:line-alg} dargestellt wird. 
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.8\linewidth]{line.png}
+    \includegraphics[width=0.7\linewidth]{line.png}
     \caption{Flow-Diagramm von der Linien-Erzeugung Algorithmus}
     \label{fig:line-alg}
 \end{figure}
@@ -459,6 +460,36 @@ aber er wird sich nicht bewegen.
 \section{Kollisionen}
 
 Als eine Vereinfachung werden alle Punkte in den Linien als Kreisen betrachtet.
+
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=0.1\textheight]{collisions-3.png}
+        \caption{$d < r_{1} + r_{2}$}
+    \end{subfigure}
+    \qquad
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=0.1\textheight]{collisions-4.png}
+        \caption{$d = r_{1} + r_{2}$}
+    \end{subfigure}
+    \qquad
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=0.1\textheight]{collisions-5.png}
+        \caption{$d > r_{1} + r_{2}$}
+    \end{subfigure}
+    \caption{Fälle für die Kollisionen}
+    \label{fig:collisions-1}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.6\linewidth]{collisions-2.png}
+    \caption{Der Player überprüft seinen Abstand mit allen Punkten in den Linien}
+    \label{fig:collisions-2}
+\end{figure}
 
 \section{Projektdokumentation}
 
