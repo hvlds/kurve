@@ -145,14 +145,14 @@ Spieler am Leben ist.
 
 \section{Softwaredokumentation}
 
-Unseres Projekt hat den Code als Basis, der zusammen während der Vorlesung 
+Das Projekt hat den Code als Basis, der zusammen während der Vorlesung 
 erstellt wurde. Dieser Code wurde in C++ migriert. 
 Die Entscheidung, das Spiel in C++ statt in C zu programmieren, lag 
 insbesondere an der Standardbibliothek von C++ und deren implementierten 
 Daten-Strukturen sowie die Eigenschaft mit Klassen zu programmieren.
 
 Für die Softwarearchitektur wurde das State Pattern implementiert, um einen 
-endlichen Automaten zu simulieren. Die Änderungen der Zuständen sind in der 
+endlichen Automaten zu simulieren. Die Änderungen der Zustände sind in der 
 Klasse \textit{Game} durchgeführt.
 
 Das Spiel wurde im Sinne von Szenen programmiert. Die Klasse \textit{Game}
@@ -226,7 +226,7 @@ Der Startzustand des Automaten ist GAME\_MENU.
 \end{figure}
 
 \paragraph{GAME\_MENU}
-Es wird das Menü für den Auswahl von Spielern gezeigt. Es kann nur zu dem
+Es wird das Menü für die Auswahl von Spielern gezeigt. Es kann nur zu dem
 nächsten Zustand übergegangen werden (GAME\_TRANSITION), in dem mindestens 
 2 Spieler
 ihre Anwesenheit bestätigen und dann die SPACE-Taste gedrückt wird.
@@ -239,7 +239,7 @@ der neuer Zustand wird GAME\_ESCAPE.
 \paragraph{GAME\_ACTIVE}
 Das Spiel läuft und die Spieler dürfen anderen umschließen und in die Irre führen.
 Es kann in jedem Moment die SPACE-Taste gedrückt werden, um das Spiel zu pausieren
-und der neuer Zustand wird GAME\_PAUSE. Es kann auch mit der ESCAPE-Taste das
+und der neue Zustand wird GAME\_PAUSE. Es kann auch mit der ESCAPE-Taste das
 Spiel abgebrochen und zurück ins Menü gelangt werden. Dann wird der 
 neue Zustand GAME\_ESCAPE. 
 Wenn nur ein Spieler auf dem Feld übrig ist, wird der Zustand
@@ -286,8 +286,8 @@ Anschließend schließt \textit{Display} am Ende des Programms auch das Fenster
 
 Das Fenster hat eine ursprüngliche Ratio von 1:1 mit einer Größe von 700x700 Pixel.
 Das Fenster behält sein Aspect Ratio, indem es immer den kleinsten Wert 
-zwischen Höhe und Breite nimmt und sich dann in der Mitte positioniert. Ist zum Beispiel die Höhe größer als die Breite, zentriert das 
-Fenster sich in der Mitte von der Höhe mit der Größe von der Breite. Der Rest
+zwischen Höhe und Breite nimmt und sich dann in der Mitte positioniert. Ist zum Beispiel die Höhe größer als die Breite, zentriert sich das 
+Fenster in der Mitte der Höhe mit der Größe der Breite. Der Rest
 wird mit einem schwarzen Padding gefüllt.
 
 \begin{figure}[!htb]
@@ -318,7 +318,7 @@ wird mit einem schwarzen Padding gefüllt.
         \includegraphics[width=1\linewidth]{aspect-ratio-2.png}
         \caption{Screenshot vertikale Ausrichtung}
     \end{subfigure}
-    \caption{Screenshots von dem Beispiel der Ausrichtung}
+    \caption{Screenshots des Beispiels der Ausrichtung}
 	\label{fig:display-aspect-ratio}
 \end{figure}
 
@@ -515,7 +515,7 @@ Da alle Elementen im Spiel als Kreisen betrachtet werden, kann man eine Kollisio
 detektieren, wenn der Abstand zwischen beiden Kreisen kleiner als die Summe ihrer Radien sind.
 
 Seien $C_{1}$ und $C_{2}$ die Zentren zweier Kreise. Der Abstand zwischen den 
-Zentren wird mit der folgenden Gleichung gberechnet:
+Zentren wird mit der folgenden Gleichung berechnet:
 
 \begin{equation}
     d = \sqrt{(C_{1x} - C_{2x})^2 + (C_{1y} - C_{2y})^2}
