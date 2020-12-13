@@ -1,23 +1,11 @@
 #include "gl_calls.hpp"
 
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include <vector>
-
-#include "glm/glm.hpp"
-#include "mesh.hpp"
-#include "user.hpp"
 
 extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include "obj.h"
-#include "bitmap.h"
 }
-
-#define Y_ANGULAR_VELOCITY 2
 
 void check_error(int condition, const char* error_text) {
     if (!condition) {

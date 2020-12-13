@@ -1,8 +1,6 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <string>
-#include <vector>
 #include <memory>
 
 #include "mesh.hpp"
