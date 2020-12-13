@@ -14,8 +14,25 @@ extern "C" {
 
 void error_callback(int error, const char* description);
 
+/**
+ * @brief Change of the screen ratio of the game. The function preserves
+ * the ratio taking the shortest side of the window and centering in the
+ * longest side
+ * 
+ * @param window 
+ * @param fb_width 
+ * @param fb_height 
+ */
 void framebuffer_size_callback(GLFWwindow* window, int fb_width, int fb_height);
 
+/**
+ * @brief Set new window size values in user_data_t after the window
+ * changes its size
+ *  
+ * @param window 
+ * @param width 
+ * @param height 
+ */
 void window_size_callback(GLFWwindow* window, int width, int height);
 
 class Display {

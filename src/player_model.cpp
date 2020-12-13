@@ -72,8 +72,9 @@ void PlayerModel::update(GLFWwindow* window) {
             double time_delta = new_time - this->time;
             double speed = 3.0; 
 
-            // Check that the player is inside of the yellow limit
-            if (this->trans_x + this->start_pos_x >= 13.75 
+            // Check that the player is inside of the playground,
+            // no collision with the border
+            if (this->trans_x + this->start_pos_x >= 13.5 
                 || this->trans_x + this->start_pos_x <= -18.75) {
                 this->is_alive = false;
                 return;

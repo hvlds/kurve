@@ -1,19 +1,12 @@
 #include "game.hpp"
 
-#include <map>
 #include <memory>
-#include <vector>
 
 #include "border_model.hpp"
 #include "font.hpp"
 #include "gl_calls.hpp"
-#include "mesh.hpp"
-#include "model.hpp"
-#include "player_manager.hpp"
-#include "player_model.hpp"
-#include "point.hpp"
-#include "shader.hpp"
 #include "menu.hpp"
+#include "player_manager.hpp"
 #include "side_panel.hpp"
 
 Game::Game(GLFWwindow* window) {
@@ -140,7 +133,8 @@ void Game::terminate() {
     this->player_manager->terminate();
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void key_callback(
+    GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
     GameState game_state = user_data->game_state;
 
