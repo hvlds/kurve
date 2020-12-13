@@ -5,7 +5,6 @@
 
 LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
     std::cout << "---- INIT LineModel ----" << std::endl;
-    this->model_type = MODEL_LINE;
     this->color = color;
 
     Shader shader("../shader/line.vs", "../shader/line.fs", &this->shader_id);

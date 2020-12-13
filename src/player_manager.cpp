@@ -29,7 +29,8 @@ void PlayerManager::add_players() {
 void PlayerManager::add_player(
     int id,
     Control control,
-    std::array<GLubyte, 3> color) {    
+    std::array<GLubyte, 3> color) {   
+    // Generate a random start position for the new player 
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
 

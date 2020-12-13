@@ -2,7 +2,6 @@
 #include "border_mesh.hpp"
 
 BorderModel::BorderModel() {
-    this->model_type = MODEL_BORDER;
     Shader shader("../shader/border.vs", "../shader/border.fs", &this->shader_id);
     
     auto mesh = std::make_shared<BorderMesh>();
