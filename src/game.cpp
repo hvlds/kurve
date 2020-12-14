@@ -181,7 +181,7 @@ void key_callback(
                 reset_player_info(window);
             }
         }
-        if (key == GLFW_KEY_ESCAPE) {
+        if (key == GLFW_KEY_ESCAPE && user_data->game_state != GAME_OVER) {
             user_data->game_state = GAME_ESCAPE;
         }
     }
