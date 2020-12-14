@@ -12,11 +12,9 @@
 Game::Game(GLFWwindow* window) {
     std::cout << "---- INIT Game ----" << std::endl;
     this->window = window;
-
     this->has_players = false;
 
     this->font = std::make_shared<Font>();
-
     this->menu = std::make_shared<Menu>(window, this->font);
     this->side_panel = std::make_shared<SidePanel>(window, this->font);
     this->player_manager = std::make_shared<PlayerManager>(window);
@@ -136,13 +134,12 @@ void Game::terminate() {
 void key_callback(
     GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
-    GameState game_state = user_data->game_state;
 
     if (action == GLFW_RELEASE) {
         return;
     }
 
-    if (game_state == GAME_MENU) {
+    if (user_data->game_state == GAME_MENU) {
         if (key == GLFW_KEY_SPACE) {
             // GAME_MENU -> GAME_ACTIVE
             if (user_data->game_state == GAME_MENU) {
@@ -160,15 +157,19 @@ void key_callback(
         for (auto player_info : *user_data->player_info) {
             if (player_info.is_active == false 
                 && key == player_info.control.left_key) {
-                user_data->player_info->at(player_info.id - 1).is_active = true;
+                user_data->player_info->at(player_info.id - 1).is_active = 
+                    true;
             }
 
             if (player_info.is_active == true 
                 && key == player_info.control.right_key) {
-                user_data->player_info->at(player_info.id - 1).is_active = false;
+                user_data->player_info->at(player_info.id - 1).is_active = 
+                    false;
             }
         }
     } else {
+        // Space can be different things depending of the context:
+        // A confirmation key (go to next scene) or pause key (when active)
         if (key == GLFW_KEY_SPACE) {
             if (user_data->game_state == GAME_PAUSE) {
                 user_data->game_state = GAME_ACTIVE;
@@ -181,6 +182,7 @@ void key_callback(
                 reset_player_info(window);
             }
         }
+        // Go back to the menu only if the state is other than GAME_OVER
         if (key == GLFW_KEY_ESCAPE && user_data->game_state != GAME_OVER) {
             user_data->game_state = GAME_ESCAPE;
         }

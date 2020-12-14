@@ -136,7 +136,8 @@ void PlayerManager::detect_collisions() {
                     if (distance < 0.3) {
                         if (player->is_alive == true) {
                             player->is_alive = false;
-                            std::cout << "Collision with your own line!" << std::endl;
+                            std::cout << "Collision with your own line!" 
+                                << std::endl;
                             this->dead_players.push_back(player->get_id());
                             break;
                         }
@@ -174,7 +175,8 @@ void PlayerManager::update_score() {
         std::vector<int> alive_vec = this->get_alive_players();
         if (alive_vec.size() == 1) {
             int last_id = alive_vec.back();
-            user_data->player_info->at(last_id - 1).score += this->players.size();
+            user_data->player_info->at(last_id - 1).score += 
+                this->players.size();
         }
 
         this->is_updated = true;
@@ -211,6 +213,7 @@ GameState PlayerManager::check_score() {
 void PlayerManager::reset_player(int id) {
     std::shared_ptr<PlayerModel> player = this->players.at(id);
 
+    // Generate a new random position for the player
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
 
