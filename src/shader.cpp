@@ -7,8 +7,6 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "obj.h"
-#include "bitmap.h"
 }
 
 Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
