@@ -12,7 +12,7 @@ void GameOver::draw() {
 
     this->font->draw_text(
         "GAME OVER",
-        -150.0f,
+        -160.0f,
         450.0f,
         1.5f,
         glm::vec3(1.0f, 1.0f, 1.0f));
