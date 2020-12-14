@@ -15,7 +15,7 @@ Table of contents
 
 Clone this project.
 ```
-$ git clone https://github.com/hfvaldesg/kurve.git
+$ git clone https://github.com/h-valdes/kurve.git
 ```
 
 Install all the dependencies:
