@@ -2,6 +2,8 @@
 
 **Kurve** is a remake of the popular game "Achtung, die Kurve!".
 
+![](docs/img/demo.gif)
+
 Table of contents
 =================
 
