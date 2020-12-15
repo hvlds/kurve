@@ -60,9 +60,17 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     message("** Release mode **")
     target_compile_definitions(kurve PRIVATE STATIC_FILES="${CMAKE_INSTALL_PREFIX}/${files_dest}")
     message("STATIC_FILES = ${files_dest}")
+    file(READ "template.desktop" filedata)
+    file(WRITE  "kurve.desktop" "${filedata}Exec=${CMAKE_INSTALL_PREFIX}/${tool_dest}/kurve\n")
 endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 install(TARGETS kurve DESTINATION "${tool_dest}")
 
 install(FILES ${SHADERS} DESTINATION "${files_dest}/shader")
 install(FILES ${FONTS} DESTINATION "${files_dest}/fonts")
+
+install(
+    FILES kurve.desktop
+    PERMISSIONS WORLD_EXECUTE WORLD_WRITE WORLD_READ
+    DESTINATION ~/.local/share/applications
+)

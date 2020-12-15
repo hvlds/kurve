@@ -16,7 +16,7 @@ install/
 build/
 Release/
 Debug/
-
+kurve.desktop
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
