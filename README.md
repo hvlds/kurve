@@ -2,13 +2,17 @@
 
 **Kurve** is a remake of the popular game "Achtung, die Kurve!".
 
-![](docs/img/demo.gif)
+<p align="center">
+  <img width="460" height="300" src="docs/img/demo.gif">
+</p>
 
 Table of contents
 =================
 
 <!--ts-->
    * [Getting Started](#getting-started)
+      * [Install](#install)
+      * [Debug](#debug)
    * [Built With](#built-with)
    * [Screenshots](#screenshots)
 <!--te-->
@@ -21,8 +25,8 @@ $ git clone https://github.com/h-valdes/kurve.git
 ```
 
 Install all the dependencies:
-* GLFW
-* FreeType2
+* [GLFW](https://www.glfw.org/)
+* [FreeType2](https://www.freetype.org/)
 
 ### Install
 
