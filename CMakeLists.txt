@@ -62,12 +62,15 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     message("STATIC_FILES = ${files_dest}")
     file(READ "template.desktop" filedata)
     file(WRITE  "kurve.desktop" "${filedata}Exec=${CMAKE_INSTALL_PREFIX}/${tool_dest}/kurve\n")
+    file(READ "kurve.desktop" filedata)
+    file(WRITE  "kurve.desktop" "${filedata}Icon=${CMAKE_INSTALL_PREFIX}/${files_dest}/kurve.png\n")
 endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 install(TARGETS kurve DESTINATION "${tool_dest}")
 
 install(FILES ${SHADERS} DESTINATION "${files_dest}/shader")
 install(FILES ${FONTS} DESTINATION "${files_dest}/fonts")
+install(FILES "kurve.png" DESTINATION "${files_dest}")
 
 install(
     FILES kurve.desktop
