@@ -22,18 +22,35 @@ Install all the dependencies:
 * GLFW
 * FreeType2
 
+### Install
+
 Build the project
 ```
 $ cd kurve
-$ mkdir build
-$ cd build
-$ cmake ..
+$ mkdir Release
+$ cd Release
+$ cmake -DCMAKE_BUILD_TYPE=Release ..
+$ sudo make install
+```
+
+Enjoy
+```
+$ kurve
+```
+
+### Debug
+To play without installing the game in your computer:
+```
+$ cd kurve
+$ mkdir Debug
+$ cd Debug
+$ cmake -DCMAKE_BUILD_TYPE=Debug ..
 $ make
 ```
 
 Enjoy
 ```
-./kurve
+$ ./kurve
 ```
 
 ## Built With

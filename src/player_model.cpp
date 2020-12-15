@@ -20,8 +20,14 @@ PlayerModel::PlayerModel(
     Point point{x, y};
     this->last_point = point;
 
+    std::string vs_path(STATIC_FILES);
+    vs_path.append("/shader/player.vs");
+
+    std::string fs_path(STATIC_FILES);
+    fs_path.append("/shader/player.fs");
+
     // Compile and add the shaders
-    Shader shader("../shader/player.vs", "../shader/player.fs", &this->shader_id);
+    Shader shader(vs_path.c_str(), fs_path.c_str(), &this->shader_id);
     // Init the uniforms
     this->init_uniforms();
 

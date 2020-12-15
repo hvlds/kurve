@@ -9,8 +9,10 @@
 #include "player_manager.hpp"
 #include "side_panel.hpp"
 
+
 Game::Game(GLFWwindow* window) {
     std::cout << "---- INIT Game ----" << std::endl;
+
     this->window = window;
     this->has_players = false;
 

@@ -7,7 +7,13 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
     std::cout << "---- INIT LineModel ----" << std::endl;
     this->color = color;
 
-    Shader shader("../shader/line.vs", "../shader/line.fs", &this->shader_id);
+    std::string vs_path(STATIC_FILES);
+    vs_path.append("/shader/line.vs");
+
+    std::string fs_path(STATIC_FILES);
+    fs_path.append("/shader/line.fs");
+
+    Shader shader(vs_path.c_str(), fs_path.c_str(), &this->shader_id);
     this->init_uniforms();
 
     auto mesh = std::make_shared<LineMesh>(point, this->color);

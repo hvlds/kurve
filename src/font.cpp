@@ -2,18 +2,22 @@
 #include "shader.hpp"
 #include "gl_calls.hpp"
 #include <iostream>
+#include <string>
 
 Font::Font() {
     // Testing FreeType
     std::cout << "---- INIT FONT ----" << std::endl;
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
-        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+        std::cout << 
+            "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
         return;
     }
 
     FT_Face face;
-    if (FT_New_Face(ft, "fonts/UbuntuMono-R.ttf", 0, &face)) {
+    std::string font_path(STATIC_FILES);
+    font_path.append("/fonts/UbuntuMono-R.ttf");
+    if (FT_New_Face(ft, font_path.c_str(), 0, &face)) {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
         return;
     }
@@ -27,7 +31,15 @@ Font::Font() {
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);  // disable byte-alignment restriction
 
-    Shader shader("./shader/font.vs", "./shader/font.fs", &this->shader_id);
+    std::string vs_path(STATIC_FILES);
+    vs_path.append("/shader/font.vs");
+
+    std::string fs_path(STATIC_FILES);
+    fs_path.append("/shader/font.fs");
+    Shader shader(
+        vs_path.c_str(), 
+        fs_path.c_str(), 
+        &this->shader_id);
 
     for (unsigned char c = 0; c < 128; c++) {
         // load character glyph
