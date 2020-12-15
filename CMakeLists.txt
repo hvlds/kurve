@@ -51,14 +51,14 @@ set(tool_dest "bin")
 set(files_dest "share/kurve")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message("Debug mode")
+    message("** Debug mode **")
     target_compile_definitions(kurve PRIVATE STATIC_FILES="${CMAKE_BINARY_DIR}")
     message("STATIC_FILES = ${CMAKE_BINARY_DIR}")
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    message("Release mode")
-    target_compile_definitions(kurve PRIVATE STATIC_FILES="/usr/local/${files_dest}")
+    message("** Release mode **")
+    target_compile_definitions(kurve PRIVATE STATIC_FILES="${CMAKE_INSTALL_PREFIX}/${files_dest}")
     message("STATIC_FILES = ${files_dest}")
 endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
