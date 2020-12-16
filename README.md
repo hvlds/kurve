@@ -68,10 +68,10 @@ $ ./kurve
    - [x] Random length of lines (defined in a specific range)
    - [x] Menu to select the players
    - [x] Game Over screen
-- [] v0.2.alpha
-   - [] Sort the name of the player in the Game Over screen, depending of the
+- [ ] v0.2.alpha
+   - [ ] Sort the name of the player in the Game Over screen, depending of the
       number of points
-   - [] Add a starting direction arrow in the transition zone (before starting)
+   - [ ] Add a starting direction arrow in the transition zone (before starting)
 
 ## Built With
 
