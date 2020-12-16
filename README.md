@@ -61,19 +61,19 @@ $ ./kurve
 ```
 
 ## Roadmap
+- [x] v0.1-alpha
+   - [x] Minimal working implementation of "Achtung, die Kurve". It has all the
+      features from the 1995 DOS version
+   - [x] Random start position of the players
+   - [x] Random length of lines (defined in a specific range)
+   - [x] Menu to select the players
+   - [x] Game Over screen
 - [ ] v0.2-alpha
    - [ ] Sort the name of the players in the Game Over screen depending on the
       number of points
    - [ ] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Full Screen support
    - [ ] End the game when pressing Escape in the Menu
-- [x] v0.1-alpha
-   - [x] Minimal working implementation of "Achtung, die Kurve". It has all the
-      features from the 1995 DDOS version
-   - [x] Random start position of the players
-   - [x] Random length of lines (defined in a specific range)
-   - [x] Menu to select the players
-   - [x] Game Over screen
 
 
 ## Built With
