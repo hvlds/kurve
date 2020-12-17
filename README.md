@@ -74,6 +74,8 @@ $ ./kurve
    - [ ] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Full Screen support
    - [ ] End the game when pressing Escape in the Menu
+   - [ ] Read the configuration of the players from a file (txt, json, yaml, 
+      etc)
 
 
 ## Built With
