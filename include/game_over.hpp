@@ -10,6 +10,7 @@ extern "C" {
 }
 #include "font.hpp"
 #include <memory>
+#include <map>
 
 class GameOver {
    private:
@@ -23,6 +24,7 @@ class GameOver {
     void draw();
     void update();
     int get_winner();
+    std::map<int, int, std::greater<int>> get_results();
 };
 
 #endif
