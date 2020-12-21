@@ -21,15 +21,18 @@ void GameOver::draw() {
     float pos_name_y = 350.0f;
     float ready_extra_margin = 150.0f;
     int active_counter = 0;
+
+    auto results = this->get_results();
     int id_winner = this->get_winner();
+    auto players = *user_data->player_info;
     
-    for (auto player_info : *user_data->player_info) {
-        std::string name = player_info.name;
-        std::string menu_text = player_info.menu_text;
-        int id = player_info.id;
-        bool is_active = player_info.is_active;
-        glm::vec3 menu_color = player_info.menu_color;
-        int score = player_info.score;
+    for (auto item : results) {
+        std::string name = players.at(item.second - 1).name;
+        std::string menu_text = players.at(item.second - 1).menu_text;
+        int id = players.at(item.second - 1).id;
+        bool is_active = players.at(item.second - 1).is_active;
+        glm::vec3 menu_color = players.at(item.second - 1).menu_color;
+        int score = players.at(item.second - 1).score;
 
         if (is_active == true) {
             if (id == id_winner) {
@@ -83,28 +86,29 @@ void GameOver::draw() {
     
 }
 
-int GameOver::get_winner() {
+std::map<int, int, std::greater<int>> GameOver::get_results() {
+    std::map<int, int, std::greater<int>> results;
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
-    std::pair<int, int> best_player;
-    bool is_first = true;
-    
     for (auto player : *user_data->player_info) {
         if (player.is_active == true) {
-            int score = player.score;
-            int id = player.id;
-            auto temp_pair = std::make_pair(id, score);
-            if (is_first == true) {
-                best_player = temp_pair;
-                is_first = false;
-            } else {
-                if (score > best_player.second) {
-                    best_player = temp_pair;
-                }
-            }
+            results.insert(
+                std::make_pair(player.score, player.id)
+            );
         }
     }
+    return results;
+}
 
-    return best_player.first;
+int GameOver::get_winner() {
+    auto results = this->get_results();
+    int winner;
+
+    for (auto item : results) {
+        winner = item.second;
+        break;
+    }
+
+    return winner;
 }
 
 void GameOver::update() {
