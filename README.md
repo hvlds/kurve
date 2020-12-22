@@ -79,6 +79,8 @@ $ ./kurve
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
    - [ ] Migrate from the self built classes Point and Vector to GLM
+   - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
+      changes in the class Game
 
 
 ## Built With
