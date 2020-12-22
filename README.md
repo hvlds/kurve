@@ -76,6 +76,9 @@ $ ./kurve
    - [ ] End the game when pressing Escape in the Menu
    - [ ] Read the configuration of the players from a file (txt, json, yaml, 
       etc)
+   - [ ] Add a new general Menu (to choose between different options: config,
+      exit the game, etc)
+   - [ ] Migrate from the self built classes Point and Vector to GLM
 
 
 ## Built With
