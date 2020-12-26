@@ -54,6 +54,7 @@ set(files_dest "share/kurve")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("** Debug mode **")
     target_compile_definitions(kurve PRIVATE STATIC_FILES="${CMAKE_BINARY_DIR}")
+    add_compile_definitions(DEBUG)
     message("STATIC_FILES = ${CMAKE_BINARY_DIR}")
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 

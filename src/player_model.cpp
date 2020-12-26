@@ -8,8 +8,10 @@
 
 
 PlayerModel::PlayerModel(
-    int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {       
+    int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color) {   
+#ifdef DEBUG
     std::cout << "---- INIT PlayerModel ----" << std::endl;
+#endif    
     this->color = color;
     this->id = id;
     this->is_alive = true;
@@ -49,7 +51,9 @@ PlayerModel::PlayerModel(
 }
 
 PlayerModel::~PlayerModel() {
+#ifdef DEBUG
     std::cout << "---- DESTROY PlayerModel ----" << std::endl;
+#endif
     glDeleteProgram(this->shader_id);
     gl_check_error("glDeleteProgram");
 }
@@ -164,7 +168,9 @@ void PlayerModel::update(GLFWwindow* window) {
 }
 
 void PlayerModel::init_uniforms() {
+#ifdef DEBUG
     std::cout << "Init uniforms" << std::endl;
+#endif
     // Y trans:
     this->trans_y_loc = glGetUniformLocation(this->shader_id, "trans_y");
     gl_check_error("glGetUniformLocation [trans_y]");

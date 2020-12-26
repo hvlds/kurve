@@ -11,7 +11,9 @@
 
 
 Game::Game(GLFWwindow* window) {
+#ifdef DEBUG
     std::cout << "---- INIT Game ----" << std::endl;
+#endif
 
     this->window = window;
     this->has_players = false;
@@ -122,8 +124,9 @@ void Game::loop() {
 }
 
 void Game::terminate() {
+#ifdef DEBUG
     std::cout << "---- TERMINATE Game ----" << std::endl;
-
+#endif
     // Terminate the Border Model
     glDeleteProgram(this->border_model->shader_id);
     gl_check_error("glDeleteProgram");

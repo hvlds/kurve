@@ -33,7 +33,6 @@ BorderMesh::BorderMesh() {
     gl_check_error("glBindVertexArray");
 
     this->vao = vao;
-    std::cout << "VAO: " << vao << std::endl;
 
     // Generate and bind a vertex buffer object:
     GLuint vbo;
@@ -45,7 +44,6 @@ BorderMesh::BorderMesh() {
     gl_check_error("glBindBuffer");
     
     this->vbo = vbo;
-    std::cout << "VBO: " << vbo << std::endl;
 
     // Upload the vertex data to the GPU:
     glBufferData(

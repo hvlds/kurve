@@ -41,7 +41,6 @@ PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
     gl_check_error("glBindVertexArray");
 
     this->vao = vao;
-    std::cout << "VAO: " << vao << std::endl;
 
     // Generate and bind a vertex buffer object:
     GLuint vbo;
@@ -53,7 +52,6 @@ PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
     gl_check_error("glBindBuffer");
     
     this->vbo = vbo;
-    std::cout << "VBO: " << vbo << std::endl;
 
     // Upload the vertex data to the GPU:
     glBufferData(
@@ -93,7 +91,9 @@ PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
 }
 
 PlayerMesh::~PlayerMesh() {
+#ifdef DEBUG
     std::cout << "---- DESTROY PlayerMesh ----" << std::endl;
+#endif
     glDeleteVertexArrays(1, &this->vao);
     gl_check_error("glDeleteVertexArrays");
 
