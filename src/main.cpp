@@ -13,6 +13,10 @@
 #include "gl_calls.hpp"
 #include "user.hpp"
 
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
 int main(void) {
     // Define the basic information for the six players
     // The Information is hardcoded fixed and cannot be edited!

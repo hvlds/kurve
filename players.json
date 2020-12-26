@@ -1,0 +1,51 @@
+{
+    "players": ["p1", "p2", "p3", "p4", "p5", "p6"],
+    "p1": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "color": ["0xFF", "0x00", "0x00"],
+        "menu_color": [1.0, 0.0, 0.0]
+    },
+    "p2": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "color": ["0xFF", "0x00", "0x00"],
+        "menu_color": [1.0, 0.0, 0.0]
+    },
+    "p3": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "color": ["0xFF", "0x00", "0x00"],
+        "menu_color": [1.0, 0.0, 0.0]
+    },
+    "p4": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "color": ["0xFF", "0x00", "0x00"],
+        "menu_color": [1.0, 0.0, 0.0]
+    },
+    "p5": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "color": ["0xFF", "0x00", "0x00"],
+        "menu_color": [1.0, 0.0, 0.0]
+    },
+    "p6": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "color": ["0xFF", "0x00", "0x00"],
+        "menu_color": [1.0, 0.0, 0.0]
+    }
+}
