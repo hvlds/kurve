@@ -11,23 +11,31 @@ extern "C" {
 
 Shader::Shader(std::string vs_path, std::string fs_path, GLuint* shader_id) {
     // Create the vertex shader:
+#ifdef DEBUG
     printf("Compiling vertex shader ...\n");
+#endif
     GLuint vertex_shader = Shader::compile(
         GL_VERTEX_SHADER, vs_path.c_str(), "Vertex shader");
 
     // Create the fragment shader:
+#ifdef DEBUG
     printf("Compiling fragment shader ...\n");
+#endif
     GLuint fragment_shader = Shader::compile(
         GL_FRAGMENT_SHADER, fs_path.c_str(), "Fragment shader");
 
     // Create an empty shader program:
+#ifdef DEBUG
     printf("Creating shader program ...\n");
+#endif    
 
     GLuint shader_program;
 
     shader_program = glCreateProgram();
     gl_check_error("glCreateProgram");
+#ifdef DEBUG
     std::cout << "Shader Program ID: " << shader_program << std::endl;
+#endif
 
     // Attach both shaders to the program:
     glAttachShader(shader_program, vertex_shader);

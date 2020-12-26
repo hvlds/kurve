@@ -9,7 +9,9 @@ PlayerManager::PlayerManager(GLFWwindow* window) {
 }
 
 void PlayerManager::add_players() {
+#ifdef DEBUG
     std::cout << "---- ADD PLAYERS ----" << std::endl;
+#endif
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
     
     for(auto player_info : *user_data->player_info) {
@@ -122,7 +124,9 @@ void PlayerManager::detect_collisions() {
                 if (distance < 0.3) {
                     if (player->is_alive == true) {
                         player->is_alive = false;
+#ifdef DEBUG
                         std::cout << "Collision with player!" << std::endl;
+#endif
                         this->dead_players.push_back(player->get_id());
                         break;
                     }
@@ -136,8 +140,10 @@ void PlayerManager::detect_collisions() {
                     if (distance < 0.3) {
                         if (player->is_alive == true) {
                             player->is_alive = false;
+#ifdef DEBUG
                             std::cout << "Collision with your own line!" 
                                 << std::endl;
+#endif
                             this->dead_players.push_back(player->get_id());
                             break;
                         }
@@ -229,8 +235,9 @@ void PlayerManager::reset_player(int id) {
 void PlayerManager::reset() {
     // Clear the map with user and vector with dead players
     this->dead_players.clear();
-
+#ifdef DEBUG
     std::cout << "---- RESET PLAYERS ----" << std::endl;
+#endif
     for (auto item : this->players) {
         item.second->is_alive = true;
         this->reset_player(item.first);
