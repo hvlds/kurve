@@ -71,6 +71,7 @@ $ ./kurve
 - [ ] v0.2-alpha
    - [x] Sort the name of the players in the Game Over screen depending on the
       number of points
+   - [x] Make the terminal output less verbose when the build type is release
    - [ ] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Full Screen support
    - [ ] End the game when pressing Escape in the Menu
