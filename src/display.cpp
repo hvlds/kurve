@@ -41,13 +41,17 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 }
 
 Display::Display(user_data_t* user_data) {
+#ifdef DEBUG
 	std::cout << "Creating display" << std::endl;
+#endif
 	
 	this->user_data = user_data;
 
 	// Specify our error callback func:
 	// Then initialize GLFW itself.
+#ifdef DEBUG
 	printf("Initializing GLFW ...\n");
+#endif
 
 	glfwSetErrorCallback(error_callback);
 	check_error(glfwInit(), "Failed to initialize GLFW.");
@@ -61,7 +65,9 @@ Display::Display(user_data_t* user_data) {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Create a GLFW window:
+#ifdef DEBUG
 	printf("Creating window ...\n");
+#endif
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 	glfwWindowHint(GLFW_MAXIMIZED, GL_TRUE);

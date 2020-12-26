@@ -130,7 +130,6 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
     gl_check_error("glBindVertexArray");
 
     this->vao = vao;
-    std::cout << "VAO: " << vao << std::endl;
 
     // Generate and bind a vertex buffer object (VBO):
     GLuint vbo;
@@ -142,7 +141,6 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
     gl_check_error("glBindBuffer");
     
     this->vbo = vbo;
-    std::cout << "VBO: " << vbo << std::endl;
 
     // Upload the vertex data to the GPU:
     glBufferData(
@@ -183,7 +181,9 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
 }
 
 LineMesh::~LineMesh() {
+#ifdef DEBUG
     std::cout << "---- DESTROY LineMesh ----" << std::endl;
+#endif
     glDeleteVertexArrays(1, &this->vao);
     gl_check_error("glDeleteVertexArrays");
 

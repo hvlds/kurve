@@ -4,7 +4,9 @@
 
 
 LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
+#ifdef DEBUG
     std::cout << "---- INIT LineModel ----" << std::endl;
+#endif
     this->color = color;
 
     std::string vs_path(STATIC_FILES);
@@ -20,7 +22,9 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
     this->line_mesh = mesh;
 
     // Init the values of the model
+#ifdef DEBUG
     std::cout << "x: " << point.x << " y: " << point.y << std::endl;
+#endif
     this->start_pos_x = 0; 
     this->start_pos_y = 0;
     
@@ -31,7 +35,9 @@ LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
 }
 
 LineModel::~LineModel() {
+#ifdef DEBUG
     std::cout << "---- DESTROY LineModel ----" << std::endl;
+#endif
     glDeleteProgram(this->shader_id);
     gl_check_error("glDeleteProgram");
 }
@@ -47,7 +53,9 @@ void LineModel::draw() {
 }
 
 void LineModel::init_uniforms() {
+#ifdef DEBUG
     std::cout << "Init uniforms" << std::endl;
+#endif
     // Start pos Y:
     this->start_pos_y_loc = glGetUniformLocation(this->shader_id, "start_pos_y");
     gl_check_error("glGetUniformLocation [start_pos_y]");
@@ -60,7 +68,9 @@ void LineModel::init_uniforms() {
 }
 
 void LineModel::init_values() {
+#ifdef DEBUG
     std::cout << "Init values" << std::endl;
+#endif
     glUniform1f(this->start_pos_x_loc, this->start_pos_x);
     gl_check_error("glUniform1f [start_pos_x]");
 

@@ -6,7 +6,9 @@
 
 Font::Font() {
     // Testing FreeType
+#ifdef DEBUG
     std::cout << "---- INIT FONT ----" << std::endl;
+#endif
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         std::cout << 
@@ -86,9 +88,6 @@ Font::Font() {
     glGenBuffers(1, &this->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 
-    std::cout << "VAO: " << this->VAO << std::endl;
-    std::cout << "VBO: " << this->VBO << std::endl;
-    
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
     
     glEnableVertexAttribArray(0);
@@ -99,7 +98,9 @@ Font::Font() {
 }
 
 Font::~Font() {
+#ifdef DEBUG
     std::cout << "---- DESTROY Font ----" << std::endl;
+#endif
     // TODO: Fix the segmentation fault!
     // glDeleteVertexArrays(1, &this->VAO);
     // gl_check_error("glDeleteVertexArrays");
