@@ -28,6 +28,7 @@ $ git clone https://github.com/h-valdes/kurve.git
 Install all the dependencies:
 * [GLFW](https://www.glfw.org/)
 * [FreeType2](https://www.freetype.org/)
+* [json](https://github.com/nlohmann/json)
 
 ### Install
 
@@ -72,11 +73,11 @@ $ ./kurve
    - [x] Sort the name of the players in the Game Over screen depending on the
       number of points
    - [x] Make the terminal output less verbose when the build type is release
+   - [x] Read the configuration of the players from a file (txt, json, yaml, 
+      etc)
    - [ ] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Full Screen support
    - [ ] End the game when pressing Escape in the Menu
-   - [ ] Read the configuration of the players from a file (txt, json, yaml, 
-      etc)
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
    - [ ] Migrate from the self built classes Point and Vector to GLM
