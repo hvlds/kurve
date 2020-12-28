@@ -4,48 +4,48 @@
         "id": 1,
         "name": "Gryffindor",
         "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["LEFT_CONTROL", "LEFT_ALT"],
+        "control": ["GLFW_KEY_LEFT_CONTROL", "GLFW_KEY_LEFT_ALT"],
         "color": ["0xFF", "0x00", "0x00"],
         "menu_color": [1.0, 0.0, 0.0]
     },
     "p2": {
-        "id": 1,
-        "name": "Gryffindor",
-        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["LEFT_CONTROL", "LEFT_ALT"],
-        "color": ["0xFF", "0x00", "0x00"],
-        "menu_color": [1.0, 0.0, 0.0]
+        "id": 2,
+        "name": "Slytherin",
+        "menu_text": "Slytherin    <1 Q>",
+        "control": ["GLFW_KEY_1", "GLFW_KEY_Q"],
+        "color": ["0x00", "0xFF", "0x00"],
+        "menu_color": [0.0, 1.0, 0.0]
     },
     "p3": {
-        "id": 1,
-        "name": "Gryffindor",
-        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["LEFT_CONTROL", "LEFT_ALT"],
-        "color": ["0xFF", "0x00", "0x00"],
-        "menu_color": [1.0, 0.0, 0.0]
+        "id": 3,
+        "name": "Hufflepuff",
+        "menu_text": "Hufflepuff   <M ,>",
+        "control": ["GLFW_KEY_M", "GLFW_KEY_COMMA"],
+        "color": ["0xFF", "0xFF", "0x00"],
+        "menu_color": [1.0, 1.0, 0.0]
     },
     "p4": {
-        "id": 1,
-        "name": "Gryffindor",
-        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["LEFT_CONTROL", "LEFT_ALT"],
-        "color": ["0xFF", "0x00", "0x00"],
-        "menu_color": [1.0, 0.0, 0.0]
+        "id": 4,
+        "name": "Ravenclaw",
+        "menu_text": "Ravenclaw    <L.Arrow R.Arrow>",
+        "control": ["GLFW_KEY_LEFT", "GLFW_KEY_RIGHT"],
+        "color": ["0x00", "0x66", "0xFF"],
+        "menu_color": [0.0, 0.5, 1.0]
     },
     "p5": {
-        "id": 1,
-        "name": "Gryffindor",
-        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["LEFT_CONTROL", "LEFT_ALT"],
-        "color": ["0xFF", "0x00", "0x00"],
-        "menu_color": [1.0, 0.0, 0.0]
+        "id": 5,
+        "name": "Muggle",
+        "menu_text": "Muggle       <O P>",
+        "control": ["GLFW_KEY_O", "GLFW_KEY_P"],
+        "color": ["0xDD", "0x00", "0xDD"],
+        "menu_color": [1.0, 0.11, 0.68]
     },
     "p6": {
-        "id": 1,
-        "name": "Gryffindor",
-        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["LEFT_CONTROL", "LEFT_ALT"],
-        "color": ["0xFF", "0x00", "0x00"],
-        "menu_color": [1.0, 0.0, 0.0]
+        "id": 6,
+        "name": "Squib",
+        "menu_text": "Squib        <B N>",
+        "control": ["GLFW_KEY_B", "GLFW_KEY_N"],
+        "color": ["0xDD", "0xDD", "0xDD"],
+        "menu_color": [0.7, 0.7, 0.7]
     }
 }
