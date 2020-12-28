@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 project(kurve)
 
 find_package(Freetype REQUIRED)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
@@ -36,11 +37,21 @@ file(GLOB FONTS
 )
 file(COPY ${FONTS} DESTINATION "${CMAKE_BINARY_DIR}/fonts")
 
+# Configure the json settings files
+file(GLOB SETTINGS
+    "${CMAKE_SOURCE_DIR}/settings/players.json"
+)
+file(COPY ${SETTINGS} DESTINATION "${CMAKE_BINARY_DIR}/settings")
+
 set (PROJECT_SOURCES main.cpp)
 
 add_executable(kurve ${all_SRCS})
 link_libraries("-lglfw -ldl -lm")
-target_link_libraries(kurve m GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor freetype)
+target_link_libraries(
+    kurve PRIVATE m GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor 
+    freetype 
+    nlohmann_json::nlohmann_json
+)
 
 set_target_properties(kurve PROPERTIES
     CXX_STANDARD 17
@@ -72,6 +83,7 @@ install(TARGETS kurve DESTINATION "${tool_dest}")
 
 install(FILES ${SHADERS} DESTINATION "${files_dest}/shader")
 install(FILES ${FONTS} DESTINATION "${files_dest}/fonts")
+install(FILES ${SETTINGS} DESTINATION "${files_dest}/settings")
 install(FILES "kurve.png" DESTINATION "${files_dest}")
 
 install(

@@ -1,0 +1,52 @@
+
+{
+    "players": ["p1", "p2", "p3", "p4", "p5", "p6"],
+    "p1": {
+        "id": 1,
+        "name": "Gryffindor",
+        "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
+        "control": [341, 342],
+        "color": [255, 0, 0],
+        "menu_color": [1.0, 0.0, 0.0]
+    },
+    "p2": {
+        "id": 2,
+        "name": "Slytherin",
+        "menu_text": "Slytherin    <1 Q>",
+        "control": [49, 81],
+        "color": [0, 255, 0],
+        "menu_color": [0.0, 1.0, 0.0]
+    },
+    "p3": {
+        "id": 3,
+        "name": "Hufflepuff",
+        "menu_text": "Hufflepuff   <M ,>",
+        "control": [77, 44],
+        "color": [255, 255, 0],
+        "menu_color": [1.0, 1.0, 0.0]
+    },
+    "p4": {
+        "id": 4,
+        "name": "Ravenclaw",
+        "menu_text": "Ravenclaw    <L.Arrow R.Arrow>",
+        "control": [263, 262],
+        "color": [0, 102, 255],
+        "menu_color": [0.0, 0.5, 1.0]
+    },
+    "p5": {
+        "id": 5,
+        "name": "Muggle",
+        "menu_text": "Muggle       <O P>",
+        "control": [79, 80],
+        "color": [221, 0, 221],
+        "menu_color": [1.0, 0.11, 0.68]
+    },
+    "p6": {
+        "id": 6,
+        "name": "Squib",
+        "menu_text": "Squib        <B N>",
+        "control": [66, 78],
+        "color": [221, 221, 221],
+        "menu_color": [0.7, 0.7, 0.7]
+    }
+}
