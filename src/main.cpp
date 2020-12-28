@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <vector>
 
@@ -18,6 +19,18 @@
 using json = nlohmann::json;
 
 int main(void) {
+
+    std::string json_path(STATIC_FILES);
+    json_path.append("/settings/players.json");
+
+    std::ifstream json_file(json_path);
+    json players_json;
+    json_file >> players_json;
+
+    for (auto player : players_json["players"]) {
+        std::cout << player << std::endl;
+    }
+
     // Define the basic information for the six players
     // The Information is hardcoded fixed and cannot be edited!
     player_info_t player_1 = {
