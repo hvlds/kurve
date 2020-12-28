@@ -27,8 +27,22 @@ int main(void) {
     json players_json;
     json_file >> players_json;
 
-    for (auto player : players_json["players"]) {
-        std::cout << player << std::endl;
+    for (std::string player_name : players_json["players"]) {
+        auto player_json = players_json[player_name];
+        player_info_t player = {
+            .is_active = false,
+            .id = player_json["id"],
+            .name = player_json["name"],
+            .menu_text = player_json["menu_text"],
+            .control = {
+                player_json["control"][0], 
+                player_json["control"][1]},
+            .color = {0xFF, 0x00, 0x00},
+            .menu_color = glm::vec3(
+                player_json["menu_color"][0],
+                player_json["menu_color"][1],
+                player_json["menu_color"][2]),
+            .score = 0};
     }
 
     // Define the basic information for the six players

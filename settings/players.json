@@ -5,7 +5,7 @@
         "id": 1,
         "name": "Gryffindor",
         "menu_text": "Gryffindor   <L.Ctrl L.Alt>",
-        "control": ["GLFW_KEY_LEFT_CONTROL", "GLFW_KEY_LEFT_ALT"],
+        "control": [341, 342],
         "color": ["0xFF", "0x00", "0x00"],
         "menu_color": [1.0, 0.0, 0.0]
     },
@@ -13,7 +13,7 @@
         "id": 2,
         "name": "Slytherin",
         "menu_text": "Slytherin    <1 Q>",
-        "control": ["GLFW_KEY_1", "GLFW_KEY_Q"],
+        "control": [49, 81],
         "color": ["0x00", "0xFF", "0x00"],
         "menu_color": [0.0, 1.0, 0.0]
     },
@@ -21,7 +21,7 @@
         "id": 3,
         "name": "Hufflepuff",
         "menu_text": "Hufflepuff   <M ,>",
-        "control": ["GLFW_KEY_M", "GLFW_KEY_COMMA"],
+        "control": [77, 44],
         "color": ["0xFF", "0xFF", "0x00"],
         "menu_color": [1.0, 1.0, 0.0]
     },
@@ -29,7 +29,7 @@
         "id": 4,
         "name": "Ravenclaw",
         "menu_text": "Ravenclaw    <L.Arrow R.Arrow>",
-        "control": ["GLFW_KEY_LEFT", "GLFW_KEY_RIGHT"],
+        "control": [263, 262],
         "color": ["0x00", "0x66", "0xFF"],
         "menu_color": [0.0, 0.5, 1.0]
     },
@@ -37,7 +37,7 @@
         "id": 5,
         "name": "Muggle",
         "menu_text": "Muggle       <O P>",
-        "control": ["GLFW_KEY_O", "GLFW_KEY_P"],
+        "control": [79, 80],
         "color": ["0xDD", "0x00", "0xDD"],
         "menu_color": [1.0, 0.11, 0.68]
     },
@@ -45,7 +45,7 @@
         "id": 6,
         "name": "Squib",
         "menu_text": "Squib        <B N>",
-        "control": ["GLFW_KEY_B", "GLFW_KEY_N"],
+        "control": [66, 78],
         "color": ["0xDD", "0xDD", "0xDD"],
         "menu_color": [0.7, 0.7, 0.7]
     }
