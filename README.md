@@ -1,5 +1,8 @@
 # Kurve
 
+[![Github Actions][img_gh-actions]][gh-actions]
+![mit license][img_license]
+
 **Kurve** is a remake of the popular game "Achtung, die Kurve!".
 
 <p align="center">
