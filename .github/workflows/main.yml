@@ -20,7 +20,7 @@ jobs:
 
     - name: Make and run the library in Release mode
       env:
-        DISPLAY: ":0.0" 
+        DISPLAY: ":99.0" 
       run: |
         mkdir Release
         cd Release
@@ -30,7 +30,7 @@ jobs:
         
     - name: Make and run the library in Debug mode
       env:
-        DISPLAY: ":0.0" 
+        DISPLAY: ":99.0" 
       run: |
         mkdir Debug
         cd Debug
