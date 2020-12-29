@@ -83,14 +83,15 @@ $ ./kurve
    - [x] Make the terminal output less verbose when the build type is release
    - [x] Read the configuration of the players from a file (txt, json, yaml, 
       etc)
-   - [ ] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Full Screen support
    - [ ] End the game when pressing Escape in the Menu
-   - [ ] Add a new general Menu (to choose between different options: config,
-      exit the game, etc)
    - [ ] Migrate from the self built classes Point and Vector to GLM
-   - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
-      changes in the class Game
+   - [ ] Generate a debian package (.deb) with cmake
+- [ ] Add a starting direction arrow in the transition zone (before starting)
+- [ ] Add a new general Menu (to choose between different options: config,
+   exit the game, etc)
+- [ ] Create an abstraction for the Scenes and a SceneManager replacing the
+   changes in the class Game
 
 
 ## Built With
