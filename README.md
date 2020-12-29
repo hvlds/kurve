@@ -3,6 +3,9 @@
 [![Github Actions][img_gh-actions]][gh-actions]
 ![mit license][img_license]
 
+[img_license]: https://img.shields.io/badge/License-MIT_or_Apache_2.0-blue.svg
+[img_gh-actions]: https://github.com/h-valdes/kurve/workflows/CI/badge.svg
+
 **Kurve** is a remake of the popular game "Achtung, die Kurve!".
 
 <p align="center">
