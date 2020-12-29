@@ -1,6 +1,6 @@
 # Specify the minimum version for CMake
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.11)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -g")
@@ -11,6 +11,7 @@ project(kurve)
 
 find_package(Freetype REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(OpenGL REQUIRED)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
@@ -48,7 +49,7 @@ set (PROJECT_SOURCES main.cpp)
 add_executable(kurve ${all_SRCS})
 link_libraries("-lglfw -ldl -lm")
 target_link_libraries(
-    kurve PRIVATE m GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor 
+    kurve PRIVATE m glfw dl
     freetype 
     nlohmann_json::nlohmann_json
 )
