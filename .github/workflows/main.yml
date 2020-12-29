@@ -16,11 +16,11 @@ jobs:
       run: |
         sudo apt install libglfw3-dev libfreetype-dev nlohmann-json3-dev \
         libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev \
-        mesa-utils pkg-config xorg-dev xvfb \
+        mesa-utils pkg-config xorg-dev xvfb openbox\
 
     - name: Make and run the library in Release mode
       env:
-        DISPLAY: 99.0
+        DISPLAY: ":0.0" 
       run: |
         mkdir Release
         cd Release
@@ -30,7 +30,7 @@ jobs:
         
     - name: Make and run the library in Debug mode
       env:
-        DISPLAY: 99.0
+        DISPLAY: ":0.0" 
       run: |
         mkdir Debug
         cd Debug
