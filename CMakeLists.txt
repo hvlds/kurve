@@ -47,12 +47,18 @@ file(COPY ${SETTINGS} DESTINATION "${CMAKE_BINARY_DIR}/settings")
 set (PROJECT_SOURCES main.cpp)
 
 add_executable(kurve ${all_SRCS})
+
 link_libraries("-lglfw -ldl -lm")
+
 target_link_libraries(
-    kurve PRIVATE m glfw dl
-    freetype 
+    kurve PRIVATE 
+    m 
+    glfw 
+    dl
+    ${FREETYPE_LIBRARIES} 
     nlohmann_json::nlohmann_json
 )
+target_include_directories(kurve PRIVATE ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties(kurve PROPERTIES
     CXX_STANDARD 17
