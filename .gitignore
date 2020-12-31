@@ -17,6 +17,7 @@ build/
 Release/
 Debug/
 kurve.desktop
+*.snap
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
