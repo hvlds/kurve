@@ -10,7 +10,7 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 apps:
   kurve:
-    command: 
+    command: usr/bin/kurve
     plugs:
       - opengl
       - x11
@@ -27,6 +27,7 @@ parts:
     source-type: git
     source-depth: 1
     stage-packages:
+    - build-essential
     - libglu1-mesa
     - libfreetype6
     - libglfw3
@@ -42,5 +43,5 @@ parts:
     override-build: |
       mkdir Release
       cd Release
-      cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+      cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$SNAPCRAFT_PRIME/usr ..
       make install
