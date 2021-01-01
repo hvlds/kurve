@@ -1,24 +1,33 @@
 name: kurve # you probably want to 'snapcraft register <name>'
 base: core20 # the base snap is the execution environment for this snap
 version: '0.2' # just for humans, typically '1.2+git' or '1.3.2'
-summary: Single-line elevator pitch for your amazing snap # 79 char long summary
+summary: Remake of the classic game "Achtung, die Kurve!" # 79 char long summary
 description: |
-  This is my-snap's description. You have a paragraph or two to tell the
-  most important story about your snap. Keep it under 100 words though,
-  we live in tweetspace and your description wants to look good in the snap
-  store.
+  Remake of the classic game "Achtung, die Kurve!"
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
+apps:
+  kurve:
+    command: 
+    plugs:
+      - opengl
+      - x11
+      - desktop
+      - desktop-legacy
+      - unity7
+      - home
+
 parts:
-  kurve-part:
+  kurve:
     plugin: cmake
-    build-snaps: [cmake/latest/edge] # We need cmake >= 3.11
+    build-snaps: [cmake/latest/edge]
     source: https://github.com/h-valdes/kurve
     source-type: git
     source-depth: 1
     stage-packages:
+    - libglu1-mesa
     - libfreetype6
     - libglfw3
     - libpng16-16
@@ -30,11 +39,8 @@ parts:
     - libglfw3-dev
     - libfreetype-dev
     - nlohmann-json3-dev
-    cmake-parameters:
-    - "-DCMAKE_INSTALL_PREFIX=/usr/local"
-    - "-DCMAKE_BUILD_TYPE=Release"
-
-apps:
-  kurve-part:
-    command: kurve
-    common-id: com.example.kurve
+    override-build: |
+      mkdir Release
+      cd Release
+      cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+      make install
