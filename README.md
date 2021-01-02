@@ -1,14 +1,16 @@
-# Kurve
+# kurve
 
 [![Github Actions][img_gh-actions]][gh-actions]
 ![mit license][img_license]
+[![kurve](https://snapcraft.io/kurve/badge.svg)](https://snapcraft.io/kurve)
 
 [img_license]: https://img.shields.io/badge/License-MIT_or_Apache_2.0-blue.svg
 [img_gh-actions]: https://github.com/h-valdes/kurve/workflows/Ubuntu/badge.svg
 
 [gh-actions]: https://github.com/h-valdes/kurve/actions?query=workflow%3AUbuntu
 
-**Kurve** is a remake of the popular game "Achtung, die Kurve!".
+**kurve** is a remake of the popular game "Achtung, die Kurve!" using C++ 
+and OpenGL.
 
 <p align="center">
   <img width="460" height="300" src="docs/img/demo.gif">
@@ -31,6 +33,8 @@ Table of contents
 
 ### Install using snap
 Kurve is available in the Snap Store under the name "kurve".
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/kurve)
 ```
 $ sudo snap install kurve
 ```
