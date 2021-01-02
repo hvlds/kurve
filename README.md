@@ -40,16 +40,20 @@ $ sudo snap install kurve
 ```
 
 ### Install from the source
-Clone this project.
+Clone this project
 ```
 $ git clone https://github.com/h-valdes/kurve.git
 ```
 
-Install all the dependencies if:
+Install all the dependencies:
 * [GLFW](https://www.glfw.org/)
 * [FreeType2](https://www.freetype.org/)
 * [json](https://github.com/nlohmann/json)
 
+In Ubuntu 20.04
+```
+$ sudo apt install libglfw3-dev libfreetype-dev nlohmann-json3-dev
+```
 
 Build the project
 ```
@@ -66,7 +70,8 @@ $ kurve
 ```
 
 ### Debug
-To play without installing the game in your computer:
+To play without installing the game in your computer (you still need to 
+install the dependencies):
 ```
 $ cd kurve
 $ mkdir Debug
