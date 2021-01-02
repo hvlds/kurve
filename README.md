@@ -95,7 +95,7 @@ $ ./kurve
    - [x] Read the configuration of the players from a json file
    - [x] Generate a snap package (.snap) with snapcraft
    - [x] End the game when pressing Escape in the Menu
-   - [ ] Full Screen support
+   - [x] Full Screen support
    - [ ] Migrate from the self built classes Point and Vector to GLM
    - [ ] Generate a debian package (.deb) with cmake
 - [ ] Add a starting direction arrow in the transition zone (before starting)
