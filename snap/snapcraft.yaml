@@ -15,6 +15,10 @@ apps:
       - opengl
       - x11
 
+architectures:
+  - build-on: amd64
+    run-on: amd64
+
 parts:
   desktop-glib-only:
       source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
