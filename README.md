@@ -19,7 +19,8 @@ Table of contents
 
 <!--ts-->
    * [Getting Started](#getting-started)
-      * [Install](#install)
+      * [Install using snap](#install-using-snap)
+      * [Install (Source)](#install-from-the-source)
       * [Debug](#debug)
    * [Roadmap](#roadmap)
    * [Built With](#built-with)
@@ -28,17 +29,23 @@ Table of contents
 
 ## Getting Started
 
+### Install using snap
+Kurve is available in the Snap Store under the name "kurve".
+```
+$ sudo snap install kurve
+```
+
+### Install from the source
 Clone this project.
 ```
 $ git clone https://github.com/h-valdes/kurve.git
 ```
 
-Install all the dependencies:
+Install all the dependencies if:
 * [GLFW](https://www.glfw.org/)
 * [FreeType2](https://www.freetype.org/)
 * [json](https://github.com/nlohmann/json)
 
-### Install
 
 Build the project
 ```
