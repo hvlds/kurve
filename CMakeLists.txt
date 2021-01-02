@@ -100,10 +100,10 @@ install(FILES ${FONTS} DESTINATION "${files_dest}/fonts")
 install(FILES ${SETTINGS} DESTINATION "${files_dest}/settings")
 install(FILES "kurve.png" DESTINATION "${files_dest}")
 
-if (CMAKE_BUILD_TYPE NOT STREQUAL "SNAPCRAFT")
+if (NOT CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
     install(
         FILES kurve.desktop
         PERMISSIONS WORLD_EXECUTE WORLD_WRITE WORLD_READ
         DESTINATION ~/.local/share/applications
     )
-endif (CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
+endif (NOT CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
