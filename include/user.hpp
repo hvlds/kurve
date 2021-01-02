@@ -67,6 +67,7 @@ typedef struct {
     // Dimensions of the window:
     int window_width;
     int window_height;
+    bool is_fullscreen;
     GameState game_state;
     std::vector<player_info_t>* player_info;
 } user_data_t;

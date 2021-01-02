@@ -59,6 +59,7 @@ int main(void) {
         {
             .window_width = 700,
             .window_height = 700,
+            .is_fullscreen = false,
             .game_state = GAME_MENU,
             .player_info = &player_info};
 
