@@ -149,6 +149,10 @@ void key_callback(
         return;
     }
 
+    if (key == GLFW_KEY_F11) {
+        glfwSetWindowMonitor(window, true ? glfwGetPrimaryMonitor() : NULL, 0, 0, 1200, 1200, GLFW_DONT_CARE);
+    }
+
     if (user_data->game_state == GAME_MENU) {
         // Exit the game when pressing scape
         if (key == GLFW_KEY_ESCAPE) {
