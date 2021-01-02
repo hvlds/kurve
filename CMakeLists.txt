@@ -88,7 +88,7 @@ endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 if (CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
     message("** SNAPCRAFT mode **")
-    target_compile_definitions(kurve PRIVATE STATIC_FILES="$SNAP/usr/${files_dest}")
+    target_compile_definitions(kurve PRIVATE STATIC_FILES="/snap/kurve/current/${files_dest}")
     message("STATIC_FILES = ${files_dest}")
 endif (CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
 
