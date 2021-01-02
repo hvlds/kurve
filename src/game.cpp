@@ -8,6 +8,7 @@
 #include "menu.hpp"
 #include "player_manager.hpp"
 #include "side_panel.hpp"
+#include "display.hpp"
 
 
 Game::Game(GLFWwindow* window) {
@@ -150,7 +151,19 @@ void key_callback(
     }
 
     if (key == GLFW_KEY_F11) {
-        glfwSetWindowMonitor(window, true ? glfwGetPrimaryMonitor() : NULL, 0, 0, 1200, 1200, GLFW_DONT_CARE);
+        user_data->is_fullscreen = !user_data->is_fullscreen;
+        
+        GLFWmonitor* primary = glfwGetPrimaryMonitor();
+        const GLFWvidmode * mode = glfwGetVideoMode(primary);
+
+        int width = mode->width;
+        int height = mode->height;
+
+        glfwSetWindowMonitor(
+            window, 
+            user_data->is_fullscreen ? primary : NULL, 
+            0, 0, width, height, GLFW_DONT_CARE);
+        framebuffer_size_callback(window, width, height);
     }
 
     if (user_data->game_state == GAME_MENU) {
