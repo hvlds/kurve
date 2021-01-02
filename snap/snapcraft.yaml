@@ -27,7 +27,7 @@ parts:
   kurve:
     plugin: cmake
     build-snaps: [cmake/latest/edge]
-    source: https://github.com/h-valdes/kurve
+    source: https://github.com/h-valdes/kurve.git
     source-depth: 1
     stage-packages:
     - build-essential
