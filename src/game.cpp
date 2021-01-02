@@ -38,6 +38,11 @@ void Game::loop() {
             gl_check_error("glClear");
             this->has_players = false;
             this->menu->draw();
+        } else if (game_state == GAME_EXIT) {
+#ifdef DEBUG
+    std::cout << "---- EXIT Game ----" << std::endl;
+#endif
+            break;
         } else if (game_state == GAME_OVER) {
             glClear(GL_COLOR_BUFFER_BIT);
             gl_check_error("glClear");
@@ -145,6 +150,11 @@ void key_callback(
     }
 
     if (user_data->game_state == GAME_MENU) {
+        // Exit the game when pressing scape
+        if (key == GLFW_KEY_ESCAPE) {
+            user_data->game_state = GAME_EXIT;
+        }
+
         if (key == GLFW_KEY_SPACE) {
             // GAME_MENU -> GAME_ACTIVE
             if (user_data->game_state == GAME_MENU) {
