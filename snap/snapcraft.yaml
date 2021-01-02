@@ -1,0 +1,56 @@
+name: kurve
+base: core20 
+version: 'v0.2-alpha' 
+summary: Remake of the classic game "Achtung, die Kurve!" 
+description: |
+  Remake of the classic game "Achtung, die Kurve!"
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+apps:
+  kurve:
+    command: bin/desktop-launch $SNAP/bin/kurve
+    plugs:
+      - opengl
+      - x11
+
+parts:
+  desktop-glib-only:
+      source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+      source-subdir: glib-only
+      plugin: make
+      build-packages:
+        - libglib2.0-dev
+      stage-packages:
+        - libglib2.0-bin
+  kurve:
+    plugin: cmake
+    build-snaps: [cmake/latest/edge]
+    source: https://github.com/h-valdes/kurve
+    source-depth: 1
+    stage-packages:
+    - build-essential
+    - mesa-utils
+    - libglu1-mesa
+    - libgl1-mesa-dri
+    - libgl1-mesa-glx
+    - libfreetype6
+    - libglfw3
+    - libpng16-16
+    - libx11-6
+    - libxau6
+    - libxcb1
+    - libxdmcp6
+    build-packages:
+    - g++
+    - libglfw3-dev
+    - libfreetype-dev
+    - nlohmann-json3-dev
+    override-build: |
+      mkdir SNAPCRAFT
+      cd SNAPCRAFT
+      cmake -DCMAKE_BUILD_TYPE=SNAPCRAFT -DCMAKE_INSTALL_PREFIX=$SNAPCRAFT_PART_INSTALL ..
+      make install
+    after:
+      - desktop-glib-only

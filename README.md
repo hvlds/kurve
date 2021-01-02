@@ -82,6 +82,7 @@ $ ./kurve
       number of points
    - [x] Make the terminal output less verbose when the build type is release
    - [x] Read the configuration of the players from a json file
+   - [x] Generate a snap package (.snap) with snapcraft
    - [ ] Full Screen support
    - [ ] End the game when pressing Escape in the Menu
    - [ ] Migrate from the self built classes Point and Vector to GLM
