@@ -5,8 +5,8 @@ summary: Remake of the classic game "Achtung, die Kurve!"
 description: |
   Remake of the classic game "Achtung, die Kurve!"
 
-grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+grade: stable 
+confinement: strict
 
 apps:
   kurve:
