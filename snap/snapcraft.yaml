@@ -10,7 +10,7 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 apps:
   kurve:
-    command: usr/bin/kurve
+    command: bin/kurve
     plugs:
       - opengl
       - x11
@@ -23,8 +23,7 @@ parts:
   kurve:
     plugin: cmake
     build-snaps: [cmake/latest/edge]
-    source: https://github.com/h-valdes/kurve
-    source-type: git
+    source: .
     source-depth: 1
     stage-packages:
     - build-essential
@@ -37,11 +36,12 @@ parts:
     - libxcb1
     - libxdmcp6
     build-packages:
+    - g++
     - libglfw3-dev
     - libfreetype-dev
     - nlohmann-json3-dev
     override-build: |
-      mkdir Release
-      cd Release
-      cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$SNAPCRAFT_PRIME/usr ..
+      mkdir SNAPCRAFT
+      cd SNAPCRAFT
+      cmake -DCMAKE_BUILD_TYPE=SNAPCRAFT -DCMAKE_INSTALL_PREFIX=$SNAPCRAFT_PART_INSTALL ..
       make install

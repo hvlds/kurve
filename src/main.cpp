@@ -22,6 +22,7 @@ int main(void) {
 
     std::string json_path(STATIC_FILES);
     json_path.append("/settings/players.json");
+    std::cout << json_path << std::endl;
 
     std::ifstream json_file(json_path);
     json players_json;

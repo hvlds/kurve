@@ -101,7 +101,7 @@ std::map<int, int, std::greater<int>> GameOver::get_results() {
 
 int GameOver::get_winner() {
     auto results = this->get_results();
-    int winner;
+    int winner = -1;
 
     for (auto item : results) {
         winner = item.second;
