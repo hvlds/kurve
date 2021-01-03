@@ -94,7 +94,7 @@ $ ./kurve
    - [x] Random length of lines (defined in a specific range)
    - [x] Menu to select the players
    - [x] Game Over screen
-- [ ] v0.2-alpha
+- [x] v0.2-alpha
    - [x] Sort the name of the players in the Game Over screen depending on the
       number of points
    - [x] Make the terminal output less verbose when the build type is release
@@ -103,15 +103,16 @@ $ ./kurve
    - [x] End the game when pressing Escape in the Menu
    - [x] Full Screen support
    - [x] Generate a debian package (.deb) with cmake
-   - [ ] Migrate from the self built classes Point and Vector to GLM
-- [ ] Add a starting direction arrow in the transition zone (before starting)
-- [ ] Add a new general Menu (to choose between different options: config,
-   exit the game, etc)
-- [ ] Create an abstraction for the Scenes and a SceneManager replacing the
-   changes in the class Game
-- [ ] Create an AI to play against
-- [ ] Improve the scoring system and add a minimum differences to win
-- [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
+   - [x] Migrate from the self built classes Point and Vector to GLM
+- [ ] v0.3-alpha
+   - [ ] Add a starting direction arrow in the transition zone (before starting)
+   - [ ] Add a new general Menu (to choose between different options: config,
+      exit the game, etc)
+   - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
+      changes in the class Game
+   - [ ] Create an AI to play against
+   - [ ] Improve the scoring system and add a minimum differences to win
+   - [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
 
 
 # Built With
