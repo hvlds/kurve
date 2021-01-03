@@ -11,8 +11,6 @@ extern "C" {
 #include "math.h"
 }
 
-double get_distance(glm::vec2 p1, glm::vec2 p2);
-
 class Vector {
    public:
     GLfloat x;

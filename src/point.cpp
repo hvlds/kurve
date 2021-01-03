@@ -1,11 +1,5 @@
 #include "point.hpp"
 
-double get_distance(glm::vec2 p1, glm::vec2 p2) {
-    double distance;
-    distance = sqrt(pow((p1.x - p2.x), 2) + pow((p1.y - p2.y), 2));
-    return distance;
-}
-
 Vector::Vector(glm::vec2 start, glm::vec2 end) {
     this->x = end.x - start.x;
     this->y = end.y - start.y;

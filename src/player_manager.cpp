@@ -120,7 +120,7 @@ void PlayerManager::detect_collisions() {
         } else {
             // Collisions with other players
             for (auto point : oponent_points) {
-                double distance = get_distance(point, position);
+                auto distance = glm::length(position - point);
                 if (distance < 0.3) {
                     if (player->is_alive == true) {
                         player->is_alive = false;
@@ -136,7 +136,7 @@ void PlayerManager::detect_collisions() {
             // Collisions with all the lines (include of the base player)
             if (own_points.size() > 20 && player->is_alive == true) {
                 for (auto point : own_points) {
-                    double distance = get_distance(point, position);
+                    auto distance = glm::length(position - point);
                     if (distance < 0.3) {
                         if (player->is_alive == true) {
                             player->is_alive = false;
