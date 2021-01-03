@@ -6,7 +6,7 @@ BorderMesh::BorderMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
-    std::vector<Point> points = {
+    std::vector<glm::vec2> points = {
         {0.65, 0.9}, {-0.9, 0.9}, {-0.9, -0.9}, {0.65, -0.9}
     };
 

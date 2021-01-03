@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-LineModel::LineModel(Point point, glm::vec3 color) {
+LineModel::LineModel(glm::vec2 point, glm::vec3 color) {
 #ifdef DEBUG
     std::cout << "---- INIT LineModel ----" << std::endl;
 #endif
@@ -78,7 +78,7 @@ void LineModel::init_values() {
     gl_check_error("glUniform1f [start_pos_y]");
 }
 
-void LineModel::add_point(Point point) {
+void LineModel::add_point(glm::vec2 point) {
     // if (this->points.size() > 0) {
     //     auto last_point = this->points.back();
     // }
@@ -90,7 +90,7 @@ void LineModel::set_color(glm::vec3 color) {
     this->color = color;
 }
 
-std::vector<Point> LineModel::get_points() {
+std::vector<glm::vec2> LineModel::get_points() {
     return this->points;
 }
 
@@ -99,7 +99,7 @@ void LineModel::clear() {
     line_mesh->clear();
 }
 
-void LineModel::set_start_position(Point point) {
+void LineModel::set_start_position(glm::vec2 point) {
     glUseProgram(this->shader_id);
     
     this->add_point(point);

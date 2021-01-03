@@ -31,11 +31,11 @@ void LineMesh::update() {
     }
 }
 
-void LineMesh::set_points(std::vector<Point> points) {
+void LineMesh::set_points(std::vector<glm::vec2> points) {
     this->points = points;
 }
 
-void LineMesh::add_point(Point point) {
+void LineMesh::add_point(glm::vec2 point) {
     if (this->line_points.size() == 0) {
         this->line_points.push_back(point);
     } else if (this->line_points.size() == 1) {
@@ -55,7 +55,7 @@ void LineMesh::add_point(Point point) {
         // std::cout << "direction: " << direction << std::endl;
 
         GLfloat r{0.17};
-        Point left_point, right_point;
+        glm::vec2 left_point, right_point;
 
         double v2_length = v2.get_length();
         v2.x = (v2.x / (GLfloat) v2_length) * r;
@@ -105,7 +105,7 @@ void LineMesh::add_point(Point point) {
 
 }
 
-LineMesh::LineMesh(Point first_point, glm::vec3 color) {
+LineMesh::LineMesh(glm::vec2 first_point, glm::vec3 color) {
     this->color = color;
     
     std::vector<vertex_data_t> vertex_data;

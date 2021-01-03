@@ -19,7 +19,7 @@ PlayerModel::PlayerModel(
     // Set an initial random length for the first line
     this->random_length = 70 + (rand() % 120);
     
-    Point point{x, y};
+    glm::vec2 point{x, y};
     this->last_point = point;
 
     std::string vs_path(STATIC_FILES);
@@ -123,7 +123,7 @@ void PlayerModel::update(GLFWwindow* window) {
             this->trans_x += this->speed_x;
             this->trans_y += this->speed_y;    
 
-            Point point{
+            glm::vec2 point{
                 this->trans_x + this->start_pos_x,
                 this->trans_y + this->start_pos_y
             };
@@ -228,12 +228,12 @@ void PlayerModel::set_keys(Control control) {
 }
 
 
-Point PlayerModel::get_position() {
+glm::vec2 PlayerModel::get_position() {
     return this->last_point;
 }
 
-std::vector<Point> PlayerModel::get_line_points() {
-    std::vector<Point> player_points;
+std::vector<glm::vec2> PlayerModel::get_line_points() {
+    std::vector<glm::vec2> player_points;
 
     if (this->lines.size() != 0) {
         for (auto line : this->lines) {
@@ -271,7 +271,7 @@ void PlayerModel::clear() {
     this->lines.clear();
 }
 
-void PlayerModel::set_position(Point point) {
+void PlayerModel::set_position(glm::vec2 point) {
     glUseProgram(this->shader_id);
     this->points.push_back(point);
 

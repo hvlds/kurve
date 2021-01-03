@@ -10,18 +10,18 @@
 
 class LineMesh: public Mesh {
    protected:
-    std::vector<Point> points;
-    std::vector<Point> line_points;
-    Point actual_point;
-    Point last_point;
-    Point second_last_point;
+    std::vector<glm::vec2> points;
+    std::vector<glm::vec2> line_points;
+    glm::vec2 actual_point;
+    glm::vec2 last_point;
+    glm::vec2 second_last_point;
     glm::vec3 color;    
    public:
-    LineMesh(Point first_point, glm::vec3 color);
+    LineMesh(glm::vec2 first_point, glm::vec3 color);
     ~LineMesh();
     virtual void draw() override;
-    void set_points(std::vector<Point> points);
-    void add_point(Point point);
+    void set_points(std::vector<glm::vec2> points);
+    void add_point(glm::vec2 point);
     void update();
     void clear();
 };
