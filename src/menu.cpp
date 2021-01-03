@@ -29,7 +29,7 @@ void Menu::draw() {
         std::string menu_text = player_info.menu_text;
         // int id = player_info.id;
         bool is_active = player_info.is_active;
-        glm::vec3 menu_color = player_info.menu_color;
+        glm::vec3 color = player_info.color;
 
         if (is_active == true) {
             this->font->draw_text(
@@ -37,7 +37,7 @@ void Menu::draw() {
                 200.0f + ready_extra_margin,
                 pos_name_y + pos,
                 0.75f,
-                menu_color);
+                color);
             active_counter++;
         }
 
@@ -46,7 +46,7 @@ void Menu::draw() {
             -500.0f, 
             pos_name_y + pos, 
             0.75f, 
-            menu_color);
+            color);
         pos_name_y -= 75.0f;
     }
 

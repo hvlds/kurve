@@ -39,10 +39,10 @@ int main(void) {
             .control = {
                 player_json["control"][0], 
                 player_json["control"][1]},
-            .color = {
-                static_cast<GLubyte>(player_json["color"][0]),
-                static_cast<GLubyte>(player_json["color"][1]),
-                static_cast<GLubyte>(player_json["color"][2])},
+            .color = glm::vec3(
+                player_json["menu_color"][0],
+                player_json["menu_color"][1],
+                player_json["menu_color"][2]),
             .menu_color = glm::vec3(
                 player_json["menu_color"][0],
                 player_json["menu_color"][1],

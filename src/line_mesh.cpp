@@ -16,7 +16,7 @@ void LineMesh::update() {
                         static_cast<GLfloat>(point.y), 
                         0
                     }, 
-                    .color = {this->color[0], this->color[1], this->color[2]}
+                    .color = {this->color.x, this->color.y, this->color.z}
                 }
             );
         }
@@ -105,7 +105,7 @@ void LineMesh::add_point(Point point) {
 
 }
 
-LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
+LineMesh::LineMesh(Point first_point, glm::vec3 color) {
     this->color = color;
     
     std::vector<vertex_data_t> vertex_data;
@@ -116,7 +116,7 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
                 static_cast<GLfloat>(first_point.y), 
                 0
             }, 
-            .color = {this->color[0], this->color[1], this->color[2]}
+            .color = {this->color.x, this->color.y, this->color.z}
         }
     );
 

@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-LineModel::LineModel(Point point, std::array<GLubyte, 3> color) {
+LineModel::LineModel(Point point, glm::vec3 color) {
 #ifdef DEBUG
     std::cout << "---- INIT LineModel ----" << std::endl;
 #endif
@@ -86,7 +86,7 @@ void LineModel::add_point(Point point) {
     this->line_mesh->add_point(point);
 }
 
-void LineModel::set_color(std::array<GLubyte, 3> color) {
+void LineModel::set_color(glm::vec3 color) {
     this->color = color;
 }
 

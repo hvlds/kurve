@@ -31,7 +31,7 @@ void GameOver::draw() {
         std::string menu_text = players.at(item.second - 1).menu_text;
         int id = players.at(item.second - 1).id;
         bool is_active = players.at(item.second - 1).is_active;
-        glm::vec3 menu_color = players.at(item.second - 1).menu_color;
+        glm::vec3 color = players.at(item.second - 1).color;
         int score = players.at(item.second - 1).score;
 
         if (is_active == true) {
@@ -42,13 +42,13 @@ void GameOver::draw() {
                         200.0f + ready_extra_margin,
                         pos_name_y + pos,
                         0.75f,
-                        menu_color);
+                        color);
                     this->font->draw_text(
                         name,
                         -500.0f,
                         pos_name_y + pos,
                         0.75f,
-                        menu_color);
+                        color);
                     this->blank_frames++;
                 } else if (this->full_frames <= this->max_frames) {
                     this->full_frames++;
@@ -63,13 +63,13 @@ void GameOver::draw() {
                     200.0f + ready_extra_margin,
                     pos_name_y + pos,
                     0.75f,
-                    menu_color);
+                    color);
                 this->font->draw_text(
                     name, 
                     -500.0f, 
                     pos_name_y + pos, 
                     0.75f, 
-                    menu_color);
+                    color);
             }
 
             pos_name_y -= 75.0f;

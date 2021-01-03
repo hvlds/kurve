@@ -33,7 +33,7 @@ class PlayerManager {
     void add_player(
         int id,
         Control control,
-        std::array<GLubyte, 3> color);
+        glm::vec3 color);
     void update(GLFWwindow* window);
     std::vector<Point> get_all_points();
 

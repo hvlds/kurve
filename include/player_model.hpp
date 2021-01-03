@@ -34,7 +34,7 @@ class PlayerModel : public Model {
 
     int id;
     Control control;
-    std::array<GLubyte, 3> color;
+    glm::vec3 color;
 
    public:
     // The uniforms locations
@@ -55,7 +55,7 @@ class PlayerModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-    PlayerModel(int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
+    PlayerModel(int id, GLfloat x, GLfloat y, glm::vec3 color);
     ~PlayerModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;

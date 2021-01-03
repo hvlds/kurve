@@ -54,7 +54,7 @@ typedef struct {
     std::string name;
     std::string menu_text;
     Control control;
-    std::array<GLubyte, 3> color;
+    glm::vec3 color;
     glm::vec3 menu_color;
     int score;
 } player_info_t;
