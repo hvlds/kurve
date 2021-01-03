@@ -102,8 +102,8 @@ $ ./kurve
    - [x] Generate a snap package (.snap) with snapcraft
    - [x] End the game when pressing Escape in the Menu
    - [x] Full Screen support
+   - [x] Generate a debian package (.deb) with cmake
    - [ ] Migrate from the self built classes Point and Vector to GLM
-   - [ ] Generate a debian package (.deb) with cmake
 - [ ] Add a starting direction arrow in the transition zone (before starting)
 - [ ] Add a new general Menu (to choose between different options: config,
    exit the game, etc)

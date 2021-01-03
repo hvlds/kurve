@@ -9,6 +9,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 project(kurve)
 
+# Set project version
+set(VERSION_MAJOR 0)
+set(VERSION_MINOR 2)
+
 find_package(Freetype REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -92,7 +96,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
     message("STATIC_FILES = ${files_dest}")
 endif (CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
 
-
 install(TARGETS kurve DESTINATION "${tool_dest}")
 
 install(FILES ${SHADERS} DESTINATION "${files_dest}/shader")
@@ -107,3 +110,15 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
         DESTINATION ~/.local/share/applications
     )
 endif (NOT CMAKE_BUILD_TYPE STREQUAL "SNAPCRAFT")
+
+## DEB Package generator
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+set(CPACK_PACKAGE_DESCRIPTION "Remake of 'Achtung, die Kurve!'")
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 1)
+set(CPACK_PACKAGE_VENDOR "Hernán Valdés")
+set(CPACK_PACKAGE_CONTACT "hfvaldesg@gmail.com")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libglfw3-dev,libfreetype-dev,nlohmann-json3-dev")
+set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${VERSION_MAJOR}.${VERSION_MINOR}")
+include (CPack)
