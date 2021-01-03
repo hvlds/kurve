@@ -26,12 +26,13 @@ Table of contents
       * [Debug](#debug)
    * [Roadmap](#roadmap)
    * [Built With](#built-with)
+   * [License and Authors](#license-and-authors)
    * [Screenshots](#screenshots)
 <!--te-->
 
-## Getting Started
+# Getting Started
 
-### Install using snap
+## Install using snap
 Kurve is available in the Snap Store under the name "kurve".
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/kurve)
@@ -39,13 +40,13 @@ Kurve is available in the Snap Store under the name "kurve".
 $ sudo snap install kurve
 ```
 
-### Install from the source
+## Install from the source
 Clone this project
 ```
 $ git clone https://github.com/h-valdes/kurve.git
 ```
 
-Install all the dependencies:
+### Install all the dependencies:
 * [GLFW](https://www.glfw.org/)
 * [FreeType2](https://www.freetype.org/)
 * [json](https://github.com/nlohmann/json)
@@ -55,7 +56,7 @@ In Ubuntu 20.04
 $ sudo apt install libglfw3-dev libfreetype-dev nlohmann-json3-dev
 ```
 
-Build the project
+### Build and install the project
 ```
 $ cd kurve
 $ mkdir Release
@@ -69,7 +70,7 @@ Enjoy
 $ kurve
 ```
 
-### Debug
+## Debug
 To play without installing the game in your computer (you still need to 
 install the dependencies):
 ```
@@ -85,7 +86,7 @@ Enjoy
 $ ./kurve
 ```
 
-## Roadmap
+# Roadmap
 - [x] v0.1-alpha
    - [x] Minimal working implementation of "Achtung, die Kurve". It has all the
       features from the 1995 DOS version
@@ -111,7 +112,7 @@ $ ./kurve
 - [ ] Create an AI to play against
 
 
-## Built With
+# Built With
 
 * C++
 * OpenGL (glad)
@@ -119,7 +120,21 @@ $ ./kurve
 * GLFW
 * FreeType2
 
-## Screenshots
+# License and Authors
+This Project started as a final project for the class Multimedia
+at the TU Bergakademie Freiberg by Simon Al Nomer and Hernán Valdés.
+The final version for the class corresponds the Release v0.1-alpha.
+
+The class was taught by [Jonas Treumer](https://github.com/JayTee42) and 
+[Ben Lorenz](https://github.com/bnlrnz) and inside of the project 
+are still traces of the C code programmed by them as an example of the 
+functionality of OpenGL and GLFW.
+
+All future release (starting from v0.2-alpha) are developed and maintained by 
+Hernán Valdés and licensed under the MIT License.
+
+
+# Screenshots
 
 ![](docs/img/1.png)
 ![](docs/img/2.png)
