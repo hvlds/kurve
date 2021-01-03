@@ -45,19 +45,19 @@ void LineMesh::add_point(glm::vec2 point) {
         this->second_last_point = this->last_point;
         this->last_point = this->line_points.back();
 
-        Vector v1{this->last_point, this->second_last_point}; // second last - last
-        Vector v2{this->last_point, point}; // actual - last
+        glm::vec2 v1 = this->second_last_point - this->last_point; // second last - last
+        glm::vec2 v2 = point - this->last_point; // actual - last
         
-        double angle = Vector::angle(v1, v2);
+        double angle = get_angle(v1, v2);
         // std::cout << "angle: " << angle << std::endl;
-        double direction = Vector::cross_product(v1, v2);
+        double direction = cross_product(v1, v2);
         direction = round(direction);
         // std::cout << "direction: " << direction << std::endl;
 
         GLfloat r{0.17};
         glm::vec2 left_point, right_point;
 
-        double v2_length = v2.get_length();
+        double v2_length = get_length(v2);
         v2.x = (v2.x / (GLfloat) v2_length) * r;
         v2.y = (v2.y / (GLfloat) v2_length) * r;
 

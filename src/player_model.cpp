@@ -109,7 +109,7 @@ void PlayerModel::update(GLFWwindow* window) {
                 angle_diff = static_cast<GLfloat>((speed * time_delta));
             }
 
-            Vector speed_vec{this->speed_x, this->speed_y};
+            glm::vec2 speed_vec{this->speed_x, this->speed_y};
 
             if (angle_diff != 0) {
                 // Rotate the speed vector

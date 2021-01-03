@@ -11,17 +11,10 @@ extern "C" {
 #include "math.h"
 }
 
-class Vector {
-   public:
-    GLfloat x;
-    GLfloat y;
-    Vector(glm::vec2 start, glm::vec2 end);
-    Vector(GLfloat x, GLfloat y);
-    double get_length();
-    static double dot_product(Vector v1, Vector v2);
-    static double cross_product(Vector v1, Vector v2);
-    static double angle(Vector v1, Vector v2);
-};
+double get_length(glm::vec2 v);
+double dot_product(glm::vec2 v1, glm::vec2 v2);
+double get_angle(glm::vec2 v1, glm::vec2 v2);
+double cross_product(glm::vec2 v1, glm::vec2 v2);
 
 
 #endif
