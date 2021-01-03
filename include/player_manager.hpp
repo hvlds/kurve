@@ -23,9 +23,9 @@ class PlayerManager {
     std::vector<int> dead_players;
     GLFWwindow* window;
     void reset_player(int id);
-    std::vector<Point> get_oponent_trace(int id);
-    std::vector<Point> get_player_trace(int id);
-    Point get_player_position(int id);
+    std::vector<glm::vec2> get_oponent_trace(int id);
+    std::vector<glm::vec2> get_player_trace(int id);
+    glm::vec2 get_player_position(int id);
     int max_score;
    public:
     bool is_updated = false;
@@ -33,9 +33,9 @@ class PlayerManager {
     void add_player(
         int id,
         Control control,
-        std::array<GLubyte, 3> color);
+        glm::vec3 color);
     void update(GLFWwindow* window);
-    std::vector<Point> get_all_points();
+    std::vector<glm::vec2> get_all_points();
 
     /**
      * @brief Detect all the collisions between players and lines.

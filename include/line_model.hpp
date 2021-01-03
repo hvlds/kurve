@@ -23,9 +23,9 @@ class LineModel : public Model {
    protected: 
     virtual void init_uniforms() override;
     virtual void init_values() override;
-    std::vector<Point> points;
+    std::vector<glm::vec2> points;
     std::shared_ptr<LineMesh> line_mesh;
-    std::array<GLubyte, 3> color;
+    glm::vec3 color;
    public:
     // The uniforms locations
     GLint start_pos_x_loc;
@@ -35,14 +35,14 @@ class LineModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-    LineModel(Point point, std::array<GLubyte, 3> color);
+    LineModel(glm::vec2 point, glm::vec3 color);
     ~LineModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
-    void add_point(Point point);
-    void set_color(std::array<GLubyte, 3> color);
-    std::vector<Point> get_points();
-    void set_start_position(Point point);
+    void add_point(glm::vec2 point);
+    void set_color(glm::vec3 color);
+    std::vector<glm::vec2> get_points();
+    void set_start_position(glm::vec2 point);
     void clear();
 };
 

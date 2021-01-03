@@ -7,7 +7,7 @@ extern "C" {
 #include <stdlib.h>
 }
 
-PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
+PlayerMesh::PlayerMesh(glm::vec3 color) {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
@@ -26,7 +26,7 @@ PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
                     static_cast<GLfloat>(y), 
                     0
                 }, 
-                .color = {color[0], color[1], color[2]}
+                .color = color
             }
         );
     }
@@ -76,8 +76,8 @@ PlayerMesh::PlayerMesh(std::array<GLubyte, 3> color) {
     glVertexAttribPointer(
         ATTRIB_COLOR, 
         3, 
-        GL_UNSIGNED_BYTE, 
-        GL_TRUE, 
+        GL_FLOAT, 
+        GL_FALSE, 
         sizeof(vertex_data_t), 
         (GLvoid*)offsetof(vertex_data_t, color));
     gl_check_error("glVertexAttribPointer [color]");

@@ -27,14 +27,14 @@ class PlayerModel : public Model {
     virtual void init_uniforms() override;
     virtual void init_values() override;
 
-    std::vector<Point> points;
+    std::vector<glm::vec2> points;
     std::vector<std::shared_ptr<LineModel>> lines;
     int blank_count = 0;
     int random_length;
 
     int id;
     Control control;
-    std::array<GLubyte, 3> color;
+    glm::vec3 color;
 
    public:
     // The uniforms locations
@@ -44,7 +44,7 @@ class PlayerModel : public Model {
     GLfloat start_pos_x_loc;
 
     double time;
-    Point last_point;
+    glm::vec2 last_point;
     GLfloat speed_x;
     GLfloat speed_y;
     bool is_alive;
@@ -55,7 +55,7 @@ class PlayerModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-    PlayerModel(int id, GLfloat x, GLfloat y, std::array<GLubyte, 3> color);
+    PlayerModel(int id, GLfloat x, GLfloat y, glm::vec3 color);
     ~PlayerModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
@@ -66,8 +66,8 @@ class PlayerModel : public Model {
      * @param control A control struct with the right and left keys
      */
     void set_keys(Control control);
-    Point get_position();
-    void set_position(Point point);
+    glm::vec2 get_position();
+    void set_position(glm::vec2 point);
     int get_id();
 
     /**
@@ -75,7 +75,7 @@ class PlayerModel : public Model {
      * 
      * @return std::vector<Point> A vector with all the points
      */
-    std::vector<Point> get_line_points();
+    std::vector<glm::vec2> get_line_points();
 
     /**
      * @brief Remove all the stored points and lines of the model

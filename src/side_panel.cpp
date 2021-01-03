@@ -33,7 +33,7 @@ void SidePanel::draw(int player_count, int max_score) {
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;
-        auto color = player_info.menu_color;
+        auto color = player_info.color;
         if (player_info.is_active == true) {
             y_pos = y_pos - 50.0f;
             auto score_text = std::to_string(player_info.score);

@@ -3,6 +3,10 @@
 
 #include "gl_calls.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 extern "C" {
 	// Include the GLAD loader *before* including GLFW!
 	#include "glad/glad.h"
@@ -34,7 +38,7 @@ class Mesh {
 typedef struct
 {
 	GLfloat position[3];
-	GLubyte color[3];
+	glm::vec3 color;
 } vertex_data_t;
 
 #endif

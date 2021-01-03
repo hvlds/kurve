@@ -16,7 +16,7 @@ void LineMesh::update() {
                         static_cast<GLfloat>(point.y), 
                         0
                     }, 
-                    .color = {this->color[0], this->color[1], this->color[2]}
+                    .color = this->color
                 }
             );
         }
@@ -31,11 +31,11 @@ void LineMesh::update() {
     }
 }
 
-void LineMesh::set_points(std::vector<Point> points) {
+void LineMesh::set_points(std::vector<glm::vec2> points) {
     this->points = points;
 }
 
-void LineMesh::add_point(Point point) {
+void LineMesh::add_point(glm::vec2 point) {
     if (this->line_points.size() == 0) {
         this->line_points.push_back(point);
     } else if (this->line_points.size() == 1) {
@@ -45,19 +45,19 @@ void LineMesh::add_point(Point point) {
         this->second_last_point = this->last_point;
         this->last_point = this->line_points.back();
 
-        Vector v1{this->last_point, this->second_last_point}; // second last - last
-        Vector v2{this->last_point, point}; // actual - last
+        glm::vec2 v1 = this->second_last_point - this->last_point; // second last - last
+        glm::vec2 v2 = point - this->last_point; // actual - last
         
-        double angle = Vector::angle(v1, v2);
+        double angle = get_angle(v1, v2);
         // std::cout << "angle: " << angle << std::endl;
-        double direction = Vector::cross_product(v1, v2);
+        double direction = cross_product(v1, v2);
         direction = round(direction);
         // std::cout << "direction: " << direction << std::endl;
 
         GLfloat r{0.17};
-        Point left_point, right_point;
+        glm::vec2 left_point, right_point;
 
-        double v2_length = v2.get_length();
+        double v2_length = get_length(v2);
         v2.x = (v2.x / (GLfloat) v2_length) * r;
         v2.y = (v2.y / (GLfloat) v2_length) * r;
 
@@ -105,7 +105,7 @@ void LineMesh::add_point(Point point) {
 
 }
 
-LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
+LineMesh::LineMesh(glm::vec2 first_point, glm::vec3 color) {
     this->color = color;
     
     std::vector<vertex_data_t> vertex_data;
@@ -116,7 +116,7 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
                 static_cast<GLfloat>(first_point.y), 
                 0
             }, 
-            .color = {this->color[0], this->color[1], this->color[2]}
+            .color = this->color
         }
     );
 
@@ -165,8 +165,8 @@ LineMesh::LineMesh(Point first_point, std::array<GLubyte, 3> color) {
     glVertexAttribPointer(
         ATTRIB_COLOR, 
         3, 
-        GL_UNSIGNED_BYTE, 
-        GL_TRUE, 
+        GL_FLOAT, 
+        GL_FALSE, 
         sizeof(vertex_data_t), 
         (GLvoid*)offsetof(vertex_data_t, color));
     gl_check_error("glVertexAttribPointer [color]");

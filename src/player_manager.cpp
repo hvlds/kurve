@@ -31,7 +31,7 @@ void PlayerManager::add_players() {
 void PlayerManager::add_player(
     int id,
     Control control,
-    std::array<GLubyte, 3> color) {   
+    glm::vec3 color) {   
     // Generate a random start position for the new player 
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
@@ -57,8 +57,8 @@ void PlayerManager::draw() {
     }
 }
 
-std::vector<Point> PlayerManager::get_all_points() {
-    std::vector<Point> all_points{};
+std::vector<glm::vec2> PlayerManager::get_all_points() {
+    std::vector<glm::vec2> all_points{};
     for (auto item : this->players) {
         auto temp_points = item.second->get_line_points();
         for (auto point : temp_points) {
@@ -68,9 +68,9 @@ std::vector<Point> PlayerManager::get_all_points() {
     return all_points;
 }
 
-std::vector<Point> PlayerManager::get_player_trace(int id) {
+std::vector<glm::vec2> PlayerManager::get_player_trace(int id) {
     std::shared_ptr<PlayerModel> player = this->players.at(id);
-    std::vector<Point> all_points = player->get_line_points();
+    std::vector<glm::vec2> all_points = player->get_line_points();
     std::size_t point_count = all_points.size();
     std::size_t limit = 20;
     if (point_count >= limit) {
@@ -81,8 +81,8 @@ std::vector<Point> PlayerManager::get_player_trace(int id) {
     return all_points;
 }
 
-std::vector<Point> PlayerManager::get_oponent_trace(int id) {
-    std::vector<Point> oponent_points{};
+std::vector<glm::vec2> PlayerManager::get_oponent_trace(int id) {
+    std::vector<glm::vec2> oponent_points{};
     for (auto item : this->players) {
         if (item.first != id) {
             auto temp_points = item.second->get_line_points();
@@ -94,7 +94,7 @@ std::vector<Point> PlayerManager::get_oponent_trace(int id) {
     return oponent_points;
 }
 
-Point PlayerManager::get_player_position(int id) {
+glm::vec2 PlayerManager::get_player_position(int id) {
     return this->players.at(id)->get_position();
 }
 
@@ -104,7 +104,7 @@ void PlayerManager::detect_collisions() {
         auto oponent_points = this->get_oponent_trace(id);
         auto own_points = this->get_player_trace(id);
         std::shared_ptr<PlayerModel> player = item.second;
-        Point position = player->get_position();
+        glm::vec2 position = player->get_position();
 
         // Check if player is alive (collision with border)
         bool in_dead_players = false;
@@ -120,7 +120,7 @@ void PlayerManager::detect_collisions() {
         } else {
             // Collisions with other players
             for (auto point : oponent_points) {
-                double distance = Point::get_distance(point, position);
+                auto distance = glm::length(position - point);
                 if (distance < 0.3) {
                     if (player->is_alive == true) {
                         player->is_alive = false;
@@ -136,7 +136,7 @@ void PlayerManager::detect_collisions() {
             // Collisions with all the lines (include of the base player)
             if (own_points.size() > 20 && player->is_alive == true) {
                 for (auto point : own_points) {
-                    double distance = Point::get_distance(point, position);
+                    auto distance = glm::length(position - point);
                     if (distance < 0.3) {
                         if (player->is_alive == true) {
                             player->is_alive = false;
@@ -226,7 +226,7 @@ void PlayerManager::reset_player(int id) {
     GLfloat x = (GLfloat) random_x / 10;
     GLfloat y = (GLfloat) random_y / 10;
     
-    Point new_position{x, y};
+    glm::vec2 new_position{x, y};
 
     player->clear();
     player->set_position(new_position);

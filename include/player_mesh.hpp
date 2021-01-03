@@ -8,7 +8,7 @@ class PlayerMesh: public Mesh {
    protected:
     int parts = 300;
    public:
-    PlayerMesh(std::array<GLubyte, 3> color);
+    PlayerMesh(glm::vec3 color);
     ~PlayerMesh();
     virtual void draw() override;
 };

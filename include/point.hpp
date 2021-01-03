@@ -1,30 +1,20 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 extern "C" {
 // Include the GLAD loader *before* including GLFW!
 #include "glad/glad.h"
 #include "math.h"
 }
 
-class Point {
-   public:
-    GLfloat x;
-    GLfloat y;
-    static double get_distance(Point p1, Point p2);
-};
-
-class Vector {
-   public:
-    GLfloat x;
-    GLfloat y;
-    Vector(Point start, Point end);
-    Vector(GLfloat x, GLfloat y);
-    double get_length();
-    static double dot_product(Vector v1, Vector v2);
-    static double cross_product(Vector v1, Vector v2);
-    static double angle(Vector v1, Vector v2);
-};
+double get_length(glm::vec2 v);
+double dot_product(glm::vec2 v1, glm::vec2 v2);
+double get_angle(glm::vec2 v1, glm::vec2 v2);
+double cross_product(glm::vec2 v1, glm::vec2 v2);
 
 
 #endif

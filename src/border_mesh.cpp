@@ -6,7 +6,7 @@ BorderMesh::BorderMesh() {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data;
 
-    std::vector<Point> points = {
+    std::vector<glm::vec2> points = {
         {0.65, 0.9}, {-0.9, 0.9}, {-0.9, -0.9}, {0.65, -0.9}
     };
 
@@ -18,7 +18,7 @@ BorderMesh::BorderMesh() {
                     static_cast<GLfloat>(point.y), 
                     0
                 }, 
-                .color = {0xFF, 0xFF, 0x00}
+                .color = {1.0, 1.0, 0.0}
             }
         );
     } 
@@ -68,7 +68,7 @@ BorderMesh::BorderMesh() {
     glVertexAttribPointer(
         ATTRIB_COLOR, 
         3, 
-        GL_UNSIGNED_BYTE, 
+        GL_FLOAT, 
         GL_TRUE, 
         sizeof(vertex_data_t), 
         (GLvoid*)offsetof(vertex_data_t, color));
