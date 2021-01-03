@@ -6,7 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
-#include <map>
 #include <vector>
 
 #include "display.hpp"
@@ -19,7 +18,6 @@
 using json = nlohmann::json;
 
 int main(void) {
-
     std::string json_path(STATIC_FILES);
     json_path.append("/settings/players.json");
 

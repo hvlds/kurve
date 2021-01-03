@@ -24,7 +24,7 @@ class GameOver {
     void draw();
     void update();
     int get_winner();
-    std::map<int, int, std::greater<int>> get_results();
+    std::multimap<int, int, std::greater<int>> get_results();
 };
 
 #endif
