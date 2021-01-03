@@ -40,13 +40,9 @@ int main(void) {
                 player_json["control"][0], 
                 player_json["control"][1]},
             .color = glm::vec3(
-                player_json["menu_color"][0],
-                player_json["menu_color"][1],
-                player_json["menu_color"][2]),
-            .menu_color = glm::vec3(
-                player_json["menu_color"][0],
-                player_json["menu_color"][1],
-                player_json["menu_color"][2]),
+                player_json["color"][0],
+                player_json["color"][1],
+                player_json["color"][2]),
             .score = 0};
         
         player_info.push_back(player);

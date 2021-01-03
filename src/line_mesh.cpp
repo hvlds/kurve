@@ -16,7 +16,7 @@ void LineMesh::update() {
                         static_cast<GLfloat>(point.y), 
                         0
                     }, 
-                    .color = {this->color.x, this->color.y, this->color.z}
+                    .color = this->color
                 }
             );
         }
@@ -116,7 +116,7 @@ LineMesh::LineMesh(Point first_point, glm::vec3 color) {
                 static_cast<GLfloat>(first_point.y), 
                 0
             }, 
-            .color = {this->color.x, this->color.y, this->color.z}
+            .color = this->color
         }
     );
 
@@ -165,8 +165,8 @@ LineMesh::LineMesh(Point first_point, glm::vec3 color) {
     glVertexAttribPointer(
         ATTRIB_COLOR, 
         3, 
-        GL_UNSIGNED_BYTE, 
-        GL_TRUE, 
+        GL_FLOAT, 
+        GL_FALSE, 
         sizeof(vertex_data_t), 
         (GLvoid*)offsetof(vertex_data_t, color));
     gl_check_error("glVertexAttribPointer [color]");

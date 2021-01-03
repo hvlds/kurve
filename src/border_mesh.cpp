@@ -18,7 +18,7 @@ BorderMesh::BorderMesh() {
                     static_cast<GLfloat>(point.y), 
                     0
                 }, 
-                .color = {0.5, 0.5, 0.5}
+                .color = {1.0, 1.0, 0.0}
             }
         );
     } 
@@ -68,7 +68,7 @@ BorderMesh::BorderMesh() {
     glVertexAttribPointer(
         ATTRIB_COLOR, 
         3, 
-        GL_UNSIGNED_BYTE, 
+        GL_FLOAT, 
         GL_TRUE, 
         sizeof(vertex_data_t), 
         (GLvoid*)offsetof(vertex_data_t, color));
