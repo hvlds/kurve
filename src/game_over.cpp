@@ -86,8 +86,8 @@ void GameOver::draw() {
     
 }
 
-std::map<int, int, std::greater<int>> GameOver::get_results() {
-    std::map<int, int, std::greater<int>> results;
+std::multimap<int, int, std::greater<int>> GameOver::get_results() {
+    std::multimap<int, int, std::greater<int>> results;
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     for (auto player : *user_data->player_info) {
         if (player.is_active == true) {
