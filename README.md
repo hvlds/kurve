@@ -110,6 +110,8 @@ $ ./kurve
 - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
    changes in the class Game
 - [ ] Create an AI to play against
+- [ ] Improve the scoring system and add a minimum differences to win
+- [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
 
 
 # Built With
