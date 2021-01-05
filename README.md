@@ -56,6 +56,11 @@ In Ubuntu 20.04
 $ sudo apt install libglfw3-dev libfreetype-dev nlohmann-json3-dev
 ```
 
+In archlinux or Manjaro
+```
+$ sudo pacman -Syu glfw-x11 freetype2 nlohmann-json 
+```
+
 ### Build and install the project
 ```
 $ cd kurve
