@@ -31,101 +31,113 @@ Game::Game(GLFWwindow* window) {
 }
 
 void Game::loop() {
+    const double fps_limit = 1.0 / 60.0;
+    double last_update_time = 0;  // number of seconds since the last loop
+    double last_frame_time = 0;   // number of seconds since the last frame
+
     while (!glfwWindowShouldClose(this->window)) {
-        auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
-        GameState game_state = user_data->game_state;
-        if (game_state == GAME_MENU) {
-            glClear(GL_COLOR_BUFFER_BIT);
-            gl_check_error("glClear");
-            this->has_players = false;
-            this->menu->draw();
-        } else if (game_state == GAME_EXIT) {
-#ifdef DEBUG
-    std::cout << "---- EXIT Game ----" << std::endl;
-#endif
-            break;
-        } else if (game_state == GAME_OVER) {
-            glClear(GL_COLOR_BUFFER_BIT);
-            gl_check_error("glClear");
-            this->game_over->draw();
-        } else if (game_state == GAME_ESCAPE) {
-            // Reset the players and go back to the menu
-            this->show_win_frames = 0;
-            user_data->game_state = GAME_MENU;
-            this->player_manager->terminate();
-            reset_player_info(this->window);
-        } else if (
-            game_state == GAME_ACTIVE
-            || game_state == GAME_WIN 
-            || game_state == GAME_PAUSE 
-            || game_state == GAME_TRANSITION) {
+        double now = glfwGetTime();
+        double delta_time = now - last_update_time;
+        glfwPollEvents();
 
-            // Generate the players in the first loop iteration
-            if (this->has_players == false) {
-                this->player_manager->add_players();
-                this->has_players = true;
-            }
-            
-            // Update only in the active frames
-            if (game_state != GAME_WIN) {
-                this->border_model->update(this->window);
-                this->player_manager->update(this->window);
-                player_manager->is_updated = false;
-                player_manager->detect_collisions();                
-            } else {
-                player_manager->update_score();
-
-                // Check if the actual score generates a GAME_OVER state
-                GameState new_state = player_manager->check_score();
-                if (new_state == GAME_OVER) {
-                    user_data->game_state = new_state;
-                    game_state = GAME_OVER;
-                    this->game_over->get_winner();
-                    this->player_manager->terminate();
-                }
-            }
-            
-            if (game_state != GAME_OVER) {
-                // Clear the color buffer -> background color:
+        // Logic that needs max. 60fps
+        if ((now - last_frame_time) >= fps_limit){
+            auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+            GameState game_state = user_data->game_state;
+            if (game_state == GAME_MENU) {
                 glClear(GL_COLOR_BUFFER_BIT);
                 gl_check_error("glClear");
+                this->has_players = false;
+                this->menu->draw();
+            } else if (game_state == GAME_EXIT) {
+#ifdef DEBUG
+                std::cout << "---- EXIT Game ----" << std::endl;
+#endif
+                break;
+            } else if (game_state == GAME_OVER) {
+                glClear(GL_COLOR_BUFFER_BIT);
+                gl_check_error("glClear");
+                this->game_over->draw();
+            } else if (game_state == GAME_ESCAPE) {
+                // Reset the players and go back to the menu
+                this->show_win_frames = 0;
+                user_data->game_state = GAME_MENU;
+                this->player_manager->terminate();
+                reset_player_info(this->window);
+            } else if (
+                game_state == GAME_ACTIVE
+                || game_state == GAME_WIN 
+                || game_state == GAME_PAUSE 
+                || game_state == GAME_TRANSITION) {
 
-                // Draw the models:
-                this->border_model->draw();
-                this->player_manager->draw();
-                this->side_panel->draw(
-                    this->get_player_count(),
-                    this->player_manager->get_max_score());           
+                // Generate the players in the first loop iteration
+                if (this->has_players == false) {
+                    this->player_manager->add_players();
+                    this->has_players = true;
+                }
+                
+                // Update only in the active frames
+                if (game_state != GAME_WIN) {
+                    this->border_model->update(this->window);
+                    this->player_manager->update(this->window);
+                    player_manager->is_updated = false;
+                    player_manager->detect_collisions();                
+                } else {
+                    player_manager->update_score();
 
-                // Check how many players are still active
-                auto players_alive = player_manager->get_alive_players();
-                auto players_dead = player_manager->get_dead_players();
-
-                if (players_alive.size() <= 1 && players_dead.size() != 0) {
-                    int id_winner;
-                    if (players_alive.size() == 1) {
-                        id_winner = players_alive.back();
-                    } else {
-                        id_winner = players_dead.back();
+                    // Check if the actual score generates a GAME_OVER state
+                    GameState new_state = player_manager->check_score();
+                    if (new_state == GAME_OVER) {
+                        user_data->game_state = new_state;
+                        game_state = GAME_OVER;
+                        this->game_over->get_winner();
+                        this->player_manager->terminate();
                     }
-                    this->side_panel->set_winner(id_winner);
-                    if (this->show_win_frames < 100) {
-                        this->show_win_frames++;
-                        user_data->game_state = GAME_WIN;
-                    } else {
-                        this->show_win_frames = 0;
-                        player_manager->reset();
-                        user_data->game_state = GAME_TRANSITION;
+                }
+                
+                if (game_state != GAME_OVER) {
+                    // Clear the color buffer -> background color:
+                    glClear(GL_COLOR_BUFFER_BIT);
+                    gl_check_error("glClear");
+
+                    // Draw the models:
+                    this->border_model->draw();
+                    this->player_manager->draw();
+                    this->side_panel->draw(
+                        this->get_player_count(),
+                        this->player_manager->get_max_score());           
+
+                    // Check how many players are still active
+                    auto players_alive = player_manager->get_alive_players();
+                    auto players_dead = player_manager->get_dead_players();
+
+                    if (players_alive.size() <= 1 && players_dead.size() != 0) {
+                        int id_winner;
+                        if (players_alive.size() == 1) {
+                            id_winner = players_alive.back();
+                        } else {
+                            id_winner = players_dead.back();
+                        }
+                        this->side_panel->set_winner(id_winner);
+                        if (this->show_win_frames < 100) {
+                            this->show_win_frames++;
+                            user_data->game_state = GAME_WIN;
+                        } else {
+                            this->show_win_frames = 0;
+                            player_manager->reset();
+                            user_data->game_state = GAME_TRANSITION;
+                        }
                     }
                 }
             }
+       
+            // draw your frame here
+
+            glfwSwapBuffers(this->window);
+
+            // only set lastFrameTime when you actually draw something
+            last_frame_time = now;
         }
-
-        // Swap the buffers to avoid tearing:
-        glfwSwapBuffers(this->window);
-
-        // React to the window manager's messages (e.g. close button):
-        glfwPollEvents();
     }
 }
 

@@ -110,6 +110,8 @@ $ ./kurve
    - [x] Generate a debian package (.deb) with cmake
    - [x] Migrate from the self built classes Point and Vector to GLM
 - [ ] v0.3-alpha
+   - [x] Use a constant or max. fps. In Manjaro was unplayable, because 
+      the fps were too high 
    - [ ] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
@@ -121,8 +123,6 @@ $ ./kurve
    - [ ] Improve the font rendering and the class Font in general. Add blinking
       text throught the class, different types of font (bold, italic, etc) and
       different sizes
-   - [ ] Use a constant or max. fps. In Manjaro is unplayable, because 
-      the fps were too high 
 
 
 # Built With
