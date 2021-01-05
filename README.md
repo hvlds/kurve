@@ -113,6 +113,9 @@ $ ./kurve
    - [ ] Create an AI to play against
    - [ ] Improve the scoring system and add a minimum differences to win
    - [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
+   - [ ] Improve the font rendering and the class Font in general. Add blinking
+      text throught the class, different types of font (bold, italic, etc) and
+      different sizes
 
 
 # Built With
