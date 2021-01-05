@@ -121,6 +121,8 @@ $ ./kurve
    - [ ] Improve the font rendering and the class Font in general. Add blinking
       text throught the class, different types of font (bold, italic, etc) and
       different sizes
+   - [ ] Use a constant or max. fps. In Manjaro is unplayable, because 
+      the fps were too high 
 
 
 # Built With
