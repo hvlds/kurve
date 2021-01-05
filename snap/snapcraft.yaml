@@ -1,6 +1,6 @@
 name: kurve
 base: core20 
-version: 'v0.2-alpha' 
+version: 'v0.3-alpha' 
 summary: Remake of the classic game "Achtung, die Kurve!" 
 description: |
   Remake of the classic game "Achtung, die Kurve!"
