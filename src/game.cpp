@@ -39,6 +39,8 @@ void Game::loop() {
         double now = glfwGetTime();
         double delta_time = now - last_update_time;
         glfwPollEvents();
+
+        // Logic that needs max. 60fps
         if ((now - last_frame_time) >= fps_limit){
             auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
             GameState game_state = user_data->game_state;
@@ -136,11 +138,6 @@ void Game::loop() {
             // only set lastFrameTime when you actually draw something
             last_frame_time = now;
         }
-        // Swap the buffers to avoid tearing:
-        //glfwSwapBuffers(this->window);
-
-        // React to the window manager's messages (e.g. close button):
-        //glfwPollEvents();
     }
 }
 

@@ -18,6 +18,7 @@ extern "C" {
 #include <glm/gtc/type_ptr.hpp>
 
 #include <map>
+#include <string>
 
 struct Character {
     unsigned int TextureID;  // ID handle of the glyph texture
