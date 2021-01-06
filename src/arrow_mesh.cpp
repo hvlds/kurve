@@ -12,6 +12,7 @@ ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
     double width = 0.25;
     double height = 1;
     std::vector<vertex_data_t> vertex_data {
+        // Triangle 1
         {
             .position = {static_cast<GLfloat>(-1 * width / 2), static_cast<GLfloat>(-1 * height), 0},
             .color = color
@@ -23,7 +24,7 @@ ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
         {   .position = {static_cast<GLfloat>(width / 2), static_cast<GLfloat>(0), 0}, 
             .color = color
         },
-
+        // Triangle 2
         {
             .position = {static_cast<GLfloat>(-1 * width / 2), static_cast<GLfloat>(-1 * height), 0},
             .color = color
@@ -35,7 +36,7 @@ ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
             .position = {static_cast<GLfloat>(-1 * width / 2), static_cast<GLfloat>(0), 0}, 
             .color = color
         },
-
+        // Triangle 3
         {   .position = {static_cast<GLfloat>(-1 * width), static_cast<GLfloat>(0), 0}, 
             .color = color
         },  

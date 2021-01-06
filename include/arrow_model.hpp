@@ -33,10 +33,12 @@ class ArrowModel : public Model {
     // The uniforms locations
     GLfloat start_pos_y_loc;
     GLfloat start_pos_x_loc;
+    GLfloat angle_loc;
 
     // The Uniform values
     GLfloat start_pos_y;
     GLfloat start_pos_x;
+    GLfloat angle;
 
     ArrowModel(glm::vec2 start_position, glm::vec3 color, glm::vec2 direction);
     ~ArrowModel();

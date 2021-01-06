@@ -64,6 +64,11 @@ void ArrowModel::init_uniforms() {
 #ifdef DEBUG
     std::cout << "Init uniforms" << std::endl;
 #endif
+    // Angle for the rotation
+    this->angle_loc = glGetUniformLocation(this->shader_id, "angle");
+    gl_check_error("glGetUniformLocation [angle]");
+    check_error(this->angle_loc >= 0, "Failed to obtain uniform location for angle.");
+
     // Start pos Y:
     this->start_pos_y_loc = glGetUniformLocation(this->shader_id, "start_pos_y");
     gl_check_error("glGetUniformLocation [start_pos_y]");
@@ -79,6 +84,11 @@ void ArrowModel::init_values() {
 #ifdef DEBUG
     std::cout << "Init values" << std::endl;
 #endif
+    this->angle = atan2(this->direction.y, this->direction.x);
+
+    glUniform1f(this->angle_loc, this->angle);
+    gl_check_error("glUniform1f [angle]");
+
     glUniform1f(this->start_pos_x_loc, this->start_pos_x);
     gl_check_error("glUniform1f [start_pos_x]");
 
@@ -88,12 +98,16 @@ void ArrowModel::init_values() {
 
 void ArrowModel::set_direction(glm::vec2 direction) {
     this->direction = direction;
+    this->angle = atan2(this->direction.y, this->direction.x);
 }
 
 void ArrowModel::set_position(glm::vec2 position) {
     glUseProgram(this->shader_id);
     this->start_pos_x = position.x;
     this->start_pos_y = position.y;
+
+    glUniform1f(this->angle_loc, this->angle);
+    gl_check_error("glUniform1f [angle]");
 
     glUniform1f(this->start_pos_x_loc, this->start_pos_x);
     gl_check_error("glUniform1f [start_pos_x]");
