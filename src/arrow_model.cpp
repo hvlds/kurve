@@ -5,6 +5,7 @@
 #include "gl_calls.hpp"
 #include "arrow_mesh.hpp"
 #include "shader.hpp"
+#include "point.hpp"
 
 
 ArrowModel::ArrowModel(
@@ -13,6 +14,8 @@ ArrowModel::ArrowModel(
     std::cout << "---- INIT ArrowModel ----" << std::endl;
 #endif    
     this->color = color;
+    this->start_pos_x = start_position.x;
+    this->start_pos_y = start_position.y;
     this->direction = direction;
 
     std::string vs_path(STATIC_FILES);
@@ -21,18 +24,13 @@ ArrowModel::ArrowModel(
     std::string fs_path(STATIC_FILES);
     fs_path.append("/shader/arrow.fs");
 
-    // Compile and add the shaders
     Shader shader(vs_path.c_str(), fs_path.c_str(), &this->shader_id);
-    // Init the uniforms
+
     this->init_uniforms();
 
-    // Add the mesh
     auto mesh = std::make_shared<ArrowMesh>(this->color);
     this->mesh = mesh;
 
-    // Init the values of the model
-    this->start_pos_x = start_position.x;
-    this->start_pos_y = start_position.y;
     this->init_values();    
 }
 
@@ -84,7 +82,9 @@ void ArrowModel::init_values() {
 #ifdef DEBUG
     std::cout << "Init values" << std::endl;
 #endif
-    this->angle = atan2(this->direction.y, this->direction.x);
+    glm::vec2 pos {this->start_pos_x, this->start_pos_y};
+    glm::vec2 pos2 = pos + this->direction * 100.0f;
+    this->angle = static_cast<GLfloat>(get_angle(pos, pos2));
 
     glUniform1f(this->angle_loc, this->angle);
     gl_check_error("glUniform1f [angle]");
@@ -98,7 +98,18 @@ void ArrowModel::init_values() {
 
 void ArrowModel::set_direction(glm::vec2 direction) {
     this->direction = direction;
-    this->angle = atan2(this->direction.y, this->direction.x);
+    glm::vec2 pos {this->start_pos_x, this->start_pos_y};
+    glm::vec2 pos2 = pos + this->direction * 100.0f;
+    this->angle = static_cast<GLfloat>(get_angle(pos, pos2));
+
+    glUniform1f(this->angle_loc, this->angle);
+    gl_check_error("glUniform1f [angle]");
+
+    glUniform1f(this->start_pos_x_loc, this->start_pos_x);
+    gl_check_error("glUniform1f [start_pos_x]");
+
+    glUniform1f(this->start_pos_y_loc, this->start_pos_y);
+    gl_check_error("glUniform1f [start_pos_y]");
 }
 
 void ArrowModel::set_position(glm::vec2 position) {
