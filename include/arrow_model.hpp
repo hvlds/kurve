@@ -16,7 +16,6 @@ extern "C" {
 }
 
 #include <array>
-#include <memory>
 #include <vector>
 
 #define VELOCITY 10
@@ -31,18 +30,14 @@ class ArrowModel : public Model {
 
    public:
     // The uniforms locations
-    GLint trans_y_loc;
-    GLint trans_x_loc;
     GLfloat start_pos_y_loc;
     GLfloat start_pos_x_loc;
 
     // The Uniform values
-    GLfloat trans_y;
-    GLfloat trans_x;
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-    ArrowModel(int id, GLfloat x, GLfloat y, glm::vec3 color, glm::vec2 direction);
+    ArrowModel(glm::vec2 start_position, glm::vec3 color, glm::vec2 direction);
     ~ArrowModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
