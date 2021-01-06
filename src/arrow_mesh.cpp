@@ -9,38 +9,40 @@ extern "C" {
 
 ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
     // Triangle data:
+    double width = 0.25;
+    double height = 1;
     std::vector<vertex_data_t> vertex_data {
         {
-            .position = {static_cast<GLfloat>(-0.25), static_cast<GLfloat>(-1), 0},
+            .position = {static_cast<GLfloat>(-1 * width / 2), static_cast<GLfloat>(-1 * height), 0},
             .color = color
         },
         {
-            .position = {static_cast<GLfloat>(0.25), static_cast<GLfloat>(-1), 0}, 
+            .position = {static_cast<GLfloat>(width / 2), static_cast<GLfloat>(-1 * height), 0}, 
             .color = color
         }, 
-        {   .position = {static_cast<GLfloat>(0.25), static_cast<GLfloat>(0), 0}, 
+        {   .position = {static_cast<GLfloat>(width / 2), static_cast<GLfloat>(0), 0}, 
             .color = color
         },
 
         {
-            .position = {static_cast<GLfloat>(-0.25), static_cast<GLfloat>(-1), 0},
+            .position = {static_cast<GLfloat>(-1 * width / 2), static_cast<GLfloat>(-1 * height), 0},
             .color = color
         },
-        {   .position = {static_cast<GLfloat>(0.25), static_cast<GLfloat>(0), 0}, 
+        {   .position = {static_cast<GLfloat>(width / 2), static_cast<GLfloat>(0), 0}, 
             .color = color
         },
         {
-            .position = {static_cast<GLfloat>(-0.25), static_cast<GLfloat>(0), 0}, 
+            .position = {static_cast<GLfloat>(-1 * width / 2), static_cast<GLfloat>(0), 0}, 
             .color = color
         },
 
-        {   .position = {static_cast<GLfloat>(-0.5), static_cast<GLfloat>(0), 0}, 
+        {   .position = {static_cast<GLfloat>(-1 * width), static_cast<GLfloat>(0), 0}, 
             .color = color
         },  
-        {   .position = {static_cast<GLfloat>(0.5), static_cast<GLfloat>(0), 0}, 
+        {   .position = {static_cast<GLfloat>(width), static_cast<GLfloat>(0), 0}, 
             .color = color
         }, 
-        {   .position = {static_cast<GLfloat>(0), static_cast<GLfloat>(1), 0}, 
+        {   .position = {static_cast<GLfloat>(0), static_cast<GLfloat>(height), 0}, 
             .color = color
         }, 
     };
