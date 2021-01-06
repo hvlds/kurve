@@ -8,7 +8,7 @@ class ArrowMesh: public Mesh {
    private:
     glm::vec2 direction;   
    public:
-    ArrowMesh(glm::vec3 color, glm::vec2 direction);
+    ArrowMesh(glm::vec3 color);
     ~ArrowMesh();
     virtual void draw() override;
 };

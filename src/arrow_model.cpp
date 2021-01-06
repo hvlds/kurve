@@ -27,7 +27,7 @@ ArrowModel::ArrowModel(
     this->init_uniforms();
 
     // Add the mesh
-    auto mesh = std::make_shared<ArrowMesh>(this->color, this->direction);
+    auto mesh = std::make_shared<ArrowMesh>(this->color);
     this->mesh = mesh;
 
     // Init the values of the model

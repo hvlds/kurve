@@ -7,7 +7,7 @@ extern "C" {
 #include <stdlib.h>
 }
 
-ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
+ArrowMesh::ArrowMesh(glm::vec3 color) {
     // Triangle data:
     double width = 0.25;
     double height = 1;
@@ -119,7 +119,6 @@ ArrowMesh::~ArrowMesh() {
 }
 
 void ArrowMesh::draw() {
-    std::cout << "Draw arrow mesh" << std::endl;
     this->bind();
     glDrawArrays(GL_TRIANGLES, 0, 9);
     gl_check_error("glDrawArrays");
