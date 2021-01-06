@@ -80,7 +80,13 @@ Display::Display(user_data_t* user_data) {
         NULL);
 	check_error(this->window != NULL, "Failed to create window.");
 
-	glfwSetWindowSizeLimits(this->window, 600, 600, GLFW_DONT_CARE, GLFW_DONT_CARE);
+	GLFWmonitor* primary = glfwGetPrimaryMonitor();
+    const GLFWvidmode * mode = glfwGetVideoMode(primary);
+
+    int max_width = mode->width;
+    int max_height = mode->height;
+
+	glfwSetWindowSizeLimits(this->window, 600, 600, max_width, max_height);
 
 	// Make the OpenGL context of the window the current one:
 	glfwMakeContextCurrent(this->window);
