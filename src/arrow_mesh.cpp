@@ -11,20 +11,38 @@ ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
     // Triangle data:
     std::vector<vertex_data_t> vertex_data {
         {
-            .position = {static_cast<GLfloat>(-1), static_cast<GLfloat>(-1), 0},
+            .position = {static_cast<GLfloat>(-0.25), static_cast<GLfloat>(-1), 0},
             .color = color
         },
         {
-            .position = {static_cast<GLfloat>(1), static_cast<GLfloat>(-1), 0}, 
+            .position = {static_cast<GLfloat>(0.25), static_cast<GLfloat>(-1), 0}, 
             .color = color
         }, 
-        {   .position = {static_cast<GLfloat>(1), static_cast<GLfloat>(1), 0}, 
+        {   .position = {static_cast<GLfloat>(0.25), static_cast<GLfloat>(0), 0}, 
             .color = color
-        }, 
+        },
+
         {
-            .position = {static_cast<GLfloat>(-1), static_cast<GLfloat>(1), 0}, 
+            .position = {static_cast<GLfloat>(-0.25), static_cast<GLfloat>(-1), 0},
             .color = color
-        }
+        },
+        {   .position = {static_cast<GLfloat>(0.25), static_cast<GLfloat>(0), 0}, 
+            .color = color
+        },
+        {
+            .position = {static_cast<GLfloat>(-0.25), static_cast<GLfloat>(0), 0}, 
+            .color = color
+        },
+
+        {   .position = {static_cast<GLfloat>(-0.5), static_cast<GLfloat>(0), 0}, 
+            .color = color
+        },  
+        {   .position = {static_cast<GLfloat>(0.5), static_cast<GLfloat>(0), 0}, 
+            .color = color
+        }, 
+        {   .position = {static_cast<GLfloat>(0), static_cast<GLfloat>(1), 0}, 
+            .color = color
+        }, 
     };
 
     // TODO: blackbox! Create a VAO.
@@ -52,7 +70,7 @@ ArrowMesh::ArrowMesh(glm::vec3 color, glm::vec2 direction) {
     // Upload the vertex data to the GPU:
     glBufferData(
         GL_ARRAY_BUFFER, 
-        4 * sizeof(vertex_data_t), 
+        vertex_data.size() * sizeof(vertex_data_t), 
         (const GLvoid*)vertex_data.data(), 
         GL_STATIC_DRAW);
     gl_check_error("glBufferData");
@@ -100,6 +118,6 @@ ArrowMesh::~ArrowMesh() {
 void ArrowMesh::draw() {
     std::cout << "Draw arrow mesh" << std::endl;
     this->bind();
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glDrawArrays(GL_TRIANGLES, 0, 9);
     gl_check_error("glDrawArrays");
 }
