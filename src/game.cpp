@@ -168,8 +168,14 @@ void key_callback(
         GLFWmonitor* primary = glfwGetPrimaryMonitor();
         const GLFWvidmode * mode = glfwGetVideoMode(primary);
 
-        int width = mode->width;
-        int height = mode->height;
+        int width, height;
+        if (user_data->is_fullscreen == true) {
+            width = mode->width;
+            height = mode->height;
+        } else {
+            width = 700;
+            height = 700;
+        }
 
         glfwSetWindowMonitor(
             window, 
