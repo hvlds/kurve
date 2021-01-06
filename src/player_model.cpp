@@ -294,4 +294,12 @@ void PlayerModel::set_position(glm::vec2 point) {
 
     auto line = std::make_shared<LineModel>(point, this->color);
     this->lines.push_back(line);
+
+    // Update the values of the directional arrow
+    glm::vec2 direction{
+        this->speed_x,
+        this->speed_y
+    };
+    this->arrow->set_position(point);
+    this->arrow->set_direction(direction);
 }

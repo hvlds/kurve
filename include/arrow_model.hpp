@@ -27,6 +27,7 @@ class ArrowModel : public Model {
 
     glm::vec3 color;
     glm::vec2 direction;
+    bool is_active = true;
 
    public:
     // The uniforms locations
@@ -41,6 +42,8 @@ class ArrowModel : public Model {
     ~ArrowModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw() override;
+    void set_position(glm::vec2 position);
+    void set_direction(glm::vec2 direction);
 };
 
 #endif

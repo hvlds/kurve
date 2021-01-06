@@ -45,11 +45,19 @@ ArrowModel::~ArrowModel() {
 }
 
 void ArrowModel::draw() {
-    glUseProgram(this->shader_id);
-    this->mesh->draw();
+    if (this->is_active == true) {
+        glUseProgram(this->shader_id);
+        this->mesh->draw();
+    }
 }    
 
 void ArrowModel::update(GLFWwindow* window) {
+    auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+    if (user_data->game_state ==  GAME_TRANSITION) {
+        this->is_active = true;
+    } else {
+        this->is_active = false;
+    }
 }
 
 void ArrowModel::init_uniforms() {
@@ -71,6 +79,22 @@ void ArrowModel::init_values() {
 #ifdef DEBUG
     std::cout << "Init values" << std::endl;
 #endif
+    glUniform1f(this->start_pos_x_loc, this->start_pos_x);
+    gl_check_error("glUniform1f [start_pos_x]");
+
+    glUniform1f(this->start_pos_y_loc, this->start_pos_y);
+    gl_check_error("glUniform1f [start_pos_y]");
+}
+
+void ArrowModel::set_direction(glm::vec2 direction) {
+    this->direction = direction;
+}
+
+void ArrowModel::set_position(glm::vec2 position) {
+    glUseProgram(this->shader_id);
+    this->start_pos_x = position.x;
+    this->start_pos_y = position.y;
+
     glUniform1f(this->start_pos_x_loc, this->start_pos_x);
     gl_check_error("glUniform1f [start_pos_x]");
 
