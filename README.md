@@ -127,6 +127,7 @@ $ ./kurve
    - [ ] Improve the font rendering and the class Font in general. Add blinking
       text throught the class, different types of font (bold, italic, etc) and
       different sizes
+   - [ ] Create an AppImage package
 
 
 # Built With
