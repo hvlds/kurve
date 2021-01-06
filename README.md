@@ -1,4 +1,8 @@
-# kurve
+<p align="center">
+  <img width="160" height="160" src="snap/gui/kurve.png">
+</p>
+
+# 
 
 [![Github Actions][img_gh-actions]][gh-actions]
 ![mit license][img_license]
