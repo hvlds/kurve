@@ -48,6 +48,13 @@ PlayerModel::PlayerModel(
     // Create a line model for the player
     auto line = std::make_shared<LineModel>(point, this->color);
     this->lines.push_back(line);
+
+    // Create an arrow model for the player
+    glm::vec2 direction{this->speed_x, this->speed_y};
+    glm::vec2 start_position{this->start_pos_x, this->start_pos_y};
+    auto arrow = std::make_shared<ArrowModel>(
+        start_position, this->color, direction);
+    this->arrow = arrow;
 }
 
 PlayerModel::~PlayerModel() {
@@ -65,9 +72,12 @@ void PlayerModel::draw() {
     for (auto line : this->lines) {
         line->draw();
     }
+
+    this->arrow->draw();
 }    
 
 void PlayerModel::update(GLFWwindow* window) {
+    this->arrow->update(window);
     // Update the time and calculate the delta:
     auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
     GameState game_state = user_data->game_state;
@@ -284,4 +294,12 @@ void PlayerModel::set_position(glm::vec2 point) {
 
     auto line = std::make_shared<LineModel>(point, this->color);
     this->lines.push_back(line);
+
+    // Update the values of the directional arrow
+    glm::vec2 direction{
+        this->speed_x,
+        this->speed_y
+    };
+    this->arrow->set_position(point);
+    this->arrow->set_direction(direction);
 }

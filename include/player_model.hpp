@@ -2,6 +2,7 @@
 #define PLAYER_MODEL_HPP
 
 #include "line_model.hpp"
+#include "arrow_model.hpp"
 #include "model.hpp"
 #include "player_mesh.hpp"
 #include "point.hpp"
@@ -29,6 +30,7 @@ class PlayerModel : public Model {
 
     std::vector<glm::vec2> points;
     std::vector<std::shared_ptr<LineModel>> lines;
+    std::shared_ptr<ArrowModel> arrow; 
     int blank_count = 0;
     int random_length;
 
