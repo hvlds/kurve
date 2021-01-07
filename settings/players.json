@@ -27,7 +27,7 @@
         "name": "Ravenclaw",
         "menu_text": "Ravenclaw    <L.Arrow R.Arrow>",
         "control": [263, 262],
-        "color": [0.0, 0.0, 1.0]
+        "color": [0.0, 0.4, 1.0]
     },
     "p5": {
         "id": 5,

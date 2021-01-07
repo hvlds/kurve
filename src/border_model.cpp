@@ -18,7 +18,7 @@ void BorderModel::update(GLFWwindow* window) {
 
 }
 
-void BorderModel::draw() {
+void BorderModel::draw(GLFWwindow* window) {
     glUseProgram(this->shader_id);
     this->mesh->draw();
 }

@@ -37,13 +37,13 @@ void Game::loop() {
     double last_frame_time = 0;   // number of seconds since the last frame
 
     while (!glfwWindowShouldClose(this->window)) {
+        auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
         double now = glfwGetTime();
-        double delta_time = now - last_update_time;
+        user_data->delta_time = now - last_update_time;
         glfwPollEvents();
 
         // Logic that needs max. 60fps
         if ((now - last_frame_time) >= fps_limit){
-            auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
             GameState game_state = user_data->game_state;
             if (game_state == GAME_MENU) {
                 glClear(GL_COLOR_BUFFER_BIT);
@@ -102,7 +102,7 @@ void Game::loop() {
                     gl_check_error("glClear");
 
                     // Draw the models:
-                    this->border_model->draw();
+                    this->border_model->draw(window);
                     this->player_manager->draw();
                     this->side_panel->draw(
                         this->get_player_count(),
@@ -137,7 +137,7 @@ void Game::loop() {
             glfwSwapBuffers(this->window);
 
             // only set lastFrameTime when you actually draw something
-            last_frame_time = now;
+            last_update_time = now;
         }
     }
 }

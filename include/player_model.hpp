@@ -60,7 +60,7 @@ class PlayerModel : public Model {
     PlayerModel(int id, GLfloat x, GLfloat y, glm::vec3 color);
     ~PlayerModel();
     virtual void update(GLFWwindow* window) override;
-    virtual void draw() override;
+    virtual void draw(GLFWwindow* window) override;
     
     /**
      * @brief Set the keys to control the player

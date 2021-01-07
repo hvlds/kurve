@@ -38,7 +38,7 @@ class LineModel : public Model {
     LineModel(glm::vec2 point, glm::vec3 color);
     ~LineModel();
     virtual void update(GLFWwindow* window) override;
-    virtual void draw() override;
+    virtual void draw(GLFWwindow* window) override;
     void add_point(glm::vec2 point);
     void set_color(glm::vec3 color);
     std::vector<glm::vec2> get_points();

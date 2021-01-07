@@ -65,15 +65,15 @@ PlayerModel::~PlayerModel() {
     gl_check_error("glDeleteProgram");
 }
 
-void PlayerModel::draw() {
+void PlayerModel::draw(GLFWwindow* window) {
     glUseProgram(this->shader_id);
     this->mesh->draw();
 
     for (auto line : this->lines) {
-        line->draw();
+        line->draw(window);
     }
 
-    this->arrow->draw();
+    this->arrow->draw(window);
 }    
 
 void PlayerModel::update(GLFWwindow* window) {
