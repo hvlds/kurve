@@ -30,7 +30,7 @@ class ArrowModel : public Model {
     bool is_active = true;
     bool is_drawn = true;
     double active_time = 0;
-    double blink_time = 0.5;   
+    double blink_time = 0.05;   
 
    public:
     // The uniforms locations

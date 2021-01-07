@@ -131,14 +131,12 @@ void Game::loop() {
                     }
                 }
             }
-       
-            // draw your frame here
-
             glfwSwapBuffers(this->window);
 
             // only set lastFrameTime when you actually draw something
-            last_update_time = now;
+            last_frame_time = now;
         }
+        last_update_time = now;
     }
 }
 

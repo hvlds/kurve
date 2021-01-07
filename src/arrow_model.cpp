@@ -45,7 +45,7 @@ ArrowModel::~ArrowModel() {
 void ArrowModel::draw(GLFWwindow* window) {
     if (this->is_active == true) {
         auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
-        this->active_time += user_data->delta_time;
+        this->active_time += user_data->delta_time * 1000;
         if (this->is_drawn == true) {
             glUseProgram(this->shader_id);
             this->mesh->draw();
