@@ -5,4 +5,4 @@ Type=Application
 Terminal=false
 Name=Kurve
 Exec=/usr/local/bin/kurve
-Icon=/usr/local/share/kurve/kurve.png
+Icon=/usr/local/share/kurve/static/kurve.png

@@ -31,20 +31,20 @@ file(GLOB all_SRCS
 
 # Configure the shader files
 file(GLOB SHADERS
-    "${CMAKE_SOURCE_DIR}/shader/*.vs"
-    "${CMAKE_SOURCE_DIR}/shader/*.fs"
+    "${CMAKE_SOURCE_DIR}/static/shader/*.vs"
+    "${CMAKE_SOURCE_DIR}/static/shader/*.fs"
 )
 file(COPY ${SHADERS} DESTINATION "${CMAKE_BINARY_DIR}/shader")
 
 # Configure the font files
 file(GLOB FONTS
-    "${CMAKE_SOURCE_DIR}/fonts/UbuntuMono-R.ttf"
+    "${CMAKE_SOURCE_DIR}/static/fonts/UbuntuMono-R.ttf"
 )
 file(COPY ${FONTS} DESTINATION "${CMAKE_BINARY_DIR}/fonts")
 
 # Configure the json settings files
 file(GLOB SETTINGS
-    "${CMAKE_SOURCE_DIR}/settings/players.json"
+    "${CMAKE_SOURCE_DIR}/static/settings/players.json"
 )
 file(COPY ${SETTINGS} DESTINATION "${CMAKE_BINARY_DIR}/settings")
 
@@ -71,7 +71,7 @@ set_target_properties(kurve PROPERTIES
 )
 
 set(tool_dest "bin")
-set(files_dest "share/kurve")
+set(files_dest "share/kurve/static")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("** Debug mode **")
