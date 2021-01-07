@@ -42,10 +42,23 @@ ArrowModel::~ArrowModel() {
     gl_check_error("glDeleteProgram");
 }
 
-void ArrowModel::draw() {
+void ArrowModel::draw(GLFWwindow* window) {
     if (this->is_active == true) {
-        glUseProgram(this->shader_id);
-        this->mesh->draw();
+        auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+        this->active_time += user_data->delta_time;
+        if (this->is_drawn == true) {
+            glUseProgram(this->shader_id);
+            this->mesh->draw();
+            if (this->active_time > this->blink_time) {
+                this->is_drawn = false;
+                this->active_time = 0;
+            }
+        } else {
+            if (this->active_time > this->blink_time) {
+                this->is_drawn = true;
+                this->active_time = 0;
+            }
+        }
     }
 }    
 

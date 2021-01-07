@@ -47,7 +47,7 @@ void LineModel::update(GLFWwindow* window) {
     this->line_mesh->update();
 }
 
-void LineModel::draw() {
+void LineModel::draw(GLFWwindow* window) {
     glUseProgram(this->shader_id);
     this->line_mesh->draw();
 }

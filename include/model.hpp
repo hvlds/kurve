@@ -25,7 +25,7 @@ class Model {
     std::shared_ptr<Mesh> mesh;
     GLuint shader_id;
     virtual void update(GLFWwindow* window) = 0;
-    virtual void draw() = 0;
+    virtual void draw(GLFWwindow* window) = 0;
 };
 
 #endif

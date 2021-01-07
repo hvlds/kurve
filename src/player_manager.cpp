@@ -53,7 +53,7 @@ void PlayerManager::update(GLFWwindow* window) {
 
 void PlayerManager::draw() {
     for (auto item : this->players) {
-        item.second->draw();
+        item.second->draw(this->window);
     }
 }
 
@@ -190,7 +190,6 @@ void PlayerManager::update_score() {
 }
 
 GameState PlayerManager::check_score() {
-    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     GameState new_state = GAME_ACTIVE;
 
     auto results = get_results(this->window);

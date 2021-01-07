@@ -69,6 +69,7 @@ typedef struct {
     bool is_fullscreen;
     GameState game_state;
     std::vector<player_info_t>* player_info;
+    double delta_time;
 } user_data_t;
 
 void reset_player_info(GLFWwindow* window);

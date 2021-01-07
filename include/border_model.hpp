@@ -20,7 +20,7 @@ class BorderModel: public Model {
    public:
     BorderModel();
     virtual void update(GLFWwindow* window) override;
-    virtual void draw() override;
+    virtual void draw(GLFWwindow* window) override;
 };
 
 #endif
