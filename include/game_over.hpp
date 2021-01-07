@@ -23,8 +23,6 @@ class GameOver {
     GameOver(GLFWwindow* window, std::shared_ptr<Font> font);
     void draw();
     void update();
-    int get_winner();
-    std::multimap<int, int, std::greater<int>> get_results();
 };
 
 #endif

@@ -1,7 +1,8 @@
-#include "game.hpp"
 
 #include <memory>
 
+#include "game.hpp"
+#include "user.hpp"
 #include "border_model.hpp"
 #include "font.hpp"
 #include "gl_calls.hpp"
@@ -90,7 +91,7 @@ void Game::loop() {
                     if (new_state == GAME_OVER) {
                         user_data->game_state = new_state;
                         game_state = GAME_OVER;
-                        this->game_over->get_winner();
+                        get_winner(this->window);
                         this->player_manager->terminate();
                     }
                 }

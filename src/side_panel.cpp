@@ -18,7 +18,7 @@ void SidePanel::draw(int player_count, int max_score) {
     // Draw the score at the top of the Side Panel
     this->font->draw_text(
         std::to_string(max_score),
-        460.0f,
+        455.0f,
         500.0f,
         1.0f,
         glm::vec3(1.0f, 1.0f, 1.0f)
@@ -28,6 +28,13 @@ void SidePanel::draw(int player_count, int max_score) {
         450.0f,
         450.0f,
         0.7f,
+        glm::vec3(1.0f, 1.0f, 1.0f)
+    );
+    this->font->draw_text(
+        "2 points diff",
+        420.0f,
+        430.0f,
+        0.4f,
         glm::vec3(1.0f, 1.0f, 1.0f)
     );
 

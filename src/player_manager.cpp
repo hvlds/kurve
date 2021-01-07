@@ -182,7 +182,7 @@ void PlayerManager::update_score() {
         if (alive_vec.size() == 1) {
             int last_id = alive_vec.back();
             user_data->player_info->at(last_id - 1).score += 
-                this->players.size();
+                this->players.size() - 1;
         }
 
         this->is_updated = true;
@@ -191,25 +191,22 @@ void PlayerManager::update_score() {
 
 GameState PlayerManager::check_score() {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
-    std::pair<int, int> best_score;
-    bool is_first = true;
     GameState new_state = GAME_ACTIVE;
-    for (auto item : this->players) {
-        int id = item.first;
-        int score = user_data->player_info->at(id - 1).score;
-        if (is_first) {
-            // Set the first score as the best score
-            best_score = std::make_pair(id, score);
-            is_first = false;
-        } else {
-            if (score > best_score.second) {
-                // Check if the new score is better than the actual best score
-                best_score = std::make_pair(id, score);
-            }
+
+    auto results = get_results(this->window);
+    int first_place, second_place;
+    int count = 0;
+    for (auto item : results) {
+        if (count == 0) {
+            first_place = item.first;
+            count++;
+        } else if (count == 1) {
+            second_place = item.first;
+            break;
         }
     }
-    if (best_score.second >= this->max_score) {
-        // user_data->game_state = GAME_OVER;
+    
+    if (first_place >= second_place + 2 && first_place >= this->max_score) {
         new_state = GAME_OVER;
     }
 
