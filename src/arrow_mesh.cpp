@@ -10,7 +10,7 @@ extern "C" {
 ArrowMesh::ArrowMesh(glm::vec3 color) {
     // Triangle data:
     double width = 0.25;
-    double height = 1;
+    double height = 0.6;
     std::vector<vertex_data_t> vertex_data {
         // Triangle 1
         {

@@ -82,9 +82,21 @@ void ArrowModel::init_values() {
 #ifdef DEBUG
     std::cout << "Init values" << std::endl;
 #endif
-    glm::vec2 pos {this->start_pos_x, this->start_pos_y};
-    glm::vec2 pos2 = pos + this->direction * 100.0f;
-    this->angle = static_cast<GLfloat>(get_angle(pos, pos2));
+    this->direction = direction;
+    glm::vec2 vec1 {0, 1};
+    glm::vec2 vec2 = direction;
+    auto rotation = cross_product(vec1, vec2);
+    if (rotation > 0) {
+        this->angle = -1 * static_cast<GLfloat>(get_angle(vec1, vec2));
+    } else if (rotation < 0) {
+        this->angle = static_cast<GLfloat>(get_angle(vec1, vec2));
+    } else {
+        this->angle = 0;
+    }
+
+#ifdef DEBUG
+    std::cout << "Angle: " << this->angle << std::endl;
+#endif
 
     glUniform1f(this->angle_loc, this->angle);
     gl_check_error("glUniform1f [angle]");
@@ -98,9 +110,20 @@ void ArrowModel::init_values() {
 
 void ArrowModel::set_direction(glm::vec2 direction) {
     this->direction = direction;
-    glm::vec2 pos {this->start_pos_x, this->start_pos_y};
-    glm::vec2 pos2 = pos + this->direction * 100.0f;
-    this->angle = static_cast<GLfloat>(get_angle(pos, pos2));
+    glm::vec2 vec1 {0, 1};
+    glm::vec2 vec2 = direction;
+    auto rotation = cross_product(vec1, vec2);
+    if (rotation > 0) {
+        this->angle = -1 * static_cast<GLfloat>(get_angle(vec1, vec2));
+    } else if (rotation < 0) {
+        this->angle = static_cast<GLfloat>(get_angle(vec1, vec2));
+    } else {
+        this->angle = 0;
+    }
+#ifdef DEBUG
+    std::cout << "Angle: " << this->angle << std::endl;
+    std::cout << "Speed: " << this->direction.x << " " << this->direction.y << std::endl;
+#endif
 
     glUniform1f(this->angle_loc, this->angle);
     gl_check_error("glUniform1f [angle]");
