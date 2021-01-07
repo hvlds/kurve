@@ -131,7 +131,10 @@ $ ./kurve
    - [ ] Improve the font rendering and the class Font in general. Add blinking
       text throught the class, different types of font (bold, italic, etc) and
       different sizes
-   - [ ] Create an AppImage package
+   - [ ] Generate an AppImage package
+   - [ ] Generate a Flatpak package
+   - [ ] Reorganize the static files and structure of the repository
+   - [ ] Render textures (images) for example the logo of kurve in the main Menu
 
 
 # Built With
