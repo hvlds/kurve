@@ -11,3 +11,28 @@ void reset_player_info(GLFWwindow* window) {
         user_data->player_info->at(info.id - 1).score = 0;
     }
 }
+
+std::multimap<int, int, std::greater<int>> get_results(GLFWwindow* window) {
+    std::multimap<int, int, std::greater<int>> results;
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+    for (auto player : *user_data->player_info) {
+        if (player.is_active == true) {
+            results.insert(
+                std::make_pair(player.score, player.id)
+            );
+        }
+    }
+    return results;
+}
+
+int get_winner(GLFWwindow* window) {
+    auto results = get_results(window);
+    int winner = -1;
+
+    for (auto item : results) {
+        winner = item.second;
+        break;
+    }
+
+    return winner;
+}

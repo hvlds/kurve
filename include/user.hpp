@@ -72,5 +72,7 @@ typedef struct {
 } user_data_t;
 
 void reset_player_info(GLFWwindow* window);
+int get_winner(GLFWwindow* window);
+std::multimap<int, int, std::greater<int>> get_results(GLFWwindow* window);
 
 #endif

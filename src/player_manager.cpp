@@ -182,7 +182,7 @@ void PlayerManager::update_score() {
         if (alive_vec.size() == 1) {
             int last_id = alive_vec.back();
             user_data->player_info->at(last_id - 1).score += 
-                this->players.size();
+                this->players.size() - 1;
         }
 
         this->is_updated = true;

@@ -22,8 +22,8 @@ void GameOver::draw() {
     float ready_extra_margin = 150.0f;
     int active_counter = 0;
 
-    auto results = this->get_results();
-    int id_winner = this->get_winner();
+    auto results = get_results(this->window);
+    int id_winner = get_winner(this->window);
     auto players = *user_data->player_info;
     
     for (auto item : results) {
@@ -84,31 +84,6 @@ void GameOver::draw() {
         0.7f,
         glm::vec3(1.0f, 1.0f, 1.0f));
     
-}
-
-std::multimap<int, int, std::greater<int>> GameOver::get_results() {
-    std::multimap<int, int, std::greater<int>> results;
-    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
-    for (auto player : *user_data->player_info) {
-        if (player.is_active == true) {
-            results.insert(
-                std::make_pair(player.score, player.id)
-            );
-        }
-    }
-    return results;
-}
-
-int GameOver::get_winner() {
-    auto results = this->get_results();
-    int winner = -1;
-
-    for (auto item : results) {
-        winner = item.second;
-        break;
-    }
-
-    return winner;
 }
 
 void GameOver::update() {
