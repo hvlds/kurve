@@ -94,6 +94,9 @@ void ArrowModel::init_values() {
         this->angle = 0;
     }
 
+    this->start_pos_x += direction.x * 10.0f;
+    this->start_pos_y += direction.y * 10.0f;
+
 #ifdef DEBUG
     std::cout << "Angle: " << this->angle << std::endl;
 #endif
@@ -120,6 +123,10 @@ void ArrowModel::set_direction(glm::vec2 direction) {
     } else {
         this->angle = 0;
     }
+
+    this->start_pos_x += direction.x * 10.0f;
+    this->start_pos_y += direction.y * 10.0f;
+
 #ifdef DEBUG
     std::cout << "Angle: " << this->angle << std::endl;
     std::cout << "Speed: " << this->direction.x << " " << this->direction.y << std::endl;
