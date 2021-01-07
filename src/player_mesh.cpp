@@ -14,6 +14,7 @@ PlayerMesh::PlayerMesh(glm::vec3 color) {
     double radius{0.17};
     double delta_angle{(2 * 3.14159265) / parts};
     double angle{0};
+    glm::vec3 yellow_color{1, 1, 0};
 
     for (int i = 0; i < this->parts; i++) {
         double x{radius * cos(angle)};
@@ -26,7 +27,7 @@ PlayerMesh::PlayerMesh(glm::vec3 color) {
                     static_cast<GLfloat>(y), 
                     0
                 }, 
-                .color = color
+                .color = yellow_color
             }
         );
     }
