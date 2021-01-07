@@ -116,7 +116,7 @@ $ ./kurve
 - [ ] v0.3-alpha
    - [x] Use a constant or max. fps. In Manjaro was unplayable, because 
       the fps were too high 
-   - [ ] Add a starting direction arrow in the transition zone (before starting)
+   - [x] Add a starting direction arrow in the transition zone (before starting)
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
    - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
