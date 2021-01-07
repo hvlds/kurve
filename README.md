@@ -71,6 +71,11 @@ In archlinux or Manjaro
 $ sudo pacman -Syu glfw-x11 freetype2 nlohmann-json 
 ```
 
+In Fedora
+```
+$ sudo dnf install glfw-devel freetype-devel json-devel mesa-libGLw mesa-libGLU-devel
+```
+
 ### Build and install the project
 
 Install from the bash script (default on /usr/local)
