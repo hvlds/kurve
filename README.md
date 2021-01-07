@@ -121,12 +121,12 @@ $ ./kurve
    - [x] Use a constant or max. fps. In Manjaro was unplayable, because 
       the fps were too high 
    - [x] Add a starting direction arrow in the transition zone (before starting)
+   - [x] Improve the scoring system and add a minimum differences to win
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
    - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
       changes in the class Game
    - [ ] Create an AI to play against
-   - [ ] Improve the scoring system and add a minimum differences to win
    - [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
    - [ ] Improve the font rendering and the class Font in general. Add blinking
       text throught the class, different types of font (bold, italic, etc) and
