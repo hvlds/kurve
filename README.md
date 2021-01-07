@@ -72,6 +72,13 @@ $ sudo pacman -Syu glfw-x11 freetype2 nlohmann-json
 ```
 
 ### Build and install the project
+
+Install from the bash script (default on /usr/local)
+```
+$ sudo sh scripts/install.sh
+```
+
+Build and install manually:
 ```
 $ cd kurve
 $ mkdir Release
@@ -94,11 +101,12 @@ $ mkdir Debug
 $ cd Debug
 $ cmake -DCMAKE_BUILD_TYPE=Debug ..
 $ make
+$ ./kurve
 ```
 
-Enjoy
+Or from the script:
 ```
-$ ./kurve
+$ sh script/debug.sh
 ```
 
 # Roadmap

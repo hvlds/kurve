@@ -10,3 +10,6 @@ mkdir $DIRECTORY
 cd $DIRECTORY
 cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo make install
+
+cd ..
+sudo rm -rf Release
