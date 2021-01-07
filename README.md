@@ -43,6 +43,10 @@ Kurve is available in the Snap Store under the name "kurve".
 ```
 $ sudo snap install kurve
 ```
+To get kurve as a rolling release
+```
+$ sudo snap install kurve --edge
+```
 
 ## Install from the source
 Clone this project
