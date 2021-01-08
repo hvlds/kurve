@@ -103,31 +103,30 @@ Font::Font(GLFWwindow* window) {
 #ifdef DEBUG
     std::cout << "---- INIT FONT ----" << std::endl;
 #endif
-    this->window = window;
-    auto regular = std::make_shared<SubFont>(
-        this->window, 
-        "/fonts/UbuntuMono-R.ttf",
-        48);
-    subfonts.insert(
-        std::make_pair("regular", regular)
-    );  
-
-    auto bold = std::make_shared<SubFont>(
-        this->window, 
-        "/fonts/UbuntuMono-B.ttf",
-        48);
-    subfonts.insert(
-        std::make_pair("bold", bold)
-    ); 
-
-    auto regular_italic = std::make_shared<SubFont>(
-        this->window, 
-        "/fonts/UbuntuMono-RI.ttf",
-        48);
-    subfonts.insert(
-        std::make_pair("regular_italic", regular_italic)
-    ); 
-
+    std::vector<int> font_sizes {24, 48, 84};
+    std::vector<std::string> size_names {"small", "medium", "big"};
+    std::map<std::string, std::string> type_names;
+    type_names.insert(std::make_pair("regular", "/fonts/UbuntuMono-R.ttf")); 
+    type_names.insert(std::make_pair("bold", "/fonts/UbuntuMono-R.ttf"));
+    type_names.insert(std::make_pair("regular_italic", "/fonts/UbuntuMono-R.ttf")); 
+    type_names.insert(std::make_pair("bold_italic", "/fonts/UbuntuMono-R.ttf"));
+    
+    int count = 0;
+    for (auto item : type_names) {
+        auto type_name = item.first;
+        auto path = item.second;
+        for (auto size_name : size_names) {
+            std::string new_name = type_name + "_" + size_name;
+            int font_size = font_sizes.at(count);
+            auto sub_font = std::make_shared<SubFont>(
+                this->window, 
+                path,
+                font_size);
+            subfonts.insert(std::make_pair(new_name, sub_font));
+            count++;
+        }
+        count = 0;
+    }
 }
 
 Font::~Font() {
@@ -153,7 +152,7 @@ void Font::draw_text(
     bool is_blinking,
     FontSize font_size,
     FontType font_type) {
-    subfonts.at("regular_italic")->draw_text(
+    subfonts.at("regular_italic_medium")->draw_text(
         text, 
         x, 
         y, 
