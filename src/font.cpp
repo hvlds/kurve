@@ -103,7 +103,7 @@ Font::Font(GLFWwindow* window) {
 #ifdef DEBUG
     std::cout << "---- INIT FONT ----" << std::endl;
 #endif
-    std::vector<int> font_sizes {24, 48, 84};
+    std::vector<int> font_sizes {24, 48, 150};
     std::vector<std::string> size_names {"small", "medium", "big"};
     std::map<std::string, std::string> type_names;
     type_names.insert(std::make_pair("regular", "/fonts/UbuntuMono-R.ttf")); 
@@ -151,14 +151,18 @@ void Font::draw_text(
     glm::vec3 color,
     bool is_blinking,
     std::string font_type) {
+    if (is_blinking == true) {
+        if (this->is_drawn == false) {
+            return;
+        }
+    }
     subfonts.at(font_type)->draw_text(
-        text, 
-        x, 
-        y, 
-        scale, 
-        color,
-        is_blinking
-    );
+            text, 
+            x, 
+            y, 
+            scale, 
+            color,
+            is_blinking);
 }
 
 void SubFont::draw_text(
@@ -168,13 +172,6 @@ void SubFont::draw_text(
     float scale, 
     glm::vec3 color,
     bool is_blinking) {
-
-	if (is_blinking == true) {
-        if (this->is_drawn == false) {
-            return;
-        }
-    }
-
 	glUseProgram(this->shader_id);
     glUniform3f(glGetUniformLocation(this->shader_id, "textColor"), color.x, color.y, color.z);
     glActiveTexture(GL_TEXTURE0);

@@ -75,7 +75,7 @@ Display::Display(user_data_t* user_data) {
 	this->window = glfwCreateWindow(
         this->user_data->window_width, 
         this->user_data->window_height, 
-        "Achtung, die Kurve!", 
+        "Kurve", 
         NULL, 
         NULL);
 	check_error(this->window != NULL, "Failed to create window.");

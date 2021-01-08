@@ -138,15 +138,15 @@ $ sh script/debug.sh
    - [x] Add a starting direction arrow in the transition zone (before starting)
    - [x] Improve the scoring system and add a minimum differences to win
    - [x] Reorganize the static files and structure of the repository
+   - [x] Improve the font rendering and the class Font in general. Add blinking
+      text throught the class, different types of font (bold, italic, etc) and
+      different sizes
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
    - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
       changes in the class Game
    - [ ] Create an AI to play against
    - [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
-   - [ ] Improve the font rendering and the class Font in general. Add blinking
-      text throught the class, different types of font (bold, italic, etc) and
-      different sizes
    - [ ] Generate an AppImage package
    - [ ] Generate a Flatpak package
    - [ ] Render textures (images) for example the logo of kurve in the main Menu

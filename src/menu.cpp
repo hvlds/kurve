@@ -57,11 +57,11 @@ void Menu::draw() {
         0.7f,
         glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
     this->font->draw_text(
-        "Achtung, die Kurve!",
-        -330.0f,
-        450.0f,
-        1.5f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
+        "Kurve",
+        -200.0f,
+        400.0f,
+        1.0f,
+        glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_big");
 
     if (active_counter >= 2) {
         this->font->draw_text(
