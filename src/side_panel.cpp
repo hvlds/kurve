@@ -17,29 +17,11 @@ void SidePanel::draw(int player_count, int max_score) {
 
     // Draw the score at the top of the Side Panel
     this->font->draw_text(
-        std::to_string(max_score),
-        460.0f,
-        500.0f,
-        1.2f,
-        glm::vec3(1.0f, 1.0f, 1.0f),
-        false, "bold_medium"
-    );
+        std::to_string(max_score), 460.0f, 500.0f, 1.2f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_medium");
     this->font->draw_text(
-        "Goal",
-        455.0f,
-        450.0f,
-        0.7f,
-        glm::vec3(1.0f, 1.0f, 1.0f),
-        false, "regular_medium"
-    );
+        "Goal", 455.0f, 450.0f, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
     this->font->draw_text(
-        "2 points diff",
-        415.0f,
-        430.0f,
-        1.0f,
-        glm::vec3(1.0f, 1.0f, 1.0f),
-        false, "regular_small"
-    );
+        "2 points diff", 415.0f, 430.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;
@@ -49,15 +31,21 @@ void SidePanel::draw(int player_count, int max_score) {
             auto score_text = std::to_string(player_info.score);
             if (game_state == GAME_WIN) {
                 if (player_info.id == this->id_winner) {
-                    this->font->draw_text(name, 450.0f, y_pos, 1.0f, color, true, "regular_small");
-                    this->font->draw_text(score_text, 400.0f, y_pos, 1.0f, color, true, "regular_small"); 
+                    this->font->draw_text(
+                        name, 450.0f, y_pos, 1.0f, color, true, "regular_small");
+                    this->font->draw_text(
+                        score_text, 400.0f, y_pos, 1.0f, color, true, "regular_small"); 
                 } else {
-                    this->font->draw_text(name, 450.0f, y_pos, 1.0f, color, false, "regular_small");
-                    this->font->draw_text(score_text, 400.0f, y_pos, 1.0f, color, false, "regular_small");
+                    this->font->draw_text(
+                        name, 450.0f, y_pos, 1.0f, color, false, "regular_small");
+                    this->font->draw_text(
+                        score_text, 400.0f, y_pos, 1.0f, color, false, "regular_small");
                 }
             } else {
-                this->font->draw_text(name, 450.0f, y_pos, 1.0f, color, false, "regular_small");
-                this->font->draw_text(score_text, 400.0f, y_pos, 1.0f, color, false, "regular_small");
+                this->font->draw_text(
+                    name, 450.0f, y_pos, 1.0f, color, false, "regular_small");
+                this->font->draw_text(
+                    score_text, 400.0f, y_pos, 1.0f, color, false, "regular_small");
             }
             count += 1.0f;
         }
@@ -65,57 +53,25 @@ void SidePanel::draw(int player_count, int max_score) {
 
     if (game_state == GAME_PAUSE) {
         this->font->draw_text(
-            "Press SPACE",
-            400.0f,
-            -300.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
         this->font->draw_text(
-            "to continue",
-            400.0f,
-            -325.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to continue", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
     } else if (game_state == GAME_ACTIVE) {
         this->font->draw_text(
-            "Press SPACE",
-            400.0f,
-            -300.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
         this->font->draw_text(
-            "to pause",
-            400.0f,
-            -325.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to pause", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
     } else if (game_state == GAME_TRANSITION) {
         this->font->draw_text(
-            "Press SPACE",
-            400.0f,
-            -300.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
         this->font->draw_text(
-            "to start",
-            400.0f,
-            -325.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to start", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
     }
+    
     this->font->draw_text(
-            "Press ESCAPE",
-            400.0f,
-            -375.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f),false, "bold_small");
+            "Press ESCAPE", 400.0f, -375.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f),false, "bold_small");
         this->font->draw_text(
-            "to restart",
-            400.0f,
-            -400.0f,
-            1.0f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
-
+            "to restart", 400.0f, -400.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
 }
 
 void SidePanel::update() {

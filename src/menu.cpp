@@ -33,43 +33,25 @@ void Menu::draw() {
 
         if (is_active == true) {
             this->font->draw_text(
-                "READY",
-                200.0f + ready_extra_margin,
-                pos_name_y + pos,
-                0.75f,
-                color, false, "regular_medium");
+                "READY", 200.0f + ready_extra_margin, pos_name_y + pos, 0.75f, color, false, "regular_medium");
             active_counter++;
         }
 
         this->font->draw_text(
-            menu_text, 
-            -500.0f, 
-            pos_name_y + pos, 
-            0.75f, 
-            color, false, "regular_medium");
+            menu_text, -500.0f, pos_name_y + pos, 0.75f, color, false, "regular_medium");
         pos_name_y -= 75.0f;
     }
 
     this->font->draw_text(
         "Press the left key of the player to join the party",
-        -420.0f,
-        -225.0f + pos,
-        0.7f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
+        -420.0f, -225.0f + pos, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
     this->font->draw_text(
-        "Kurve",
-        -200.0f,
-        400.0f,
-        1.0f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_big");
+        "Kurve", -200.0f, 400.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_big");
 
     if (active_counter >= 2) {
         this->font->draw_text(
             "Press SPACE to start",
-            -180.0f,
-            -300.0f + pos,
-            0.7f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
+            -180.0f, -300.0f + pos, 0.7f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
     }
 }
 
