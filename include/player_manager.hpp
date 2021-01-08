@@ -2,6 +2,7 @@
 #define PLAYER_MANAGER_HPP
 
 #include "player_model.hpp"
+#include "ai_model.hpp"
 #include "user.hpp"
 #include "point.hpp"
 
@@ -27,6 +28,7 @@ class PlayerManager {
     std::vector<glm::vec2> get_player_trace(int id);
     glm::vec2 get_player_position(int id);
     int max_score;
+    std::shared_ptr<AIModel> AI;
    public:
     bool is_updated = false;
     PlayerManager(GLFWwindow* window);

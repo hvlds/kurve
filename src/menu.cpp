@@ -19,10 +19,7 @@ void Menu::draw() {
 
     this->font->draw_text(
         "             <Left Right>",
-        -500.0f,
-        pos_name_y + pos + 75,
-        0.75f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
+        -500.0f, pos_name_y + pos + 75, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;

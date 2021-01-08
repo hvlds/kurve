@@ -5,7 +5,8 @@
 
 PlayerManager::PlayerManager(GLFWwindow* window) {
     srand((unsigned) time(0));
-    this->window = window;       
+    this->window = window; 
+    this->AI = std::make_shared<AIModel>(10, 10.0f, 10.0f, glm::vec3(1, 1, 1));
 }
 
 void PlayerManager::add_players() {
@@ -49,12 +50,14 @@ void PlayerManager::update(GLFWwindow* window) {
     for (auto item : this->players) {
         item.second->update(window);
     }
+    this->AI->update(window);
 }
 
 void PlayerManager::draw() {
     for (auto item : this->players) {
         item.second->draw(this->window);
     }
+    this->AI->draw(this->window);
 }
 
 std::vector<glm::vec2> PlayerManager::get_all_points() {
