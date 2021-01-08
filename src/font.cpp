@@ -107,9 +107,9 @@ Font::Font(GLFWwindow* window) {
     std::vector<std::string> size_names {"small", "medium", "big"};
     std::map<std::string, std::string> type_names;
     type_names.insert(std::make_pair("regular", "/fonts/UbuntuMono-R.ttf")); 
-    type_names.insert(std::make_pair("bold", "/fonts/UbuntuMono-R.ttf"));
-    type_names.insert(std::make_pair("regular_italic", "/fonts/UbuntuMono-R.ttf")); 
-    type_names.insert(std::make_pair("bold_italic", "/fonts/UbuntuMono-R.ttf"));
+    type_names.insert(std::make_pair("bold", "/fonts/UbuntuMono-B.ttf"));
+    type_names.insert(std::make_pair("regular_italic", "/fonts/UbuntuMono-RI.ttf")); 
+    type_names.insert(std::make_pair("bold_italic", "/fonts/UbuntuMono-BI.ttf"));
     
     int count = 0;
     for (auto item : type_names) {
