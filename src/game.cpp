@@ -20,7 +20,7 @@ Game::Game(GLFWwindow* window) {
     this->window = window;
     this->has_players = false;
 
-    this->font = std::make_shared<Font>();
+    this->font = std::make_shared<Font>(window);
     this->menu = std::make_shared<Menu>(window, this->font);
     this->side_panel = std::make_shared<SidePanel>(window, this->font);
     this->player_manager = std::make_shared<PlayerManager>(window);
@@ -40,6 +40,7 @@ void Game::loop() {
         auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
         double now = glfwGetTime();
         user_data->delta_time = now - last_update_time;
+        this->font->set_delta_time(user_data->delta_time);
         glfwPollEvents();
 
         // Logic that needs max. 60fps

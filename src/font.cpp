@@ -4,11 +4,11 @@
 #include <iostream>
 #include <string>
 
-Font::Font() {
-    // Testing FreeType
+SubFont::SubFont(GLFWwindow* window, std::string path, int font_size) {
 #ifdef DEBUG
-    std::cout << "---- INIT FONT ----" << std::endl;
+    std::cout << "---- INIT SUBFONT ----" << std::endl;
 #endif
+    this->window = window;
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         std::cout << 
@@ -18,13 +18,13 @@ Font::Font() {
 
     FT_Face face;
     std::string font_path(STATIC_FILES);
-    font_path.append("/fonts/UbuntuMono-R.ttf");
+    font_path.append(path);
     if (FT_New_Face(ft, font_path.c_str(), 0, &face)) {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
         return;
     }
 
-    FT_Set_Pixel_Sizes(face, 0, 48);
+    FT_Set_Pixel_Sizes(face, 0, font_size);
 
     if (FT_Load_Char(face, 'X', FT_LOAD_RENDER)) {
         std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
@@ -94,7 +94,39 @@ Font::Font() {
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);    
+    glBindVertexArray(0);  
+}
+
+
+Font::Font(GLFWwindow* window) {
+    // Testing FreeType
+#ifdef DEBUG
+    std::cout << "---- INIT FONT ----" << std::endl;
+#endif
+    std::vector<int> font_sizes {24, 48, 84};
+    std::vector<std::string> size_names {"small", "medium", "big"};
+    std::map<std::string, std::string> type_names;
+    type_names.insert(std::make_pair("regular", "/fonts/UbuntuMono-R.ttf")); 
+    type_names.insert(std::make_pair("bold", "/fonts/UbuntuMono-R.ttf"));
+    type_names.insert(std::make_pair("regular_italic", "/fonts/UbuntuMono-R.ttf")); 
+    type_names.insert(std::make_pair("bold_italic", "/fonts/UbuntuMono-R.ttf"));
+    
+    int count = 0;
+    for (auto item : type_names) {
+        auto type_name = item.first;
+        auto path = item.second;
+        for (auto size_name : size_names) {
+            std::string new_name = type_name + "_" + size_name;
+            int font_size = font_sizes.at(count);
+            auto sub_font = std::make_shared<SubFont>(
+                this->window, 
+                path,
+                font_size);
+            subfonts.insert(std::make_pair(new_name, sub_font));
+            count++;
+        }
+        count = 0;
+    }
 }
 
 Font::~Font() {
@@ -111,14 +143,38 @@ Font::~Font() {
     // glDeleteProgram(this->shader_id);
     // gl_check_error("glDeleteProgram");
 }
-
 void Font::draw_text(
     std::string text, 
     float x, 
     float y, 
     float scale, 
-    glm::vec3 color) {
-	
+    glm::vec3 color,
+    bool is_blinking,
+    std::string font_type) {
+    subfonts.at(font_type)->draw_text(
+        text, 
+        x, 
+        y, 
+        scale, 
+        color,
+        is_blinking
+    );
+}
+
+void SubFont::draw_text(
+    std::string text, 
+    float x, 
+    float y, 
+    float scale, 
+    glm::vec3 color,
+    bool is_blinking) {
+
+	if (is_blinking == true) {
+        if (this->is_drawn == false) {
+            return;
+        }
+    }
+
 	glUseProgram(this->shader_id);
     glUniform3f(glGetUniformLocation(this->shader_id, "textColor"), color.x, color.y, color.z);
     glActiveTexture(GL_TEXTURE0);
@@ -164,4 +220,19 @@ void Font::draw_text(
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Font::set_delta_time(double delta_time) {
+    this->active_time += delta_time;
+    if (this->is_drawn == true) {
+        if (this->active_time > this->blink_time) {
+            this->is_drawn = false;
+            this->active_time = 0;
+        }
+    } else {
+        if (this->active_time > this->blink_time) {
+            this->is_drawn = true;
+            this->active_time = 0;
+        }
+    }
 }
