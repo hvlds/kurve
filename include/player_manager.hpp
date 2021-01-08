@@ -35,7 +35,8 @@ class PlayerManager {
     void add_player(
         int id,
         Control control,
-        glm::vec3 color);
+        glm::vec3 color,
+        bool is_AI);
     void update(GLFWwindow* window);
     std::vector<glm::vec2> get_all_points();
 

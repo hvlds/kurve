@@ -43,9 +43,30 @@ int main(void) {
                 player_json["color"][0],
                 player_json["color"][1],
                 player_json["color"][2]),
-            .score = 0};
+            .score = 0,
+            .is_AI = false};
         
         player_info.push_back(player);
+    }
+
+    for (std::string AI_name : players_json["AI"]) {
+        auto AI_json = players_json[AI_name];
+        player_info_t AI = {
+            .is_active = true,
+            .id = AI_json["id"],
+            .name = AI_json["name"],
+            .menu_text = "--",
+            .control = {
+                0, 
+                0},
+            .color = glm::vec3(
+                AI_json["color"][0],
+                AI_json["color"][1],
+                AI_json["color"][2]),
+            .score = 0,
+            .is_AI = true};
+        
+        player_info.push_back(AI);
     }
 
     // Create our user data struct:
@@ -55,8 +76,8 @@ int main(void) {
             .window_height = 700,
             .is_fullscreen = false,
             .game_state = GAME_MENU,
-            .player_info = &player_info,
-            .delta_time = 0};
+            .delta_time = 0,
+            .player_info = &player_info};
 
     Display display(&user_data);
     GLFWwindow* window = display.get_window();

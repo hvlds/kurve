@@ -1,6 +1,7 @@
 
 {
     "players": ["p1", "p2", "p3", "p4", "p5", "p6"],
+    "AI": ["AI1"], 
     "p1": {
         "id": 1,
         "name": "Gryffindor",
@@ -42,5 +43,10 @@
         "menu_text": "Squib        <B N>",
         "control": [66, 78],
         "color": [0.7, 0.7, 0.7]
+    },
+    "AI1": {
+        "id": 7,
+        "name": "Voldemort",
+        "color": [0.4, 0.0, 1.0]
     }
 }

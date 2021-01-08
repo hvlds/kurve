@@ -6,7 +6,6 @@
 PlayerManager::PlayerManager(GLFWwindow* window) {
     srand((unsigned) time(0));
     this->window = window; 
-    this->AI = std::make_shared<AIModel>(10, 10.0f, 10.0f, glm::vec3(1, 1, 1));
 }
 
 void PlayerManager::add_players() {
@@ -20,7 +19,7 @@ void PlayerManager::add_players() {
             auto color = player_info.color;
             auto control = player_info.control;
             int id = player_info.id;
-            this->add_player(id, control, color);
+            this->add_player(id, control, color, player_info.is_AI);
         }
     }
 
@@ -32,7 +31,8 @@ void PlayerManager::add_players() {
 void PlayerManager::add_player(
     int id,
     Control control,
-    glm::vec3 color) {   
+    glm::vec3 color,
+    bool is_AI) {   
     // Generate a random start position for the new player 
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
@@ -40,24 +40,27 @@ void PlayerManager::add_player(
     GLfloat x = (GLfloat) random_x / 10;
     GLfloat y = (GLfloat) random_y / 10;
 
-    auto player = std::make_shared<PlayerModel>(id, x, y, color);
-    player->set_keys(control);
+    if (is_AI == false) {
+        auto player = std::make_shared<PlayerModel>(id, x, y, color);
+        player->set_keys(control);
+        this->players.insert({id, player});
+    } else {
+        auto AI = std::make_shared<AIModel>(id, x, y, color);
+        this->players.insert({id, AI});
+    }
 
-    this->players.insert({id, player});
 }
 
 void PlayerManager::update(GLFWwindow* window) {
     for (auto item : this->players) {
         item.second->update(window);
     }
-    this->AI->update(window);
 }
 
 void PlayerManager::draw() {
     for (auto item : this->players) {
         item.second->draw(this->window);
     }
-    this->AI->draw(this->window);
 }
 
 std::vector<glm::vec2> PlayerManager::get_all_points() {

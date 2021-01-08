@@ -7,6 +7,7 @@
 #include "shader.hpp"
 
 void AIModel::update(GLFWwindow* window) {
+    this->arrow->update(window);
     // Update the time and calculate the delta:
     auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
     GameState game_state = user_data->game_state;

@@ -195,7 +195,7 @@ void key_callback(
             if (user_data->game_state == GAME_MENU) {
                 int player_count = 0;
                 for (auto player_info : *user_data->player_info) {
-                    if (player_info.is_active) {
+                    if (player_info.is_active && player_info.is_AI == false) {
                         player_count++;
                     }
                 }
@@ -205,16 +205,18 @@ void key_callback(
 
         // Confirmation keys: activate player
         for (auto player_info : *user_data->player_info) {
-            if (player_info.is_active == false 
-                && key == player_info.control.left_key) {
-                user_data->player_info->at(player_info.id - 1).is_active = 
-                    true;
-            }
+            if (user_data->player_info->at(player_info.id - 1).is_AI == false) {
+                if (player_info.is_active == false 
+                    && key == player_info.control.left_key) {
+                    user_data->player_info->at(player_info.id - 1).is_active = 
+                        true;
+                }
 
-            if (player_info.is_active == true 
-                && key == player_info.control.right_key) {
-                user_data->player_info->at(player_info.id - 1).is_active = 
-                    false;
+                if (player_info.is_active == true 
+                    && key == player_info.control.right_key) {
+                    user_data->player_info->at(player_info.id - 1).is_active = 
+                        false;
+                }
             }
         }
     } else {

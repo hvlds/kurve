@@ -22,21 +22,23 @@ void Menu::draw() {
         -500.0f, pos_name_y + pos + 75, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
 
     for (auto player_info : *user_data->player_info) {
-        std::string name = player_info.name;
-        std::string menu_text = player_info.menu_text;
-        // int id = player_info.id;
-        bool is_active = player_info.is_active;
-        glm::vec3 color = player_info.color;
+        if (player_info.is_AI == false) {
+            std::string name = player_info.name;
+            std::string menu_text = player_info.menu_text;
+            // int id = player_info.id;
+            bool is_active = player_info.is_active;
+            glm::vec3 color = player_info.color;
 
-        if (is_active == true) {
+            if (is_active == true) {
+                this->font->draw_text(
+                    "READY", 200.0f + ready_extra_margin, pos_name_y + pos, 0.75f, color, false, "regular_medium");
+                active_counter++;
+            }
+
             this->font->draw_text(
-                "READY", 200.0f + ready_extra_margin, pos_name_y + pos, 0.75f, color, false, "regular_medium");
-            active_counter++;
+                menu_text, -500.0f, pos_name_y + pos, 0.75f, color, false, "regular_medium");
+            pos_name_y -= 75.0f;
         }
-
-        this->font->draw_text(
-            menu_text, -500.0f, pos_name_y + pos, 0.75f, color, false, "regular_medium");
-        pos_name_y -= 75.0f;
     }
 
     this->font->draw_text(
