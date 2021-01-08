@@ -34,14 +34,20 @@ class Font {
     unsigned int VAO;
     unsigned int VBO;
     GLuint shader_id;
+    GLFWwindow* window;
+    bool is_drawn = true;
+    double blink_time = 0.5;
+    double active_time = 0;
    public:
-    Font();
+    Font(GLFWwindow* window);
     ~Font();
     void draw_text(std::string text, 
                     float x, 
                     float y, 
                     float scale, 
-                    glm::vec3 color);
+                    glm::vec3 color,
+                    bool is_blinking);
+    void set_delta_time(double delta_time);
 };
 
 #endif

@@ -4,11 +4,12 @@
 #include <iostream>
 #include <string>
 
-Font::Font() {
+Font::Font(GLFWwindow* window) {
     // Testing FreeType
 #ifdef DEBUG
     std::cout << "---- INIT FONT ----" << std::endl;
 #endif
+    this->window = window;
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         std::cout << 
@@ -117,8 +118,15 @@ void Font::draw_text(
     float x, 
     float y, 
     float scale, 
-    glm::vec3 color) {
-	
+    glm::vec3 color,
+    bool is_blinking) {
+
+	if (is_blinking == true) {
+        if (this->is_drawn == false) {
+            return;
+        }
+    }
+
 	glUseProgram(this->shader_id);
     glUniform3f(glGetUniformLocation(this->shader_id, "textColor"), color.x, color.y, color.z);
     glActiveTexture(GL_TEXTURE0);
@@ -164,4 +172,19 @@ void Font::draw_text(
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Font::set_delta_time(double delta_time) {
+    this->active_time += delta_time;
+    if (this->is_drawn == true) {
+        if (this->active_time > this->blink_time) {
+            this->is_drawn = false;
+            this->active_time = 0;
+        }
+    } else {
+        if (this->active_time > this->blink_time) {
+            this->is_drawn = true;
+            this->active_time = 0;
+        }
+    }
 }
