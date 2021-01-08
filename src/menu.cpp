@@ -22,7 +22,7 @@ void Menu::draw() {
         -500.0f,
         pos_name_y + pos + 75,
         0.75f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false);
+        glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
 
     for (auto player_info : *user_data->player_info) {
         std::string name = player_info.name;
@@ -37,7 +37,7 @@ void Menu::draw() {
                 200.0f + ready_extra_margin,
                 pos_name_y + pos,
                 0.75f,
-                color, false);
+                color, false, FONT_MEDIUM, FONT_REGULAR);
             active_counter++;
         }
 
@@ -46,7 +46,7 @@ void Menu::draw() {
             -500.0f, 
             pos_name_y + pos, 
             0.75f, 
-            color, false);
+            color, false, FONT_MEDIUM, FONT_REGULAR);
         pos_name_y -= 75.0f;
     }
 
@@ -55,13 +55,13 @@ void Menu::draw() {
         -420.0f,
         -225.0f + pos,
         0.7f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false);
+        glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
     this->font->draw_text(
         "Achtung, die Kurve!",
         -330.0f,
         450.0f,
         1.5f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false);
+        glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
 
     if (active_counter >= 2) {
         this->font->draw_text(
@@ -69,7 +69,7 @@ void Menu::draw() {
             -180.0f,
             -300.0f + pos,
             0.7f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
     }
 }
 

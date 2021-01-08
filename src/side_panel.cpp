@@ -22,7 +22,7 @@ void SidePanel::draw(int player_count, int max_score) {
         500.0f,
         1.0f,
         glm::vec3(1.0f, 1.0f, 1.0f),
-        false
+        false, FONT_MEDIUM, FONT_REGULAR
     );
     this->font->draw_text(
         "Goal",
@@ -30,7 +30,7 @@ void SidePanel::draw(int player_count, int max_score) {
         450.0f,
         0.7f,
         glm::vec3(1.0f, 1.0f, 1.0f),
-        false
+        false, FONT_MEDIUM, FONT_REGULAR
     );
     this->font->draw_text(
         "2 points diff",
@@ -38,7 +38,7 @@ void SidePanel::draw(int player_count, int max_score) {
         430.0f,
         0.4f,
         glm::vec3(1.0f, 1.0f, 1.0f),
-        false
+        false, FONT_MEDIUM, FONT_REGULAR
     );
 
     for (auto player_info : *user_data->player_info) {
@@ -49,15 +49,15 @@ void SidePanel::draw(int player_count, int max_score) {
             auto score_text = std::to_string(player_info.score);
             if (game_state == GAME_WIN) {
                 if (player_info.id == this->id_winner) {
-                    this->font->draw_text(name, 450.0f, y_pos, 0.6f, color, true);
-                    this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color, true); 
+                    this->font->draw_text(name, 450.0f, y_pos, 0.6f, color, true, FONT_MEDIUM, FONT_REGULAR);
+                    this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color, true, FONT_MEDIUM, FONT_REGULAR); 
                 } else {
-                    this->font->draw_text(name, 450.0f, y_pos, 0.6f, color, false);
-                    this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color, false);
+                    this->font->draw_text(name, 450.0f, y_pos, 0.6f, color, false, FONT_MEDIUM, FONT_REGULAR);
+                    this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color, false, FONT_MEDIUM, FONT_REGULAR);
                 }
             } else {
-                this->font->draw_text(name, 450.0f, y_pos, 0.6f, color, false);
-                this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color, false);
+                this->font->draw_text(name, 450.0f, y_pos, 0.6f, color, false, FONT_MEDIUM, FONT_REGULAR);
+                this->font->draw_text(score_text, 400.0f, y_pos, 0.6f, color, false, FONT_MEDIUM, FONT_REGULAR);
             }
             count += 1.0f;
         }
@@ -69,52 +69,52 @@ void SidePanel::draw(int player_count, int max_score) {
             400.0f,
             -300.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
         this->font->draw_text(
             "to continue",
             400.0f,
             -325.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
     } else if (game_state == GAME_ACTIVE) {
         this->font->draw_text(
             "Press SPACE",
             400.0f,
             -300.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
         this->font->draw_text(
             "to pause",
             400.0f,
             -325.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
     } else if (game_state == GAME_TRANSITION) {
         this->font->draw_text(
             "Press SPACE",
             400.0f,
             -300.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
         this->font->draw_text(
             "to start",
             400.0f,
             -325.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
     }
     this->font->draw_text(
             "Press ESCAPE",
             400.0f,
             -375.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f),false);
+            glm::vec3(1.0f, 1.0f, 1.0f),false, FONT_MEDIUM, FONT_REGULAR);
         this->font->draw_text(
             "to restart",
             400.0f,
             -400.0f,
             0.6f,
-            glm::vec3(1.0f, 1.0f, 1.0f), false);
+            glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
 
 }
 

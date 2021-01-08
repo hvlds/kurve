@@ -39,6 +39,9 @@ file(COPY ${SHADERS} DESTINATION "${CMAKE_BINARY_DIR}/shader")
 # Configure the font files
 file(GLOB FONTS
     "${CMAKE_SOURCE_DIR}/static/fonts/UbuntuMono-R.ttf"
+    "${CMAKE_SOURCE_DIR}/static/fonts/UbuntuMono-B.ttf"
+    "${CMAKE_SOURCE_DIR}/static/fonts/UbuntuMono-BI.ttf"
+    "${CMAKE_SOURCE_DIR}/static/fonts/UbuntuMono-RI.ttf"
 )
 file(COPY ${FONTS} DESTINATION "${CMAKE_BINARY_DIR}/fonts")
 

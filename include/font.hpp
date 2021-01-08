@@ -19,12 +19,48 @@ extern "C" {
 
 #include <map>
 #include <string>
+#include <memory>
 
 struct Character {
     unsigned int TextureID;  // ID handle of the glyph texture
     glm::ivec2 Size;         // Size of glyph
     glm::ivec2 Bearing;      // Offset from baseline to left/top of glyph
     unsigned int Advance;    // Offset to advance to next glyph
+};
+
+enum FontSize {
+    FONT_SMALL,
+    FONT_MEDIUM,
+    FONT_BIG
+};
+
+enum FontType {
+    FONT_BOLD,
+    FONT_REGULAR,
+    FONT_ITALIC
+};
+
+class SubFont {
+   private:
+    std::map<char, Character> Characters;
+    unsigned int texture;
+    unsigned int VAO;
+    unsigned int VBO;
+    GLuint shader_id;
+    GLFWwindow* window;
+    bool is_drawn = true;
+    double blink_time = 0.5;
+    double active_time = 0;
+   public:
+    SubFont(GLFWwindow* window, std::string path, int font_size);
+    void draw_text(std::string text, 
+                    float x, 
+                    float y, 
+                    float scale, 
+                    glm::vec3 color,
+                    bool is_blinking,
+                    FontSize font_size,
+                    FontType font_type);
 };
 
 class Font {
@@ -38,6 +74,7 @@ class Font {
     bool is_drawn = true;
     double blink_time = 0.5;
     double active_time = 0;
+    std::map<std::string, std::shared_ptr<SubFont>> subfonts;
    public:
     Font(GLFWwindow* window);
     ~Font();
@@ -46,7 +83,9 @@ class Font {
                     float y, 
                     float scale, 
                     glm::vec3 color,
-                    bool is_blinking);
+                    bool is_blinking,
+                    FontSize font_size,
+                    FontType font_type);
     void set_delta_time(double delta_time);
 };
 

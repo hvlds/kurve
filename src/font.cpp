@@ -4,10 +4,9 @@
 #include <iostream>
 #include <string>
 
-Font::Font(GLFWwindow* window) {
-    // Testing FreeType
+SubFont::SubFont(GLFWwindow* window, std::string path, int font_size) {
 #ifdef DEBUG
-    std::cout << "---- INIT FONT ----" << std::endl;
+    std::cout << "---- INIT SUBFONT ----" << std::endl;
 #endif
     this->window = window;
     FT_Library ft;
@@ -19,13 +18,13 @@ Font::Font(GLFWwindow* window) {
 
     FT_Face face;
     std::string font_path(STATIC_FILES);
-    font_path.append("/fonts/UbuntuMono-R.ttf");
+    font_path.append(path);
     if (FT_New_Face(ft, font_path.c_str(), 0, &face)) {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
         return;
     }
 
-    FT_Set_Pixel_Sizes(face, 0, 48);
+    FT_Set_Pixel_Sizes(face, 0, font_size);
 
     if (FT_Load_Char(face, 'X', FT_LOAD_RENDER)) {
         std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
@@ -95,7 +94,40 @@ Font::Font(GLFWwindow* window) {
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);    
+    glBindVertexArray(0);  
+}
+
+
+Font::Font(GLFWwindow* window) {
+    // Testing FreeType
+#ifdef DEBUG
+    std::cout << "---- INIT FONT ----" << std::endl;
+#endif
+    this->window = window;
+    auto regular = std::make_shared<SubFont>(
+        this->window, 
+        "/fonts/UbuntuMono-R.ttf",
+        48);
+    subfonts.insert(
+        std::make_pair("regular", regular)
+    );  
+
+    auto bold = std::make_shared<SubFont>(
+        this->window, 
+        "/fonts/UbuntuMono-B.ttf",
+        48);
+    subfonts.insert(
+        std::make_pair("bold", bold)
+    ); 
+
+    auto regular_italic = std::make_shared<SubFont>(
+        this->window, 
+        "/fonts/UbuntuMono-RI.ttf",
+        48);
+    subfonts.insert(
+        std::make_pair("regular_italic", regular_italic)
+    ); 
+
 }
 
 Font::~Font() {
@@ -112,14 +144,36 @@ Font::~Font() {
     // glDeleteProgram(this->shader_id);
     // gl_check_error("glDeleteProgram");
 }
-
 void Font::draw_text(
     std::string text, 
     float x, 
     float y, 
     float scale, 
     glm::vec3 color,
-    bool is_blinking) {
+    bool is_blinking,
+    FontSize font_size,
+    FontType font_type) {
+    subfonts.at("regular_italic")->draw_text(
+        text, 
+        x, 
+        y, 
+        scale, 
+        color,
+        is_blinking,
+        font_size,
+        font_type
+    );
+}
+
+void SubFont::draw_text(
+    std::string text, 
+    float x, 
+    float y, 
+    float scale, 
+    glm::vec3 color,
+    bool is_blinking,
+    FontSize font_size,
+    FontType font_type) {
 
 	if (is_blinking == true) {
         if (this->is_drawn == false) {
