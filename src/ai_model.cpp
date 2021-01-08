@@ -39,7 +39,12 @@ void AIModel::update(GLFWwindow* window) {
             GLfloat angle_diff = 0;
 
             // Update the angle diferential
-            angle_diff = static_cast<GLfloat>((-speed * time_delta));
+            auto r = ((double) rand() / (RAND_MAX)) + 1;
+            if (r > 1.5) {
+                angle_diff = static_cast<GLfloat>((-speed * time_delta));
+            } else {
+                angle_diff = static_cast<GLfloat>((speed * time_delta));
+            }
 
             glm::vec2 speed_vec{this->speed_x, this->speed_y};
 
