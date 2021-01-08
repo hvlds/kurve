@@ -28,18 +28,6 @@ struct Character {
     unsigned int Advance;    // Offset to advance to next glyph
 };
 
-enum FontSize {
-    FONT_SMALL,
-    FONT_MEDIUM,
-    FONT_BIG
-};
-
-enum FontType {
-    FONT_BOLD,
-    FONT_REGULAR,
-    FONT_ITALIC
-};
-
 class SubFont {
    private:
     std::map<char, Character> Characters;
@@ -58,9 +46,7 @@ class SubFont {
                     float y, 
                     float scale, 
                     glm::vec3 color,
-                    bool is_blinking,
-                    FontSize font_size,
-                    FontType font_type);
+                    bool is_blinking);
 };
 
 class Font {
@@ -84,8 +70,7 @@ class Font {
                     float scale, 
                     glm::vec3 color,
                     bool is_blinking,
-                    FontSize font_size,
-                    FontType font_type);
+                    std::string font_type);
     void set_delta_time(double delta_time);
 };
 

@@ -150,17 +150,14 @@ void Font::draw_text(
     float scale, 
     glm::vec3 color,
     bool is_blinking,
-    FontSize font_size,
-    FontType font_type) {
-    subfonts.at("regular_italic_medium")->draw_text(
+    std::string font_type) {
+    subfonts.at(font_type)->draw_text(
         text, 
         x, 
         y, 
         scale, 
         color,
-        is_blinking,
-        font_size,
-        font_type
+        is_blinking
     );
 }
 
@@ -170,9 +167,7 @@ void SubFont::draw_text(
     float y, 
     float scale, 
     glm::vec3 color,
-    bool is_blinking,
-    FontSize font_size,
-    FontType font_type) {
+    bool is_blinking) {
 
 	if (is_blinking == true) {
         if (this->is_drawn == false) {

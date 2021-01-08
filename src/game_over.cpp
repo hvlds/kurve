@@ -15,7 +15,7 @@ void GameOver::draw() {
         -160.0f,
         450.0f,
         1.5f,
-        glm::vec3(1.0f, 1.0f, 1.0f), false, FONT_MEDIUM, FONT_REGULAR);
+        glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
     
     float pos = -200.0f;
     float pos_name_y = 350.0f;
@@ -42,13 +42,13 @@ void GameOver::draw() {
                         200.0f + ready_extra_margin,
                         pos_name_y + pos,
                         0.75f,
-                        color, true, FONT_MEDIUM, FONT_REGULAR);
+                        color, true, "regular_medium");
                     this->font->draw_text(
                         name,
                         -500.0f,
                         pos_name_y + pos,
                         0.75f,
-                        color, true, FONT_MEDIUM, FONT_REGULAR);
+                        color, true, "regular_medium");
                     this->blank_frames++;
                 } else if (this->full_frames <= this->max_frames) {
                     this->full_frames++;
@@ -60,9 +60,9 @@ void GameOver::draw() {
             } else {
                 this->font->draw_text(
                     std::to_string(score), 200.0f + ready_extra_margin,
-                    pos_name_y + pos, 0.75f, color, false, FONT_MEDIUM, FONT_REGULAR);
+                    pos_name_y + pos, 0.75f, color, false, "regular_medium");
                 this->font->draw_text(
-                    name, -500.0f, pos_name_y + pos, 0.75f, color, false, FONT_MEDIUM, FONT_REGULAR);
+                    name, -500.0f, pos_name_y + pos, 0.75f, color, false, "regular_medium");
             }
 
             pos_name_y -= 75.0f;
@@ -76,7 +76,7 @@ void GameOver::draw() {
         -225.0f + pos,
         0.7f,
         glm::vec3(1.0f, 1.0f, 1.0f),
-        false, FONT_MEDIUM, FONT_REGULAR);
+        false, "regular_medium");
     
 }
 
