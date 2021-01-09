@@ -16,6 +16,9 @@ class AIModel : public PlayerModel {
     void update(GLFWwindow* window) override;
     void set_all_points(std::vector<glm::vec2> all_points);
     int plan();
+    double get_smallest_distance(GLfloat delta_angle);
+    GLfloat get_delta_angle();
+    double max_look_ahead(int direction);
 };
 
 #endif

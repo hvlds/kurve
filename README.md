@@ -63,7 +63,7 @@ $ git clone https://github.com/h-valdes/kurve.git
 
 In Ubuntu 20.04
 ```
-$ sudo apt install libglfw3-dev libfreetype-dev nlohmann-json3-dev
+$ sudo apt install libglfw3-dev libfreetype-dev nlohmann-json3-dev cmake
 ```
 
 In archlinux or Manjaro
@@ -111,7 +111,7 @@ $ ./kurve
 
 Or from the script:
 ```
-$ sh script/debug.sh
+$ sh scripts/debug.sh
 ```
 
 # Roadmap
