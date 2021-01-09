@@ -17,6 +17,7 @@ extern "C" {
 #include <map>
 #include <memory>
 #include <vector>
+#include <set>
 
 class PlayerManager {
    protected:
@@ -28,7 +29,7 @@ class PlayerManager {
     std::vector<glm::vec2> get_player_trace(int id);
     glm::vec2 get_player_position(int id);
     int max_score;
-    std::shared_ptr<AIModel> AI;
+    std::set<int> AI_list;
    public:
     bool is_updated = false;
     PlayerManager(GLFWwindow* window);

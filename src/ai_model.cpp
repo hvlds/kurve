@@ -39,8 +39,8 @@ void AIModel::update(GLFWwindow* window) {
             GLfloat angle_diff = 0;
 
             // Update the angle diferential
-            auto r = ((double) rand() / (RAND_MAX)) + 1;
-            if (r > 1.5) {
+            int direction = this->plan();
+            if (direction == 1) {
                 angle_diff = static_cast<GLfloat>((-speed * time_delta));
             } else {
                 angle_diff = static_cast<GLfloat>((speed * time_delta));
@@ -102,4 +102,13 @@ void AIModel::update(GLFWwindow* window) {
             gl_check_error("glUniform1f [trans_x]");
         }
     }
+}
+
+void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
+    this->all_points = all_points;
+}
+
+int AIModel::plan() {
+    int direction = 1;
+    return direction;
 }
