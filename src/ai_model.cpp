@@ -42,8 +42,10 @@ void AIModel::update(GLFWwindow* window) {
             int direction = this->plan();
             if (direction == 1) {
                 angle_diff = static_cast<GLfloat>((-speed * time_delta));
-            } else {
+            } else if (direction == -1){
                 angle_diff = static_cast<GLfloat>((speed * time_delta));
+            } else {
+                angle_diff = 0;
             }
 
             glm::vec2 speed_vec{this->speed_x, this->speed_y};
@@ -109,6 +111,6 @@ void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
 }
 
 int AIModel::plan() {
-    int direction = 1;
+    int direction = 0;
     return direction;
 }
