@@ -112,6 +112,7 @@ void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
 
 int AIModel::plan() {
     int direction = 0;
+    glm::vec2 last_direction {this->speed_x, this->speed_y};
 
     // Check Borders
     if ((this->last_point.x + 3) >= 13.5) {
@@ -127,56 +128,50 @@ int AIModel::plan() {
         return direction = 1;
     }
 
-    // Check enemy points
-    for (auto point : this->all_points) {
-        auto distance = glm::length(this->last_point - point);
-        if (distance < 1) {
-            auto angle = get_angle(this->last_point, point);
-            if (angle < 0) {
-                return direction = 1;
-            } else {
-                return direction = -1;
-            }
-        }
-    }
+    std::vector<glm::vec2> filtered_points;
+    double smallest_distance = -1;
+    glm::vec2 nearest_point;
+    bool is_first = true;
 
-    // Check own line
-    auto own_points = this->get_line_points();
-    auto points_count = own_points.size();
-    if (points_count > 35) {
-        for (int i = 0; i < 30; i++) {
-            own_points.pop_back();
+    for (auto point : this->all_points) {
+        glm::vec2 vec1 {0, 1};
+        glm::vec2 vec2 = last_direction;
+        auto angle = get_angle(vec1, vec2);
+        auto rotation = cross_product(vec1, vec2);
+        
+        if (rotation > 0) {
+            angle = -1 * angle;
+        } else if (rotation == 0 ) {
+            angle = 0;
         }
-        for (auto point : own_points) {
+
+        auto new_x = point.x * cos(angle) - point.y * sin(angle);
+        auto new_y = point.x * sin(angle) + point.y * cos(angle);
+
+        if (new_x >= 0 && new_y >= 0) {
+            glm::vec2 new_point{new_x, new_y};
             auto distance = glm::length(this->last_point - point);
-            if (distance < 2) {
-                auto angle = get_angle(this->last_point, point);
-                if (angle < 0) {
-                    return direction = 1;
-                } else {
-                    return direction = -1;
+            if (is_first == true) {
+                smallest_distance = distance;
+                nearest_point = point;
+            } else {
+                if (distance < smallest_distance) {
+                    smallest_distance = distance;
+                    nearest_point = point;
                 }
             }
         }
     }
 
-    // Increase straight counter
-    if (direction == 0 && forward_counter < 15) {
-        forward_counter++;
-    } else {
-        switch(last_direction) {
-            case 0:
-                direction = -1;
-                break;
-            case -1:
-                direction = 1;
-                break;
-            case 1:
-                direction = 0;
-                break;
+    std::cout << "Smallest Distance: " << smallest_distance << std::endl;
+    std::cout << "----" << std::endl;
+    if (smallest_distance < 3 && smallest_distance != 1) {
+        auto angle = cross_product(this->last_point, nearest_point);
+        if (angle > 0) {
+            return direction = 1;
+        } else {
+            return direction = -1;
         }
-        last_direction = direction;
-        forward_counter -= 1;
     }
 
     return direction;

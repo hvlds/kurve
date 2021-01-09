@@ -62,7 +62,7 @@ void PlayerManager::update(GLFWwindow* window) {
         } else {
             // It is an AIModel
             std::shared_ptr<AIModel> p = std::dynamic_pointer_cast<AIModel> (item.second);
-            p->set_all_points(this->get_oponent_trace(item.first));
+            p->set_all_points(this->get_all_points());
             p->update(window);
         }
     }
