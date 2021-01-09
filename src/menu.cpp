@@ -38,6 +38,12 @@ void Menu::draw() {
             this->font->draw_text(
                 menu_text, -500.0f, pos_name_y + pos, 0.75f, color, false, "regular_medium");
             pos_name_y -= 75.0f;
+        } else {
+            if (player_info.is_active == true) {
+                active_counter++;
+                this->font->draw_text(
+                "AI", -500.0f, -100 + pos, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
+            }
         }
     }
 

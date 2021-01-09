@@ -213,19 +213,13 @@ GLfloat AIModel::get_delta_angle() {
 double AIModel::max_look_ahead(int direction) {
     auto delta_angle = this->get_delta_angle();
     double smallest_distance = -1;
-    for (int i = 0; i<50; i++) {
+    for (int i = 0; i < 10; i++) {
         auto current_smallest_distance = this->get_smallest_distance(delta_angle);
         if (current_smallest_distance > smallest_distance) {
             smallest_distance = current_smallest_distance;
         }
-        delta_angle += delta_angle*direction;        
+        delta_angle += (delta_angle*10)*direction;        
     }
-    
-    // if (direction == 1) {
-    //     std::cout << "max_distance_right " << smallest_distance << std::endl;
-    // } else {
-    //     std::cout << "max_distance_left " << smallest_distance << std::endl;
-    // }
 
     return smallest_distance;
 }
