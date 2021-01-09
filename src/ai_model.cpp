@@ -234,6 +234,8 @@ void AIModel::set_new_goal() {
 #ifdef DEBUG
     std::cout << "New Goal for AI-" << this->id << " = (" << x << "; " << y << std::endl;
 #endif
+
+    this->goal = new_goal;
 }
 
 bool AIModel::check_goal() {
