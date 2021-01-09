@@ -56,6 +56,7 @@ typedef struct {
     Control control;
     glm::vec3 color;
     int score;
+    bool is_AI;
 } player_info_t;
 
 /**
@@ -68,8 +69,9 @@ typedef struct {
     int window_height;
     bool is_fullscreen;
     GameState game_state;
-    std::vector<player_info_t>* player_info;
     double delta_time;
+    bool has_AI;
+    std::vector<player_info_t>* player_info;
 } user_data_t;
 
 void reset_player_info(GLFWwindow* window);

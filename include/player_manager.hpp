@@ -2,6 +2,7 @@
 #define PLAYER_MANAGER_HPP
 
 #include "player_model.hpp"
+#include "ai_model.hpp"
 #include "user.hpp"
 #include "point.hpp"
 
@@ -16,6 +17,7 @@ extern "C" {
 #include <map>
 #include <memory>
 #include <vector>
+#include <set>
 
 class PlayerManager {
    protected:
@@ -27,13 +29,15 @@ class PlayerManager {
     std::vector<glm::vec2> get_player_trace(int id);
     glm::vec2 get_player_position(int id);
     int max_score;
+    std::set<int> AI_list;
    public:
     bool is_updated = false;
     PlayerManager(GLFWwindow* window);
     void add_player(
         int id,
         Control control,
-        glm::vec3 color);
+        glm::vec3 color,
+        bool is_AI);
     void update(GLFWwindow* window);
     std::vector<glm::vec2> get_all_points();
 

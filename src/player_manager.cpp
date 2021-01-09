@@ -5,7 +5,7 @@
 
 PlayerManager::PlayerManager(GLFWwindow* window) {
     srand((unsigned) time(0));
-    this->window = window;       
+    this->window = window; 
 }
 
 void PlayerManager::add_players() {
@@ -19,7 +19,7 @@ void PlayerManager::add_players() {
             auto color = player_info.color;
             auto control = player_info.control;
             int id = player_info.id;
-            this->add_player(id, control, color);
+            this->add_player(id, control, color, player_info.is_AI);
         }
     }
 
@@ -31,7 +31,8 @@ void PlayerManager::add_players() {
 void PlayerManager::add_player(
     int id,
     Control control,
-    glm::vec3 color) {   
+    glm::vec3 color,
+    bool is_AI) {   
     // Generate a random start position for the new player 
     int random_x= -100 + (rand() % 200);
     int random_y= -100 + (rand() % 200);
@@ -39,15 +40,31 @@ void PlayerManager::add_player(
     GLfloat x = (GLfloat) random_x / 10;
     GLfloat y = (GLfloat) random_y / 10;
 
-    auto player = std::make_shared<PlayerModel>(id, x, y, color);
-    player->set_keys(control);
+    if (is_AI == false) {
+        auto player = std::make_shared<PlayerModel>(id, x, y, color);
+        player->set_keys(control);
+        this->players.insert({id, player});
+    } else {
+        auto AI = std::make_shared<AIModel>(id, x, y, color);
+        AI_list.insert(id);
+        this->players.insert({id, AI});
+    }
 
-    this->players.insert({id, player});
 }
 
 void PlayerManager::update(GLFWwindow* window) {
     for (auto item : this->players) {
-        item.second->update(window);
+        std::set<int>::iterator it;
+        it = AI_list.find(item.first);
+        if (it == AI_list.end()) {
+            // It is (Mario) a PlayerModel
+            item.second->update(window);
+        } else {
+            // It is an AIModel
+            std::shared_ptr<AIModel> p = std::dynamic_pointer_cast<AIModel> (item.second);
+            p->set_all_points(this->get_all_points());
+            p->update(window);
+        }
     }
 }
 
@@ -230,6 +247,7 @@ void PlayerManager::reset_player(int id) {
 
 void PlayerManager::reset() {
     // Clear the map with user and vector with dead players
+    this->AI_list.clear();
     this->dead_players.clear();
 #ifdef DEBUG
     std::cout << "---- RESET PLAYERS ----" << std::endl;
