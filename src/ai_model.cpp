@@ -133,16 +133,13 @@ int AIModel::plan() {
     double smallest_distance = this->get_smallest_distance((GLfloat) 0);
 
     std::cout << "Smallest Distance: " << smallest_distance << std::endl;
-    std::cout << "----" << std::endl;    
+    std::cout << "----" << std::endl;   
 
-    if (smallest_distance < 4 && smallest_distance != -1) {
-        // double max_distance_right = this->max_look_ahead(1);
-        // double max_distance_left = this->max_look_ahead(-1);
+    if (smallest_distance < threshold && smallest_distance != -1) {
+        double max_distance_left = this->max_look_ahead(-1);
+        double max_distance_right = this->max_look_ahead(1);
 
-        this->last_smallest_distance = smallest_distance;
-        auto delta_angle = this->get_delta_angle();
-        smallest_distance = this->get_smallest_distance(delta_angle);
-        if (smallest_distance < this->last_smallest_distance && smallest_distance != -1) {
+        if (max_distance_left > max_distance_right) {
             direction = -1;
         } else  {
             direction = 1;
@@ -210,7 +207,6 @@ GLfloat AIModel::get_delta_angle() {
     double time_delta = new_time - this->time;
     double speed = 3;
     auto angle = static_cast<GLfloat>((speed * time_delta));
-    std::cout << "Delta Angle: " << (angle / M_PI * 180) << std::endl;
     return angle;
 }
 
@@ -218,11 +214,18 @@ double AIModel::max_look_ahead(int direction) {
     auto delta_angle = this->get_delta_angle();
     double smallest_distance = -1;
     for (int i = 0; i<50; i++) {
-        int current_smallest_distance = this->get_smallest_distance(delta_angle);
+        auto current_smallest_distance = this->get_smallest_distance(delta_angle);
         if (current_smallest_distance > smallest_distance) {
             smallest_distance = current_smallest_distance;
         }
         delta_angle += delta_angle*direction;        
     }
+    
+    if (direction == 1) {
+        std::cout << "max_distance_right " << smallest_distance << std::endl;
+    } else {
+        std::cout << "max_distance_left " << smallest_distance << std::endl;
+    }
+
     return smallest_distance;
 }
