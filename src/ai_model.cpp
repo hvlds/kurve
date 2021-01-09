@@ -154,6 +154,7 @@ int AIModel::plan() {
             if (is_first == true) {
                 smallest_distance = distance;
                 nearest_point = point;
+                is_first = false;
             } else {
                 if (distance < smallest_distance) {
                     smallest_distance = distance;
@@ -165,13 +166,8 @@ int AIModel::plan() {
 
     std::cout << "Smallest Distance: " << smallest_distance << std::endl;
     std::cout << "----" << std::endl;
-    if (smallest_distance < 3 && smallest_distance != 1) {
-        auto angle = cross_product(this->last_point, nearest_point);
-        if (angle > 0) {
-            return direction = 1;
-        } else {
-            return direction = -1;
-        }
+    if (smallest_distance < 2 && smallest_distance != 1) {
+        direction = -1;
     }
 
     return direction;

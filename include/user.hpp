@@ -70,6 +70,7 @@ typedef struct {
     bool is_fullscreen;
     GameState game_state;
     double delta_time;
+    bool has_AI;
     std::vector<player_info_t>* player_info;
 } user_data_t;
 

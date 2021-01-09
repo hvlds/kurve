@@ -8,10 +8,9 @@ void reset_player_info(GLFWwindow* window) {
     auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
     for (auto info : *user_data->player_info) {
         user_data->player_info->at(info.id - 1).score = 0;
-        if (info.is_AI == false) {
-            user_data->player_info->at(info.id - 1).is_active = false;
-        }
+        user_data->player_info->at(info.id - 1).is_active = false;
     }
+    user_data->has_AI = false;
 }
 
 std::multimap<int, int, std::greater<int>> get_results(GLFWwindow* window) {

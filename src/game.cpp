@@ -190,6 +190,24 @@ void key_callback(
             user_data->game_state = GAME_EXIT;
         }
 
+        if (key == GLFW_KEY_F1) {
+            if (user_data->has_AI == false) {
+                user_data->has_AI = true; 
+            } else {
+                user_data->has_AI = false;
+            }
+
+            for (auto player_info : *user_data->player_info) {
+                if (user_data->player_info->at(player_info.id - 1).is_AI == true) {
+                    if (user_data->has_AI == true) {
+                        user_data->player_info->at(player_info.id - 1).is_active = true;
+                    } else {
+                        user_data->player_info->at(player_info.id - 1).is_active = false;
+                    }
+                }
+            }
+        }
+
         if (key == GLFW_KEY_SPACE) {
             // GAME_MENU -> GAME_ACTIVE
             if (user_data->game_state == GAME_MENU) {

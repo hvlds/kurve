@@ -52,7 +52,7 @@ int main(void) {
     for (std::string AI_name : players_json["AI"]) {
         auto AI_json = players_json[AI_name];
         player_info_t AI = {
-            .is_active = true,
+            .is_active = false,
             .id = AI_json["id"],
             .name = AI_json["name"],
             .menu_text = "--",
@@ -77,6 +77,7 @@ int main(void) {
             .is_fullscreen = false,
             .game_state = GAME_MENU,
             .delta_time = 0,
+            .has_AI = false,
             .player_info = &player_info};
 
     Display display(&user_data);
