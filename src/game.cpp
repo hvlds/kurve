@@ -213,7 +213,8 @@ void key_callback(
             if (user_data->game_state == GAME_MENU) {
                 int player_count = 0;
                 for (auto player_info : *user_data->player_info) {
-                    if (player_info.is_active && player_info.is_AI == false) {
+                    // if (player_info.is_active && player_info.is_AI == false) {
+                    if (player_info.is_active) {
                         player_count++;
                     }
                 }

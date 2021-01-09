@@ -221,11 +221,11 @@ double AIModel::max_look_ahead(int direction) {
         delta_angle += delta_angle*direction;        
     }
     
-    if (direction == 1) {
-        std::cout << "max_distance_right " << smallest_distance << std::endl;
-    } else {
-        std::cout << "max_distance_left " << smallest_distance << std::endl;
-    }
+    // if (direction == 1) {
+    //     std::cout << "max_distance_right " << smallest_distance << std::endl;
+    // } else {
+    //     std::cout << "max_distance_left " << smallest_distance << std::endl;
+    // }
 
     return smallest_distance;
 }
