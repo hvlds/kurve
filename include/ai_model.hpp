@@ -11,6 +11,7 @@ class AIModel : public PlayerModel {
    private:
     std::vector<glm::vec2> all_points;
     int forward_counter = 0;
+    glm::vec2 goal;
    public:
     AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {}
     void update(GLFWwindow* window) override;
@@ -19,6 +20,8 @@ class AIModel : public PlayerModel {
     double get_smallest_distance(GLfloat delta_angle);
     GLfloat get_delta_angle();
     double max_look_ahead(int direction);
+    void set_new_goal();
+    bool check_goal();
 };
 
 #endif

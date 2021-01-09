@@ -223,3 +223,24 @@ double AIModel::max_look_ahead(int direction) {
 
     return smallest_distance;
 }
+
+void AIModel::set_new_goal() {
+    int random_x= -100 + (rand() % 200);
+    int random_y= -100 + (rand() % 200);
+    GLfloat x = (GLfloat) random_x / 10;
+    GLfloat y = (GLfloat) random_y / 10;
+    
+    glm::vec2 new_goal {x, y};
+#ifdef DEBUG
+    std::cout << "New Goal for AI-" << this->id << " = (" << x << "; " << y << std::endl;
+#endif
+}
+
+bool AIModel::check_goal() {
+    bool in_goal = false;
+    double distance = glm::length(this->last_point - this->goal);
+    if (distance < 0.2) {
+        in_goal = true;
+    }
+    return in_goal;
+}
