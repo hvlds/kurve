@@ -10,6 +10,8 @@
 class AIModel : public PlayerModel {
    private:
     std::vector<glm::vec2> all_points;
+    int forward_counter = 0;
+    int last_direction = 0;
    public:
     AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {}
     void update(GLFWwindow* window) override;

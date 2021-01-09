@@ -1,7 +1,7 @@
 
 {
     "players": ["p1", "p2", "p3", "p4", "p5", "p6"],
-    "AI": ["AI1"], 
+    "AI": ["AI1", "AI2"], 
     "p1": {
         "id": 1,
         "name": "Gryffindor",
@@ -48,5 +48,10 @@
         "id": 7,
         "name": "Voldemort",
         "color": [0.4, 0.0, 1.0]
+    },
+    "AI2": {
+        "id": 8,
+        "name": "Hagrid",
+        "color": [0.5, 0.3, 0.1]
     }
 }

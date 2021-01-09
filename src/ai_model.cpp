@@ -112,5 +112,72 @@ void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
 
 int AIModel::plan() {
     int direction = 0;
+
+    // Check Borders
+    if ((this->last_point.x + 3) >= 13.5) {
+        return direction = 1;
+    } 
+    if ((this->last_point.x - 3) <= -18.75) {
+        return direction = -1;
+    }
+    if ((this->last_point.y + 3) >= 18.75) {
+        return direction = -1;
+    }
+    if ((this->last_point.y - 3) <= -18.75) {
+        return direction = 1;
+    }
+
+    // Check enemy points
+    for (auto point : this->all_points) {
+        auto distance = glm::length(this->last_point - point);
+        if (distance < 1) {
+            auto angle = get_angle(this->last_point, point);
+            if (angle < 0) {
+                return direction = 1;
+            } else {
+                return direction = -1;
+            }
+        }
+    }
+
+    // Check own line
+    auto own_points = this->get_line_points();
+    auto points_count = own_points.size();
+    if (points_count > 35) {
+        for (int i = 0; i < 30; i++) {
+            own_points.pop_back();
+        }
+        for (auto point : own_points) {
+            auto distance = glm::length(this->last_point - point);
+            if (distance < 2) {
+                auto angle = get_angle(this->last_point, point);
+                if (angle < 0) {
+                    return direction = 1;
+                } else {
+                    return direction = -1;
+                }
+            }
+        }
+    }
+
+    // Increase straight counter
+    if (direction == 0 && forward_counter < 15) {
+        forward_counter++;
+    } else {
+        switch(last_direction) {
+            case 0:
+                direction = -1;
+                break;
+            case -1:
+                direction = 1;
+                break;
+            case 1:
+                direction = 0;
+                break;
+        }
+        last_direction = direction;
+        forward_counter -= 1;
+    }
+
     return direction;
 }
