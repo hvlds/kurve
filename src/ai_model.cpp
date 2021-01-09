@@ -114,18 +114,54 @@ int AIModel::plan() {
     int direction = 0;
     glm::vec2 last_direction {this->speed_x, this->speed_y};
 
+    int threshold = 5;
+
     // Check Borders
-    if ((this->last_point.x + 3) >= 13.5) {
+    if ((this->last_point.x + threshold) >= 13.5) {
         return direction = 1;
     } 
-    if ((this->last_point.x - 3) <= -18.75) {
+    if ((this->last_point.x - threshold) <= -18.75) {
         return direction = -1;
     }
-    if ((this->last_point.y + 3) >= 18.75) {
+    if ((this->last_point.y + threshold) >= 18.75) {
         return direction = -1;
     }
-    if ((this->last_point.y - 3) <= -18.75) {
+    if ((this->last_point.y - threshold) <= -18.75) {
         return direction = 1;
+    }
+
+    double smallest_distance = this->get_smallest_distance((GLfloat) 0);
+
+    std::cout << "Smallest Distance: " << smallest_distance << std::endl;
+    std::cout << "----" << std::endl;    
+
+    if (smallest_distance < 4 && smallest_distance != -1) {
+        // double max_distance_right = this->max_look_ahead(1);
+        // double max_distance_left = this->max_look_ahead(-1);
+
+        this->last_smallest_distance = smallest_distance;
+        auto delta_angle = this->get_delta_angle();
+        smallest_distance = this->get_smallest_distance(delta_angle);
+        if (smallest_distance < this->last_smallest_distance && smallest_distance != -1) {
+            direction = -1;
+        } else  {
+            direction = 1;
+        }
+    }
+
+    return direction;
+}
+
+double AIModel::get_smallest_distance(GLfloat delta_angle) {
+
+    glm::vec2 last_direction {this->speed_x, this->speed_y};
+    
+    if (delta_angle != 0) {
+        GLfloat temp_speed_x = last_direction.x;
+        GLfloat temp_speed_y = last_direction.y;
+
+        last_direction.x = temp_speed_x * cos(delta_angle) - temp_speed_y * sin(delta_angle);
+        last_direction.y = temp_speed_x * sin(delta_angle) + temp_speed_y * cos(delta_angle);
     }
 
     std::vector<glm::vec2> filtered_points;
@@ -134,6 +170,8 @@ int AIModel::plan() {
     bool is_first = true;
 
     for (auto point : this->all_points) {
+        auto centered_point = point - this->last_point;
+
         glm::vec2 vec1 {0, 1};
         glm::vec2 vec2 = last_direction;
         auto angle = get_angle(vec1, vec2);
@@ -145,10 +183,10 @@ int AIModel::plan() {
             angle = 0;
         }
 
-        auto new_x = point.x * cos(angle) - point.y * sin(angle);
-        auto new_y = point.x * sin(angle) + point.y * cos(angle);
+        auto new_x = centered_point.x * cos(angle) - centered_point.y * sin(angle);
+        auto new_y = centered_point.x * sin(angle) + centered_point.y * cos(angle);
 
-        if (new_x >= 0 && new_y >= 0) {
+        if (new_x < 1 && new_x > -1 && new_y > 0) {
             glm::vec2 new_point{new_x, new_y};
             auto distance = glm::length(this->last_point - point);
             if (is_first == true) {
@@ -164,11 +202,27 @@ int AIModel::plan() {
         }
     }
 
-    std::cout << "Smallest Distance: " << smallest_distance << std::endl;
-    std::cout << "----" << std::endl;
-    if (smallest_distance < 2 && smallest_distance != 1) {
-        direction = -1;
-    }
+    return smallest_distance;
+}
 
-    return direction;
+GLfloat AIModel::get_delta_angle() {
+    double new_time = glfwGetTime();
+    double time_delta = new_time - this->time;
+    double speed = 3;
+    auto angle = static_cast<GLfloat>((speed * time_delta));
+    std::cout << "Delta Angle: " << (angle / M_PI * 180) << std::endl;
+    return angle;
+}
+
+double AIModel::max_look_ahead(int direction) {
+    auto delta_angle = this->get_delta_angle();
+    double smallest_distance = -1;
+    for (int i = 0; i<50; i++) {
+        int current_smallest_distance = this->get_smallest_distance(delta_angle);
+        if (current_smallest_distance > smallest_distance) {
+            smallest_distance = current_smallest_distance;
+        }
+        delta_angle += delta_angle*direction;        
+    }
+    return smallest_distance;
 }
