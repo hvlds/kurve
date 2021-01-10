@@ -8,13 +8,18 @@
 #include "user.hpp"
 #include "grid.hpp"
 
+#include <memory>
+
 class AIModel : public PlayerModel {
    private:
     std::vector<glm::vec2> all_points;
     int forward_counter = 0;
     glm::vec2 goal;
+    std::shared_ptr<Grid> grid;
    public:
-    AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {}
+    AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {
+        this->grid = std::make_shared<Grid>();
+    }
     void update(GLFWwindow* window) override;
     void set_all_points(std::vector<glm::vec2> all_points);
     int plan();

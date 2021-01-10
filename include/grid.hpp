@@ -23,7 +23,8 @@ class Grid {
    public:
     Grid();
     void populate(std::vector<glm::vec2> all_points);
-    std::vector<int> get_grid_coordinates(double x, double y);    
+    std::vector<int> get_coordinates(double x, double y);
+    void clear();    
 };
 
 #endif

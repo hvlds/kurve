@@ -1,7 +1,11 @@
 #include "grid.hpp"
 #include <cmath>
+#include <iostream>
 
 Grid::Grid() {
+#ifdef DEBUG
+    std::cout << "---- INIT Grid ----" << std::endl;
+#endif
     this->width = this->right_limit - this->left_limit;
     this->height = this->top_limit - this->bottom_limit;
 
@@ -32,21 +36,29 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
     if (all_points.size() > 0) {
         for (auto point : all_points) {
     
-            auto coordinates = this->get_grid_coordinates(point.x, point.y);
-            this->matrix.at(coordinates[0] - 1).at(coordinates[1] - 1) = true;
+            auto coordinates = this->get_coordinates(point.x, point.y);
+            this->matrix.at(coordinates[0]).at(coordinates[1]) = true;
         }
     }
 }
 
-std::vector<int> Grid::get_grid_coordinates(double x, double y) {
+std::vector<int> Grid::get_coordinates(double x, double y) {
     double x_diff = x - this->left_limit; 
     double y_diff = this->top_limit - y;
 
     // Determine the coordinates on the grid
-    int x_pos = static_cast<int>(floor(x_diff / this->cell_width));
-    int y_pos = static_cast<int>(floor(y_diff / this->cell_height));
+    int x_pos = static_cast<int>(floor(x_diff / this->cell_width)) - 1;
+    int y_pos = static_cast<int>(floor(y_diff / this->cell_height)) - 1;
 
     std::vector<int> coordinates{x_pos, y_pos};
 
     return coordinates;
+}
+
+void Grid::clear() {
+    for (int i = 0; i < horizontal_cells; i++) {
+        for (int j = 0; j < vertical_cells; j++) {
+            this->matrix.at(i).at(j) = false;
+        }
+    }
 }

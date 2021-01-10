@@ -128,8 +128,10 @@ int AIModel::plan() {
         return direction = 1;
     }
 
-    Grid grid = Grid();
-    grid.populate(this->all_points);
+    this->grid->populate(this->all_points);
+    auto coordinates = this->grid->get_coordinates(
+        this->last_point.x,
+        this->last_point.y);
 
     // double smallest_distance = this->get_smallest_distance((GLfloat) 0);
 
