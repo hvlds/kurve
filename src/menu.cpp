@@ -43,6 +43,8 @@ void Menu::draw() {
                 active_counter++;
                 this->font->draw_text(
                 "AI", -500.0f, -100 + pos, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
+                this->font->draw_text(
+                    "READY", 200.0f + ready_extra_margin, -100 + pos, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_medium");
             }
         }
     }

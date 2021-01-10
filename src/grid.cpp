@@ -1,4 +1,5 @@
 #include "grid.hpp"
+#include "point.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -37,12 +38,12 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
         for (auto point : all_points) {
     
             auto coordinates = this->get_coordinates(point.x, point.y);
-            this->matrix.at(coordinates[0]).at(coordinates[1]) = true;
+            this->matrix.at(coordinates.first).at(coordinates.second) = true;
         }
     }
 }
 
-std::vector<int> Grid::get_coordinates(double x, double y) {
+std::pair<int, int> Grid::get_coordinates(double x, double y) {
     double x_diff = x - this->left_limit; 
     double y_diff = this->top_limit - y;
 
@@ -50,9 +51,8 @@ std::vector<int> Grid::get_coordinates(double x, double y) {
     int x_pos = static_cast<int>(floor(x_diff / this->cell_width)) - 1;
     int y_pos = static_cast<int>(floor(y_diff / this->cell_height)) - 1;
 
-    std::vector<int> coordinates{x_pos, y_pos};
-
-    return coordinates;
+    auto pair = std::make_pair(x_pos, y_pos); 
+    return pair;
 }
 
 void Grid::clear() {
@@ -61,4 +61,47 @@ void Grid::clear() {
             this->matrix.at(i).at(j) = false;
         }
     }
+}
+
+void Grid::direction_to_coordinates(glm::vec2 direction) {
+    double x_diff = direction.x;
+    double y_diff = direction.y;
+
+    glm::vec2 vec1 {1, 0};
+    glm::vec2 vec2 {x_diff, y_diff};
+    auto rotation = cross_product(vec1, vec2);
+    double angle;
+
+    if (rotation > 0) {
+        angle = get_angle(vec1, vec2);
+    } else if (rotation < 0) {
+        angle = 2 * M_PI - get_angle(vec1, vec2);
+    } else {
+        angle = 0;
+    }
+
+    angle = angle * 180 / M_PI;
+
+    int cuadrant = 0;
+    double last_angle = 45 / 2;
+
+    for (int i = 0; i < 8; i++) {
+        if (i == 0) {
+            if (angle >= (360 - (45 / 2)) || angle < (45 / 2)) {
+                cuadrant = 0;
+                break;
+            }
+        } else {
+            if (angle >= (last_angle) && angle < (last_angle + 45)) {
+                cuadrant = i;
+                break;
+            } else {
+                last_angle += (45 / 2);
+            }
+        }
+    }
+
+    std::cout << "----" << std::endl;
+    std::cout << "Angle: " << angle << std::endl;
+    std::cout << "Cuadrant: " << cuadrant << std::endl; 
 }

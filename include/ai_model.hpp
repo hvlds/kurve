@@ -19,6 +19,7 @@ class AIModel : public PlayerModel {
    public:
     AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {
         this->grid = std::make_shared<Grid>();
+        this->set_new_goal();
     }
     void update(GLFWwindow* window) override;
     void set_all_points(std::vector<glm::vec2> all_points);
@@ -27,7 +28,7 @@ class AIModel : public PlayerModel {
     GLfloat get_delta_angle();
     double max_look_ahead(int direction);
     void set_new_goal();
-    bool check_goal();
+    void check_goal();
 };
 
 #endif

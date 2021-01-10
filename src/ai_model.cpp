@@ -7,9 +7,14 @@
 #include "shader.hpp"
 
 void AIModel::update(GLFWwindow* window) {
+    // Update the direction of the directional arrow
     this->arrow->update(window);
-    // Update the time and calculate the delta:
+
+    // Check if the goal was reached and assign a new one if true
+    this->check_goal();
+
     auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+
     GameState game_state = user_data->game_state;
     if (game_state == GAME_PAUSE) {
         double new_time = glfwGetTime();
@@ -129,9 +134,16 @@ int AIModel::plan() {
     }
 
     this->grid->populate(this->all_points);
-    auto coordinates = this->grid->get_coordinates(
+    auto AI_coordinates = this->grid->get_coordinates(
         this->last_point.x,
         this->last_point.y);
+
+    auto goal_coordinates = this->grid->get_coordinates(
+        this->goal.x,
+        this->goal.y
+    );
+
+    this->grid->direction_to_coordinates(glm::vec2(this->speed_x, this->speed_y));
 
     // double smallest_distance = this->get_smallest_distance((GLfloat) 0);
 
@@ -237,17 +249,18 @@ void AIModel::set_new_goal() {
     
     glm::vec2 new_goal {x, y};
 #ifdef DEBUG
-    std::cout << "New Goal for AI-" << this->id << " = (" << x << "; " << y << std::endl;
+    std::cout << "New Goal for AI-" << this->id << ": " << x << " , " << y << std::endl;
 #endif
 
     this->goal = new_goal;
 }
 
-bool AIModel::check_goal() {
-    bool in_goal = false;
+void AIModel::check_goal() {
     double distance = glm::length(this->last_point - this->goal);
     if (distance < 0.2) {
-        in_goal = true;
+#ifdef DEBUG
+        std::cout << "Goal reached!" << std::endl;
+#endif
+        this->set_new_goal();
     }
-    return in_goal;
 }
