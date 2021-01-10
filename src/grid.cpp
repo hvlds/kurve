@@ -85,20 +85,18 @@ void Grid::direction_to_coordinates(glm::vec2 direction) {
     int cuadrant = 0;
     double last_angle = 45 / 2;
 
-    for (int i = 0; i < 8; i++) {
-        if (i == 0) {
-            if (angle >= (360 - (45 / 2)) || angle < (45 / 2)) {
-                cuadrant = 0;
-                break;
-            }
-        } else {
-            if (angle >= (last_angle) && angle < (last_angle + 45)) {
-                cuadrant = i;
-                break;
-            } else {
-                last_angle += (45 / 2);
-            }
+    for (int i = 1; i < 8; i++) {
+        if (angle >= (360 - (45 / 2)) || angle < (45 / 2)) {
+            cuadrant = 0;
+            break;
         }
+
+        if (angle >= (last_angle) && angle < (last_angle + 45)) {
+            cuadrant = i;
+            break;
+        } 
+
+        last_angle += 45;
     }
 
     std::cout << "----" << std::endl;
