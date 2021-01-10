@@ -51,27 +51,31 @@ void SidePanel::draw(int player_count, int max_score) {
         }
     }
 
+    std::string fps_str = std::to_string(user_data->fps);
+    this->font->draw_text(
+            fps_str, 400.0f, -250.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
+
     if (game_state == GAME_PAUSE) {
         this->font->draw_text(
-            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
         this->font->draw_text(
-            "to continue", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to continue", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
     } else if (game_state == GAME_ACTIVE) {
         this->font->draw_text(
-            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
         this->font->draw_text(
-            "to pause", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to pause", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
     } else if (game_state == GAME_TRANSITION) {
         this->font->draw_text(
-            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "Press SPACE", 400.0f, -300.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
         this->font->draw_text(
-            "to start", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to start", 400.0f, -325.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
     }
     
     this->font->draw_text(
-            "Press ESCAPE", 400.0f, -375.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f),false, "bold_small");
+            "Press ESCAPE", 400.0f, -375.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f),false, "regular_small");
         this->font->draw_text(
-            "to restart", 400.0f, -400.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "bold_small");
+            "to restart", 400.0f, -400.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f), false, "regular_small");
 }
 
 void SidePanel::update() {

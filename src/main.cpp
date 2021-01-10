@@ -78,6 +78,7 @@ int main(void) {
             .game_state = GAME_MENU,
             .delta_time = 0,
             .has_AI = false,
+            .fps = 0,
             .player_info = &player_info};
 
     Display display(&user_data);

@@ -22,6 +22,7 @@ class AIModel : public PlayerModel {
     double max_look_ahead(int direction);
     void set_new_goal();
     bool check_goal();
+    std::vector<std::vector<bool>> generate_grid();
 };
 
 #endif

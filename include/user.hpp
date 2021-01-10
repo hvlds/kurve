@@ -71,6 +71,7 @@ typedef struct {
     GameState game_state;
     double delta_time;
     bool has_AI;
+    int fps;
     std::vector<player_info_t>* player_info;
 } user_data_t;
 
