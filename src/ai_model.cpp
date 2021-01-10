@@ -128,7 +128,8 @@ int AIModel::plan() {
         return direction = 1;
     }
 
-    auto matrix = this->generate_grid();
+    Grid grid = Grid();
+    grid.populate(this->all_points);
 
     // double smallest_distance = this->get_smallest_distance((GLfloat) 0);
 
@@ -248,54 +249,3 @@ bool AIModel::check_goal() {
     }
     return in_goal;
 }
-
-std::vector<std::vector<bool>> AIModel::generate_grid() {
-    double left_limit = -18.75;
-    double right_limit = 13.5;
-    double top_limit = 18.75;
-    double bottom_limit = -18.75;
-
-    double width = right_limit - left_limit;
-    double height = top_limit - bottom_limit;
-
-    int horizontal_cells = 0;
-    int vertical_cells = 0;
-
-    // Determine the number of horizontal/vertical cells
-    if (height >= width) {
-        horizontal_cells = static_cast<int>(width / height * 100); 
-        vertical_cells = 100;
-    } else {
-        vertical_cells = static_cast<int>(height / width * 100); 
-        horizontal_cells = 100;
-    }
-
-    // Determine the width and height of every cell
-    double cell_width = width / (double) horizontal_cells;
-    double cell_height = height / (double) vertical_cells;
-
-    // Create matrix full of 0
-    std::vector<std::vector<bool>> matrix;
-    for (int i = 0; i < horizontal_cells; i++) {
-        std::vector<bool> temp_vec;
-        for (int j = 0; j < vertical_cells; j++) {
-            temp_vec.push_back(false);
-        }
-        matrix.push_back(temp_vec);
-    }
-
-    if (this->all_points.size() > 0) {
-        for (auto point : this->all_points) {
-            double x_diff = point.x - left_limit; 
-            double y_diff = top_limit - point.y;
-
-            // Determine the coordinates on the grid
-            int x_pos = static_cast<int>(floor(x_diff / cell_width));
-            int y_pos = static_cast<int>(floor(y_diff / cell_height));
-
-            matrix.at(x_pos - 1).at(y_pos - 1) = true;
-        }
-    }
-
-    return matrix;
-}  
