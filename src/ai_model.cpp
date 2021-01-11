@@ -134,16 +134,7 @@ int AIModel::plan() {
     }
 
     this->grid->populate(this->all_points);
-    auto AI_coordinates = this->grid->get_coordinates(
-        this->last_point.x,
-        this->last_point.y);
-
-    auto goal_coordinates = this->grid->get_coordinates(
-        this->goal.x,
-        this->goal.y);
-
-    auto direction_cuadrant = this->grid->direction_to_cuadrant(
-        glm::vec2(this->speed_x, this->speed_y));
+    this->grid->set_player(this->last_point, glm::vec2(this->speed_x, this->speed_y));
 
     // double smallest_distance = this->get_smallest_distance((GLfloat) 0);
 

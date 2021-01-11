@@ -175,3 +175,13 @@ std::vector<std::pair<int, int>> Grid::get_neighbours(
 
     return valid_neighbours;
 }
+
+void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
+    this->center = this->get_coordinates(center.x, center.y);
+    int direction_cuadrant = this->direction_to_cuadrant(direction);
+    this->discard_invalid_neighbours(direction_cuadrant);
+}
+
+void Grid::discard_invalid_neighbours(int direction_cuadrant) {
+
+}
