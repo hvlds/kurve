@@ -63,7 +63,7 @@ void Grid::clear() {
     }
 }
 
-std::pair<int, int> Grid::direction_to_coordinates(std::pair<int, int> center, glm::vec2 direction) {
+int Grid::direction_to_cuadrant(glm::vec2 direction) {
     double x_diff = direction.x;
     double y_diff = direction.y;
 
@@ -98,43 +98,59 @@ std::pair<int, int> Grid::direction_to_coordinates(std::pair<int, int> center, g
 
         last_angle += 45;
     }
-
-    std::pair<int, int> direction_coordinates = center;
-
-    switch(cuadrant) {
-        case 0:
-            direction_coordinates.first += 1;
-            direction_coordinates.second += 0;
-            break;
-        case 1:
-            direction_coordinates.first += 1;
-            direction_coordinates.second += 1;
-            break;
-        case 2:
-            direction_coordinates.first += 0;
-            direction_coordinates.second += 1;
-            break;
-        case 3:
-            direction_coordinates.first -= 1;
-            direction_coordinates.second += 1;
-            break;
-        case 4:
-            direction_coordinates.first -= 1;
-            direction_coordinates.second += 0;
-            break;
-        case 5:
-            direction_coordinates.first -= 1;
-            direction_coordinates.second -= 1;
-            break;
-        case 6:
-            direction_coordinates.first += 0;
-            direction_coordinates.second -= 1;
-            break;
-        case 7:
-            direction_coordinates.first += 1;
-            direction_coordinates.second -= 1;
-            break;
-    }
     
-    return direction_coordinates;
+    return cuadrant;
+}
+
+std::vector<std::pair<int, int>> Grid::get_neighbours(
+    std::pair<int, int> center, int direction_cuadrant) {
+    std::vector<std::pair<int, int>> neighbours;
+
+    // Neighbour 0
+    neighbours.push_back(std::make_pair(center.first + 1, center.second));
+
+    // Neighbour 1
+    neighbours.push_back(std::make_pair(center.first + 1, center.second + 1));
+
+    // Neighbour 2
+    neighbours.push_back(std::make_pair(center.first, center.second + 1));
+
+    // Neighbour 3
+    neighbours.push_back(std::make_pair(center.first - 1, center.second + 1));
+
+    // Neighbour 4
+    neighbours.push_back(std::make_pair(center.first - 1, center.second));
+
+    // Neighbour 5
+    neighbours.push_back(std::make_pair(center.first - 1, center.second - 1));
+
+    // Neighbour 6
+    neighbours.push_back(std::make_pair(center.first, center.second - 1));
+
+    // Neighbour 7
+    neighbours.push_back(std::make_pair(center.first + 1, center.second - 1));
+
+    /*  Check which neighbours are valid. It depends of the movement 
+        constraints of the player
+
+        |-|^|-|      |x|x|x|  
+        |-|c|-| -->  |-|c|-|
+        |-|-|-|      |-|-|-|
+    */
+    std::vector<std::pair<int, int>> valid_neighbours;
+    if (direction_cuadrant == 0) {
+        valid_neighbours.push_back(neighbours[1]);
+        valid_neighbours.push_back(neighbours[0]);
+        valid_neighbours.push_back(neighbours[7]);
+    } else if (direction_cuadrant == 7) {
+        valid_neighbours.push_back(neighbours[0]);
+        valid_neighbours.push_back(neighbours[7]);
+        valid_neighbours.push_back(neighbours[6]);
+    } else {
+        valid_neighbours.push_back(neighbours[direction_cuadrant + 1]);
+        valid_neighbours.push_back(neighbours[direction_cuadrant]);
+        valid_neighbours.push_back(neighbours[direction_cuadrant - 1]);
+    }
+
+    return valid_neighbours;
 }

@@ -7,6 +7,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+/*  Grid Notation for a pair of coordinates c
+    from 0 to 1 neighbours of the center
+    |3|2|1|
+    |4|c|0|
+    |5|6|7|
+*/
 class Grid {
    private:
     double left_limit = -18.75;
@@ -24,7 +30,9 @@ class Grid {
     Grid();
     void populate(std::vector<glm::vec2> all_points);
     std::pair<int, int> get_coordinates(double x, double y);
-    std::pair<int, int> direction_to_coordinates(std::pair<int, int> center, glm::vec2 direction);
+    int direction_to_cuadrant(glm::vec2 direction);
+    std::vector<std::pair<int, int>> get_neighbours(
+        std::pair<int, int> center, int direction_cuadrant);
     void clear();    
 };
 

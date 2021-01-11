@@ -142,8 +142,7 @@ int AIModel::plan() {
         this->goal.x,
         this->goal.y);
 
-    auto direction_coordinates = this->grid->direction_to_coordinates(
-        AI_coordinates, 
+    auto direction_cuadrant = this->grid->direction_to_cuadrant(
         glm::vec2(this->speed_x, this->speed_y));
 
     // double smallest_distance = this->get_smallest_distance((GLfloat) 0);
