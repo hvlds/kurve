@@ -151,15 +151,6 @@ $ sh scripts/debug.sh
    - [ ] Generate a Flatpak package
    - [ ] Render textures (images) for example the logo of kurve in the main Menu
 
-
-# Built With
-
-* C++
-* OpenGL (glad)
-* glm
-* GLFW
-* FreeType2
-
 # License and Authors
 This Project started as a final project for the class Multimedia
 at the TU Bergakademie Freiberg by Simon Al Nomer and Hernán Valdés.
@@ -169,10 +160,6 @@ The class was taught by [Jonas Treumer](https://github.com/JayTee42) and
 [Ben Lorenz](https://github.com/bnlrnz) and inside of the project 
 are still traces of the C code programmed by them as an example of the 
 functionality of OpenGL and GLFW.
-
-All future release (starting from v0.2-alpha) are developed and maintained by 
-Hernán Valdés and licensed under the MIT License.
-
 
 # Screenshots
 

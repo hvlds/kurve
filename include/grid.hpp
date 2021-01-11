@@ -24,7 +24,7 @@ class Grid {
     Grid();
     void populate(std::vector<glm::vec2> all_points);
     std::pair<int, int> get_coordinates(double x, double y);
-    void direction_to_coordinates(glm::vec2 direction);
+    std::pair<int, int> direction_to_coordinates(std::pair<int, int> center, glm::vec2 direction);
     void clear();    
 };
 

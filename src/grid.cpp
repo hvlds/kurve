@@ -63,7 +63,7 @@ void Grid::clear() {
     }
 }
 
-void Grid::direction_to_coordinates(glm::vec2 direction) {
+std::pair<int, int> Grid::direction_to_coordinates(std::pair<int, int> center, glm::vec2 direction) {
     double x_diff = direction.x;
     double y_diff = direction.y;
 
@@ -99,7 +99,42 @@ void Grid::direction_to_coordinates(glm::vec2 direction) {
         last_angle += 45;
     }
 
-    std::cout << "----" << std::endl;
-    std::cout << "Angle: " << angle << std::endl;
-    std::cout << "Cuadrant: " << cuadrant << std::endl; 
+    std::pair<int, int> direction_coordinates = center;
+
+    switch(cuadrant) {
+        case 0:
+            direction_coordinates.first += 1;
+            direction_coordinates.second += 0;
+            break;
+        case 1:
+            direction_coordinates.first += 1;
+            direction_coordinates.second += 1;
+            break;
+        case 2:
+            direction_coordinates.first += 0;
+            direction_coordinates.second += 1;
+            break;
+        case 3:
+            direction_coordinates.first -= 1;
+            direction_coordinates.second += 1;
+            break;
+        case 4:
+            direction_coordinates.first -= 1;
+            direction_coordinates.second += 0;
+            break;
+        case 5:
+            direction_coordinates.first -= 1;
+            direction_coordinates.second -= 1;
+            break;
+        case 6:
+            direction_coordinates.first += 0;
+            direction_coordinates.second -= 1;
+            break;
+        case 7:
+            direction_coordinates.first += 1;
+            direction_coordinates.second -= 1;
+            break;
+    }
+    
+    return direction_coordinates;
 }
