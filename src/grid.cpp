@@ -106,6 +106,13 @@ std::vector<std::pair<int, int>> Grid::get_neighbours(
     std::pair<int, int> center, int direction_cuadrant) {
     std::vector<std::pair<int, int>> neighbours;
 
+    /*  Grid Notation for a pair of coordinates c
+        from 0 to 1 neighbours of the center
+        |3|2|1|
+        |4|c|0|
+        |5|6|7|
+    */
+
     // Neighbour 0
     neighbours.push_back(std::make_pair(center.first + 1, center.second));
 
@@ -132,24 +139,38 @@ std::vector<std::pair<int, int>> Grid::get_neighbours(
 
     /*  Check which neighbours are valid. It depends of the movement 
         constraints of the player
-
         |-|^|-|      |x|x|x|  
         |-|c|-| -->  |-|c|-|
         |-|-|-|      |-|-|-|
+
+        |-|-|-|      |-|-|x|  
+        |-|c|>| -->  |-|c|x|
+        |-|-|-|      |-|-|x|
     */
-    std::vector<std::pair<int, int>> valid_neighbours;
+
+    std::vector<std::pair<int, int>> temp_neighbours;
     if (direction_cuadrant == 0) {
-        valid_neighbours.push_back(neighbours[1]);
-        valid_neighbours.push_back(neighbours[0]);
-        valid_neighbours.push_back(neighbours[7]);
+        temp_neighbours.push_back(neighbours[1]);
+        temp_neighbours.push_back(neighbours[0]);
+        temp_neighbours.push_back(neighbours[7]);
     } else if (direction_cuadrant == 7) {
-        valid_neighbours.push_back(neighbours[0]);
-        valid_neighbours.push_back(neighbours[7]);
-        valid_neighbours.push_back(neighbours[6]);
+        temp_neighbours.push_back(neighbours[0]);
+        temp_neighbours.push_back(neighbours[7]);
+        temp_neighbours.push_back(neighbours[6]);
     } else {
-        valid_neighbours.push_back(neighbours[direction_cuadrant + 1]);
-        valid_neighbours.push_back(neighbours[direction_cuadrant]);
-        valid_neighbours.push_back(neighbours[direction_cuadrant - 1]);
+        temp_neighbours.push_back(neighbours[direction_cuadrant + 1]);
+        temp_neighbours.push_back(neighbours[direction_cuadrant]);
+        temp_neighbours.push_back(neighbours[direction_cuadrant - 1]);
+    }
+
+    // Check that the neighbours are in limit of the grid
+    std::vector<std::pair<int, int>> valid_neighbours;
+    for (auto neighbour : temp_neighbours) {
+        bool condition1 = neighbour.first >= 0 && neighbour.first < horizontal_cells; 
+        bool condition2 = neighbour.second >= 0 && neighbour.second < vertical_cells; 
+        if (condition1 && condition2) {
+            valid_neighbours.push_back(neighbour);
+        }
     }
 
     return valid_neighbours;

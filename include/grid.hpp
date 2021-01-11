@@ -7,12 +7,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-/*  Grid Notation for a pair of coordinates c
-    from 0 to 1 neighbours of the center
-    |3|2|1|
-    |4|c|0|
-    |5|6|7|
-*/
 class Grid {
    private:
     double left_limit = -18.75;
