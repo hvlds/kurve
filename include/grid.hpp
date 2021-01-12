@@ -25,6 +25,7 @@ class Grid {
     std::pair<int, int> get_coordinates(double x, double y);
     void check_cuadrants(int direction_cuadrant);
     bool in_grid(std::pair<int, int> cell);
+    int get_distance(std::pair<int, int> c1, std::pair<int, int> c2);
     std::vector<std::pair<int, int>> get_neighbours(std::pair<int, int> cell);
    public:
     Grid();

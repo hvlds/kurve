@@ -43,6 +43,11 @@ bool Grid::in_grid(std::pair<int, int> cell) {
     return flag; 
 }
 
+// Manhattan Distance between two cells
+int Grid::get_distance(std::pair<int, int> c1, std::pair<int, int> c2) {
+    return std::abs(c1.first - c2.first) + std::abs(c1.second - c2.second);
+}
+
 void Grid::populate(std::vector<glm::vec2> all_points) {    
     if (all_points.size() > 0) {
         for (auto point : all_points) {
