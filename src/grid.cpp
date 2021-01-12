@@ -31,7 +31,17 @@ Grid::Grid() {
         }
         this->matrix.push_back(temp_vec);
     }
-}   
+}
+
+bool Grid::in_grid(std::pair<int, int> cell) {
+    bool condition1 = cell.first >= 0 && cell.first < horizontal_cells; 
+    bool condition2 = cell.second >= 0 && cell.second < vertical_cells;
+    bool flag = false;
+    if (condition1 && condition2) {
+        flag = true;
+    }
+    return flag; 
+}
 
 void Grid::populate(std::vector<glm::vec2> all_points) {    
     if (all_points.size() > 0) {
@@ -102,8 +112,7 @@ int Grid::direction_to_cuadrant(glm::vec2 direction) {
     return cuadrant;
 }
 
-std::vector<std::pair<int, int>> Grid::get_neighbours(
-    std::pair<int, int> center, int direction_cuadrant) {
+void Grid::check_cuadrants(int direction_cuadrant) {
     std::vector<std::pair<int, int>> neighbours;
 
     /*  Grid Notation for a pair of coordinates c
@@ -137,6 +146,13 @@ std::vector<std::pair<int, int>> Grid::get_neighbours(
     // Neighbour 7
     neighbours.push_back(std::make_pair(center.first + 1, center.second - 1));
 
+    // Make every possible neigbour invalid
+    for (auto neighbour : neighbours) {
+        if (this->in_grid(neighbour) == true) {
+            this->matrix[neighbour.first][neighbour.second] = false;
+        }
+    }
+
     /*  Check which neighbours are valid. It depends of the movement 
         constraints of the player
         |-|^|-|      |x|x|x|  
@@ -149,6 +165,7 @@ std::vector<std::pair<int, int>> Grid::get_neighbours(
     */
 
     std::vector<std::pair<int, int>> temp_neighbours;
+    std::vector<int> valid_id;
     if (direction_cuadrant == 0) {
         temp_neighbours.push_back(neighbours[1]);
         temp_neighbours.push_back(neighbours[0]);
@@ -166,22 +183,53 @@ std::vector<std::pair<int, int>> Grid::get_neighbours(
     // Check that the neighbours are in limit of the grid
     std::vector<std::pair<int, int>> valid_neighbours;
     for (auto neighbour : temp_neighbours) {
-        bool condition1 = neighbour.first >= 0 && neighbour.first < horizontal_cells; 
-        bool condition2 = neighbour.second >= 0 && neighbour.second < vertical_cells; 
-        if (condition1 && condition2) {
-            valid_neighbours.push_back(neighbour);
+        if (this->in_grid(neighbour) == true) {
+            this->matrix[neighbour.first][neighbour.second] = true;
         }
     }
-
-    return valid_neighbours;
 }
 
 void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
     this->center = this->get_coordinates(center.x, center.y);
     int direction_cuadrant = this->direction_to_cuadrant(direction);
-    this->discard_invalid_neighbours(direction_cuadrant);
+    this->check_cuadrants(direction_cuadrant);
 }
 
-void Grid::discard_invalid_neighbours(int direction_cuadrant) {
+std::vector<std::pair<int, int>> Grid::get_neighbours(std::pair<int, int> cell) {
+    std::vector<std::pair<int, int>> neighbours;
 
+    // Neighbour 0
+    neighbours.push_back(std::make_pair(center.first + 1, center.second));
+
+    // Neighbour 1
+    neighbours.push_back(std::make_pair(center.first + 1, center.second + 1));
+
+    // Neighbour 2
+    neighbours.push_back(std::make_pair(center.first, center.second + 1));
+
+    // Neighbour 3
+    neighbours.push_back(std::make_pair(center.first - 1, center.second + 1));
+
+    // Neighbour 4
+    neighbours.push_back(std::make_pair(center.first - 1, center.second));
+
+    // Neighbour 5
+    neighbours.push_back(std::make_pair(center.first - 1, center.second - 1));
+
+    // Neighbour 6
+    neighbours.push_back(std::make_pair(center.first, center.second - 1));
+
+    // Neighbour 7
+    neighbours.push_back(std::make_pair(center.first + 1, center.second - 1));
+
+    std::vector<std::pair<int, int>> valid_neighbours;
+    for (auto neighbour : neighbours) {
+        if (this->in_grid(neighbour) == true) {
+            if (this->matrix[neighbour.first][neighbour.second] == true) {
+                valid_neighbours.push_back(neighbour);
+            }            
+        }
+    }
+
+    return valid_neighbours;
 }

@@ -23,9 +23,9 @@ class Grid {
     std::vector<std::vector<bool>> matrix;
     int direction_to_cuadrant(glm::vec2 direction);
     std::pair<int, int> get_coordinates(double x, double y);
-    std::vector<std::pair<int, int>> get_neighbours(
-        std::pair<int, int> center, int direction_cuadrant);
-    void discard_invalid_neighbours(int direction_cuadrant);
+    void check_cuadrants(int direction_cuadrant);
+    bool in_grid(std::pair<int, int> cell);
+    std::vector<std::pair<int, int>> get_neighbours(std::pair<int, int> cell);
    public:
     Grid();
     void populate(std::vector<glm::vec2> all_points);
