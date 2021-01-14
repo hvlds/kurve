@@ -135,101 +135,21 @@ int AIModel::plan() {
 
     this->grid->populate(this->all_points);
     this->grid->set_player(this->last_point, glm::vec2(this->speed_x, this->speed_y));
+    
+    auto start_vec = this->grid->get_coordinates(last_point.x, last_point.y); 
+    auto goal_vec = this->grid->get_coordinates(goal.x, goal.y);
 
-    // double smallest_distance = this->get_smallest_distance((GLfloat) 0);
+    if (this->counter_plan > 100) {
+        std::cout << "Start planning" << std::endl;
+        auto next_cell = this->grid->get_next_cell(start_vec, goal_vec);
+        std::cout << "Next cell: " << next_cell.x << "," << next_cell.y << std::endl;
+        this->counter_plan = 0;
+    } else {
+        this->counter_plan++;
+    }
 
-    // std::cout << "Smallest Distance: " << smallest_distance << std::endl;
-    // std::cout << "----" << std::endl;   
-
-    // if (smallest_distance < threshold && smallest_distance != -1) {
-    //     double max_distance_left = this->max_look_ahead(-1);
-    //     double max_distance_right = this->max_look_ahead(1);
-
-    //     if (max_distance_left > max_distance_right) {
-    //         direction = -1;
-    //     } else  {
-    //         direction = 1;
-    //     }
-    // }
 
     return direction;
-}
-
-double AIModel::get_smallest_distance(GLfloat delta_angle) {
-    auto temp_x = this->speed_x; 
-    auto temp_y = this->speed_y; 
-
-    glm::vec2 last_direction {temp_x, temp_y};
-    
-    if (delta_angle != 0) {
-        GLfloat temp_speed_x = last_direction.x;
-        GLfloat temp_speed_y = last_direction.y;
-
-        last_direction.x = temp_speed_x * cos(delta_angle) - temp_speed_y * sin(delta_angle);
-        last_direction.y = temp_speed_x * sin(delta_angle) + temp_speed_y * cos(delta_angle);
-    }
-
-    std::vector<glm::vec2> filtered_points;
-    double smallest_distance = -1;
-    glm::vec2 nearest_point;
-    bool is_first = true;
-
-    for (auto point : this->all_points) {
-        auto centered_point = point - this->last_point;
-
-        glm::vec2 vec1 {0, 1};
-        glm::vec2 vec2 = last_direction;
-        auto angle = get_angle(vec1, vec2);
-        auto rotation = cross_product(vec1, vec2);
-        
-        if (rotation > 0) {
-            angle = -1 * angle;
-        } else if (rotation == 0 ) {
-            angle = 0;
-        }
-
-        auto new_x = centered_point.x * cos(angle) - centered_point.y * sin(angle);
-        auto new_y = centered_point.x * sin(angle) + centered_point.y * cos(angle);
-
-        if (new_x < 1 && new_x > -1 && new_y > 0) {
-            glm::vec2 new_point{new_x, new_y};
-            auto distance = glm::length(this->last_point - point);
-            if (is_first == true) {
-                smallest_distance = distance;
-                nearest_point = point;
-                is_first = false;
-            } else {
-                if (distance < smallest_distance) {
-                    smallest_distance = distance;
-                    nearest_point = point;
-                }
-            }
-        }
-    }
-
-    return smallest_distance;
-}
-
-GLfloat AIModel::get_delta_angle() {
-    double new_time = glfwGetTime();
-    double time_delta = new_time - this->time;
-    double speed = 3;
-    auto angle = static_cast<GLfloat>((speed * time_delta));
-    return angle;
-}
-
-double AIModel::max_look_ahead(int direction) {
-    auto delta_angle = this->get_delta_angle();
-    double smallest_distance = -1;
-    for (int i = 0; i < 10; i++) {
-        auto current_smallest_distance = this->get_smallest_distance(delta_angle);
-        if (current_smallest_distance > smallest_distance) {
-            smallest_distance = current_smallest_distance;
-        }
-        delta_angle += (delta_angle*10)*direction;        
-    }
-
-    return smallest_distance;
 }
 
 void AIModel::set_new_goal() {

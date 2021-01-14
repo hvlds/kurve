@@ -2,8 +2,8 @@
 #include "point.hpp"
 #include <cmath>
 #include <iostream>
-#include <queue>
 #include <map>
+#include <memory>
 
 Grid::Grid() {
 #ifdef DEBUG
@@ -241,15 +241,63 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
     return valid_neighbours;
 }
 
-void Grid::a_star(glm::ivec2 start, glm::ivec2 goal) {
-    // std::priority_queue<std::pair<int, glm::ivec2>> frontier{};
-    // frontier.push({0, start});
-    // std::map<glm::ivec2, glm::ivec2> came_from;
-    // std::map<glm::ivec2, int> cost_so_far;
-    // came_from.insert({start, glm::ivec2(-1, -1)});
-    // cost_so_far.insert({start, 0});
+glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
+    auto start_ptr = std::make_shared<glm::ivec2>(start);
 
-    // while (!frontier.empty()) {
-    //     auto current = frontier.top().second;
-    // }
+    // std::priority_queue<std::pair<int, std::shared_ptr<glm::ivec2>>> frontier;
+    PriorityQueue<std::shared_ptr<glm::ivec2>, int> frontier;
+    frontier.put(start_ptr, 0);
+
+    std::map<std::shared_ptr<glm::ivec2>, std::shared_ptr<glm::ivec2>> came_from;
+    std::map<std::shared_ptr<glm::ivec2>, int> cost_so_far;
+
+    came_from.insert({start_ptr, nullptr});
+    // came_from.insert({start_ptr, std::make_shared<glm::ivec2>(-1, -1)});
+    cost_so_far.insert({start_ptr, 0});
+
+    while (!frontier.empty()) {
+        auto current = frontier.get();
+        
+        std::cout << "Start: " << start.x << "," << start.y << std::endl;
+        std::cout << "Current: " << current->x << "," << current->y << std::endl;
+        std::cout << "Goal: " << goal.x << "," << goal.y << std::endl;
+        
+        if (*current == goal) {
+            break;
+        }
+
+        auto neighbours = this->get_neighbours(*current);
+        for (auto next : neighbours) {
+            if (next.x != start.x && next.y != start.y) {
+                std::cout << "Next: " << next.x << "," << next.y << std::endl;
+                auto next_ptr = std::make_shared<glm::ivec2>(next);
+                auto new_cost = cost_so_far.at(current);
+                cost_so_far.insert({next_ptr, new_cost});
+                auto priority = new_cost + this->get_distance(goal, next);
+                frontier.put(next_ptr, priority);
+                came_from[next_ptr] = current;
+            }
+        }
+
+        std::cout << "----" << std::endl;
+    }
+
+    std::shared_ptr<glm::ivec2> next_cell_ptr;
+    for (auto item : came_from) {
+        auto cell_ptr = item.first;
+        auto origin_ptr = item.second;
+        if (origin_ptr == start_ptr) {
+            next_cell_ptr = cell_ptr;
+            break;
+        }
+    }
+
+    glm::ivec2 next_cell;
+    if (next_cell_ptr == nullptr) {
+        next_cell = glm::ivec2(-1, -1);
+    } else {
+        next_cell = *next_cell_ptr;
+    }
+
+    return next_cell;
 }
