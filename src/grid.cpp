@@ -2,6 +2,8 @@
 #include "point.hpp"
 #include <cmath>
 #include <iostream>
+#include <queue>
+#include <map>
 
 Grid::Grid() {
 #ifdef DEBUG
@@ -33,9 +35,9 @@ Grid::Grid() {
     }
 }
 
-bool Grid::in_grid(std::pair<int, int> cell) {
-    bool condition1 = cell.first >= 0 && cell.first < horizontal_cells; 
-    bool condition2 = cell.second >= 0 && cell.second < vertical_cells;
+bool Grid::in_grid(glm::ivec2 cell) {
+    bool condition1 = cell.x >= 0 && cell.x < horizontal_cells; 
+    bool condition2 = cell.y >= 0 && cell.y < vertical_cells;
     bool flag = false;
     if (condition1 && condition2) {
         flag = true;
@@ -44,8 +46,8 @@ bool Grid::in_grid(std::pair<int, int> cell) {
 }
 
 // Manhattan Distance between two cells
-int Grid::get_distance(std::pair<int, int> c1, std::pair<int, int> c2) {
-    return std::abs(c1.first - c2.first) + std::abs(c1.second - c2.second);
+int Grid::get_distance(glm::ivec2 c1, glm::ivec2 c2) {
+    return std::abs(c1.x - c2.x) + std::abs(c1.y - c2.y);
 }
 
 void Grid::populate(std::vector<glm::vec2> all_points) {    
@@ -53,12 +55,12 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
         for (auto point : all_points) {
     
             auto coordinates = this->get_coordinates(point.x, point.y);
-            this->matrix.at(coordinates.first).at(coordinates.second) = true;
+            this->matrix.at(coordinates.x).at(coordinates.y) = true;
         }
     }
 }
 
-std::pair<int, int> Grid::get_coordinates(double x, double y) {
+glm::ivec2 Grid::get_coordinates(double x, double y) {
     double x_diff = x - this->left_limit; 
     double y_diff = this->top_limit - y;
 
@@ -66,7 +68,7 @@ std::pair<int, int> Grid::get_coordinates(double x, double y) {
     int x_pos = static_cast<int>(floor(x_diff / this->cell_width)) - 1;
     int y_pos = static_cast<int>(floor(y_diff / this->cell_height)) - 1;
 
-    auto pair = std::make_pair(x_pos, y_pos); 
+    auto pair = glm::ivec2(x_pos, y_pos); 
     return pair;
 }
 
@@ -118,7 +120,7 @@ int Grid::direction_to_cuadrant(glm::vec2 direction) {
 }
 
 void Grid::check_cuadrants(int direction_cuadrant) {
-    std::vector<std::pair<int, int>> neighbours;
+    std::vector<glm::ivec2> neighbours;
 
     /*  Grid Notation for a pair of coordinates c
         from 0 to 1 neighbours of the center
@@ -128,33 +130,33 @@ void Grid::check_cuadrants(int direction_cuadrant) {
     */
 
     // Neighbour 0
-    neighbours.push_back(std::make_pair(center.first + 1, center.second));
+    neighbours.push_back(glm::ivec2(center.x + 1, center.y));
 
     // Neighbour 1
-    neighbours.push_back(std::make_pair(center.first + 1, center.second + 1));
+    neighbours.push_back(glm::ivec2(center.x + 1, center.y + 1));
 
     // Neighbour 2
-    neighbours.push_back(std::make_pair(center.first, center.second + 1));
+    neighbours.push_back(glm::ivec2(center.x, center.y + 1));
 
     // Neighbour 3
-    neighbours.push_back(std::make_pair(center.first - 1, center.second + 1));
+    neighbours.push_back(glm::ivec2(center.x - 1, center.y + 1));
 
     // Neighbour 4
-    neighbours.push_back(std::make_pair(center.first - 1, center.second));
+    neighbours.push_back(glm::ivec2(center.x - 1, center.y));
 
     // Neighbour 5
-    neighbours.push_back(std::make_pair(center.first - 1, center.second - 1));
+    neighbours.push_back(glm::ivec2(center.x - 1, center.y - 1));
 
     // Neighbour 6
-    neighbours.push_back(std::make_pair(center.first, center.second - 1));
+    neighbours.push_back(glm::ivec2(center.x, center.y - 1));
 
     // Neighbour 7
-    neighbours.push_back(std::make_pair(center.first + 1, center.second - 1));
+    neighbours.push_back(glm::ivec2(center.x + 1, center.y - 1));
 
     // Make every possible neigbour invalid
     for (auto neighbour : neighbours) {
         if (this->in_grid(neighbour) == true) {
-            this->matrix[neighbour.first][neighbour.second] = false;
+            this->matrix[neighbour.x][neighbour.y] = false;
         }
     }
 
@@ -169,7 +171,7 @@ void Grid::check_cuadrants(int direction_cuadrant) {
         |-|-|-|      |-|-|x|
     */
 
-    std::vector<std::pair<int, int>> temp_neighbours;
+    std::vector<glm::ivec2> temp_neighbours;
     std::vector<int> valid_id;
     if (direction_cuadrant == 0) {
         temp_neighbours.push_back(neighbours[1]);
@@ -186,10 +188,10 @@ void Grid::check_cuadrants(int direction_cuadrant) {
     }
 
     // Check that the neighbours are in limit of the grid
-    std::vector<std::pair<int, int>> valid_neighbours;
+    std::vector<glm::ivec2> valid_neighbours;
     for (auto neighbour : temp_neighbours) {
         if (this->in_grid(neighbour) == true) {
-            this->matrix[neighbour.first][neighbour.second] = true;
+            this->matrix[neighbour.x][neighbour.y] = true;
         }
     }
 }
@@ -200,41 +202,54 @@ void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
     this->check_cuadrants(direction_cuadrant);
 }
 
-std::vector<std::pair<int, int>> Grid::get_neighbours(std::pair<int, int> cell) {
-    std::vector<std::pair<int, int>> neighbours;
+std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
+    std::vector<glm::ivec2> neighbours;
 
     // Neighbour 0
-    neighbours.push_back(std::make_pair(center.first + 1, center.second));
+    neighbours.push_back(glm::ivec2(center.x + 1, center.y));
 
     // Neighbour 1
-    neighbours.push_back(std::make_pair(center.first + 1, center.second + 1));
+    neighbours.push_back(glm::ivec2(center.x + 1, center.y + 1));
 
     // Neighbour 2
-    neighbours.push_back(std::make_pair(center.first, center.second + 1));
+    neighbours.push_back(glm::ivec2(center.x, center.y + 1));
 
     // Neighbour 3
-    neighbours.push_back(std::make_pair(center.first - 1, center.second + 1));
+    neighbours.push_back(glm::ivec2(center.x - 1, center.y + 1));
 
     // Neighbour 4
-    neighbours.push_back(std::make_pair(center.first - 1, center.second));
+    neighbours.push_back(glm::ivec2(center.x - 1, center.y));
 
     // Neighbour 5
-    neighbours.push_back(std::make_pair(center.first - 1, center.second - 1));
+    neighbours.push_back(glm::ivec2(center.x - 1, center.y - 1));
 
     // Neighbour 6
-    neighbours.push_back(std::make_pair(center.first, center.second - 1));
+    neighbours.push_back(glm::ivec2(center.x, center.y - 1));
 
     // Neighbour 7
-    neighbours.push_back(std::make_pair(center.first + 1, center.second - 1));
+    neighbours.push_back(glm::ivec2(center.x + 1, center.y - 1));
 
-    std::vector<std::pair<int, int>> valid_neighbours;
+    std::vector<glm::ivec2> valid_neighbours;
     for (auto neighbour : neighbours) {
         if (this->in_grid(neighbour) == true) {
-            if (this->matrix[neighbour.first][neighbour.second] == true) {
+            if (this->matrix[neighbour.x][neighbour.y] == true) {
                 valid_neighbours.push_back(neighbour);
             }            
         }
     }
 
     return valid_neighbours;
+}
+
+void Grid::a_star(glm::ivec2 start, glm::ivec2 goal) {
+    // std::priority_queue<std::pair<int, glm::ivec2>> frontier{};
+    // frontier.push({0, start});
+    // std::map<glm::ivec2, glm::ivec2> came_from;
+    // std::map<glm::ivec2, int> cost_so_far;
+    // came_from.insert({start, glm::ivec2(-1, -1)});
+    // cost_so_far.insert({start, 0});
+
+    // while (!frontier.empty()) {
+    //     auto current = frontier.top().second;
+    // }
 }

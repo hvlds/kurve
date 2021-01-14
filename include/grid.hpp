@@ -19,18 +19,19 @@ class Grid {
     int vertical_cells;
     double cell_width;
     double cell_height;
-    std::pair<int, int> center;
+    glm::ivec2 center;
     std::vector<std::vector<bool>> matrix;
     int direction_to_cuadrant(glm::vec2 direction);
-    std::pair<int, int> get_coordinates(double x, double y);
+    glm::ivec2 get_coordinates(double x, double y);
     void check_cuadrants(int direction_cuadrant);
-    bool in_grid(std::pair<int, int> cell);
-    int get_distance(std::pair<int, int> c1, std::pair<int, int> c2);
-    std::vector<std::pair<int, int>> get_neighbours(std::pair<int, int> cell);
+    bool in_grid(glm::ivec2 cell);
+    int get_distance(glm::ivec2 c1, glm::ivec2 c2);
+    std::vector<glm::ivec2> get_neighbours(glm::ivec2 cell);
    public:
     Grid();
     void populate(std::vector<glm::vec2> all_points);
     void set_player(glm::vec2 center, glm::vec2 direction);
+    void a_star(glm::ivec2 start, glm::ivec2 goal);
     void clear();    
 };
 
