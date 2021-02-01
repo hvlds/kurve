@@ -14,11 +14,11 @@ Grid::Grid() {
 
     // Determine the number of horizontal/vertical cells
     if (this->height >= this->width) {
-        this->horizontal_cells = static_cast<int>(this->width / this->height * 100); 
-        this->vertical_cells = 100;
+        this->horizontal_cells = static_cast<int>(this->width / this->height * 20); 
+        this->vertical_cells = 20;
     } else {
-        this->vertical_cells = static_cast<int>(this->height / this->width * 100); 
-        this->horizontal_cells = 100;
+        this->vertical_cells = static_cast<int>(this->height / this->width * 20); 
+        this->horizontal_cells = 20;
     }
 
     // Determine the width and height of every cell
@@ -73,8 +73,8 @@ glm::ivec2 Grid::get_coordinates(double x, double y) {
 }
 
 void Grid::clear() {
-    for (int i = 0; i < horizontal_cells; i++) {
-        for (int j = 0; j < vertical_cells; j++) {
+    for (int i = 0; i < this->horizontal_cells; i++) {
+        for (int j = 0; j < this->vertical_cells; j++) {
             this->matrix.at(i).at(j) = false;
         }
     }
@@ -200,6 +200,7 @@ void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
     this->center = this->get_coordinates(center.x, center.y);
     int direction_cuadrant = this->direction_to_cuadrant(direction);
     this->check_cuadrants(direction_cuadrant);
+    this->print();
 }
 
 std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
@@ -254,7 +255,7 @@ glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
     came_from.insert({start_ptr, nullptr});
     // came_from.insert({start_ptr, std::make_shared<glm::ivec2>(-1, -1)});
     cost_so_far.insert({start_ptr, 0});
-
+    
     while (!frontier.empty()) {
         auto current = frontier.get();
         
@@ -262,24 +263,31 @@ glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
         std::cout << "Current: " << current->x << "," << current->y << std::endl;
         std::cout << "Goal: " << goal.x << "," << goal.y << std::endl;
         
-        if (*current == goal) {
+        if (current->x == goal.x && current->y == goal.y) {
             break;
         }
 
         auto neighbours = this->get_neighbours(*current);
+        bool has_more = false;
         for (auto next : neighbours) {
-            if (next.x != start.x && next.y != start.y) {
+            if (next.x != current->x && next.y != current->y) {
                 std::cout << "Next: " << next.x << "," << next.y << std::endl;
                 auto next_ptr = std::make_shared<glm::ivec2>(next);
                 auto new_cost = cost_so_far.at(current);
                 cost_so_far.insert({next_ptr, new_cost});
                 auto priority = new_cost + this->get_distance(goal, next);
                 frontier.put(next_ptr, priority);
-                came_from[next_ptr] = current;
+
+                came_from.insert({next_ptr, current});
+                has_more = true;
             }
         }
 
         std::cout << "----" << std::endl;
+        if (has_more == false) {
+            break;
+        }
+
     }
 
     std::shared_ptr<glm::ivec2> next_cell_ptr;
@@ -300,4 +308,21 @@ glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
     }
 
     return next_cell;
+}
+
+int Grid::get_new_direction(glm::vec2 center, glm::vec2 direction) {
+    // auto cuadrant = this->direction_to_cuadrant(glm::vec2, );
+    return 0;
+}
+
+void Grid::print() {
+    std::cout << "---- Actual Grid ----" << std::endl;
+
+    for (int i = 0; i < this->horizontal_cells; i++) {
+        for (int j = 0; j < this->vertical_cells; j++) {
+            std::cout << this->matrix.at(i).at(j) << " ";
+        }
+        std::cout << std::endl;
+    }
+
 }

@@ -33,7 +33,9 @@ class Grid {
     void populate(std::vector<glm::vec2> all_points);
     void set_player(glm::vec2 center, glm::vec2 direction);
     glm::ivec2 get_next_cell(glm::ivec2 start, glm::ivec2 goal);
-    void clear();    
+    int get_new_direction(glm::vec2 center, glm::vec2 direction);
+    void clear();
+    void print();    
 };
 
 template<typename T, typename priority_t>

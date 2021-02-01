@@ -117,21 +117,20 @@ void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
 
 int AIModel::plan() {
     int direction = 0;
-    int threshold = 5;
 
-    // Check Borders
-    if ((this->last_point.x + threshold) >= 13.5) {
-        return direction = 1;
-    } 
-    if ((this->last_point.x - threshold) <= -18.75) {
-        return direction = -1;
-    }
-    if ((this->last_point.y + threshold) >= 18.75) {
-        return direction = -1;
-    }
-    if ((this->last_point.y - threshold) <= -18.75) {
-        return direction = 1;
-    }
+    // // Check Borders
+    // if ((this->last_point.x + threshold) >= 13.5) {
+    //     return direction = 1;
+    // } 
+    // if ((this->last_point.x - threshold) <= -18.75) {
+    //     return direction = -1;
+    // }
+    // if ((this->last_point.y + threshold) >= 18.75) {
+    //     return direction = -1;
+    // }
+    // if ((this->last_point.y - threshold) <= -18.75) {
+    //     return direction = 1;
+    // }
 
     this->grid->populate(this->all_points);
     this->grid->set_player(this->last_point, glm::vec2(this->speed_x, this->speed_y));
@@ -139,7 +138,7 @@ int AIModel::plan() {
     auto start_vec = this->grid->get_coordinates(last_point.x, last_point.y); 
     auto goal_vec = this->grid->get_coordinates(goal.x, goal.y);
 
-    if (this->counter_plan > 100) {
+    if (this->counter_plan > 10) {
         std::cout << "Start planning" << std::endl;
         auto next_cell = this->grid->get_next_cell(start_vec, goal_vec);
         std::cout << "Next cell: " << next_cell.x << "," << next_cell.y << std::endl;
@@ -147,7 +146,6 @@ int AIModel::plan() {
     } else {
         this->counter_plan++;
     }
-
 
     return direction;
 }
