@@ -200,7 +200,6 @@ void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
     this->center = this->get_coordinates(center.x, center.y);
     int direction_cuadrant = this->direction_to_cuadrant(direction);
     this->check_cuadrants(direction_cuadrant);
-    this->print();
 }
 
 std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
@@ -244,6 +243,7 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
 
 glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
     auto start_ptr = std::make_shared<glm::ivec2>(start);
+    this->print(goal);
 
     // std::priority_queue<std::pair<int, std::shared_ptr<glm::ivec2>>> frontier;
     PriorityQueue<std::shared_ptr<glm::ivec2>, int> frontier;
@@ -315,12 +315,20 @@ int Grid::get_new_direction(glm::vec2 center, glm::vec2 direction) {
     return 0;
 }
 
-void Grid::print() {
-    std::cout << "---- Actual Grid ----" << std::endl;
+void Grid::print(const glm::ivec2 goal) {
+    std::cout << std::endl;
 
     for (int i = 0; i < this->horizontal_cells; i++) {
         for (int j = 0; j < this->vertical_cells; j++) {
-            std::cout << this->matrix.at(i).at(j) << " ";
+            glm::ivec2 position {i, j};
+            bool value = this->matrix.at(i).at(j);
+            if (position == goal) {
+                std::cout << "\033[1;36m" << "X" << "\033[0m";
+            } else if (value) {
+                std::cout << "\033[1;31m" << value << "\033[0m";
+            } else {
+                std::cout << value;
+            }
         }
         std::cout << std::endl;
     }
