@@ -7,7 +7,6 @@
 [![Github Actions][img_gh-actions]][gh-actions]
 ![mit license][img_license]
 [![kurve](https://snapcraft.io/kurve/badge.svg)](https://snapcraft.io/kurve)
-[![Discord channel](https://img.shields.io/discord/796367578028441600?logo=discord)](https://discord.gg/cGXqBYhS)
 
 
 [img_license]: https://img.shields.io/badge/License-MIT_or_Apache_2.0-blue.svg
