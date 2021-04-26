@@ -59,7 +59,7 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
         for (auto point : all_points) {
     
             auto coordinates = this->get_coordinates(point.x, point.y);
-            this->matrix.at(coordinates.x).at(coordinates.y) = true;
+            this->matrix.at(coordinates.y).at(coordinates.x) = true;
         }
     }
 }
@@ -77,9 +77,9 @@ glm::ivec2 Grid::get_coordinates(double x, double y) {
 }
 
 void Grid::clear() {
-    for (int i = 0; i < this->horizontal_cells; i++) {
-        for (int j = 0; j < this->vertical_cells; j++) {
-            this->matrix.at(i).at(j) = false;
+    for (int j = 0; j < this->vertical_cells; j++) {
+        for (int i = 0; i < this->horizontal_cells; i++) {
+            this->matrix[j][i] = false;
         }
     }
 }
@@ -160,7 +160,7 @@ void Grid::check_cuadrants(int direction_cuadrant) {
     // Make every possible neigbour invalid
     for (auto neighbour : neighbours) {
         if (this->in_grid(neighbour) == true) {
-            this->matrix[neighbour.x][neighbour.y] = false;
+            this->matrix[neighbour.y][neighbour.x] = false;
         }
     }
 
@@ -195,7 +195,7 @@ void Grid::check_cuadrants(int direction_cuadrant) {
     std::vector<glm::ivec2> valid_neighbours;
     for (auto neighbour : temp_neighbours) {
         if (this->in_grid(neighbour) == true) {
-            this->matrix[neighbour.x][neighbour.y] = true;
+            this->matrix[neighbour.y][neighbour.x] = true;
         }
     }
 }
@@ -236,7 +236,7 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
     std::vector<glm::ivec2> valid_neighbours;
     for (auto neighbour : neighbours) {
         if (this->in_grid(neighbour) == true) {
-            if (this->matrix[neighbour.x][neighbour.y] == true) {
+            if (this->matrix[neighbour.y][neighbour.x] == true) {
                 valid_neighbours.push_back(neighbour);
             }            
         }

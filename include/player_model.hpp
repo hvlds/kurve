@@ -84,7 +84,7 @@ class PlayerModel : public Model {
      * and set all the fields into their initial values.
      * 
      */
-    void clear();
+    virtual void clear();
 };
 
 #endif

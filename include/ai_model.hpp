@@ -27,6 +27,7 @@ class AIModel : public PlayerModel {
     int plan();
     void set_new_goal();
     void check_goal();
+    void clear() override;
 };
 
 #endif
