@@ -14,12 +14,18 @@ class Grid {
     double right_limit = 13.5;
     double top_limit = 18.75;
     double bottom_limit = -18.75;
+
     double width;
     double height;
+
     int horizontal_cells;
     int vertical_cells;
+
     double cell_width;
     double cell_height;
+
+    int max_cells_count;
+
     glm::ivec2 center;
     std::vector<std::vector<bool>> matrix;
     int direction_to_cuadrant(glm::vec2 direction);

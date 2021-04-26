@@ -12,13 +12,17 @@ Grid::Grid() {
     this->width = this->right_limit - this->left_limit;
     this->height = this->top_limit - this->bottom_limit;
 
+    this->max_cells_count = 20;
+
     // Determine the number of horizontal/vertical cells
     if (this->height >= this->width) {
-        this->horizontal_cells = static_cast<int>(this->width / this->height * 20); 
-        this->vertical_cells = 20;
+        this->horizontal_cells = static_cast<int>(
+            (this->width / this->height) * this->max_cells_count); 
+        this->vertical_cells = this->max_cells_count;
     } else {
-        this->vertical_cells = static_cast<int>(this->height / this->width * 20); 
-        this->horizontal_cells = 20;
+        this->vertical_cells = static_cast<int>(
+            (this->height / this->width) * this->max_cells_count); 
+        this->horizontal_cells = this->max_cells_count;
     }
 
     // Determine the width and height of every cell
@@ -26,9 +30,9 @@ Grid::Grid() {
     this->cell_height = this->height / (double) this->vertical_cells;
 
     // Create matrix full of 0
-    for (int i = 0; i < horizontal_cells; i++) {
+    for (int j = 0; j < vertical_cells; j++) {
         std::vector<bool> temp_vec;
-        for (int j = 0; j < vertical_cells; j++) {
+        for (int i = 0; i < horizontal_cells; i++) {
             temp_vec.push_back(false);
         }
         this->matrix.push_back(temp_vec);
@@ -318,10 +322,10 @@ int Grid::get_new_direction(glm::vec2 center, glm::vec2 direction) {
 void Grid::print(const glm::ivec2 goal) {
     std::cout << std::endl;
 
-    for (int i = 0; i < this->horizontal_cells; i++) {
-        for (int j = 0; j < this->vertical_cells; j++) {
+    for (int j = 0; j < this->vertical_cells; j++) {
+        for (int i = 0; i < this->horizontal_cells; i++) {
             glm::ivec2 position {i, j};
-            bool value = this->matrix.at(i).at(j);
+            bool value = this->matrix[j][i];
             if (position == goal) {
                 std::cout << "\033[1;36m" << "X" << "\033[0m";
             } else if (value) {
