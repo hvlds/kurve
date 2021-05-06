@@ -61,7 +61,7 @@ void PlayerManager::update(GLFWwindow* window) {
             item.second->update(window);
         } else {
             // It is an AIModel
-            std::shared_ptr<AIModel> p = std::dynamic_pointer_cast<AIModel> (item.second);
+            auto p = std::dynamic_pointer_cast<AIModel> (item.second);
             p->set_all_points(this->get_all_points());
             p->update(window);
         }

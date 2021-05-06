@@ -59,21 +59,29 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
         for (auto point : all_points) {
     
             auto coordinates = this->get_coordinates(point.x, point.y);
-            this->matrix.at(coordinates.y).at(coordinates.x) = true;
+            this->matrix[coordinates.y][coordinates.x] = true;
         }
     }
 }
 
 glm::ivec2 Grid::get_coordinates(double x, double y) {
+    std::cout << "Grid: get_coordinates" << std::endl;
+
     double x_diff = x - this->left_limit; 
     double y_diff = this->top_limit - y;
+
+    std::cout << "x_diff " << x_diff << std::endl;
+    std::cout << "y_diff " << y_diff << std::endl;
 
     // Determine the coordinates on the grid
     int x_pos = static_cast<int>(floor(x_diff / this->cell_width)) - 1;
     int y_pos = static_cast<int>(floor(y_diff / this->cell_height)) - 1;
 
-    auto pair = glm::ivec2(x_pos, y_pos); 
-    return pair;
+    std::cout << "x_pos " << x_pos << std::endl;
+    std::cout << "y_pos " << y_pos << std::endl;
+
+    auto coordinates = glm::ivec2(x_pos, y_pos); 
+    return coordinates;
 }
 
 void Grid::clear() {
