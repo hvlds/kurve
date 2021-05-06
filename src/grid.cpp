@@ -2,8 +2,8 @@
 #include "point.hpp"
 #include <cmath>
 #include <iostream>
-#include <queue>
 #include <map>
+#include <memory>
 
 Grid::Grid() {
 #ifdef DEBUG
@@ -12,13 +12,17 @@ Grid::Grid() {
     this->width = this->right_limit - this->left_limit;
     this->height = this->top_limit - this->bottom_limit;
 
+    this->max_cells_count = 20;
+
     // Determine the number of horizontal/vertical cells
     if (this->height >= this->width) {
-        this->horizontal_cells = static_cast<int>(this->width / this->height * 100); 
-        this->vertical_cells = 100;
+        this->horizontal_cells = static_cast<int>(
+            (this->width / this->height) * this->max_cells_count); 
+        this->vertical_cells = this->max_cells_count;
     } else {
-        this->vertical_cells = static_cast<int>(this->height / this->width * 100); 
-        this->horizontal_cells = 100;
+        this->vertical_cells = static_cast<int>(
+            (this->height / this->width) * this->max_cells_count); 
+        this->horizontal_cells = this->max_cells_count;
     }
 
     // Determine the width and height of every cell
@@ -26,9 +30,9 @@ Grid::Grid() {
     this->cell_height = this->height / (double) this->vertical_cells;
 
     // Create matrix full of 0
-    for (int i = 0; i < horizontal_cells; i++) {
+    for (int j = 0; j < vertical_cells; j++) {
         std::vector<bool> temp_vec;
-        for (int j = 0; j < vertical_cells; j++) {
+        for (int i = 0; i < horizontal_cells; i++) {
             temp_vec.push_back(false);
         }
         this->matrix.push_back(temp_vec);
@@ -55,27 +59,35 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
         for (auto point : all_points) {
     
             auto coordinates = this->get_coordinates(point.x, point.y);
-            this->matrix.at(coordinates.x).at(coordinates.y) = true;
+            this->matrix[coordinates.y][coordinates.x] = true;
         }
     }
 }
 
 glm::ivec2 Grid::get_coordinates(double x, double y) {
+    std::cout << "Grid: get_coordinates" << std::endl;
+
     double x_diff = x - this->left_limit; 
     double y_diff = this->top_limit - y;
+
+    std::cout << "x_diff " << x_diff << std::endl;
+    std::cout << "y_diff " << y_diff << std::endl;
 
     // Determine the coordinates on the grid
     int x_pos = static_cast<int>(floor(x_diff / this->cell_width)) - 1;
     int y_pos = static_cast<int>(floor(y_diff / this->cell_height)) - 1;
 
-    auto pair = glm::ivec2(x_pos, y_pos); 
-    return pair;
+    std::cout << "x_pos " << x_pos << std::endl;
+    std::cout << "y_pos " << y_pos << std::endl;
+
+    auto coordinates = glm::ivec2(x_pos, y_pos); 
+    return coordinates;
 }
 
 void Grid::clear() {
-    for (int i = 0; i < horizontal_cells; i++) {
-        for (int j = 0; j < vertical_cells; j++) {
-            this->matrix.at(i).at(j) = false;
+    for (int j = 0; j < this->vertical_cells; j++) {
+        for (int i = 0; i < this->horizontal_cells; i++) {
+            this->matrix[j][i] = false;
         }
     }
 }
@@ -156,7 +168,7 @@ void Grid::check_cuadrants(int direction_cuadrant) {
     // Make every possible neigbour invalid
     for (auto neighbour : neighbours) {
         if (this->in_grid(neighbour) == true) {
-            this->matrix[neighbour.x][neighbour.y] = false;
+            this->matrix[neighbour.y][neighbour.x] = false;
         }
     }
 
@@ -191,7 +203,7 @@ void Grid::check_cuadrants(int direction_cuadrant) {
     std::vector<glm::ivec2> valid_neighbours;
     for (auto neighbour : temp_neighbours) {
         if (this->in_grid(neighbour) == true) {
-            this->matrix[neighbour.x][neighbour.y] = true;
+            this->matrix[neighbour.y][neighbour.x] = true;
         }
     }
 }
@@ -232,7 +244,7 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
     std::vector<glm::ivec2> valid_neighbours;
     for (auto neighbour : neighbours) {
         if (this->in_grid(neighbour) == true) {
-            if (this->matrix[neighbour.x][neighbour.y] == true) {
+            if (this->matrix[neighbour.y][neighbour.x] == true) {
                 valid_neighbours.push_back(neighbour);
             }            
         }
@@ -241,15 +253,96 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
     return valid_neighbours;
 }
 
-void Grid::a_star(glm::ivec2 start, glm::ivec2 goal) {
-    // std::priority_queue<std::pair<int, glm::ivec2>> frontier{};
-    // frontier.push({0, start});
-    // std::map<glm::ivec2, glm::ivec2> came_from;
-    // std::map<glm::ivec2, int> cost_so_far;
-    // came_from.insert({start, glm::ivec2(-1, -1)});
-    // cost_so_far.insert({start, 0});
+glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
+    auto start_ptr = std::make_shared<glm::ivec2>(start);
+    this->print(goal);
 
-    // while (!frontier.empty()) {
-    //     auto current = frontier.top().second;
-    // }
+    // std::priority_queue<std::pair<int, std::shared_ptr<glm::ivec2>>> frontier;
+    PriorityQueue<std::shared_ptr<glm::ivec2>, int> frontier;
+    frontier.put(start_ptr, 0);
+
+    std::map<std::shared_ptr<glm::ivec2>, std::shared_ptr<glm::ivec2>> came_from;
+    std::map<std::shared_ptr<glm::ivec2>, int> cost_so_far;
+
+    came_from.insert({start_ptr, nullptr});
+    // came_from.insert({start_ptr, std::make_shared<glm::ivec2>(-1, -1)});
+    cost_so_far.insert({start_ptr, 0});
+    
+    while (!frontier.empty()) {
+        auto current = frontier.get();
+        
+        std::cout << "Start: " << start.x << "," << start.y << std::endl;
+        std::cout << "Current: " << current->x << "," << current->y << std::endl;
+        std::cout << "Goal: " << goal.x << "," << goal.y << std::endl;
+        
+        if (current->x == goal.x && current->y == goal.y) {
+            break;
+        }
+
+        auto neighbours = this->get_neighbours(*current);
+        bool has_more = false;
+        for (auto next : neighbours) {
+            if (next.x != current->x && next.y != current->y) {
+                std::cout << "Next: " << next.x << "," << next.y << std::endl;
+                auto next_ptr = std::make_shared<glm::ivec2>(next);
+                auto new_cost = cost_so_far.at(current);
+                cost_so_far.insert({next_ptr, new_cost});
+                auto priority = new_cost + this->get_distance(goal, next);
+                frontier.put(next_ptr, priority);
+
+                came_from.insert({next_ptr, current});
+                has_more = true;
+            }
+        }
+
+        std::cout << "----" << std::endl;
+        if (has_more == false) {
+            break;
+        }
+
+    }
+
+    std::shared_ptr<glm::ivec2> next_cell_ptr;
+    for (auto item : came_from) {
+        auto cell_ptr = item.first;
+        auto origin_ptr = item.second;
+        if (origin_ptr == start_ptr) {
+            next_cell_ptr = cell_ptr;
+            break;
+        }
+    }
+
+    glm::ivec2 next_cell;
+    if (next_cell_ptr == nullptr) {
+        next_cell = glm::ivec2(-1, -1);
+    } else {
+        next_cell = *next_cell_ptr;
+    }
+
+    return next_cell;
+}
+
+int Grid::get_new_direction(glm::vec2 center, glm::vec2 direction) {
+    // auto cuadrant = this->direction_to_cuadrant(glm::vec2, );
+    return 0;
+}
+
+void Grid::print(const glm::ivec2 goal) {
+    std::cout << std::endl;
+
+    for (int j = 0; j < this->vertical_cells; j++) {
+        for (int i = 0; i < this->horizontal_cells; i++) {
+            glm::ivec2 position {i, j};
+            bool value = this->matrix[j][i];
+            if (position == goal) {
+                std::cout << "\033[1;36m" << "X" << "\033[0m";
+            } else if (value) {
+                std::cout << "\033[1;31m" << value << "\033[0m";
+            } else {
+                std::cout << value;
+            }
+        }
+        std::cout << std::endl;
+    }
+
 }

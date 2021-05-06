@@ -16,6 +16,7 @@ class AIModel : public PlayerModel {
     int forward_counter = 0;
     glm::vec2 goal;
     std::shared_ptr<Grid> grid;
+    int counter_plan = 0;
    public:
     AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {
         this->grid = std::make_shared<Grid>();
@@ -24,11 +25,9 @@ class AIModel : public PlayerModel {
     void update(GLFWwindow* window) override;
     void set_all_points(std::vector<glm::vec2> all_points);
     int plan();
-    double get_smallest_distance(GLfloat delta_angle);
-    GLfloat get_delta_angle();
-    double max_look_ahead(int direction);
     void set_new_goal();
     void check_goal();
+    void clear() override;
 };
 
 #endif

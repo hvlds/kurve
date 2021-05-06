@@ -46,7 +46,7 @@ void PlayerManager::add_player(
         this->players.insert({id, player});
     } else {
         auto AI = std::make_shared<AIModel>(id, x, y, color);
-        AI_list.insert(id);
+        this->AI_list.insert(id);
         this->players.insert({id, AI});
     }
 
@@ -55,13 +55,13 @@ void PlayerManager::add_player(
 void PlayerManager::update(GLFWwindow* window) {
     for (auto item : this->players) {
         std::set<int>::iterator it;
-        it = AI_list.find(item.first);
-        if (it == AI_list.end()) {
+        it = this->AI_list.find(item.first);
+        if (it == this->AI_list.end()) {
             // It is (Mario) a PlayerModel
             item.second->update(window);
         } else {
             // It is an AIModel
-            std::shared_ptr<AIModel> p = std::dynamic_pointer_cast<AIModel> (item.second);
+            auto p = std::dynamic_pointer_cast<AIModel> (item.second);
             p->set_all_points(this->get_all_points());
             p->update(window);
         }
