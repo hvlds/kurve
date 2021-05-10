@@ -53,6 +53,9 @@ void PlayerManager::add_player(
 }
 
 void PlayerManager::update(GLFWwindow* window) {
+    auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
+    user_data->grid->populate(this->get_all_points());
+    user_data->grid->print();
     for (auto item : this->players) {
         std::set<int>::iterator it;
         it = this->AI_list.find(item.first);
@@ -246,6 +249,9 @@ void PlayerManager::reset_player(int id) {
 }
 
 void PlayerManager::reset() {
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    user_data->grid->clear();
+
     // Clear the map with user and vector with dead players
     this->AI_list.clear();
     this->dead_players.clear();
@@ -267,6 +273,8 @@ int PlayerManager::get_max_score() {
 }
 
 void PlayerManager::terminate() {
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
+    user_data->grid->clear();
     this->players.clear();
     this->dead_players.clear();
 }

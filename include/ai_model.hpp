@@ -19,8 +19,6 @@ class AIModel : public PlayerModel {
     int counter_plan = 0;
    public:
     AIModel(int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(id, x, y, color) {
-        this->grid = std::make_shared<Grid>();
-        this->set_new_goal();
     }
     void update(GLFWwindow* window) override;
     void set_all_points(std::vector<glm::vec2> all_points);

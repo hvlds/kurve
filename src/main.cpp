@@ -79,7 +79,8 @@ int main(void) {
             .delta_time = 0,
             .has_AI = false,
             .fps = 0,
-            .player_info = &player_info};
+            .player_info = &player_info,
+            .grid = std::make_shared<Grid>()};
 
     Display display(&user_data);
     GLFWwindow* window = display.get_window();

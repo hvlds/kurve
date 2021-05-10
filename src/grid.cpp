@@ -57,7 +57,6 @@ int Grid::get_distance(glm::ivec2 c1, glm::ivec2 c2) {
 void Grid::populate(std::vector<glm::vec2> all_points) {    
     if (all_points.size() > 0) {
         for (auto point : all_points) {
-    
             auto coordinates = this->get_coordinates(point.x, point.y);
             this->matrix[coordinates.y][coordinates.x] = true;
         }
@@ -65,20 +64,24 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
 }
 
 glm::ivec2 Grid::get_coordinates(double x, double y) {
-    std::cout << "Grid: get_coordinates" << std::endl;
+    // std::cout << "Grid: get_coordinates" << std::endl;
 
     double x_diff = x - this->left_limit; 
     double y_diff = this->top_limit - y;
 
-    std::cout << "x_diff " << x_diff << std::endl;
-    std::cout << "y_diff " << y_diff << std::endl;
+    // std::cout << "x_diff " << x_diff << std::endl;
+    // std::cout << "y_diff " << y_diff << std::endl;
 
     // Determine the coordinates on the grid
-    int x_pos = static_cast<int>(floor(x_diff / this->cell_width)) - 1;
-    int y_pos = static_cast<int>(floor(y_diff / this->cell_height)) - 1;
+    int x_pos = static_cast<int>(floor(x_diff / this->cell_width));
+    int y_pos = static_cast<int>(floor(y_diff / this->cell_height));
 
-    std::cout << "x_pos " << x_pos << std::endl;
-    std::cout << "y_pos " << y_pos << std::endl;
+    if (x_pos < 0) {
+        x_pos = 0;
+    }
+
+    // std::cout << "x_pos " << x_pos << std::endl;
+    // std::cout << "y_pos " << y_pos << std::endl;
 
     auto coordinates = glm::ivec2(x_pos, y_pos); 
     return coordinates;
@@ -255,7 +258,6 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
 
 glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
     auto start_ptr = std::make_shared<glm::ivec2>(start);
-    this->print(goal);
 
     // std::priority_queue<std::pair<int, std::shared_ptr<glm::ivec2>>> frontier;
     PriorityQueue<std::shared_ptr<glm::ivec2>, int> frontier;
@@ -327,16 +329,14 @@ int Grid::get_new_direction(glm::vec2 center, glm::vec2 direction) {
     return 0;
 }
 
-void Grid::print(const glm::ivec2 goal) {
+void Grid::print() {
     std::cout << std::endl;
 
     for (int j = 0; j < this->vertical_cells; j++) {
         for (int i = 0; i < this->horizontal_cells; i++) {
             glm::ivec2 position {i, j};
             bool value = this->matrix[j][i];
-            if (position == goal) {
-                std::cout << "\033[1;36m" << "X" << "\033[0m";
-            } else if (value) {
+            if (value) {
                 std::cout << "\033[1;31m" << value << "\033[0m";
             } else {
                 std::cout << value;

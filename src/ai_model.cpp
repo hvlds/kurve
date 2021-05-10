@@ -118,20 +118,20 @@ void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
 int AIModel::plan() {
     int direction = 0;
 
-    this->grid->populate(this->all_points);
-    this->grid->set_player(this->last_point, glm::vec2(this->speed_x, this->speed_y));
+    // this->grid->populate(this->all_points);
+    // this->grid->set_player(this->last_point, glm::vec2(this->speed_x, this->speed_y));
     
-    auto start_vec = this->grid->get_coordinates(last_point.x, last_point.y); 
-    auto goal_vec = this->grid->get_coordinates(goal.x, goal.y);
+    // auto start_vec = this->grid->get_coordinates(last_point.x, last_point.y); 
+    // auto goal_vec = this->grid->get_coordinates(goal.x, goal.y);
 
-    if (this->counter_plan > 10) {
-        std::cout << "Start planning" << std::endl;
-        auto next_cell = this->grid->get_next_cell(start_vec, goal_vec);
-        std::cout << "Next cell: " << next_cell.x << "," << next_cell.y << std::endl;
-        this->counter_plan = 0;
-    } else {
-        this->counter_plan++;
-    }
+    // if (this->counter_plan > 10) {
+    //     std::cout << "Start planning" << std::endl;
+    //     auto next_cell = this->grid->get_next_cell(start_vec, goal_vec);
+    //     std::cout << "Next cell: " << next_cell.x << "," << next_cell.y << std::endl;
+    //     this->counter_plan = 0;
+    // } else {
+    //     this->counter_plan++;
+    // }
 
     return direction;
 }
@@ -173,5 +173,5 @@ void AIModel::clear() {
     this->lines.clear();
 
     // Clear the grid
-    this->grid->clear();
+    // this->grid->clear();
 }

@@ -18,6 +18,9 @@ extern "C" {
 #include <string>
 #include <vector>
 #include <array>
+#include <memory>
+
+#include "grid.hpp"
 
 /**
  * @brief A user can move left and right. The GLFW keys
@@ -73,6 +76,7 @@ typedef struct {
     bool has_AI;
     int fps;
     std::vector<player_info_t>* player_info;
+    std::shared_ptr<Grid> grid;
 } user_data_t;
 
 void reset_player_info(GLFWwindow* window);

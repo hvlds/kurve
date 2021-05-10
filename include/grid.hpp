@@ -41,7 +41,7 @@ class Grid {
     glm::ivec2 get_next_cell(glm::ivec2 start, glm::ivec2 goal);
     int get_new_direction(glm::vec2 center, glm::vec2 direction);
     void clear();
-    void print(glm::ivec2 goal);    
+    void print();    
 };
 
 template<typename T, typename priority_t>
