@@ -25,6 +25,7 @@ class Grid {
     double cell_height;
 
     int max_cells_count;
+    std::vector<glm::vec2> all_points;
 
     glm::ivec2 center;
     std::vector<std::vector<bool>> matrix;
@@ -39,7 +40,7 @@ class Grid {
     void populate(std::vector<glm::vec2> all_points);
     void set_player(glm::vec2 center, glm::vec2 direction);
     glm::ivec2 get_next_cell(glm::ivec2 start, glm::ivec2 goal);
-    int get_new_direction(glm::vec2 center, glm::vec2 direction);
+    int get_new_direction(glm::vec2 center, glm::vec2 next_cell, glm::vec2 direction);
     void clear();
     void print();    
 };

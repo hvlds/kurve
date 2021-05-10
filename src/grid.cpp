@@ -54,7 +54,9 @@ int Grid::get_distance(glm::ivec2 c1, glm::ivec2 c2) {
     return std::abs(c1.x - c2.x) + std::abs(c1.y - c2.y);
 }
 
-void Grid::populate(std::vector<glm::vec2> all_points) {    
+void Grid::populate(std::vector<glm::vec2> all_points) {
+    this->all_points = all_points;
+
     if (all_points.size() > 0) {
         for (auto point : all_points) {
             auto coordinates = this->get_coordinates(point.x, point.y);
@@ -212,6 +214,8 @@ void Grid::check_cuadrants(int direction_cuadrant) {
 }
 
 void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
+    this->clear();
+    this->populate(this->all_points);
     this->center = this->get_coordinates(center.x, center.y);
     int direction_cuadrant = this->direction_to_cuadrant(direction);
     this->check_cuadrants(direction_cuadrant);
@@ -324,9 +328,20 @@ glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
     return next_cell;
 }
 
-int Grid::get_new_direction(glm::vec2 center, glm::vec2 direction) {
-    // auto cuadrant = this->direction_to_cuadrant(glm::vec2, );
-    return 0;
+int Grid::get_new_direction(glm::vec2 center, glm::vec2 next_cell, glm::vec2 direction) {
+    glm::vec2 diff_vec = next_cell - center;
+    auto temp_direction = cross_product(diff_vec, direction);
+
+    std::cout << "temp_direction: " << temp_direction << std::endl;
+
+    int new_direction = 0;
+    if (temp_direction < 0) {
+        new_direction = -1;
+    } else if (temp_direction > 0) {
+        new_direction = 1;
+    }
+    
+    return new_direction;
 }
 
 void Grid::print() {

@@ -8,7 +8,7 @@
 
 
 PlayerModel::PlayerModel(
-    int id, GLfloat x, GLfloat y, glm::vec3 color) {   
+    GLFWwindow* window, int id, GLfloat x, GLfloat y, glm::vec3 color) {   
 #ifdef DEBUG
     std::cout << "---- INIT PlayerModel ----" << std::endl;
 #endif    

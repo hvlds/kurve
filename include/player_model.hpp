@@ -57,7 +57,7 @@ class PlayerModel : public Model {
     GLfloat start_pos_y;
     GLfloat start_pos_x;
 
-    PlayerModel(int id, GLfloat x, GLfloat y, glm::vec3 color);
+    PlayerModel(GLFWwindow* window, int id, GLfloat x, GLfloat y, glm::vec3 color);
     ~PlayerModel();
     virtual void update(GLFWwindow* window) override;
     virtual void draw(GLFWwindow* window) override;

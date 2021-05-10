@@ -12,7 +12,7 @@ void PlayerManager::add_players() {
 #ifdef DEBUG
     std::cout << "---- ADD PLAYERS ----" << std::endl;
 #endif
-    auto user_data = (user_data_t*)glfwGetWindowUserPointer(window);
+    auto user_data = (user_data_t*)glfwGetWindowUserPointer(this->window);
     
     for(auto player_info : *user_data->player_info) {
         if(player_info.is_active == true) {
@@ -41,11 +41,11 @@ void PlayerManager::add_player(
     GLfloat y = (GLfloat) random_y / 10;
 
     if (is_AI == false) {
-        auto player = std::make_shared<PlayerModel>(id, x, y, color);
+        auto player = std::make_shared<PlayerModel>(this->window, id, x, y, color);
         player->set_keys(control);
         this->players.insert({id, player});
     } else {
-        auto AI = std::make_shared<AIModel>(id, x, y, color);
+        auto AI = std::make_shared<AIModel>(this->window, id, x, y, color);
         this->AI_list.insert(id);
         this->players.insert({id, AI});
     }
