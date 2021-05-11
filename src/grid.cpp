@@ -40,8 +40,8 @@ Grid::Grid() {
 }
 
 bool Grid::in_grid(glm::ivec2 cell) {
-    bool condition1 = cell.x >= 0 && cell.x < horizontal_cells; 
-    bool condition2 = cell.y >= 0 && cell.y < vertical_cells;
+    bool condition1 = cell.x >= 0 && cell.x < this->horizontal_cells; 
+    bool condition2 = cell.y >= 0 && cell.y < this->vertical_cells;
     bool flag = false;
     if (condition1 && condition2) {
         flag = true;
@@ -56,6 +56,18 @@ int Grid::get_distance(glm::ivec2 c1, glm::ivec2 c2) {
 
 void Grid::populate(std::vector<glm::vec2> all_points) {
     this->all_points = all_points;
+
+    // Populate the horizontal border
+    for (int i = 0; i < this->horizontal_cells; i++) {
+        this->matrix[0][i] = true;
+        this->matrix[this->vertical_cells - 1][i] = true;
+    }
+
+    // Populate the vertical border
+    for (int j = 0; j < this->vertical_cells; j++) {
+        this->matrix[j][0] = true;
+        this->matrix[j][this->horizontal_cells - 1] = true;
+    }
 
     if (all_points.size() > 0) {
         for (auto point : all_points) {
