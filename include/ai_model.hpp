@@ -17,6 +17,7 @@ class AIModel : public PlayerModel {
     glm::vec2 goal;
     std::shared_ptr<Grid> grid;
     int counter_plan = 0;
+    int last_direction = 0;
     GLFWwindow* window;
    public:
     AIModel(GLFWwindow* window, int id, GLfloat x, GLfloat y, glm::vec3 color) : PlayerModel(window, id, x, y, color) {
@@ -26,9 +27,7 @@ class AIModel : public PlayerModel {
     }
     void update(GLFWwindow* window) override;
     void set_all_points(std::vector<glm::vec2> all_points);
-    int plan();
-    void set_new_goal();
-    void check_goal();
+    void plan();
     void clear() override;
 };
 

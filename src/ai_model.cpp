@@ -10,9 +10,6 @@ void AIModel::update(GLFWwindow* window) {
     // Update the direction of the directional arrow
     this->arrow->update(window);
 
-    // Check if the goal was reached and assign a new one if true
-    this->check_goal();
-
     auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
 
     GameState game_state = user_data->game_state;
@@ -44,10 +41,10 @@ void AIModel::update(GLFWwindow* window) {
             GLfloat angle_diff = 0;
 
             // Update the angle diferential
-            int direction = this->plan();
-            if (direction == 1) {
+            this->plan();
+            if (this->last_direction == 1) {
                 angle_diff = static_cast<GLfloat>((-speed * time_delta));
-            } else if (direction == -1){
+            } else if (this->last_direction == -1){
                 angle_diff = static_cast<GLfloat>((speed * time_delta));
             } else {
                 angle_diff = 0;
@@ -115,47 +112,11 @@ void AIModel::set_all_points(std::vector<glm::vec2> all_points) {
     this->all_points = all_points;
 }
 
-int AIModel::plan() {
-    int direction = 0;
-
+void AIModel::plan() {
     this->grid->set_player(this->last_point, glm::vec2(this->speed_x, this->speed_y));
     
     auto start_vec = this->grid->get_coordinates(this->last_point.x, this->last_point.y); 
-    auto goal_vec = this->grid->get_coordinates(this->goal.x, this->goal.y);
-
-    direction = this->grid->get_next_cell(start_vec, glm::vec2(this->speed_x, this->speed_y));
-    // if (this->counter_plan > 4) {
-    //     std::cout << "Start planning" << std::endl;
-    //     this->counter_plan = 0;
-    // } else {
-    //     this->counter_plan++;
-    // }
-
-    return direction;
-}
-
-void AIModel::set_new_goal() {
-    int random_x= -100 + (rand() % 200);
-    int random_y= -100 + (rand() % 200);
-    GLfloat x = (GLfloat) random_x / 10;
-    GLfloat y = (GLfloat) random_y / 10;
-    
-    glm::vec2 new_goal {x, y};
-#ifdef DEBUG
-    std::cout << "New Goal for AI-" << this->id << ": " << x << " , " << y << std::endl;
-#endif
-
-    this->goal = new_goal;
-}
-
-void AIModel::check_goal() {
-    double distance = glm::length(this->last_point - this->goal);
-    if (distance < 0.2) {
-#ifdef DEBUG
-        std::cout << "Goal reached!" << std::endl;
-#endif
-        this->set_new_goal();
-    }
+    this->last_direction = this->grid->get_next_cell(start_vec, glm::vec2(this->speed_x, this->speed_y));
 }
 
 void AIModel::clear() {
@@ -169,7 +130,4 @@ void AIModel::clear() {
 
     // Clear the vector with the lines
     this->lines.clear();
-
-    // Clear the grid
-    // this->grid->clear();
 }

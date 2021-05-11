@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <random>
 
 Grid::Grid() {
 #ifdef DEBUG
@@ -12,7 +13,7 @@ Grid::Grid() {
     this->width = this->right_limit - this->left_limit;
     this->height = this->top_limit - this->bottom_limit;
 
-    this->max_cells_count = 30;
+    this->max_cells_count = 25;
 
     // Determine the number of horizontal/vertical cells
     if (this->height >= this->width) {
@@ -279,7 +280,11 @@ int Grid::get_next_cell(glm::ivec2 start, glm::vec2 direction) {
     int dir_cuadrant = this->direction_to_cuadrant(direction);
     auto collision_ray_0 = this->get_collision_ray(start, dir_cuadrant);
 
-    if (collision_ray_0.size() < 4) {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(-1, 1);
+
+    if (collision_ray_0.size() < 10) {
         // |1|0|2|
         std::vector<bool> collision_ray_1;
         std::vector<bool> collision_ray_2;
@@ -296,9 +301,13 @@ int Grid::get_next_cell(glm::ivec2 start, glm::vec2 direction) {
 
         if (collision_ray_1.size() >= collision_ray_2.size()) {
             new_direction = -1;
-        } else {
+        } else if (collision_ray_2.size() >= collision_ray_1.size()){
             new_direction = 1;
+        } else {
+            new_direction = 0;
         }        
+    } else {
+        new_direction = dist(mt);
     }
 
     return new_direction;
@@ -306,7 +315,7 @@ int Grid::get_next_cell(glm::ivec2 start, glm::vec2 direction) {
 
 std::vector<bool> Grid::get_collision_ray(glm::ivec2 start, int dir_cuadrant) {
     std::vector<bool> status;
-    for (int i = 1; i < 6; i++) {
+    for (int i = 1; i < 15; i++) {
         status.push_back(this->check_next(start, dir_cuadrant, i));
         if (status.back() == true) {
             break;
