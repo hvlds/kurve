@@ -140,11 +140,11 @@ $ sh scripts/debug.sh
    - [x] Improve the font rendering and the class Font in general. Add blinking
       text throught the class, different types of font (bold, italic, etc) and
       different sizes
+   - [x] Create an AI to play against
    - [ ] Add a new general Menu (to choose between different options: config,
       exit the game, etc)
    - [ ] Create an abstraction for the Scenes and a SceneManager replacing the
       changes in the class Game
-   - [ ] Create an AI to play against
    - [ ] Change the style to differ with the Flash Remake of "Achtung, die Kurve"
    - [ ] Generate an AppImage package
    - [ ] Generate a Flatpak package
