@@ -12,7 +12,7 @@ Grid::Grid() {
     this->width = this->right_limit - this->left_limit;
     this->height = this->top_limit - this->bottom_limit;
 
-    this->max_cells_count = 20;
+    this->max_cells_count = 30;
 
     // Determine the number of horizontal/vertical cells
     if (this->height >= this->width) {
@@ -55,6 +55,7 @@ int Grid::get_distance(glm::ivec2 c1, glm::ivec2 c2) {
 }
 
 void Grid::populate(std::vector<glm::vec2> all_points) {
+    this->clear();
     this->all_points = all_points;
 
     // Populate the horizontal border
@@ -75,6 +76,8 @@ void Grid::populate(std::vector<glm::vec2> all_points) {
             this->matrix[coordinates.y][coordinates.x] = true;
         }
     }
+
+    this->backup_matrix = this->matrix;
 }
 
 glm::ivec2 Grid::get_coordinates(double x, double y) {
@@ -226,8 +229,7 @@ void Grid::check_cuadrants(int direction_cuadrant) {
 }
 
 void Grid::set_player(glm::vec2 center, glm::vec2 direction) {
-    this->clear();
-    this->populate(this->all_points);
+    this->matrix = this->backup_matrix;
     this->center = this->get_coordinates(center.x, center.y);
     int direction_cuadrant = this->direction_to_cuadrant(direction);
     this->check_cuadrants(direction_cuadrant);
@@ -272,73 +274,121 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
     return valid_neighbours;
 }
 
-glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
-    auto start_ptr = std::make_shared<glm::ivec2>(start);
-
-    // std::priority_queue<std::pair<int, std::shared_ptr<glm::ivec2>>> frontier;
-    PriorityQueue<std::shared_ptr<glm::ivec2>, int> frontier;
-    frontier.put(start_ptr, 0);
-
-    std::map<std::shared_ptr<glm::ivec2>, std::shared_ptr<glm::ivec2>> came_from;
-    std::map<std::shared_ptr<glm::ivec2>, int> cost_so_far;
-
-    came_from.insert({start_ptr, nullptr});
-    // came_from.insert({start_ptr, std::make_shared<glm::ivec2>(-1, -1)});
-    cost_so_far.insert({start_ptr, 0});
-    
-    while (!frontier.empty()) {
-        auto current = frontier.get();
-        
-        std::cout << "Start: " << start.x << "," << start.y << std::endl;
-        std::cout << "Current: " << current->x << "," << current->y << std::endl;
-        std::cout << "Goal: " << goal.x << "," << goal.y << std::endl;
-        
-        if (current->x == goal.x && current->y == goal.y) {
-            break;
-        }
-
-        auto neighbours = this->get_neighbours(*current);
-        bool has_more = false;
-        for (auto next : neighbours) {
-            if (next.x != current->x && next.y != current->y) {
-                std::cout << "Next: " << next.x << "," << next.y << std::endl;
-                auto next_ptr = std::make_shared<glm::ivec2>(next);
-                auto new_cost = cost_so_far.at(current);
-                cost_so_far.insert({next_ptr, new_cost});
-                auto priority = new_cost + this->get_distance(goal, next);
-                frontier.put(next_ptr, priority);
-
-                came_from.insert({next_ptr, current});
-                has_more = true;
-            }
-        }
-
-        std::cout << "----" << std::endl;
-        if (has_more == false) {
-            break;
-        }
-
-    }
-
-    std::shared_ptr<glm::ivec2> next_cell_ptr;
-    for (auto item : came_from) {
-        auto cell_ptr = item.first;
-        auto origin_ptr = item.second;
-        if (origin_ptr == start_ptr) {
-            next_cell_ptr = cell_ptr;
+int Grid::get_next_cell(glm::ivec2 start, glm::vec2 direction) {
+    int new_direction = 0;
+    std::vector<bool> status;
+    for (int i = 1; i < 6; i++) {
+        status.push_back(this->check_next(start, direction, i));
+        if (status.back() == true) {
             break;
         }
     }
 
-    glm::ivec2 next_cell;
-    if (next_cell_ptr == nullptr) {
-        next_cell = glm::ivec2(-1, -1);
-    } else {
-        next_cell = *next_cell_ptr;
+    if (status.size() < 3) {
+        new_direction = -1;
     }
 
-    return next_cell;
+    return new_direction;
 }
+
+bool Grid::check_next(glm::ivec2 start, glm::vec2 direction, int inc) {
+    int dir_cuadrant = this->direction_to_cuadrant(direction);
+    bool status = true;
+
+    /*  Grid Notation for a pair of coordinates c
+        from 0 to 1 neighbours of the center
+        |3|2|1|
+        |4|c|0|
+        |5|6|7|
+    */ 
+    if (dir_cuadrant == 0 && start.x + inc < this->horizontal_cells) {
+        status = this->matrix[start.y][start.x + inc];
+    } else if (dir_cuadrant == 1 && start.x + inc < this->horizontal_cells && start.y - inc >= 0) {
+        status = this->matrix[start.y - inc][start.x + inc];
+    } else if (dir_cuadrant == 2 && start.y - inc >= 0) {
+        status = this->matrix[start.y - inc][start.x];
+    } else if (dir_cuadrant == 3 && start.x - inc >= 0 && start.y - inc >= 0) {
+        status = this->matrix[start.y - inc][start.x - inc];
+    } else if (dir_cuadrant == 4 && start.x - inc >= 0) {
+        status = this->matrix[start.y][start.x - inc];
+    } else if (dir_cuadrant == 5 && start.x - inc >= 0 && start.y + inc < this->vertical_cells) {
+        status = this->matrix[start.y + inc][start.x - inc];
+    } else if (dir_cuadrant == 6 && start.y + inc < this->vertical_cells) {
+        status = this->matrix[start.y + inc][start.x];
+    } else if (dir_cuadrant == 7 && start.x + inc < this->horizontal_cells && start.y + inc < this->vertical_cells) {
+        status = this->matrix[start.y + inc][start.x + inc];
+    }
+
+    return status;
+}
+
+// glm::ivec2 Grid::get_next_cell(glm::ivec2 start, glm::ivec2 goal) {
+//     auto start_ptr = std::make_shared<glm::ivec2>(start);
+
+//     // std::priority_queue<std::pair<int, std::shared_ptr<glm::ivec2>>> frontier;
+//     PriorityQueue<std::shared_ptr<glm::ivec2>, int> frontier;
+//     frontier.put(start_ptr, 0);
+
+//     std::map<std::shared_ptr<glm::ivec2>, std::shared_ptr<glm::ivec2>> came_from;
+//     std::map<std::shared_ptr<glm::ivec2>, int> cost_so_far;
+
+//     came_from.insert({start_ptr, nullptr});
+//     // came_from.insert({start_ptr, std::make_shared<glm::ivec2>(-1, -1)});
+//     cost_so_far.insert({start_ptr, 0});
+    
+//     while (!frontier.empty()) {
+//         auto current = frontier.get();
+        
+//         std::cout << "Start: " << start.x << "," << start.y << std::endl;
+//         std::cout << "Current: " << current->x << "," << current->y << std::endl;
+//         std::cout << "Goal: " << goal.x << "," << goal.y << std::endl;
+        
+//         if (current->x == goal.x && current->y == goal.y) {
+//             break;
+//         }
+
+//         auto neighbours = this->get_neighbours(*current);
+//         bool has_more = false;
+//         for (auto next : neighbours) {
+//             if (next.x != current->x && next.y != current->y) {
+//                 std::cout << "Next: " << next.x << "," << next.y << std::endl;
+//                 auto next_ptr = std::make_shared<glm::ivec2>(next);
+//                 auto new_cost = cost_so_far.at(current);
+//                 cost_so_far.insert({next_ptr, new_cost});
+//                 auto priority = new_cost + this->get_distance(goal, next);
+//                 frontier.put(next_ptr, priority);
+
+//                 came_from.insert({next_ptr, current});
+//                 has_more = true;
+//             }
+//         }
+
+//         std::cout << "----" << std::endl;
+//         if (has_more == false) {
+//             break;
+//         }
+
+//     }
+
+//     std::shared_ptr<glm::ivec2> next_cell_ptr;
+//     for (auto item : came_from) {
+//         auto cell_ptr = item.first;
+//         auto origin_ptr = item.second;
+//         if (origin_ptr == start_ptr) {
+//             next_cell_ptr = cell_ptr;
+//             break;
+//         }
+//     }
+
+//     glm::ivec2 next_cell;
+//     if (next_cell_ptr == nullptr) {
+//         next_cell = glm::ivec2(-1, -1);
+//     } else {
+//         next_cell = *next_cell_ptr;
+//     }
+
+//     return next_cell;
+// }
 
 int Grid::get_new_direction(glm::vec2 center, glm::vec2 next_cell, glm::vec2 direction) {
     glm::vec2 diff_vec = next_cell - center;

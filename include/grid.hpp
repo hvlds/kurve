@@ -25,10 +25,12 @@ class Grid {
     double cell_height;
 
     int max_cells_count;
-    std::vector<glm::vec2> all_points;
 
     glm::ivec2 center;
+    std::vector<glm::vec2> all_points;
     std::vector<std::vector<bool>> matrix;
+    std::vector<std::vector<bool>> backup_matrix;
+
     int direction_to_cuadrant(glm::vec2 direction);
     void check_cuadrants(int direction_cuadrant);
     bool in_grid(glm::ivec2 cell);
@@ -39,7 +41,8 @@ class Grid {
     glm::ivec2 get_coordinates(double x, double y);
     void populate(std::vector<glm::vec2> all_points);
     void set_player(glm::vec2 center, glm::vec2 direction);
-    glm::ivec2 get_next_cell(glm::ivec2 start, glm::ivec2 goal);
+    int get_next_cell(glm::ivec2 start, glm::vec2 direction);
+    bool check_next(glm::ivec2 start, glm::vec2 direction, int inc);
     int get_new_direction(glm::vec2 center, glm::vec2 next_cell, glm::vec2 direction);
     void clear();
     void print();    
