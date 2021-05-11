@@ -276,23 +276,47 @@ std::vector<glm::ivec2> Grid::get_neighbours(glm::ivec2 cell) {
 
 int Grid::get_next_cell(glm::ivec2 start, glm::vec2 direction) {
     int new_direction = 0;
-    std::vector<bool> status;
-    for (int i = 1; i < 6; i++) {
-        status.push_back(this->check_next(start, direction, i));
-        if (status.back() == true) {
-            break;
-        }
-    }
+    int dir_cuadrant = this->direction_to_cuadrant(direction);
+    auto collision_ray_0 = this->get_collision_ray(start, dir_cuadrant);
 
-    if (status.size() < 3) {
-        new_direction = -1;
+    if (collision_ray_0.size() < 4) {
+        // |1|0|2|
+        std::vector<bool> collision_ray_1;
+        std::vector<bool> collision_ray_2;
+        if (dir_cuadrant != 0 && dir_cuadrant != 7) {
+            collision_ray_1 = this->get_collision_ray(start, dir_cuadrant + 1);
+            collision_ray_2 = this->get_collision_ray(start, dir_cuadrant - 1);
+        } else if (dir_cuadrant == 0){
+            collision_ray_1 = this->get_collision_ray(start, dir_cuadrant + 1);
+            collision_ray_2 = this->get_collision_ray(start, 7);
+        } else if (dir_cuadrant == 7) {
+            collision_ray_1 = this->get_collision_ray(start, 0);
+            collision_ray_2 = this->get_collision_ray(start, dir_cuadrant - 1);
+        }
+
+        if (collision_ray_1.size() >= collision_ray_2.size()) {
+            new_direction = -1;
+        } else {
+            new_direction = 1;
+        }        
     }
 
     return new_direction;
 }
 
-bool Grid::check_next(glm::ivec2 start, glm::vec2 direction, int inc) {
-    int dir_cuadrant = this->direction_to_cuadrant(direction);
+std::vector<bool> Grid::get_collision_ray(glm::ivec2 start, int dir_cuadrant) {
+    std::vector<bool> status;
+    for (int i = 1; i < 6; i++) {
+        status.push_back(this->check_next(start, dir_cuadrant, i));
+        if (status.back() == true) {
+            break;
+        }
+    }
+
+    return status;
+}
+
+bool Grid::check_next(glm::ivec2 start, int dir_cuadrant, int inc) {
     bool status = true;
 
     /*  Grid Notation for a pair of coordinates c

@@ -56,7 +56,7 @@ void PlayerManager::update(GLFWwindow* window) {
     auto user_data = (user_data_t*) glfwGetWindowUserPointer(window);
     user_data->grid->populate(this->get_all_points());
 #ifdef DEBUG
-    user_data->grid->print();
+    // user_data->grid->print();
 #endif
     for (auto item : this->players) {
         std::set<int>::iterator it;

@@ -41,8 +41,11 @@ class Grid {
     glm::ivec2 get_coordinates(double x, double y);
     void populate(std::vector<glm::vec2> all_points);
     void set_player(glm::vec2 center, glm::vec2 direction);
+
     int get_next_cell(glm::ivec2 start, glm::vec2 direction);
-    bool check_next(glm::ivec2 start, glm::vec2 direction, int inc);
+    bool check_next(glm::ivec2 start, int dir_cuadrant, int inc);
+    std::vector<bool> get_collision_ray(glm::ivec2 start, int dir_cuadrant);
+
     int get_new_direction(glm::vec2 center, glm::vec2 next_cell, glm::vec2 direction);
     void clear();
     void print();    
