@@ -4,9 +4,7 @@
 
 # 
 
-[![Github Actions][img_gh-actions]][gh-actions]
 ![mit license][img_license]
-[![kurve](https://snapcraft.io/kurve/badge.svg)](https://snapcraft.io/kurve)
 
 
 [img_license]: https://img.shields.io/badge/License-MIT_or_Apache_2.0-blue.svg
@@ -26,7 +24,6 @@ Table of contents
 
 <!--ts-->
    * [Getting Started](#getting-started)
-      * [Install using snap](#install-using-snap)
       * [Install (Source)](#install-from-the-source)
       * [Debug](#debug)
    * [Roadmap](#roadmap)
@@ -36,18 +33,6 @@ Table of contents
 <!--te-->
 
 # Getting Started
-
-## Install using snap
-Kurve is available in the Snap Store under the name "kurve".
-
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/kurve)
-```
-$ sudo snap install kurve
-```
-To get kurve as a rolling release
-```
-$ sudo snap install kurve --edge
-```
 
 ## Install from the source
 Clone this project
